@@ -1,5 +1,7 @@
 package com.ticketorder.model;
 
-public class TicketOrderVO {
+import java.io.Serializable;
 
+public class TicketOrderVO implements Serializable{
+	
 }
