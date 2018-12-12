@@ -68,7 +68,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 			pstmt.setString(3, evetitVO.getEvetit_name());
 			pstmt.setDate(4, evetitVO.getEvetit_startdate());
 			pstmt.setDate(5, evetitVO.getEvetit_enddate());
-			pstmt.setBytes(6, evetitVO.getEvetit_poster());				
+			pstmt.setBytes(6, evetitVO.getEvetit_poster());		  //B		
 			pstmt.setCharacterStream(7, new StringReader(evetitVO.getInfo()));							
 			pstmt.setCharacterStream(8, new StringReader(evetitVO.getNotices()));		
 			pstmt.setCharacterStream(9, new StringReader(evetitVO.getEticpurchaserules())); 				
@@ -229,7 +229,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 				eventTitleVO.setEvetit_startdate(rs.getDate("evetit_startdate"));
 				eventTitleVO.setEvetit_enddate(rs.getDate("evetit_enddate"));
 				
-				eventTitleVO.setEvetit_poster(rs.getBytes("evetit_poster"));
+				eventTitleVO.setEvetit_poster(rs.getBytes("evetit_poster"));	  //B
 							
 				br = new BufferedReader(rs.getCharacterStream("info"));
 				StringBuilder infoSb = new StringBuilder();
@@ -343,7 +343,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 				eventTitleVO.setEvetit_startdate(rs.getDate("evetit_startdate"));
 				eventTitleVO.setEvetit_enddate(rs.getDate("evetit_enddate"));
 				
-				eventTitleVO.setEvetit_poster(rs.getBytes("evetit_poster"));
+				eventTitleVO.setEvetit_poster(rs.getBytes("evetit_poster"));  //B
 							
 				br = new BufferedReader(rs.getCharacterStream("info"));
 				StringBuilder infoSb = new StringBuilder();
@@ -460,7 +460,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 			EventTitleVO1.setEvetit_startdate(java.sql.Date.valueOf("2019-01-31"));
 			EventTitleVO1.setEvetit_enddate(java.sql.Date.valueOf("2019-01-31"));
 			
-			fis1 = new FileInputStream("writeImgJDBC/tomcat.jpg");			
+			fis1 = new FileInputStream("writeImgJDBC/tomcat.jpg");		  //B	
 			baos1 = new ByteArrayOutputStream();			
 			int i;
 			while ((i = fis1.read()) != -1)
@@ -572,7 +572,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 		System.out.println(EventTitleVO3.getEvetit_name());
 		System.out.println(EventTitleVO3.getEvetit_startdate());
 		System.out.println(EventTitleVO3.getEvetit_enddate());
-		
+																							//B
 		try (PrintStream ps = new PrintStream(new FileOutputStream("readImgJDBC/eventTitleTest.jpg"), true)){
 			ps.write(EventTitleVO3.getEvetit_poster());
 		} catch (IOException e) {
