@@ -74,7 +74,7 @@ public class EventJDBCDAO implements EventDAO_interface{
 		
 			pstmt.executeUpdate();
 			
-			System.out.println("Inserted");
+			System.out.println("----------Inserted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -123,7 +123,7 @@ public class EventJDBCDAO implements EventDAO_interface{
 		
 			pstmt.executeUpdate();
 			
-			System.out.println("Updated");
+			System.out.println("----------Updated----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -162,7 +162,7 @@ public class EventJDBCDAO implements EventDAO_interface{
 
 			pstmt.executeUpdate();
 			
-			System.out.println("Deleted");
+			System.out.println("----------Deleted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -222,7 +222,7 @@ public class EventJDBCDAO implements EventDAO_interface{
 				eventVO.setEve_status(rs.getString("eve_status"));
 			}
 			
-			System.out.println("findByPrimaryKey finished");
+			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -296,7 +296,7 @@ public class EventJDBCDAO implements EventDAO_interface{
 				list.add(eventVO);
 			}
 			
-			System.out.println("getAll finished");
+			System.out.println("----------getAll finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -371,10 +371,10 @@ public class EventJDBCDAO implements EventDAO_interface{
 				baos1.write(i);			
 			eventVO1.setEve_seatmap(baos1.toByteArray());	
 			
-			eventVO1.setEve_startdate(java.sql.Timestamp.valueOf("2018-08-22 12:00:00"));							
-			eventVO1.setEve_enddate(java.sql.Timestamp.valueOf("2019-03-12 14:30:00"));		
+			eventVO1.setEve_startdate(java.sql.Timestamp.valueOf("2018-08-20 12:00:00"));							
+			eventVO1.setEve_enddate(java.sql.Timestamp.valueOf("2019-03-10 14:30:00"));		
 			eventVO1.setEve_onsaledate(java.sql.Timestamp.valueOf("2018-09-01 10:00:00")); 				
-			eventVO1.setEve_offsaledate(java.sql.Timestamp.valueOf("2018-03-31 24:00:00"));				
+			eventVO1.setEve_offsaledate(java.sql.Timestamp.valueOf("2018-03-09 24:00:00"));				
 			eventVO1.setTiclimit(new Integer(4));			
 			eventVO1.setFullrefundenddate(java.sql.Timestamp.valueOf("2018-09-10 10:00:00"));
 			eventVO1.setEve_status("normal");
@@ -410,6 +410,7 @@ public class EventJDBCDAO implements EventDAO_interface{
 		try {
 			EventVO eventVO2 = new EventVO();
 			
+			eventVO2.setEve_no("E000101"); 			
 			eventVO2.setVenue_no("V001");
 			eventVO2.setEve_sessionname("第一場");					
 			
@@ -427,7 +428,6 @@ public class EventJDBCDAO implements EventDAO_interface{
 			eventVO2.setTiclimit(new Integer(4));			
 			eventVO2.setFullrefundenddate(null);
 			eventVO2.setEve_status("cancel");
-			eventVO2.setEve_no("E000101"); 
 			
 			dao.update(eventVO2);
 			

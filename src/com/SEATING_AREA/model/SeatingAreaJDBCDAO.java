@@ -57,7 +57,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 
 			pstmt.executeUpdate();
 			
-			System.out.println("Inserted");
+			System.out.println("----------Inserted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -100,7 +100,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 
 			pstmt.executeUpdate();
 			
-			System.out.println("Updated");
+			System.out.println("----------Updated----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -139,7 +139,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 
 			pstmt.executeUpdate();
 			
-			System.out.println("Deleted");
+			System.out.println("----------Deleted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -193,7 +193,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 				seatingareaVO.setTicbookednumber(rs.getInt("ticbookednumber"));
 			}
 			
-			System.out.println("findByPrimaryKey finished");
+			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -255,7 +255,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 				list.add(seatingareaVO);
 			}
 
-			System.out.println("getAll finished");
+			System.out.println("----------getAll finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -307,7 +307,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 		SeatingAreaVO seatingareaVO1 = new SeatingAreaVO();	
 		seatingareaVO1.setEve_no("E000101");
 		seatingareaVO1.setTictype_no("E000101A");
-		seatingareaVO1.setTicarea_ename("10");		
+		seatingareaVO1.setTicarea_ename("03");		
 		seatingareaVO1.setTicarea_no(seatingareaVO1.getTictype_no() + seatingareaVO1.getTicarea_ename());		
 		seatingareaVO1.setTicarea_color("#EE7700");
 		seatingareaVO1.setTicarea_name("搖滾A3區");
@@ -319,7 +319,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 		
 		// 修改	
 		SeatingAreaVO seatingareaVO2 = new SeatingAreaVO();
-		seatingareaVO2.setTicarea_no("E000101A06");
+		seatingareaVO2.setTicarea_no("E000101A01");
 		seatingareaVO2.setTicarea_color("#EEEEEE");
 		seatingareaVO2.setTicarea_name("搖滾搖滾區");
 		seatingareaVO2.setTictotalnumber(new Integer(250));
@@ -329,7 +329,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 		
 		
 		// 刪除
-		dao.delete("E000101A06"); 
+		dao.delete("E000101A03"); 
 		System.out.println("------------------------------");
 
 		

@@ -56,7 +56,7 @@ public class TicketTypeJDBCDAO implements TicketTypeDAO_interface{
 		
 			pstmt.executeUpdate();
 			
-			System.out.println("Inserted");
+			System.out.println("----------Inserted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -98,7 +98,7 @@ public class TicketTypeJDBCDAO implements TicketTypeDAO_interface{
 		
 			pstmt.executeUpdate();
 			
-			System.out.println("Updated");
+			System.out.println("----------Updated----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -137,7 +137,7 @@ public class TicketTypeJDBCDAO implements TicketTypeDAO_interface{
 
 			pstmt.executeUpdate();
 			
-			System.out.println("Deleted");
+			System.out.println("----------Deleted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -190,7 +190,7 @@ public class TicketTypeJDBCDAO implements TicketTypeDAO_interface{
 				ticketTypeVO.setTictype_price(rs.getInt("tictype_price"));				
 			}
 			
-			System.out.println("findByPrimaryKey finished");
+			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -250,7 +250,7 @@ public class TicketTypeJDBCDAO implements TicketTypeDAO_interface{
 				list.add(ticketTypeVO);				
 			}
 			
-			System.out.println("getAll finished");
+			System.out.println("----------getAll finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -301,10 +301,10 @@ public class TicketTypeJDBCDAO implements TicketTypeDAO_interface{
 		// 新增				
 		TicketTypeVO ticketTypeVO1 = new TicketTypeVO();			
 		ticketTypeVO1.setEve_no("E000101");
-		ticketTypeVO1.setTictype_ename("N");
+		ticketTypeVO1.setTictype_ename("E");
 		ticketTypeVO1.setTictype_no(ticketTypeVO1.getEve_no() + ticketTypeVO1.getTictype_ename());
 		ticketTypeVO1.setTictype_color("#EE7700"); 			
-		ticketTypeVO1.setTictype_name("搖滾E區");					
+		ticketTypeVO1.setTictype_name("搖滾C區");					
 		ticketTypeVO1.setTictype_price(new Integer(1500));									
 		dao.insert(ticketTypeVO1);
 		
@@ -312,10 +312,10 @@ public class TicketTypeJDBCDAO implements TicketTypeDAO_interface{
 		
 		// 修改				
 		TicketTypeVO ticketTypeVO2 = new TicketTypeVO();			
-		ticketTypeVO2.setTictype_no("E000101E");
+		ticketTypeVO2.setTictype_no("E000101A");
 		ticketTypeVO2.setTictype_color("#EEEEEE"); 			
 		ticketTypeVO2.setTictype_name("搖滾EEEE區");					
-		ticketTypeVO2.setTictype_price(new Integer(500));									
+		ticketTypeVO2.setTictype_price(new Integer(8000));									
 		dao.update(ticketTypeVO2);
 			
 		

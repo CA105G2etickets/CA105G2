@@ -82,7 +82,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 		
 			pstmt.executeUpdate();
 			
-			System.out.println("Inserted");
+			System.out.println("----------Inserted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -137,7 +137,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 		
 			pstmt.executeUpdate();
 			
-			System.out.println("Updated");
+			System.out.println("----------Updated----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -176,7 +176,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 
 			pstmt.executeUpdate();
 			
-			System.out.println("Deleted");
+			System.out.println("----------Deleted----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -274,7 +274,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 				
 			}
 			
-			System.out.println("findByPrimaryKey finished");
+			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -390,7 +390,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 				
 			}
 			
-			System.out.println("getAll finished");
+			System.out.println("----------getAll finished----------");
 			
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());	
@@ -457,8 +457,8 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 			EventTitleVO1.setEveclass_no("A"); 
 			EventTitleVO1.setTicrefpolicy_no("TRP2");
 			EventTitleVO1.setEvetit_name("SingAround");
-			EventTitleVO1.setEvetit_startdate(java.sql.Date.valueOf("2016-01-01"));
-			EventTitleVO1.setEvetit_enddate(java.sql.Date.valueOf("2016-01-01"));
+			EventTitleVO1.setEvetit_startdate(java.sql.Date.valueOf("2019-01-31"));
+			EventTitleVO1.setEvetit_enddate(java.sql.Date.valueOf("2019-01-31"));
 			
 			fis1 = new FileInputStream("writeImgJDBC/tomcat.jpg");			
 			baos1 = new ByteArrayOutputStream();			
@@ -467,15 +467,15 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 				baos1.write(i);			
 			EventTitleVO1.setEvetit_poster(baos1.toByteArray());
 						
-			EventTitleVO1.setInfo("This is INFO");		
-			EventTitleVO1.setNotices("This is NOTICES");
-			EventTitleVO1.setEticpurchaserules("This is ETICPURCHASERULES");
-			EventTitleVO1.setEticrules("This is ETICRULES");
-			EventTitleVO1.setRefundrules("This is REFUNDRULES");
+			EventTitleVO1.setInfo("This is INFO.");		
+			EventTitleVO1.setNotices("This is NOTICES.");
+			EventTitleVO1.setEticpurchaserules("This is ETICPURCHASERULES.");
+			EventTitleVO1.setEticrules("This is ETICRULES.");
+			EventTitleVO1.setRefundrules("This is REFUNDRULES.");
 			EventTitleVO1.setEvetit_sessions(new Integer(1));
 			EventTitleVO1.setEvetit_status("temporary");
-			EventTitleVO1.setLaunchdate(java.sql.Date.valueOf("2016-01-01"));
-			EventTitleVO1.setOffdate(java.sql.Date.valueOf("2016-01-01"));
+			EventTitleVO1.setLaunchdate(java.sql.Date.valueOf("2019-01-31"));
+			EventTitleVO1.setOffdate(java.sql.Date.valueOf("2019-01-31"));
 			EventTitleVO1.setPromotionranking(new Integer(1));
 			
 			dao.insert(EventTitleVO1);
@@ -508,7 +508,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 		ByteArrayOutputStream baos2 = null;	
 		try {
 			EventTitleVO EventTitleVO2 = new EventTitleVO();
-			EventTitleVO2.setEvetit_no("E0005");
+			EventTitleVO2.setEvetit_no("E0001");
 			EventTitleVO2.setEveclass_no("B"); 
 			EventTitleVO2.setTicrefpolicy_no("TRP3");
 			EventTitleVO2.setEvetit_name("SingAround2");
@@ -522,11 +522,11 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 				baos2.write(i);		
 			EventTitleVO2.setEvetit_poster(baos2.toByteArray());
 						
-			EventTitleVO2.setInfo("This is INFO2");		
-			EventTitleVO2.setNotices("This is NOTICES2");
-			EventTitleVO2.setEticpurchaserules("This is ETICPURCHASERULES2");
-			EventTitleVO2.setEticrules("This is ETICRULES2");
-			EventTitleVO2.setRefundrules("This is REFUNDRULES2");
+			EventTitleVO2.setInfo("This is INFO.2");		
+			EventTitleVO2.setNotices("This is NOTICES.2");
+			EventTitleVO2.setEticpurchaserules("This is ETICPURCHASERULES.2");
+			EventTitleVO2.setEticrules("This is ETICRULES.2");
+			EventTitleVO2.setRefundrules("This is REFUNDRULES.2");
 			EventTitleVO2.setEvetit_sessions(new Integer(2));
 			EventTitleVO2.setEvetit_status("temporary");
 			EventTitleVO2.setLaunchdate(java.sql.Date.valueOf("2018-12-31"));
@@ -573,7 +573,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 		System.out.println(EventTitleVO3.getEvetit_startdate());
 		System.out.println(EventTitleVO3.getEvetit_enddate());
 		
-		try (PrintStream ps = new PrintStream(new FileOutputStream("readImgJDBC/test.jpg"), true)){
+		try (PrintStream ps = new PrintStream(new FileOutputStream("readImgJDBC/eventTitleTest.jpg"), true)){
 			ps.write(EventTitleVO3.getEvetit_poster());
 		} catch (IOException e) {
 			e.printStackTrace();
