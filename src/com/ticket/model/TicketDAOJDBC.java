@@ -1,32 +1,34 @@
-package com.ticketorder.model;
-import java.util.*;
+package com.ticket.model;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
+import com.ticketorder.model.TicketOrderDAOJDBC;
+import com.ticketorder.model.TicketOrderVO;
+
+public class TicketDAOJDBC implements TicketDAO_interface{
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "CA105G2";
 	String passwd = "123456";
 	private static final String INSERT_STMT=
-			"INSERT INTO ticket_order (ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status) VALUES (ticket_order_seq.NEXTVAL,?,?,?,?,?,?,?)";
+			"INSERT INTO ticket (ticket_no,ticarea_no,ticket_order_no,member_no,ticket_status,ticket_create_time,ticket_resale_status,ticket_resale_price,is_from_resale) VALUES (ticket_seq.NEXTVAL,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT=
-			"SELECT ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status FROM ticket_order order by ticket_order_no";
+			"SELECT ticket_no,ticarea_no,ticket_order_no,member_no,ticket_status,ticket_create_time,ticket_resale_status,ticket_resale_price,is_from_resale FROM ticket order by ticket_no";
 	private static final String GET_ONE_STMT=
-			"SELECT ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status FROM ticket_order where ticket_order_no=?";
+			"SELECT ticket_no,ticarea_no,ticket_order_no,member_no,ticket_status,ticket_create_time,ticket_resale_status,ticket_resale_price,is_from_resale FROM ticket where ticket_no=?";
 	private static final String DELETE = 
-			"DELETE FROM ticket_order where ticket_order_no = ?";
+			"DELETE FROM ticket where ticket_no = ?";
 	private static final String UPDATE = 
-			"UPDATE ticket_order set member_no=?, ticarea_no=?, total_price=?, total_amount=?, ticket_order_time=?, payment_method=?,ticket_order_status=? where ticket_order_no=?";
-	
+			"UPDATE ticket set ticarea_no=?, ticket_order_no=?, member_no=?, ticket_status=?, ticket_create_time=?, ticket_resale_status=?,ticket_resale_price=?,is_from_resale=? where ticket_no=?";
+
 	@Override
-	public void insert(TicketOrderVO ticketorderVO) {
+	public void insert(TicketVO ticketVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -34,13 +36,14 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
-			pstmt.setString(1, ticketorderVO.getMember_no());
-			pstmt.setString(2, ticketorderVO.getTicarea_no());
-			pstmt.setInt(3, ticketorderVO.getTotal_price());
-			pstmt.setInt(4, ticketorderVO.getTotal_amount());
-			pstmt.setTimestamp(5, ticketorderVO.getTicket_order_time());
-			pstmt.setString(6, ticketorderVO.getPayment_method());
-			pstmt.setString(7, ticketorderVO.getTicket_order_status());
+			pstmt.setString(1, ticketVO.getTicarea_no());
+			pstmt.setString(2, ticketVO.getTicket_order_no());
+			pstmt.setString(3, ticketVO.getMember_no());
+			pstmt.setString(4, ticketVO.getTicket_status());
+			pstmt.setTimestamp(5, ticketVO.getTicket_create_time());
+			pstmt.setString(6, ticketVO.getTicket_resale_status());
+			pstmt.setInt(7, ticketVO.getTicket_resale_price());
+			pstmt.setString(8, ticketVO.getIs_from_resale());
 
 			pstmt.executeUpdate();
 
@@ -72,7 +75,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 	}
 
 	@Override
-	public void update(TicketOrderVO ticketorderVO) {
+	public void update(TicketVO ticketVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -80,14 +83,15 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setString(1, ticketorderVO.getMember_no());
-			pstmt.setString(2, ticketorderVO.getTicarea_no());
-			pstmt.setInt(3, ticketorderVO.getTotal_price());
-			pstmt.setInt(4, ticketorderVO.getTotal_amount());
-			pstmt.setTimestamp(5, ticketorderVO.getTicket_order_time());
-			pstmt.setString(6, ticketorderVO.getPayment_method());
-			pstmt.setString(7, ticketorderVO.getTicket_order_status());
-			pstmt.setString(8, ticketorderVO.getTicket_order_no());
+			pstmt.setString(1, ticketVO.getTicarea_no());
+			pstmt.setString(2, ticketVO.getTicket_order_no());
+			pstmt.setString(3, ticketVO.getMember_no());
+			pstmt.setString(4, ticketVO.getTicket_status());
+			pstmt.setTimestamp(5, ticketVO.getTicket_create_time());
+			pstmt.setString(6, ticketVO.getTicket_resale_status());
+			pstmt.setInt(7, ticketVO.getTicket_resale_price());
+			pstmt.setString(8, ticketVO.getIs_from_resale());
+			pstmt.setString(9, ticketVO.getTicket_no());
 
 			pstmt.executeUpdate();
 
@@ -119,7 +123,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 	}
 
 	@Override
-	public void delete(String ticket_order_no) {
+	public void delete(String ticket_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -128,7 +132,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setString(1, ticket_order_no);
+			pstmt.setString(1, ticket_no);
 
 			pstmt.executeUpdate();
 
@@ -160,8 +164,8 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 	}
 
 	@Override
-	public TicketOrderVO findByPrimaryKey(String ticket_order_no) {
-		TicketOrderVO ticketorderVO = null;
+	public TicketVO findByPrimaryKey(String ticket_no) {
+		TicketVO ticketVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -172,21 +176,23 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setString(1, ticket_order_no);
+			pstmt.setString(1, ticket_no);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// empVo �]�٬� Domain objects
-				ticketorderVO = new TicketOrderVO();
-				ticketorderVO.setTicket_order_no(rs.getString("ticket_order_no"));
-				ticketorderVO.setMember_no(rs.getString("member_no"));
-				ticketorderVO.setTicarea_no(rs.getString("ticarea_no"));
-				ticketorderVO.setTotal_price(rs.getInt("total_price"));
-				ticketorderVO.setTotal_amount(rs.getInt("total_amount"));
-				ticketorderVO.setTicket_order_time(rs.getTimestamp("ticket_order_time"));
-				ticketorderVO.setPayment_method(rs.getString("payment_method"));
-				ticketorderVO.setTicket_order_status(rs.getString("ticket_order_status"));
+				ticketVO = new TicketVO();
+				ticketVO.setTicket_no(rs.getString("ticket_no"));
+				ticketVO.setTicarea_no(rs.getString("ticarea_no"));
+				ticketVO.setTicket_order_no(rs.getString("ticket_order_no"));
+				ticketVO.setMember_no(rs.getString("member_no"));
+				ticketVO.setTicket_status(rs.getString("ticket_status"));
+				ticketVO.setTicket_create_time(rs.getTimestamp("ticket_create_time"));
+				ticketVO.setTicket_resale_status(rs.getString("ticket_resale_status"));
+				ticketVO.setTicket_resale_price(rs.getInt("ticket_resale_price"));
+				ticketVO.setIs_from_resale(rs.getString("is_from_resale"));
+				
 			}
 
 			// Handle any driver errors
@@ -221,13 +227,13 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 				}
 			}
 		}
-		return ticketorderVO;
+		return ticketVO;
 	}
 
 	@Override
-	public List<TicketOrderVO> getAll() {
-		List<TicketOrderVO> list = new ArrayList<TicketOrderVO>();
-		TicketOrderVO ticketorderVO = null;
+	public List<TicketVO> getAll() {
+		List<TicketVO> list = new ArrayList<TicketVO>();
+		TicketVO ticketVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -242,16 +248,17 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 
 			while (rs.next()) {
 				// empVO �]�٬� Domain objects
-				ticketorderVO = new TicketOrderVO();
-				ticketorderVO.setTicket_order_no(rs.getString("ticket_order_no"));
-				ticketorderVO.setMember_no(rs.getString("member_no"));
-				ticketorderVO.setTicarea_no(rs.getString("ticarea_no"));
-				ticketorderVO.setTotal_price(rs.getInt("total_price"));
-				ticketorderVO.setTotal_amount(rs.getInt("total_amount"));
-				ticketorderVO.setTicket_order_time(rs.getTimestamp("ticket_order_time"));
-				ticketorderVO.setPayment_method(rs.getString("payment_method"));
-				ticketorderVO.setTicket_order_status(rs.getString("ticket_order_status"));
-				list.add(ticketorderVO); // Store the row in the list
+				ticketVO = new TicketVO();
+				ticketVO.setTicket_no(rs.getString("ticket_no"));
+				ticketVO.setTicarea_no(rs.getString("ticarea_no"));
+				ticketVO.setTicket_order_no(rs.getString("ticket_order_no"));
+				ticketVO.setMember_no(rs.getString("member_no"));
+				ticketVO.setTicket_status(rs.getString("ticket_status"));
+				ticketVO.setTicket_create_time(rs.getTimestamp("ticket_create_time"));
+				ticketVO.setTicket_resale_status(rs.getString("ticket_resale_status"));
+				ticketVO.setTicket_resale_price(rs.getInt("ticket_resale_price"));
+				ticketVO.setIs_from_resale(rs.getString("is_from_resale"));
+				list.add(ticketVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
@@ -289,13 +296,12 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 		return list;
 	}
 	public static void main (String[] args) {
-		TicketOrderDAOJDBC dao = new TicketOrderDAOJDBC();
+		TicketDAOJDBC dao = new TicketDAOJDBC();
 		//�s�W
-		TicketOrderVO ticketorderVO = new TicketOrderVO();
+		TicketVO ticketVO = new TicketVO();
 //		dao.insert(ticketorderVO);
 		
 		//�ק�
-		TicketOrderVO ticketorderVO2 = new TicketOrderVO();
 //		dao.update(ticketorderVO2);
 		
 		//�R��
@@ -307,17 +313,18 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 		System.out.println("---------------------");
 		
 		//�d�� list
-		List<TicketOrderVO> list = dao.getAll();
-		for(TicketOrderVO aVO :list) {
+		List<TicketVO> list = dao.getAll();
+		for(TicketVO aVO :list) {
 			System.out.println("------select2 start--------");
+			System.out.print(aVO.getTicket_no() + ",");
+			System.out.print(aVO.getTicarea_no() + ",");
 			System.out.print(aVO.getTicket_order_no() + ",");
 			System.out.print(aVO.getMember_no() + ",");
-			System.out.print(aVO.getTicarea_no() + ",");
-			System.out.print(aVO.getTotal_price() + ",");
-			System.out.print(aVO.getTotal_amount() + ",");
-			System.out.print(aVO.getTicket_order_time() + ",");
-			System.out.print(aVO.getPayment_method() + ",");
-			System.out.print(aVO.getTicket_order_status() + ",");
+			System.out.print(aVO.getTicket_status() + ",");
+			System.out.print(aVO.getTicket_create_time() + ",");
+			System.out.print(aVO.getTicket_resale_status() + ",");
+			System.out.print(aVO.getTicket_resale_price() + ",");
+			System.out.print(aVO.getIs_from_resale() + ",");
 			System.out.println("---------------------");
 		}
 	}
