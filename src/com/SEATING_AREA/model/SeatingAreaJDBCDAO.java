@@ -25,7 +25,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 			
 	private static final String DELETE_STMT = 
 			"DELETE FROM seating_area WHERE ticarea_no=?";
-		
+		 
 	private static final String GET_ONE_STMT=
 			"SELECT ticarea_no, eve_no, tictype_no, ticarea_ename, ticarea_color, ticarea_name, tictotalnumber, ticbookednumber "
 			+ "FROM seating_area WHERE ticarea_no=?";
