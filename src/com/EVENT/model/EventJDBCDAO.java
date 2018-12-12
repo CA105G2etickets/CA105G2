@@ -194,7 +194,6 @@ public class EventJDBCDAO implements EventDAO_interface{
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;
-		BufferedReader br = null;
 		
 		try {
 			Class.forName(DRIVER);
@@ -229,13 +228,6 @@ public class EventJDBCDAO implements EventDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException ioe) {
-					ioe.printStackTrace(System.err);
-				}
-			}
 			if (rs != null) {
 				try {
 					rs.close();
@@ -270,7 +262,6 @@ public class EventJDBCDAO implements EventDAO_interface{
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;
-		BufferedReader br = null;
 		
 		try {
 			Class.forName(DRIVER);
@@ -303,13 +294,6 @@ public class EventJDBCDAO implements EventDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException ioe) {
-					ioe.printStackTrace(System.err);
-				}
-			}
 			if (rs != null) {
 				try {
 					rs.close();
