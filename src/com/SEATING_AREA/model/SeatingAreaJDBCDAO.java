@@ -161,7 +161,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 				}
 			}
 		}
-	}
+	} 
 
 	@Override
 	public SeatingAreaVO findByPrimaryKey(String ticarea_no) {
