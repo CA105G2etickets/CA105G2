@@ -3,13 +3,11 @@ package com.EVENT_TITLE.model;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,7 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 	

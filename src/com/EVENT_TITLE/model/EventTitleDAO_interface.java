@@ -1,7 +1,6 @@
 package com.EVENT_TITLE.model;
 
 import java.util.List;
-import java.util.Set;
 
 public interface EventTitleDAO_interface {
 	
