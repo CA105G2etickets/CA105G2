@@ -521,7 +521,7 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 			while ((i = fis2.read()) != -1)
 				baos2.write(i);		
 			EventTitleVO2.setEvetit_poster(baos2.toByteArray());
-						
+						 
 			EventTitleVO2.setInfo("This is INFO.2");		
 			EventTitleVO2.setNotices("This is NOTICES.2");
 			EventTitleVO2.setEticpurchaserules("This is ETICPURCHASERULES.2");
