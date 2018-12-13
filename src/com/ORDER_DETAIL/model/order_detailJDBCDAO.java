@@ -15,7 +15,8 @@ public class order_detailJDBCDAO implements order_detailDAO_interface {
 	String passwd = "123456";
 
 	private static final String INSERT_STMT = 
-		"INSERT INTO ORDER_DETAIL (ORDER_NO, GOODS_NO, GOODS_BONUS, GOODS_PC) VALUES ('O'||to_char(sysdate,'yyyymmdd')||LPAD(to_char(ORDER_DETAIL_seq.NEXTVAL), 5, '0'), ?, ?, ?)";
+		"INSERT INTO ORDER_DETAIL (ORDER_NO, GOODS_NO, GOODS_BONUS, GOODS_PC) "
+		+ "VALUES 'O20181212'||LPAD(to_char(ORDER_DETAIL_seq.NEXTVAL), 5, '0'), ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 		"SELECT ORDER_NO, GOODS_NO, GOODS_BONUS, GOODS_PC FROM ORDER_DETAIL ORDER BY ORDER_NO";
 	private static final String GET_ONE_STMT = 
