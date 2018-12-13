@@ -2,11 +2,16 @@ package com.ORDER_DETAIL.model;
 
 public class order_detailVO implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7973064175273608162L;
+	
 	private String orderNo;
 	private String goodsNo;
 	private Double goodsBonus;
 	private Double goodsPc;
+	
+	public order_detailVO() {
+		
+	}
 	
 	public String getOrderNo() {
 		return orderNo;
@@ -31,8 +36,6 @@ public class order_detailVO implements java.io.Serializable {
 	}
 	public void setGoodsPc(Double goodsPc) {
 		this.goodsPc = goodsPc;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}	
+
 }

@@ -4,7 +4,8 @@ import java.sql.Timestamp;
 
 public class order_historyVO implements java.io.Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3974699486176517592L;
+	
 	private String orderNo;
 	private String memberNo;
 	private Double orderPrice;
@@ -18,6 +19,9 @@ public class order_historyVO implements java.io.Serializable {
 	private String receiverTel;
 	private String orderStatus;
 	
+	public order_historyVO() {
+		
+	}
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -90,8 +94,7 @@ public class order_historyVO implements java.io.Serializable {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
+
 	
 }
