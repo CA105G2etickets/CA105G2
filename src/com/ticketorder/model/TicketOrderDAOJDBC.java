@@ -296,8 +296,8 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 //		ticketorderVO.setTicarea_no("E000101A01");
 //		ticketorderVO.setTotal_price(9999);
 //		ticketorderVO.setTotal_amount(2);
-//		long longTime = new Date().getTime();
-//		Timestamp times = new Timestamp(longTime);
+//		long Ltime = new Date().getTime();
+//		Timestamp times = new Timestamp(Ltime);
 //		ticketorderVO.setTicket_order_time(times);
 //		ticketorderVO.setPayment_method("CREDITCARD");
 //		ticketorderVO.setTicket_order_status("WAITFORPAY1");
@@ -307,21 +307,21 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 //		dao.delete("TO_20181214_000004"); 
 		
 		//SELECT WITH PK
-		TicketOrderVO VO3 = dao.findByPrimaryKey("TO_20181225_000001");
+		TicketOrderVO VO2 = dao.findByPrimaryKey("TO_20181225_000001");
 		System.out.println("------select1 start--------");
-		System.out.print(VO3.getTicket_order_no() + ",");
-		System.out.print(VO3.getMember_no() + ",");
-		System.out.print(VO3.getTicarea_no() + ",");
-		System.out.print(VO3.getTotal_price() + ",");
-		System.out.print(VO3.getTotal_amount() + ",");
-		System.out.print(VO3.getTicket_order_time() + ",");
-		System.out.print(VO3.getPayment_method() + ",");
-		System.out.print(VO3.getTicket_order_status() + ",");
+		System.out.print(VO2.getTicket_order_no() + ",");
+		System.out.print(VO2.getMember_no() + ",");
+		System.out.print(VO2.getTicarea_no() + ",");
+		System.out.print(VO2.getTotal_price() + ",");
+		System.out.print(VO2.getTotal_amount() + ",");
+		System.out.print(VO2.getTicket_order_time() + ",");
+		System.out.print(VO2.getPayment_method() + ",");
+		System.out.print(VO2.getTicket_order_status() + ",");
 		System.out.println("---------------------");
 		
 		//UPDATE
-//		VO3.setTotal_price(9000); //update VO3.price to 9000;
-//		dao.update(VO3);
+//		VO2.setTotal_price(9000); //update VO2.price to 9000;
+//		dao.update(VO2);
 		
 		//SELECT WITH LIST
 		List<TicketOrderVO> list = dao.getAll();

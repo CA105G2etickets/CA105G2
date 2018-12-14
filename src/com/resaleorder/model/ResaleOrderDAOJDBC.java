@@ -4,7 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.ticketorder.model.TicketOrderDAOJDBC;
@@ -16,7 +18,7 @@ public class ResaleOrderDAOJDBC implements ResaleOrderDAO_interface{
 	String userid = "CA105G2";
 	String passwd = "123456";
 	private static final String INSERT_STMT=
-			"INSERT INTO resale_ord (resale_ordno,ticket_no,member_seller_no,member_buyer_no,resale_ordprice,resale_ordstatus,resale_ord_createtime,resale_ord_completetime,payment_method) VALUES (resale_ord_seq.NEXTVAL,?,?,?,?,?,?,?,?)";
+			"INSERT INTO resale_ord (resale_ordno,ticket_no,member_seller_no,member_buyer_no,resale_ordprice,resale_ordstatus,resale_ord_createtime,resale_ord_completetime,payment_method) VALUES ('R_'||(TO_CHAR(SYSDATE,'YYYYMMDD'))||'_'||LPAD(to_char(RESALE_ORD_SEQ.NEXTVAL), 6, '0'),?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT=
 			"SELECT resale_ordno,ticket_no,member_seller_no,member_buyer_no,resale_ordprice,resale_ordstatus,resale_ord_createtime,resale_ord_completetime,payment_method FROM resale_ord order by resale_ordno";
 	private static final String GET_ONE_STMT=
@@ -295,24 +297,44 @@ public class ResaleOrderDAOJDBC implements ResaleOrderDAO_interface{
 	}
 	public static void main (String[] args) {
 		ResaleOrderDAOJDBC dao = new ResaleOrderDAOJDBC();
-		//�s�W
-//		dao.insert(ticketorderVO);
+		//ADD
+//		ResaleOrderVO rVO = new ResaleOrderVO();
+//		rVO.setTicket_no("T_20181225_000003");
+//		rVO.setMember_seller_no("M000002");
+//		rVO.setMember_buyer_no("");
+//		rVO.setResale_ordprice(9900);
+//		rVO.setResale_ordstatus("WAITFORPAY1");
+//		long Ltime = new Date().getTime();
+//		Timestamp times = new Timestamp(Ltime);
+//		rVO.setResale_ord_createtime(times);
+//		rVO.setResale_ord_completetime(null);
+//		rVO.setPayment_method(null);
+//		dao.insert(rVO);
+//		//DELETE
+//		dao.delete("R_20181214_000004");
 		
-		//�ק�
-//		dao.update(ticketorderVO2);
-		
-		//�R��
-//		dao.delete("ticket_order_no"); //����ݭn��ʿ�J
-		
-		//�d��
+		//SELECT WITH PK
+		ResaleOrderVO VO2 = dao.findByPrimaryKey("R_20181226_000001");
 		System.out.println("------select1 start--------");
-		
+		System.out.print(VO2.getResale_ordno() + ",");
+		System.out.print(VO2.getTicket_no() + ",");
+		System.out.print(VO2.getMember_seller_no() + ",");
+		System.out.print(VO2.getMember_buyer_no() + ",");
+		System.out.print(VO2.getResale_ordprice()+ ",");
+		System.out.print(VO2.getResale_ordstatus() + ",");
+		System.out.print(VO2.getResale_ord_createtime()+ ",");
+		System.out.print(VO2.getResale_ord_completetime() + ",");
+		System.out.print(VO2.getPayment_method() + ",");
 		System.out.println("---------------------");
 		
-		//�d�� list
+		//UPDATE
+		VO2.setResale_ordprice(7700);
+		dao.update(VO2);
+		
+		//SELECT WITH LIST
 		List<ResaleOrderVO> list = dao.getAll();
 		for(ResaleOrderVO aVO :list) {
-			System.out.println("------select2 start--------");
+			System.out.println("------selectALL start--------");
 			System.out.print(aVO.getResale_ordno() + ",");
 			System.out.print(aVO.getTicket_no() + ",");
 			System.out.print(aVO.getMember_seller_no() + ",");

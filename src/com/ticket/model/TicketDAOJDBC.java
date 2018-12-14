@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.ticketorder.model.TicketOrderDAOJDBC;
@@ -17,7 +19,7 @@ public class TicketDAOJDBC implements TicketDAO_interface{
 	String userid = "CA105G2";
 	String passwd = "123456";
 	private static final String INSERT_STMT=
-			"INSERT INTO ticket (ticket_no,ticarea_no,ticket_order_no,member_no,ticket_status,ticket_create_time,ticket_resale_status,ticket_resale_price,is_from_resale) VALUES (ticket_seq.NEXTVAL,?,?,?,?,?,?,?,?)";
+			"INSERT INTO ticket (ticket_no,ticarea_no,ticket_order_no,member_no,ticket_status,ticket_create_time,ticket_resale_status,ticket_resale_price,is_from_resale) VALUES ('T_'||(TO_CHAR(SYSDATE,'YYYYMMDD'))||'_'||LPAD(to_char(TICKET_SEQ.NEXTVAL), 6, '0'),?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT=
 			"SELECT ticket_no,ticarea_no,ticket_order_no,member_no,ticket_status,ticket_create_time,ticket_resale_status,ticket_resale_price,is_from_resale FROM ticket order by ticket_no";
 	private static final String GET_ONE_STMT=
@@ -297,25 +299,43 @@ public class TicketDAOJDBC implements TicketDAO_interface{
 	}
 	public static void main (String[] args) {
 		TicketDAOJDBC dao = new TicketDAOJDBC();
-		//�s�W
-		TicketVO ticketVO = new TicketVO();
-//		dao.insert(ticketorderVO);
+		//ADD
+//		TicketVO tVO = new TicketVO();
+//		tVO.setTicarea_no("E000101A01");
+//		tVO.setTicket_order_no("TO_20181225_000001");
+//		tVO.setMember_no("M000001");
+//		tVO.setTicket_status("ACTIVE1");
+//		long Ltime = new Date().getTime();
+//		Timestamp times = new Timestamp(Ltime);
+//		tVO.setTicket_create_time(times);
+//		tVO.setTicket_resale_status("NONE1");
+//		tVO.setTicket_resale_price(0);
+//		tVO.setIs_from_resale("NO");
+//		dao.insert(tVO);
+//		//DELETE
+//		dao.delete("T_20181214_000004");
 		
-		//�ק�
-//		dao.update(ticketorderVO2);
-		
-		//�R��
-//		dao.delete("ticket_order_no"); //����ݭn��ʿ�J
-		
-		//�d��
+		//SELECT WITH PK
+		TicketVO tVO2 = dao.findByPrimaryKey("T_20181225_000001");
 		System.out.println("------select1 start--------");
-		
+		System.out.print(tVO2.getTicket_no() + ",");
+		System.out.print(tVO2.getTicarea_no() + ",");
+		System.out.print(tVO2.getTicket_order_no() + ",");
+		System.out.print(tVO2.getMember_no() + ",");
+		System.out.print(tVO2.getTicket_status() + ",");
+		System.out.print(tVO2.getTicket_create_time() + ",");
+		System.out.print(tVO2.getTicket_resale_status() + ",");
+		System.out.print(tVO2.getTicket_resale_price() + ",");
+		System.out.print(tVO2.getIs_from_resale() + ",");
 		System.out.println("---------------------");
+		//UPDATE
+		tVO2.setTicket_status("USED2");
+		dao.update(tVO2);
 		
-		//�d�� list
+		//SELECT WTIH LIST
 		List<TicketVO> list = dao.getAll();
 		for(TicketVO aVO :list) {
-			System.out.println("------select2 start--------");
+			System.out.println("------selectALL start--------");
 			System.out.print(aVO.getTicket_no() + ",");
 			System.out.print(aVO.getTicarea_no() + ",");
 			System.out.print(aVO.getTicket_order_no() + ",");
