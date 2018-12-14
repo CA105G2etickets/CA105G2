@@ -100,7 +100,6 @@ public class FaqJDBCDAO implements FaqDAO_interface {
 			}
 		}
 
-		
 	}
 
 	@Override
