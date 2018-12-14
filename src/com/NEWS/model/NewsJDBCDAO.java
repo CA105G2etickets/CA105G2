@@ -3,6 +3,7 @@ package com.NEWS.model;
 import java.sql.*;
 import java.util.*;
 
+//NewsJDBCDAO的SEQUENCE部分程式碼需再修改
 public class NewsJDBCDAO implements NewsDAO_interface {
 	
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
