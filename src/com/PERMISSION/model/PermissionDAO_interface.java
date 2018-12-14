@@ -9,5 +9,5 @@ public interface PermissionDAO_interface {
     public void delete(String permissionListNo);
     public PermissionVO findByPrimaryKey(String permissionListNo);
     public List<PermissionVO> getAll();
-
+    
 }

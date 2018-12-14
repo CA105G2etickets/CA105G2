@@ -9,5 +9,5 @@ public interface NewsClassificationDAO_interface {
     public void delete(String newsClassificationNo);
     public NewsClassificationVO findByPrimaryKey(String newsClassificationNo);
     public List<NewsClassificationVO> getAll();
-
+    
 }

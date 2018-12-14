@@ -9,5 +9,5 @@ public interface FaqDAO_interface {
     public void delete(String faqNo);
     public FaqVO findByPrimaryKey(String faqNo);
     public List<FaqVO> getAll();
-    
+
 }

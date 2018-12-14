@@ -9,5 +9,5 @@ public interface TransactionHistoryDAO_interface {
     public void delete(String transactionHistoryNo);
     public TransactionHistoryVO findByPrimaryKey(String transactionHistoryNo);
     public List<TransactionHistoryVO> getAll();
-
+    
 }

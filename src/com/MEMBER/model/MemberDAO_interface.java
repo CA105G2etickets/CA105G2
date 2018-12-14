@@ -9,5 +9,5 @@ public interface MemberDAO_interface {
     public void delete(String memberNo);
     public MemberVO findByPrimaryKey(String memberNo);
     public List<MemberVO> getAll();
-
+    
 }
