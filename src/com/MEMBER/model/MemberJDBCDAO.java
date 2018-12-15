@@ -11,18 +11,18 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	private static final String PASSWORD = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO FAQ (FAQ_NO,QUESTION,ANSWER,FAQ_CLASSIFICATION) VALUES ('FAQ'||LPAD(to_char(faq_no_seq.NEXTVAL), 3, '0'), ?, ?, ?)";
+			"INSERT INTO MEMBER (MEMBER_NO,MEMBER_FULLNAME,EMAIL,PHONE,IDCARD,MEMBER_ACCOUNT,MEMBER_PASSWORD,EWALLET_BALANCE,CREATION_DATE,PROFILE_PICTURE,MEMBER_STATUS) VALUES ('M'||LPAD(to_char(member_no_seq.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT * FROM FAQ ORDER BY FAQ_NO";
+			"SELECT * FROM MEMBER ORDER BY MEMBER_NO";
 	private static final String DELETE = 
-			"DELETE FROM FAQ WHERE FAQ_NO = ?";
+			"DELETE FROM MEMBER WHERE MEMBER_NO = ?";
 	private static final String UPDATE = 
-			"UPDATE FAQ SET QUESTION = ?, ANSWER = ?, FAQ_CLASSIFICATION = ? WHERE FAQ_NO = ?";
+			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, IDCARD = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, EWALLET_BALANCE = ?, CREATION_DATE = ?, PROFILE_PICTURE = ?, MEMBER_STATUS = ? WHERE MEMBER_NO = ?";
 	private static final String FIND_BY_PK_SQL = 
-			"SELECT * FROM FAQ WHERE FAQ_NO = ?";
+			"SELECT * FROM MEMBER WHERE MEMBER_NO = ?";
 	
 	@Override
-	public void insert(FaqVO faq) {
+	public void insert(MemberVO member) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -33,14 +33,21 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, faq.getQuestion());
-			pstmt.setString(2, faq.getAnswer());
-			pstmt.setString(3, faq.getFaqClassification());
+			pstmt.setString(1, member.getMemberFullname());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getIdcard());
+			pstmt.setString(5, member.getMemberAccount());
+			pstmt.setString(6, member.getMemberPassword());
+			pstmt.setInt(7, member.getEwalletBalance());
+			pstmt.setTimestamp(8, member.getCreationDate());
+			pstmt.setBytes(9, member.getProfilePicture());
+			pstmt.setString(10, member.getMemberStatus());
 
 			pstmt.executeUpdate();
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("BuBu!"
 					+ e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -62,7 +69,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	}
 
 	@Override
-	public void update(FaqVO faq) {
+	public void update(MemberVO member) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -73,15 +80,22 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, faq.getQuestion());
-			pstmt.setString(2, faq.getAnswer());
-			pstmt.setString(3, faq.getFaqClassification());
-			pstmt.setString(4, faq.getFaqNo());
+			pstmt.setString(1, member.getMemberFullname());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getIdcard());
+			pstmt.setString(5, member.getMemberAccount());
+			pstmt.setString(6, member.getMemberPassword());
+			pstmt.setInt(7, member.getEwalletBalance());
+			pstmt.setTimestamp(8, member.getCreationDate());
+			pstmt.setBytes(9, member.getProfilePicture());
+			pstmt.setString(10, member.getMemberStatus());
+			pstmt.setString(11, member.getMemberNo());
 
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("BuBu!"
 					+ e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -103,7 +117,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	}
 
 	@Override
-	public void delete(String faqNo) {
+	public void delete(String memberNo) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -114,12 +128,12 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setString(1, faqNo);
+			pstmt.setString(1, memberNo);
 
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("BuBu!"
 					+ e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -141,9 +155,9 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	}
 
 	@Override
-	public FaqVO findByPrimaryKey(String faqNo) {
+	public MemberVO findByPrimaryKey(String memberNo) {
 		
-		FaqVO faq = null;
+		MemberVO member = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -154,20 +168,27 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(FIND_BY_PK_SQL);
 
-			pstmt.setString(1, faqNo);
+			pstmt.setString(1, memberNo);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				faq = new FaqVO();
-				faq.setFaqNo(rs.getString("faqNo"));
-				faq.setQuestion(rs.getString("question"));
-				faq.setAnswer(rs.getString("answer"));
-				faq.setFaqClassification(rs.getString("faqClassification"));
+				member = new MemberVO();
+				member.setMemberNo(rs.getString("memberNo"));
+				member.setMemberFullname(rs.getString("memberFullname"));
+				member.setEmail(rs.getString("email"));
+				member.setPhone(rs.getString("phone"));
+				member.setIdcard(rs.getString("idcard"));
+				member.setMemberAccount(rs.getString("memberAccount"));
+				member.setMemberPassword(rs.getString("memberPassword"));
+				member.setEwalletBalance(rs.getInt("ewalletBalance"));
+				member.setCreationDate(rs.getTimestamp("creationDate"));
+				member.setProfilePicture(rs.getBytes("profilePicture"));
+				member.setMemberStatus(rs.getString("memberStatus"));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("BuBu!"
 					+ e.getMessage());
 		} finally {
 			if (rs != null) {
@@ -192,14 +213,14 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				}
 			}
 		}
-		return faq;
+		return member;
 	}
 
 	@Override
-	public List<FaqVO> getAll() {
+	public List<MemberVO> getAll() {
 		
-		List<FaqVO> list = new ArrayList<FaqVO>();
-		FaqVO faq = null;
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		MemberVO member = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -213,12 +234,19 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				faq = new FaqVO();
-				faq.setFaqNo(rs.getString("faqNo"));
-				faq.setQuestion(rs.getString("question"));
-				faq.setAnswer(rs.getString("answer"));
-				faq.setFaqClassification(rs.getString("faqClassification"));
-				list.add(faq);
+				member = new MemberVO();
+				member.setMemberNo(rs.getString("memberNo"));
+				member.setMemberFullname(rs.getString("memberFullname"));
+				member.setEmail(rs.getString("email"));
+				member.setPhone(rs.getString("phone"));
+				member.setIdcard(rs.getString("idcard"));
+				member.setMemberAccount(rs.getString("memberAccount"));
+				member.setMemberPassword(rs.getString("memberPassword"));
+				member.setEwalletBalance(rs.getInt("ewalletBalance"));
+				member.setCreationDate(rs.getTimestamp("creationDate"));
+				member.setProfilePicture(rs.getBytes("profilePicture"));
+				member.setMemberStatus(rs.getString("memberStatus"));
+				list.add(member);
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
