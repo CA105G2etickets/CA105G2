@@ -1,4 +1,4 @@
-package com.FAVORITE_GOODS.model;
+package com.ORDER_DETAIL.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,25 +8,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
+public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "CA105G2";
 	String passwd = "123456";
 
 	private static final String INSERT_STMT = 
-		"INSERT INTO FAVORITE_GOODS (MEMBER_NO, GOODS_NO) VALUES (?, ?)";
+		"INSERT INTO ORDER_DETAIL (ORDER_NO, GOODS_NO, GOODS_BONUS, GOODS_PC) "
+		+ "VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-		"SELECT MEMBER_NO, GOODS_NO FROM FAVORITE_GOODS ORDER BY MEMBER_NO";
+		"SELECT ORDER_NO, GOODS_NO, GOODS_BONUS, GOODS_PC FROM ORDER_DETAIL ORDER BY ORDER_NO";
 	private static final String GET_ONE_STMT = 
-		"SELECT MEMBER_NO, GOODS_NO FROM FAVORITE_GOODS WHERE MEMBER_NO = ?";
+		"SELECT ORDER_NO, GOODS_NO, GOODS_BONUS, GOODS_PC FROM ORDER_DETAIL WHERE ORDER_NO = ?";
 	private static final String DELETE = 
-		"DELETE FROM FAVORITE_GOODS WHERE MEMBER_NO = ?";
+		"DELETE FROM ORDER_DETAIL WHERE ORDER_NO = ?";
 	private static final String UPDATE =
-		"UPDATE FAVORITE_GOODS SET GOODS_NO = ? WHERE MEMBER_NO = ?";
+		"UPDATE ORDER_DETAIL SET GOODS_NO = ?, GOODS_BONUS = ?, GOODS_PC = ? WHERE ORDER_NO = ?";
 	
 	@Override
-	public void insert(favorite_goodsVO favorite_goodsVO) {
+	public void insert(OrderDetailVO orderDetailVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -36,9 +37,12 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			pstmt.setString(1, orderDetailVO.getOrderNo());
+			pstmt.setString(2, orderDetailVO.getGoodsNo());
+			pstmt.setDouble(3, orderDetailVO.getGoodsBonus());
+			pstmt.setDouble(4, orderDetailVO.getGoodsPc());
 
-			pstmt.setString(1, favorite_goodsVO.getMemberNo());
-			pstmt.setString(2, favorite_goodsVO.getGoodsNo());
 
 			pstmt.executeUpdate();
 
@@ -66,7 +70,7 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 	}
 
 	@Override
-	public void update(favorite_goodsVO favorite_goodsVO) {
+	public void update(OrderDetailVO orderDetailVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -77,8 +81,10 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, favorite_goodsVO.getGoodsNo());
-			pstmt.setString(2, favorite_goodsVO.getMemberNo());
+			pstmt.setString(1, orderDetailVO.getGoodsNo());
+			pstmt.setDouble(2, orderDetailVO.getGoodsBonus());
+			pstmt.setDouble(3, orderDetailVO.getGoodsPc());
+			pstmt.setString(4, orderDetailVO.getOrderNo());
 
 			pstmt.executeUpdate();
 
@@ -108,7 +114,7 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 	}
 
 	@Override
-	public void delete(String memberNo) {
+	public void delete(String orderNo) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -118,7 +124,7 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
-			pstmt.setString(1, memberNo);
+			pstmt.setString(1, orderNo);
 			pstmt.executeUpdate();
 
 
@@ -146,9 +152,9 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 	}
 
 	@Override
-	public favorite_goodsVO findByPrimaryKey(String memberNo) {
+	public OrderDetailVO findByPrimaryKey(String orderNo) {
 
-		favorite_goodsVO favorite_goodsVO = null;
+		OrderDetailVO orderDetailVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -158,16 +164,19 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			pstmt.setString(1, memberNo);
+			pstmt.setString(1, orderNo);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 
-				favorite_goodsVO = new favorite_goodsVO();
-				favorite_goodsVO.setMemberNo(rs.getString("MEMBER_NO"));
-				favorite_goodsVO.setGoodsNo(rs.getString("GOODS_NO"));
+				orderDetailVO = new OrderDetailVO();
+				orderDetailVO.setOrderNo(rs.getString("ORDER_NO"));
+				orderDetailVO.setGoodsNo(rs.getString("GOODS_NO"));
+				orderDetailVO.setGoodsBonus(rs.getDouble("GOODS_BONUS"));
+				orderDetailVO.setGoodsPc(rs.getDouble("GOODS_PC"));
 
 			}
+
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -196,13 +205,13 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 				}
 			}
 		}
-		return favorite_goodsVO;
+		return orderDetailVO;
 	}
 
 	@Override
-	public List<favorite_goodsVO> getAll() {
-		List<favorite_goodsVO> list = new ArrayList<favorite_goodsVO>();
-		favorite_goodsVO favorite_goodsVO = null;
+	public List<OrderDetailVO> getAll() {
+		List<OrderDetailVO> list = new ArrayList<OrderDetailVO>();
+		OrderDetailVO orderDetailVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -216,10 +225,12 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				favorite_goodsVO = new favorite_goodsVO();
-				favorite_goodsVO.setMemberNo(rs.getString("MEMBER_NO"));
-				favorite_goodsVO.setGoodsNo(rs.getString("GOODS_NO"));
-				list.add(favorite_goodsVO); // Store the row in the list
+				orderDetailVO = new OrderDetailVO();
+				orderDetailVO.setOrderNo(rs.getString("ORDER_NO"));
+				orderDetailVO.setGoodsNo(rs.getString("GOODS_NO"));
+				orderDetailVO.setGoodsBonus(rs.getDouble("GOODS_BONUS"));
+				orderDetailVO.setGoodsPc(rs.getDouble("GOODS_PC"));
+				list.add(orderDetailVO); // Store the row in the list
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -256,37 +267,46 @@ public class favorite_goodsJDBCDAO implements favorite_goodsDAO_interface {
 
 	public static void main(String[] args) {
 
-		favorite_goodsJDBCDAO dao = new favorite_goodsJDBCDAO();
+		OrderDetailJDBCDAO dao = new OrderDetailJDBCDAO();
 
 		// 新增
-//		favorite_goodsVO favorite_goodsVO1 = new favorite_goodsVO();
-//		favorite_goodsVO1.setMemberNo("M000004");
-//		favorite_goodsVO1.setGoodsNo("P10004");
-//		dao.insert(favorite_goodsVO1);
+		OrderDetailVO orderDetailVO1 = new OrderDetailVO();
+		orderDetailVO1.setOrderNo("O2018121210005");
+		orderDetailVO1.setGoodsNo("P10005");
+		orderDetailVO1.setGoodsBonus(new Double(44444));
+		orderDetailVO1.setGoodsPc(new Double(1));
+
+		dao.insert(orderDetailVO1);
 
 		// 修改
-//		favorite_goodsVO favorite_goodsVO2 = new favorite_goodsVO();
-//		favorite_goodsVO2.setMemberNo("M000004");
-//		favorite_goodsVO2.setGoodsNo("P10777");
-//		dao.update(favorite_goodsVO2);
+//		OrderDetailVO orderDetailVO2 = new OrderDetailVO();
+//		orderDetailVO2.setOrderNo("O2018121210004");
+//		orderDetailVO2.setGoodsNo("P10777");
+//		orderDetailVO2.setGoodsBonus(new Double(765474));
+//		orderDetailVO2.setGoodsPc(new Double(8));
+//
+//		dao.update(orderDetailVO2);
 
 		// 刪除
-//		dao.delete("M000004");
+//		dao.delete("O2018121110004");
 
 		// 查詢
-//		favorite_goodsVO favorite_goodsVO3 = dao.findByPrimaryKey("M000002");
-//		System.out.println("查詢訂單編號結果↓");
-//		System.out.println("會員編號：\t\t" + favorite_goodsVO3.getMemberNo());
-//		System.out.println("商品編號：\t\t" + favorite_goodsVO3.getGoodsNo());
+//		OrderDetailVO orderDetailVO3 = dao.findByPrimaryKey("O2018121510002");
+//		System.out.println("訂單編號：　　" + orderDetailVO3.getOrderNo());
+//		System.out.println("商品編號：　　" + orderDetailVO3.getGoodsNo());
+//		System.out.println("實際交易單價：" + orderDetailVO3.getGoodsBonus());
+//		System.out.println("商品數量：　　" + orderDetailVO3.getGoodsPc());
 //		System.out.println("------------------------------------");
 
 		// 查詢列表
-		List<favorite_goodsVO> list = dao.getAll();
-		System.out.println("查詢訂單明細列表結果↓");
-		for (favorite_goodsVO aOrder : list) {
-			System.out.println("會員編號：\t\t" + aOrder.getMemberNo());
-			System.out.println("商品編號：\t\t" + aOrder.getGoodsNo());
-			System.out.println("------------------------------------");
-		}
+//		List<OrderDetailVO> list = dao.getAll();
+//		for (OrderDetailVO aOrder : list) {
+//			System.out.println("訂單編號：　　" + aOrder.getOrderNo());
+//			System.out.println("商品編號：　　" + aOrder.getGoodsNo());
+//			System.out.println("實際交易單價：" + aOrder.getGoodsBonus());
+//			System.out.println("商品數量：　　" + aOrder.getGoodsPc());
+//			System.out.println("------------------------------------");
+//		}
+		
 	}
 }

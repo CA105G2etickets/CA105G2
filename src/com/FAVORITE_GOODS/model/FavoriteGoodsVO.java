@@ -1,13 +1,13 @@
 package com.FAVORITE_GOODS.model;
 
-public class favorite_goodsVO implements java.io.Serializable {
+public class FavoriteGoodsVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = -5775565293428691932L;
 	
 	private String memberNo;
 	private String goodsNo;
 	
-	public favorite_goodsVO() {
+	public FavoriteGoodsVO() {
 		
 	}
 	public String getMemberNo() {
