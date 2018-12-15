@@ -11,18 +11,18 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 	private static final String PASSWORD = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO FAQ (FAQ_NO,QUESTION,ANSWER,FAQ_CLASSIFICATION) VALUES ('FAQ'||LPAD(to_char(faq_no_seq.NEXTVAL), 3, '0'), ?, ?, ?)";
+			"INSERT INTO TRANSACTION_HISTORY (TRANSACTION_HISTORY_NO,MEMBER_NO,TRANSACTION_DATETIME,TRANSACTION_CATEGORY,EXPENDITURES,RECEIPT,EWALLET_BALANCE,DESCRIPTION) VALUES ('20180225'||'-'||LPAD(to_char(transaction_history_no_seq.NEXTVAL), 2, '0'), ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT * FROM FAQ ORDER BY FAQ_NO";
+			"SELECT * FROM TRANSACTION_HISTORY ORDER BY TRANSACTION_HISTORY_NO";
 	private static final String DELETE = 
-			"DELETE FROM FAQ WHERE FAQ_NO = ?";
+			"DELETE FROM TRANSACTION_HISTORY WHERE TRANSACTION_HISTORY_NO = ?";
 	private static final String UPDATE = 
-			"UPDATE FAQ SET QUESTION = ?, ANSWER = ?, FAQ_CLASSIFICATION = ? WHERE FAQ_NO = ?";
+			"UPDATE TRANSACTION_HISTORY SET MEMBER_NO = ?, TRANSACTION_DATETIME = ?, TRANSACTION_CATEGORY = ?, EXPENDITURES = ?, RECEIPT = ?, EWALLET_BALANCE = ?, DESCRIPTION = ? WHERE TRANSACTION_HISTORY_NO = ?";
 	private static final String FIND_BY_PK_SQL = 
-			"SELECT * FROM FAQ WHERE FAQ_NO = ?";
+			"SELECT * FROM TRANSACTION_HISTORY WHERE TRANSACTION_HISTORY_NO = ?";
 	
 	@Override
-	public void insert(FaqVO faq) {
+	public void insert(TransactionHistoryVO transactionHistory) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -33,14 +33,18 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, faq.getQuestion());
-			pstmt.setString(2, faq.getAnswer());
-			pstmt.setString(3, faq.getFaqClassification());
+			pstmt.setString(1, transactionHistory.getMemberNo());
+			pstmt.setTimestamp(2, transactionHistory.getTransactionDatetime());
+			pstmt.setString(3, transactionHistory.getTransactionCategory());
+			pstmt.setInt(4, transactionHistory.getExpenditures());
+			pstmt.setInt(5, transactionHistory.getReceipt());
+			pstmt.setInt(6, transactionHistory.getEwalletBalance());
+			pstmt.setString(7, transactionHistory.getDescription());
 
 			pstmt.executeUpdate();
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured."
 					+ e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -62,7 +66,7 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 	}
 
 	@Override
-	public void update(FaqVO faq) {
+	public void update(TransactionHistoryVO transactionHistory) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -73,15 +77,19 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, faq.getQuestion());
-			pstmt.setString(2, faq.getAnswer());
-			pstmt.setString(3, faq.getFaqClassification());
-			pstmt.setString(4, faq.getFaqNo());
+			pstmt.setString(1, transactionHistory.getMemberNo());
+			pstmt.setTimestamp(2, transactionHistory.getTransactionDatetime());
+			pstmt.setString(3, transactionHistory.getTransactionCategory());
+			pstmt.setInt(4, transactionHistory.getExpenditures());
+			pstmt.setInt(5, transactionHistory.getReceipt());
+			pstmt.setInt(6, transactionHistory.getEwalletBalance());
+			pstmt.setString(7, transactionHistory.getDescription());
+			pstmt.setString(8, transactionHistory.getTransactionHistoryNo());
 
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured."
 					+ e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -103,7 +111,7 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 	}
 
 	@Override
-	public void delete(String faqNo) {
+	public void delete(String transactionHistoryNo) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -114,12 +122,12 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setString(1, faqNo);
+			pstmt.setString(1, transactionHistoryNo);
 
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured."
 					+ e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -141,9 +149,9 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 	}
 
 	@Override
-	public FaqVO findByPrimaryKey(String faqNo) {
+	public TransactionHistoryVO findByPrimaryKey(String transactionHistoryNo) {
 		
-		FaqVO faq = null;
+		TransactionHistoryVO transactionHistory = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -154,16 +162,20 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(FIND_BY_PK_SQL);
 
-			pstmt.setString(1, faqNo);
+			pstmt.setString(1, transactionHistoryNo);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				faq = new FaqVO();
-				faq.setFaqNo(rs.getString("faqNo"));
-				faq.setQuestion(rs.getString("question"));
-				faq.setAnswer(rs.getString("answer"));
-				faq.setFaqClassification(rs.getString("faqClassification"));
+				transactionHistory = new TransactionHistoryVO();
+				transactionHistory.setTransactionHistoryNo(rs.getString("faqNo"));
+				transactionHistory.setMemberNo(rs.getString("question"));
+				transactionHistory.setTransactionDatetime(rs.getString("answer"));
+				transactionHistory.setTransactionCategory(rs.getString("faqClassification"));
+				transactionHistory.setTransactionDatetime(rs.getString("answer"));
+				transactionHistory.setTransactionDatetime(rs.getString("answer"));
+				transactionHistory.setTransactionDatetime(rs.getString("answer"));
+				transactionHistory.setTransactionDatetime(rs.getString("answer"));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
