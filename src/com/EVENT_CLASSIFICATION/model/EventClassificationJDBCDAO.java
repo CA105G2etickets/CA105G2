@@ -19,7 +19,7 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 			"INSERT INTO EVENT_CLASSIFICATION (EVECLASS_NO,EVECLASS_NAME) VALUES (?, ?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE EVENT_CLASSIFICATION SET EVECLASS_NO=?,EVECLASS_NAME=?";
+			"UPDATE EVENT_CLASSIFICATION SET EVECLASS_NAME=? WHERE EVECLASS_NO=?";
 	
 	private static final String DELETE_STMT = 
 			"DELETE FROM EVENT_CLASSIFICATION WHERE EVECLASS_NO=?";
@@ -80,9 +80,9 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
-			
-			pstmt.setString(1,eventClassificationVO.getEveclass_no());
-			pstmt.setString(2,eventClassificationVO.getEveclass_name());
+			pstmt.setString(1,eventClassificationVO.getEveclass_name());
+			pstmt.setString(2,eventClassificationVO.getEveclass_no());
+	
 			
 			pstmt.executeUpdate();
 			

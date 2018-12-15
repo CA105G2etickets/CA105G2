@@ -21,7 +21,7 @@ public class TicketRefundPolicyJDBCDAO implements TicketRefundPolicyDAO_interfac
 			"INSERT INTO TICKET_REFUND_POLICY (TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT) VALUES (?,?,?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE TICKET_REFUND_POLICY SET TICREFPOLICY_NO=?,TICREFPOLICY_NAME=?,TICREFPOLICY_CONTENT=?";
+			"UPDATE TICKET_REFUND_POLICY SET TICREFPOLICY_NAME=?,TICREFPOLICY_CONTENT=? WHERE TICREFPOLICY_NO=?";
 	
 	private static final String DELETE_STMT = 
 			"DELETE FROM TICKET_REFUND_POLICY WHERE TICREFPOLICY_NO=?";
@@ -80,9 +80,9 @@ public class TicketRefundPolicyJDBCDAO implements TicketRefundPolicyDAO_interfac
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
-			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_no());
-			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_name());
-			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_content());
+			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_name());
+			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_content());
+			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_no());
 			
 			pstmt.executeUpdate();
 			System.out.println("Updated");

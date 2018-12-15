@@ -21,7 +21,7 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 			"INSERT INTO ADVERTISEMENT (AD_NO, EVETIT_NO, AD_STARTDATE, AD_ENDDATE) VALUES (?, ?, ?, ?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE ADVERTISEMENT SET AD_NO=?,EVETIT_NO=?,AD_STARTDATE=?,AD_ENDDATE=?";
+			"UPDATE ADVERTISEMENT SET EVETIT_NO=?,AD_STARTDATE=?,AD_ENDDATE=? WHERE AD_NO=?";
 	
 	private static final String DELETE_STMT = 
 			"DELETE FROM ADVERTISEMENT WHERE AD_NO=?";
@@ -83,10 +83,10 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
-			pstmt.setString(1,advertisementVO.getAd_no());
-			pstmt.setString(2,advertisementVO.getEvetit_no());
-			pstmt.setDate(3,advertisementVO.getAd_startdate());
-			pstmt.setDate(4,advertisementVO.getAd_enddate());
+			pstmt.setString(1,advertisementVO.getEvetit_no());
+			pstmt.setDate(2,advertisementVO.getAd_startdate());
+			pstmt.setDate(3,advertisementVO.getAd_enddate());
+			pstmt.setString(4,advertisementVO.getAd_no());
 		
 			pstmt.executeUpdate();
 			

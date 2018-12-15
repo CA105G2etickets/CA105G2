@@ -21,7 +21,7 @@ public class VenueJDBCDAO implements VenueDAO_interface{
 					+"VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE VENUE SET VENUE_NO=?,VENUE_NAME=?,ADDRESS=?,LATITUDE=?,LONGITUDE=?,VENUE_INFO=?,VENUE_LOCATIONPIC=?";
+			"UPDATE VENUE SET VENUE_NAME=?,ADDRESS=?,LATITUDE=?,LONGITUDE=?,VENUE_INFO=?,VENUE_LOCATIONPIC=? WHERE VENUE_NO=?,";
 	
 	private static final String DELETE_STMT = 
 			"DELETE FROM VENUE WHERE VENUE_NO=?";
@@ -87,13 +87,13 @@ public class VenueJDBCDAO implements VenueDAO_interface{
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
-			pstmt.setString(1,venueVO.getVenue_no());
-			pstmt.setString(2,venueVO.getVenue_name());
-			pstmt.setString(3,venueVO.getAddress());
-			pstmt.setFloat(4,venueVO.getLatitude());
-			pstmt.setFloat(5,venueVO.getLongitude());
-			pstmt.setString(6,venueVO.getVenue_info());
-			pstmt.setBytes(7,venueVO.getVenue_locationPic());
+			pstmt.setString(1,venueVO.getVenue_name());
+			pstmt.setString(2,venueVO.getAddress());
+			pstmt.setFloat(3,venueVO.getLatitude());
+			pstmt.setFloat(4,venueVO.getLongitude());
+			pstmt.setString(5,venueVO.getVenue_info());
+			pstmt.setBytes(6,venueVO.getVenue_locationPic());
+			pstmt.setString(7,venueVO.getVenue_no());
 		
 			pstmt.executeUpdate();
 			
