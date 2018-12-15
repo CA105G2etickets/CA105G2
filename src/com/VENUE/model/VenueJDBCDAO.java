@@ -18,7 +18,7 @@ public class VenueJDBCDAO implements VenueDAO_interface{
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO VENUE (VENUE_NO,VENUE_NAME,ADDRESS,LATITUDE,LONGITUDE,VENUE_INFO,VENUE_LOCATIONPIC)"
-					+"VALUES (?, ?, ?, ?, ?, ?, ?)";
+					+"VALUES ('V'||LPAD(to_char(VENUE_SEQ.NEXTVAL), 3, '0'), ?, ?, ?, ?, ?, ?)";
 
 	private static final String UPDATE_STMT = 
 			"UPDATE VENUE SET VENUE_NAME=?,ADDRESS=?,LATITUDE=?,LONGITUDE=?,VENUE_INFO=?,VENUE_LOCATIONPIC=? WHERE VENUE_NO=?,";
@@ -42,13 +42,12 @@ public class VenueJDBCDAO implements VenueDAO_interface{
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1,venueVO.getVenue_no());
-			pstmt.setString(2,venueVO.getVenue_name());
-			pstmt.setString(3,venueVO.getAddress());
-			pstmt.setFloat(4,venueVO.getLatitude());
-			pstmt.setFloat(5,venueVO.getLongitude());
-			pstmt.setString(6,venueVO.getVenue_info());
-			pstmt.setBytes(7,venueVO.getVenue_locationPic());
+			pstmt.setString(1,venueVO.getVenue_name());
+			pstmt.setString(2,venueVO.getAddress());
+			pstmt.setFloat(3,venueVO.getLatitude());
+			pstmt.setFloat(4,venueVO.getLongitude());
+			pstmt.setString(5,venueVO.getVenue_info());
+			pstmt.setBytes(6,venueVO.getVenue_locationPic());
 			
 			pstmt.executeUpdate();
 			
