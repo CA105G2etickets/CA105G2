@@ -26,7 +26,7 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 		"UPDATE FAVORITE_GOODS SET GOODS_NO = ? WHERE MEMBER_NO = ?";
 	
 	@Override
-	public void insert(FavoriteGoodsVO favorite_goodsVO) {
+	public void insert(FavoriteGoodsVO favoriteGoodsVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -37,8 +37,8 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, favorite_goodsVO.getMemberNo());
-			pstmt.setString(2, favorite_goodsVO.getGoodsNo());
+			pstmt.setString(1, favoriteGoodsVO.getMemberNo());
+			pstmt.setString(2, favoriteGoodsVO.getGoodsNo());
 
 			pstmt.executeUpdate();
 
@@ -66,7 +66,7 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 	}
 
 	@Override
-	public void update(FavoriteGoodsVO favorite_goodsVO) {
+	public void update(FavoriteGoodsVO favoriteGoodsVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -77,8 +77,8 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, favorite_goodsVO.getGoodsNo());
-			pstmt.setString(2, favorite_goodsVO.getMemberNo());
+			pstmt.setString(1, favoriteGoodsVO.getGoodsNo());
+			pstmt.setString(2, favoriteGoodsVO.getMemberNo());
 
 			pstmt.executeUpdate();
 
@@ -148,7 +148,7 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 	@Override
 	public FavoriteGoodsVO findByPrimaryKey(String memberNo) {
 
-		FavoriteGoodsVO favorite_goodsVO = null;
+		FavoriteGoodsVO favoriteGoodsVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -163,9 +163,9 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 
 			while (rs.next()) {
 
-				favorite_goodsVO = new FavoriteGoodsVO();
-				favorite_goodsVO.setMemberNo(rs.getString("MEMBER_NO"));
-				favorite_goodsVO.setGoodsNo(rs.getString("GOODS_NO"));
+				favoriteGoodsVO = new FavoriteGoodsVO();
+				favoriteGoodsVO.setMemberNo(rs.getString("MEMBER_NO"));
+				favoriteGoodsVO.setGoodsNo(rs.getString("GOODS_NO"));
 
 			}
 
@@ -196,13 +196,13 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 				}
 			}
 		}
-		return favorite_goodsVO;
+		return favoriteGoodsVO;
 	}
 
 	@Override
 	public List<FavoriteGoodsVO> getAll() {
 		List<FavoriteGoodsVO> list = new ArrayList<FavoriteGoodsVO>();
-		FavoriteGoodsVO favorite_goodsVO = null;
+		FavoriteGoodsVO favoriteGoodsVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -216,10 +216,10 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				favorite_goodsVO = new FavoriteGoodsVO();
-				favorite_goodsVO.setMemberNo(rs.getString("MEMBER_NO"));
-				favorite_goodsVO.setGoodsNo(rs.getString("GOODS_NO"));
-				list.add(favorite_goodsVO); // Store the row in the list
+				favoriteGoodsVO = new FavoriteGoodsVO();
+				favoriteGoodsVO.setMemberNo(rs.getString("MEMBER_NO"));
+				favoriteGoodsVO.setGoodsNo(rs.getString("GOODS_NO"));
+				list.add(favoriteGoodsVO); // Store the row in the list
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -259,34 +259,32 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 		FavoriteGoodsJDBCDAO dao = new FavoriteGoodsJDBCDAO();
 
 		// 新增
-//		favorite_goodsVO favorite_goodsVO1 = new favorite_goodsVO();
-//		favorite_goodsVO1.setMemberNo("M000004");
-//		favorite_goodsVO1.setGoodsNo("P10004");
-//		dao.insert(favorite_goodsVO1);
+//		FavoriteGoodsVO favoriteGoodsVO1 = new FavoriteGoodsVO();
+//		favoriteGoodsVO1.setMemberNo("M000002");
+//		favoriteGoodsVO1.setGoodsNo("P0000005");
+//		dao.insert(favoriteGoodsVO1);
 
 		// 修改
-//		favorite_goodsVO favorite_goodsVO2 = new favorite_goodsVO();
-//		favorite_goodsVO2.setMemberNo("M000004");
-//		favorite_goodsVO2.setGoodsNo("P10777");
-//		dao.update(favorite_goodsVO2);
+//		FavoriteGoodsVO favoriteGoodsVO2 = new FavoriteGoodsVO();
+//		favoriteGoodsVO2.setMemberNo("M000003");
+//		favoriteGoodsVO2.setGoodsNo("P0000002");
+//		dao.update(favoriteGoodsVO2);
 
 		// 刪除
-//		dao.delete("M000004");
+//		dao.delete("M000002");
 
 		// 查詢
-//		favorite_goodsVO favorite_goodsVO3 = dao.findByPrimaryKey("M000002");
-//		System.out.println("查詢訂單編號結果↓");
-//		System.out.println("會員編號：\t\t" + favorite_goodsVO3.getMemberNo());
-//		System.out.println("商品編號：\t\t" + favorite_goodsVO3.getGoodsNo());
+//		FavoriteGoodsVO favoriteGoodsVO3 = dao.findByPrimaryKey("M000002");
+//		System.out.println("會員編號：　" + favoriteGoodsVO3.getMemberNo());
+//		System.out.println("商品編號：　" + favoriteGoodsVO3.getGoodsNo());
 //		System.out.println("------------------------------------");
 
 		// 查詢列表
-		List<FavoriteGoodsVO> list = dao.getAll();
-		System.out.println("查詢訂單明細列表結果↓");
-		for (FavoriteGoodsVO aOrder : list) {
-			System.out.println("會員編號：\t\t" + aOrder.getMemberNo());
-			System.out.println("商品編號：\t\t" + aOrder.getGoodsNo());
-			System.out.println("------------------------------------");
-		}
+//		List<FavoriteGoodsVO> list = dao.getAll();
+//		for (FavoriteGoodsVO aFavoriteGoods : list) {
+//			System.out.println("會員編號：　" + aFavoriteGoods.getMemberNo());
+//			System.out.println("商品編號：　" + aFavoriteGoods.getGoodsNo());
+//			System.out.println("------------------------------------");
+//		}
 	}
 }

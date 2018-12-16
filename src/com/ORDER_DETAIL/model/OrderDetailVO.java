@@ -1,6 +1,6 @@
 package com.ORDER_DETAIL.model;
 
-public class order_detailVO implements java.io.Serializable {
+public class OrderDetailVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 7973064175273608162L;
 	
@@ -9,10 +9,9 @@ public class order_detailVO implements java.io.Serializable {
 	private Double goodsBonus;
 	private Double goodsPc;
 	
-	public order_detailVO() {
+	public OrderDetailVO() {
 		
-	}
-	
+	}	
 	public String getOrderNo() {
 		return orderNo;
 	}

@@ -12,7 +12,7 @@ public class OrderHistoryJDBCDAO implements OrderHistoryDAO_interface {
 	private static final String INSERT_STMT = 
 		"INSERT INTO ORDER_HISTORY (ORDER_NO, MEMBER_NO, ORDER_PRICE, PAY_METHODS, SHIPPING_METHODS,"
 		+ " ORDER_DATE, ORDER_ETD, PICKUP_DATE, RECEIVER_ADD, RECEIVER_NAME, RECEIVER_TEL, ORDER_STATUS) "
-		+ "VALUES ('O20181212'||LPAD(to_char(ORDER_HISTORY_seq.NEXTVAL),5,'0'),?,?,?,?,?,?,?,?,?,?,?)";
+		+ "VALUES ('O'||to_char(sysdate,'yyyymmdd')||LPAD(to_char(ORDER_HISTORY_seq.NEXTVAL), 5, '0'),?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = 
 		"SELECT ORDER_NO, MEMBER_NO, ORDER_PRICE, PAY_METHODS, SHIPPING_METHODS, ORDER_DATE, ORDER_ETD,"
 		+ " PICKUP_DATE, RECEIVER_ADD, RECEIVER_NAME, RECEIVER_TEL, ORDER_STATUS "
@@ -301,23 +301,23 @@ public class OrderHistoryJDBCDAO implements OrderHistoryDAO_interface {
 		OrderHistoryJDBCDAO dao = new OrderHistoryJDBCDAO();
 
 		// 新增
-//		OrderHistoryVO orderHistoryVO1 = new OrderHistoryVO();
-//		orderHistoryVO1.setMemberNo("M000005");
-//		orderHistoryVO1.setOrderPrice(new Double(80000));
-//		orderHistoryVO1.setPayMethods("CREDITCARD");
-//		orderHistoryVO1.setShippingMethods("HOMEDELIVERY");
-//		orderHistoryVO1.setOrderDate(java.sql.Timestamp.valueOf("2018-11-25 09:48:34.524"));
-//		orderHistoryVO1.setOrderEtd(new Timestamp(System.currentTimeMillis()));
-//		orderHistoryVO1.setPickupDate(java.sql.Timestamp.valueOf("2018-11-30 12:40:51.435"));
-//		orderHistoryVO1.setReceiverAdd("320桃園市中壢區中正路389號");
-//		orderHistoryVO1.setReceiverName("NOVA資訊廣場");
-//		orderHistoryVO1.setReceiverTel("034028686");
-//		orderHistoryVO1.setOrderStatus("COMPLETE4");
-//		dao.insert(orderHistoryVO1);
+		OrderHistoryVO orderHistoryVO1 = new OrderHistoryVO();
+		orderHistoryVO1.setMemberNo("M000004");
+		orderHistoryVO1.setOrderPrice(new Double(80000));
+		orderHistoryVO1.setPayMethods("CREDITCARD");
+		orderHistoryVO1.setShippingMethods("HOMEDELIVERY");
+		orderHistoryVO1.setOrderDate(java.sql.Timestamp.valueOf("2018-11-25 09:48:34.524"));
+		orderHistoryVO1.setOrderEtd(new Timestamp(System.currentTimeMillis()));
+		orderHistoryVO1.setPickupDate(java.sql.Timestamp.valueOf("2018-11-30 12:40:51.435"));
+		orderHistoryVO1.setReceiverAdd("320桃園市中壢區中正路389號");
+		orderHistoryVO1.setReceiverName("NOVA資訊廣場");
+		orderHistoryVO1.setReceiverTel("034028686");
+		orderHistoryVO1.setOrderStatus("COMPLETE4");
+		dao.insert(orderHistoryVO1);
 
 		// 修改
 //		OrderHistoryVO orderHistoryVO2 = new OrderHistoryVO();
-//		orderHistoryVO2.setOrderNo("O2018121210005");
+//		orderHistoryVO2.setOrderNo("O2018121210004");
 //		orderHistoryVO2.setMemberNo("M000005");
 //		orderHistoryVO2.setOrderPrice(new Double(44444));
 //		orderHistoryVO2.setPayMethods("EWALLET");
@@ -336,7 +336,7 @@ public class OrderHistoryJDBCDAO implements OrderHistoryDAO_interface {
 //			dao.delete("O2018121210004");
 
 		// 查詢
-//		OrderHistoryVO orderHistoryVO3 = dao.findByPrimaryKey("O2018121510002");
+//		OrderHistoryVO orderHistoryVO3 = dao.findByPrimaryKey("O2018121610002");
 //		System.out.println("訂單編號：　" + orderHistoryVO3.getOrderNo());
 //		System.out.println("會員編號：　" + orderHistoryVO3.getMemberNo());
 //		System.out.println("訂單總金額：" + orderHistoryVO3.getOrderPrice());
@@ -352,22 +352,22 @@ public class OrderHistoryJDBCDAO implements OrderHistoryDAO_interface {
 //		System.out.println("-------------------------------------------");
 
 		// 查詢列表
-		List<OrderHistoryVO> list = dao.getAll();
-		for (OrderHistoryVO aOrder : list) {
-			System.out.println("訂單編號：　" + aOrder.getOrderNo());
-			System.out.println("會員編號：　" + aOrder.getMemberNo());
-			System.out.println("訂單總金額：" + aOrder.getOrderPrice());
-			System.out.println("付款方式：　" + aOrder.getPayMethods());
-			System.out.println("出貨方式：　" + aOrder.getShippingMethods());
-			System.out.println("訂購日期：　" + aOrder.getOrderDate());
-			System.out.println("出貨日期：　" + aOrder.getOrderEtd());
-			System.out.println("取貨日期：　 " + aOrder.getPickupDate());
-			System.out.println("送貨地址：　" + aOrder.getReceiverAdd());
-			System.out.println("收件人名稱：" + aOrder.getReceiverName());
-			System.out.println("收件人電話：" + aOrder.getReceiverTel());
-			System.out.println("訂單狀態：　" + aOrder.getOrderStatus());
-		System.out.println("-------------------------------------------");			
-		}
+//		List<OrderHistoryVO> list = dao.getAll();
+//		for (OrderHistoryVO aOrder : list) {
+//			System.out.println("訂單編號：　" + aOrder.getOrderNo());
+//			System.out.println("會員編號：　" + aOrder.getMemberNo());
+//			System.out.println("訂單總金額：" + aOrder.getOrderPrice());
+//			System.out.println("付款方式：　" + aOrder.getPayMethods());
+//			System.out.println("出貨方式：　" + aOrder.getShippingMethods());
+//			System.out.println("訂購日期：　" + aOrder.getOrderDate());
+//			System.out.println("出貨日期：　" + aOrder.getOrderEtd());
+//			System.out.println("取貨日期：　 " + aOrder.getPickupDate());
+//			System.out.println("送貨地址：　" + aOrder.getReceiverAdd());
+//			System.out.println("收件人名稱：" + aOrder.getReceiverName());
+//			System.out.println("收件人電話：" + aOrder.getReceiverTel());
+//			System.out.println("訂單狀態：　" + aOrder.getOrderStatus());
+//		System.out.println("-------------------------------------------");			
+//		}
 		
 	}
 }

@@ -2,7 +2,7 @@ package com.ORDER_HISTORY.model;
 
 import java.sql.Timestamp;
 
-public class order_historyVO implements java.io.Serializable {
+public class OrderHistoryVO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 3974699486176517592L;
 	
@@ -19,7 +19,7 @@ public class order_historyVO implements java.io.Serializable {
 	private String receiverTel;
 	private String orderStatus;
 	
-	public order_historyVO() {
+	public OrderHistoryVO() {
 		
 	}
 	public String getOrderNo() {

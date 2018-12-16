@@ -43,7 +43,6 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 			pstmt.setDouble(3, orderDetailVO.getGoodsBonus());
 			pstmt.setDouble(4, orderDetailVO.getGoodsPc());
 
-
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -270,28 +269,26 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 		OrderDetailJDBCDAO dao = new OrderDetailJDBCDAO();
 
 		// 新增
-		OrderDetailVO orderDetailVO1 = new OrderDetailVO();
-		orderDetailVO1.setOrderNo("O2018121210005");
-		orderDetailVO1.setGoodsNo("P10005");
-		orderDetailVO1.setGoodsBonus(new Double(44444));
-		orderDetailVO1.setGoodsPc(new Double(1));
-
-		dao.insert(orderDetailVO1);
+//		OrderDetailVO orderDetailVO1 = new OrderDetailVO();
+//		orderDetailVO1.setOrderNo("O2018121610003");
+//		orderDetailVO1.setGoodsNo("P0000007");
+//		orderDetailVO1.setGoodsBonus(new Double(44444));
+//		orderDetailVO1.setGoodsPc(new Double(1));
+//		dao.insert(orderDetailVO1);
 
 		// 修改
 //		OrderDetailVO orderDetailVO2 = new OrderDetailVO();
-//		orderDetailVO2.setOrderNo("O2018121210004");
-//		orderDetailVO2.setGoodsNo("P10777");
+//		orderDetailVO2.setOrderNo("O2018121610002");
+//		orderDetailVO2.setGoodsNo("P0000002");
 //		orderDetailVO2.setGoodsBonus(new Double(765474));
 //		orderDetailVO2.setGoodsPc(new Double(8));
-//
 //		dao.update(orderDetailVO2);
 
 		// 刪除
 //		dao.delete("O2018121110004");
 
 		// 查詢
-//		OrderDetailVO orderDetailVO3 = dao.findByPrimaryKey("O2018121510002");
+//		OrderDetailVO orderDetailVO3 = dao.findByPrimaryKey("O2018121610002");
 //		System.out.println("訂單編號：　　" + orderDetailVO3.getOrderNo());
 //		System.out.println("商品編號：　　" + orderDetailVO3.getGoodsNo());
 //		System.out.println("實際交易單價：" + orderDetailVO3.getGoodsBonus());
