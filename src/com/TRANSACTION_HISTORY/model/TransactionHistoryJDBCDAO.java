@@ -179,7 +179,7 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured."
 					+ e.getMessage());
 		} finally {
 			if (rs != null) {
@@ -238,7 +238,7 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured."
 					+ e.getMessage());
 		} finally {
 			if (rs != null) {
