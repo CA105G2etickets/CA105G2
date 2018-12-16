@@ -168,18 +168,18 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 
 			while (rs.next()) {
 				transactionHistory = new TransactionHistoryVO();
-				transactionHistory.setTransactionHistoryNo(rs.getString("faqNo"));
-				transactionHistory.setMemberNo(rs.getString("question"));
-				transactionHistory.setTransactionDatetime(rs.getString("answer"));
-				transactionHistory.setTransactionCategory(rs.getString("faqClassification"));
-				transactionHistory.setTransactionDatetime(rs.getString("answer"));
-				transactionHistory.setTransactionDatetime(rs.getString("answer"));
-				transactionHistory.setTransactionDatetime(rs.getString("answer"));
-				transactionHistory.setTransactionDatetime(rs.getString("answer"));
+				transactionHistory.setTransactionHistoryNo(rs.getString("transactionHistoryNo"));
+				transactionHistory.setMemberNo(rs.getString("memberNo"));
+				transactionHistory.setTransactionDatetime(rs.getTimestamp("transactionDatetime"));
+				transactionHistory.setTransactionCategory(rs.getString("transactionCategory"));
+				transactionHistory.setExpenditures(rs.getInt("expenditures"));
+				transactionHistory.setReceipt(rs.getInt("receipt"));
+				transactionHistory.setEwalletBalance(rs.getInt("ewalletBalance"));
+				transactionHistory.setDescription(rs.getString("description"));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured."
 					+ e.getMessage());
 		} finally {
 			if (rs != null) {
@@ -204,14 +204,14 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 				}
 			}
 		}
-		return faq;
+		return transactionHistory;
 	}
 
 	@Override
-	public List<FaqVO> getAll() {
+	public List<TransactionHistoryVO> getAll() {
 		
-		List<FaqVO> list = new ArrayList<FaqVO>();
-		FaqVO faq = null;
+		List<TransactionHistoryVO> list = new ArrayList<TransactionHistoryVO>();
+		TransactionHistoryVO transactionHistory = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -225,16 +225,20 @@ public class TransactionHistoryJDBCDAO implements TransactionHistoryDAO_interfac
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				faq = new FaqVO();
-				faq.setFaqNo(rs.getString("faqNo"));
-				faq.setQuestion(rs.getString("question"));
-				faq.setAnswer(rs.getString("answer"));
-				faq.setFaqClassification(rs.getString("faqClassification"));
-				list.add(faq);
+				transactionHistory = new TransactionHistoryVO();
+				transactionHistory.setTransactionHistoryNo(rs.getString("transactionHistoryNo"));
+				transactionHistory.setMemberNo(rs.getString("memberNo"));
+				transactionHistory.setTransactionDatetime(rs.getTimestamp("transactionDatetime"));
+				transactionHistory.setTransactionCategory(rs.getString("transactionCategory"));
+				transactionHistory.setExpenditures(rs.getInt("expenditures"));
+				transactionHistory.setReceipt(rs.getInt("receipt"));
+				transactionHistory.setEwalletBalance(rs.getInt("ewalletBalance"));
+				transactionHistory.setDescription(rs.getString("description"));
+				list.add(transactionHistory);
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured."
 					+ e.getMessage());
 		} finally {
 			if (rs != null) {
