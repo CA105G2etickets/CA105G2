@@ -8,5 +8,5 @@ public interface GoodsDAO_interface {
 	public void update(GoodsVO goodsVO);
 	public void delete(String goods_no);
 	public GoodsVO findByPrimarykey(String goods_no);
-	public List<GoodsVO> getAll();
+	public List <GoodsVO> getAll();
 }
