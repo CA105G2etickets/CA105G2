@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 
 
-public class GoodsFaqVO implements java.io.Serializable{
+public class GoodsQaVO implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1449708921454718391L;
 	private String gfaq_no;
@@ -16,11 +16,11 @@ public class GoodsFaqVO implements java.io.Serializable{
 	private Timestamp qustions_date;
 	private Timestamp answer_date;
 	
-	public GoodsFaqVO() {
+	public GoodsQaVO() {
 		super();
 	}
 	
-	public GoodsFaqVO(String gfaq_no, String goods_no, String member_no,	String administrator,String questions_content
+	public GoodsQaVO(String gfaq_no, String goods_no, String member_no,	String administrator,String questions_content
 ,String answer_content,Timestamp qustions_date,Timestamp answer_date) {
 		super();
 	

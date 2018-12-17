@@ -3,20 +3,20 @@ package com.GOODS_QA.model;
 import java.sql.*;
 import java.util.*;
 
-public class GoodsFaqJDBCDAO implements GoodsFaq_interface {
+public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "CA105G2";
 	private static final String PASSWORD = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO GOODS_FAQ(gfaq_no, goods_no, member_no, administrator, questions_content, answer_content,qustions_date,answer_date)";
-	private static final String GET_ALL_STMT = "SELECT * FROM GOODS_FAQ ORDER BY GFAQ_NO";
-	private static final String DELETE_STMT = "DELETE FROM GOODS_FAQ WHERE GFAQ_NO = ?";
-	private static final String UPDATE_STMT = "UPDATE GOODS_FAQ SET gfaq_no=?, goods_no=?, member_no=?, administrator=?, questions_content=?, answer_content=?,qustions_date=?,answer_date=?";
-	private static final String GET_ONE_STMT = "SELECT * FROM GOODS_FAQ WHERE GFAQ_NO =  ?";
+	private static final String INSERT_STMT = "INSERT INTO GOODS_QA(gfaq_no, goods_no, member_no, administrator, questions_content, answer_content,qustions_date,answer_date)";
+	private static final String GET_ALL_STMT = "SELECT * FROM GOODS_QA ORDER BY GFAQ_NO";
+	private static final String DELETE_STMT = "DELETE FROM GOODS_QA WHERE GFAQ_NO = ?";
+	private static final String UPDATE_STMT = "UPDATE GOODS_QA SET gfaq_no=?, goods_no=?, member_no=?, administrator=?, questions_content=?, answer_content=?,qustions_date=?,answer_date=?";
+	private static final String GET_ONE_STMT = "SELECT * FROM GOODS_QA WHERE GFAQ_NO =  ?";
 
 	@Override
-	public void insert(GoodsFaqVO faqVO) {
+	public void insert(GoodsQaVO faqVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -61,7 +61,7 @@ public class GoodsFaqJDBCDAO implements GoodsFaq_interface {
 	}
 
 	@Override
-	public void update(GoodsFaqVO faqVO) {
+	public void update(GoodsQaVO faqVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -144,9 +144,9 @@ public class GoodsFaqJDBCDAO implements GoodsFaq_interface {
 	}
 
 	@Override
-	public GoodsFaqVO findByPrimaryKey(String gfaq_no) {
+	public GoodsQaVO findByPrimaryKey(String gfaq_no) {
 
-		GoodsFaqVO goodsfaqVO1 = null;
+		GoodsQaVO goodsfaqVO1 = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -162,7 +162,7 @@ public class GoodsFaqJDBCDAO implements GoodsFaq_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				goodsfaqVO1 = new GoodsFaqVO();
+				goodsfaqVO1 = new GoodsQaVO();
 				goodsfaqVO1.setGfaq_no(rs.getString("gfaq_no"));
 				goodsfaqVO1.setGoods_no(rs.getString("goods_no"));
 				goodsfaqVO1.setMember_no(rs.getString("member_no"));
@@ -207,10 +207,10 @@ public class GoodsFaqJDBCDAO implements GoodsFaq_interface {
 	}
 
 	@Override
-	public List<GoodsFaqVO> getAll() {
+	public List<GoodsQaVO> getAll() {
 
-		List<GoodsFaqVO> list = new ArrayList<GoodsFaqVO>();
-		GoodsFaqVO goodsfaqVO = null;
+		List<GoodsQaVO> list = new ArrayList<GoodsQaVO>();
+		GoodsQaVO goodsfaqVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -224,7 +224,7 @@ public class GoodsFaqJDBCDAO implements GoodsFaq_interface {
 
 			while (rs.next()) {
 
-				goodsfaqVO = new GoodsFaqVO();
+				goodsfaqVO = new GoodsQaVO();
 				goodsfaqVO.setGfaq_no(rs.getString("gfaq_no"));
 				goodsfaqVO.setGoods_no(rs.getString("goods_no"));
 				goodsfaqVO.setMember_no(rs.getString("member_no"));
