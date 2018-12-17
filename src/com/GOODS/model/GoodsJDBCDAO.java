@@ -4,6 +4,8 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
+
+
 public class GoodsJDBCDAO implements GoodsDAO_interface {
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
@@ -11,26 +13,15 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 	private static final String USER = "CA105G2";
 	private static final String PASSWORD = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO GOODS (GOODS_NO, EVETIT_NO, GOODS_NAME, GOODS_PRICE, "
-			+ "GOODS_PICTURE1, GOODS_PICTURE2, GOODS_PICTURE3, GOODS_INTRODUCTION, FORSALES_A, FAVORITE_COUNT, GOODS_STATUS, "
-			+ "LAUNCHDATE, OFFDATE, GOODS_GROUP_COUNT, GOODS_WANT_COUNT, GOODS_SALES_COUNT) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO GOODS VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ?, ?, ?, ?)";
 
-	private static final String GET_ALL_STMT = "SELECT GOODS_NO, EVETIT_NO, GOODS_NAME, GOODS_PRICE,"
-			+ "GOODS_PICTURE1, GOODS_PICTURE2, GOODS_PICTURE3, GOODS_INTRODUCTION, FORSALES_A, FAVORITE_COUNT, GOODS_STATUS,"
-			+ "LAUNCHDATE, OFFDATE, GOODS_GROUP_COUNT, GOODS_WANT_COUNT, GOODS_SALES_COUNT"
-			+ "FROM GOODS ORDER BY GOODS_NO";
+	private static final String GET_ALL_STMT = "SELECT * FROM GOODS";
 
-	private static final String GET_ONE_STMT = "SELECT GOODS_NO, EVETIT_NO, GOODS_NAME, GOODS_PRICE,"
-			+ "GOODS_PICTURE1, GOODS_PICTURE2, GOODS_PICTURE3, GOODS_INTRODUCTION, FORSALES_A, FAVORITE_COUNT, GOODS_STATUS,"
-			+ "LAUNCHDATE, OFFDATE, GOODS_GROUP_COUNT, GOODS_WANT_COUNT, GOODS_SALES_COUNT"
-			+ "FROM GOODS WHERE GOODS_NO = ?";
+	private static final String GET_ONE_STMT = "SELECT * FROM GOODS WHERE GOODS_NO = ? ";
 
 	private static final String DELETE_STMT = "DELETE FROM GOODS WHERE GOODS_NO = ?";
 
-	private static final String UPDATE_STMT = "UPDATE GOODS SET GOODS_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?,"
-			+ "GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, FORSALES_A=?, FAVORITE_COUNT=?,"
-			+ "GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?, GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=?";
+	private static final String UPDATE_STMT = "UPDATE GOODS SET GOODS_NO=?, EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?,GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, ForsalesS_A=?, FAVORITE_COUNT=?,GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?, GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=?";
 
 	@Override
 	public void insert(GoodsVO goodsVO) {
@@ -51,7 +42,7 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			pstmt.setBytes(6, goodsVO.getGoods_picture2());
 			pstmt.setBytes(7, goodsVO.getGoods_picture3());
 			pstmt.setString(8, goodsVO.getGoods_introduction());
-			pstmt.setInt(9, goodsVO.getForsale_a());
+			pstmt.setInt(9, goodsVO.getForsales_a());
 			pstmt.setInt(10, goodsVO.getFavorite_count());
 			pstmt.setString(11, goodsVO.getGoods_status());
 			pstmt.setTimestamp(12, goodsVO.getLaunchdate());
@@ -63,9 +54,9 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			e.printStackTrace();
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			se.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -103,7 +94,7 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			pstmt.setBytes(5, goodsVO.getGoods_picture2());
 			pstmt.setBytes(6, goodsVO.getGoods_picture3());
 			pstmt.setString(7, goodsVO.getGoods_introduction());
-			pstmt.setInt(8, goodsVO.getForsale_a());
+			pstmt.setInt(8, goodsVO.getForsales_a());
 			pstmt.setInt(9, goodsVO.getFavorite_count());
 			pstmt.setString(10, goodsVO.getGoods_status());
 			pstmt.setTimestamp(11, goodsVO.getLaunchdate());
@@ -117,9 +108,9 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			System.out.println("----------Updated----------");
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			e.printStackTrace();
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			se.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -156,9 +147,9 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			System.out.println("----------Deleted----------");
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			e.printStackTrace();
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			se.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -205,8 +196,8 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 				goodsVO.setGoods_picture2(rs.getBytes("Goods_picture2"));
 				goodsVO.setGoods_picture3(rs.getBytes("Goods_picture3"));
 				goodsVO.setGoods_introduction(rs.getString("Goods_introduction"));
-				goodsVO.setForsale_a(rs.getInt("Forsale_a"));
-				goodsVO.setFavorite_count(rs.getInt("Favorite_coun"));
+				goodsVO.setForsales_a(rs.getInt("Forsales_a"));
+				goodsVO.setFavorite_count(rs.getInt("Favorite_count"));
 				goodsVO.setGoods_status(rs.getString("Goods_status"));
 				goodsVO.setLaunchdate(rs.getTimestamp("Launchdate"));
 				goodsVO.setOffdate(rs.getTimestamp("Offdate"));
@@ -218,9 +209,9 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			e.printStackTrace();
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			se.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -265,31 +256,30 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 
 			while (rs.next()) {
 				goodsVO = new GoodsVO();
-				goodsVO.setGoods_no(rs.getString("Goods_no"));
-				goodsVO.setEvetit_no(rs.getString("Evetit_no"));
-				goodsVO.setGoods_name(rs.getString("Goods_name"));
-				goodsVO.setGoods_price(rs.getInt("Goods_price"));
-				goodsVO.setGoods_picture1(rs.getBytes("Goods_picture1"));
-				goodsVO.setGoods_picture2(rs.getBytes("Goods_picture2"));
-				goodsVO.setGoods_picture3(rs.getBytes("Goods_picture3"));
-				goodsVO.setGoods_introduction(rs.getString("Goods_introduction"));
-				goodsVO.setForsale_a(rs.getInt("Forsale_a"));
-				goodsVO.setFavorite_count(rs.getInt("Favorite_coun"));
-				goodsVO.setGoods_status(rs.getString("Goods_status"));
-				goodsVO.setLaunchdate(rs.getTimestamp("Launchdate"));
-				goodsVO.setOffdate(rs.getTimestamp("Offdate"));
-				goodsVO.setGoods_group_count(rs.getInt("Goods_group_count"));
-				goodsVO.setGoods_want_count(rs.getInt("Goods_want_count"));
-				goodsVO.setGoods_sales_count(rs.getInt("Goods_sales_count"));
+				goodsVO.setGoods_no(rs.getString("goods_no"));
+				goodsVO.setGoods_name(rs.getString("goods_name"));
+				goodsVO.setGoods_price(rs.getInt("goods_price"));
+				goodsVO.setGoods_picture1(rs.getBytes("goods_picture1"));
+				goodsVO.setGoods_picture2(rs.getBytes("goods_picture2"));
+				goodsVO.setGoods_picture3(rs.getBytes("goods_picture3"));
+				goodsVO.setGoods_introduction(rs.getString("goods_introduction"));
+				goodsVO.setForsales_a(rs.getInt("Forsales_a"));
+				goodsVO.setFavorite_count(rs.getInt("favorite_count"));
+				goodsVO.setGoods_status(rs.getString("goods_status"));
+				goodsVO.setLaunchdate(rs.getTimestamp("launchdate"));
+				goodsVO.setOffdate(rs.getTimestamp("offdate"));
+				goodsVO.setGoods_group_count(rs.getInt("goods_group_count"));
+				goodsVO.setGoods_want_count(rs.getInt("goods_want_count"));
+				goodsVO.setGoods_sales_count(rs.getInt("goods_sales_count"));
 				list.add(goodsVO);
 			}
 
 			System.out.println("----------getAll finished----------");
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			e.printStackTrace();
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			se.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -315,4 +305,122 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 		}
 		return list;
 	}
+
+//	public static void main(String[] args) {
+//
+//		GoodsJDBCDAO dao = new GoodsJDBCDAO();
+//
+//	//	 新增		
+//		FileInputStream fis1 = null;
+//		ByteArrayOutputStream baos1 = null;
+//		try {
+//			GoodsVO goodsVO1 = new GoodsVO();
+//			goodsVO1.setGoods_no("P0000019");
+//			goodsVO1.setEvetit_no("E0003");
+//			goodsVO1.setGoods_name("貓");
+//			goodsVO1.setGoods_price(500);
+//			byte[] pic1 = null;
+//			try {
+//				pic1 = getPictureByteArray("writeImgJDBC/tomcat.jpg");
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			goodsVO1.setGoods_picture1(pic1);
+////			goodsVO1.setGoods_picture2(pic1);
+////			goodsVO1.setGoods_picture3(pic1);
+//			goodsVO1.setGoods_introduction("貓");
+//			goodsVO1.setForsales_a(400);
+//			goodsVO1.setFavorite_count(2);
+//			goodsVO1.setGoods_status("已上架");
+//			goodsVO1.setLaunchdate(Timestamp.valueOf("2018-08-20 12:00:00"));
+//			goodsVO1.setOffdate(Timestamp.valueOf("2018-09-01 10:00:00"));
+//			goodsVO1.setGoods_group_count(1);
+//			goodsVO1.setGoods_want_count(2);
+//			goodsVO1.setGoods_sales_count(1);
+//			
+//			dao.insert(goodsVO1);
+//
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (baos1 != null) {
+//				try {
+//					baos1.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (fis1 != null) {
+//				try {
+//					fis1.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
+//		
+//
+//			 查詢一個
+//		GoodsVO aGoodsVO = dao.findByPrimarykey("P0000001");
+//		System.out.println(aGoodsVO.getGoods_no());
+//		System.out.println(aGoodsVO.getEvetit_no());
+//		System.out.println(aGoodsVO.getGoods_name());
+//		System.out.println(aGoodsVO.getGoods_price());
+//		System.out.println(aGoodsVO.getGoods_picture1());
+//		System.out.println(aGoodsVO.getGoods_picture2());
+//		System.out.println(aGoodsVO.getGoods_picture3());
+//		System.out.println(aGoodsVO.getGoods_introduction());
+//		System.out.println(aGoodsVO.getForsales_a());
+//		System.out.println(aGoodsVO.getFavorite_count());
+//		System.out.println(aGoodsVO.getGoods_status());
+//		System.out.println(aGoodsVO.getLaunchdate());
+//		System.out.println(aGoodsVO.getOffdate());
+//		System.out.println(aGoodsVO.getGoods_group_count());
+//		System.out.println(aGoodsVO.getGoods_want_count());
+//		System.out.println(aGoodsVO.getGoods_sales_count());
+//
+//			 查詢全部
+//		List<GoodsVO> list = dao.getAll();
+//		for (GoodsVO aGoodsVO : list) {
+//			System.out.println(aGoodsVO.getGoods_no());
+//			System.out.println(aGoodsVO.getEvetit_no());
+//			System.out.println(aGoodsVO.getGoods_name());
+//			System.out.println(aGoodsVO.getGoods_price());
+//			System.out.println(aGoodsVO.getGoods_picture1());
+//			System.out.println(aGoodsVO.getGoods_picture2());
+//			System.out.println(aGoodsVO.getGoods_picture3());
+//			System.out.println(aGoodsVO.getGoods_introduction());
+//			System.out.println(aGoodsVO.getForsales_a());
+//			System.out.println(aGoodsVO.getFavorite_count());
+//			System.out.println(aGoodsVO.getGoods_status());
+//			System.out.println(aGoodsVO.getLaunchdate());
+//			System.out.println(aGoodsVO.getOffdate());
+//			System.out.println(aGoodsVO.getGoods_group_count());
+//			System.out.println(aGoodsVO.getGoods_want_count());
+//			System.out.println(aGoodsVO.getGoods_sales_count());
+//		}
+//
+//	}
+// 
+//
+//		public static byte[] getPictureByteArray(String path) throws IOException {
+//			File file = new File(path);
+//			FileInputStream fis = new FileInputStream(file);
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			byte[] buffer = new byte[8192];
+//			int i;
+//			while ((i = fis.read(buffer)) != -1) {
+//				baos.write(buffer, 0, 1);
+//			}
+//			baos.close();
+//			fis.close();
+//
+//			return baos.toByteArray();
+//		}
+//
+//	}
 }
