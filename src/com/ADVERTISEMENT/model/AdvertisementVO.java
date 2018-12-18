@@ -3,10 +3,8 @@ package com.ADVERTISEMENT.model;
 import java.sql.Date;
 
 public class AdvertisementVO implements java.io.Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2836918843160702803L;
+	
 	private String ad_no;
 	private String evetit_no;
 	private Date ad_startdate;
