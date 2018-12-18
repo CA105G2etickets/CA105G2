@@ -95,6 +95,4 @@ public class OrderHistoryVO implements java.io.Serializable {
 		this.orderStatus = orderStatus;
 	}
 	
-
-	
 }
