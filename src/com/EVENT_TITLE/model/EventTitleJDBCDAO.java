@@ -371,41 +371,61 @@ public class EventTitleJDBCDAO implements EventTitleDAO_interface{
 				eventTitleVO.setEvetit_enddate(rs.getDate("evetit_enddate"));
 				
 				eventTitleVO.setEvetit_poster(rs.getBytes("evetit_poster"));  //B
-							
-				br = new BufferedReader(rs.getCharacterStream("info"));
-				StringBuilder infoSb = new StringBuilder();
-				String infoStr = null;			
-				while((infoStr = br.readLine()) != null)
-					infoSb.append(infoStr).append("\n");				
-				eventTitleVO.setInfo(infoSb.toString());
 				
-				br = new BufferedReader(rs.getCharacterStream("notices"));
-				StringBuilder noticesSb = new StringBuilder();
-				String noticesStr = null;			
-				while((noticesStr = br.readLine()) != null)
-					noticesSb.append(noticesStr).append("\n");				
-				eventTitleVO.setNotices(noticesSb.toString());
+				if(rs.getCharacterStream("info") == null) {
+					eventTitleVO.setInfo("");
+				} else {
+					br = new BufferedReader(rs.getCharacterStream("info"));
+					StringBuilder infoSb = new StringBuilder();
+					String infoStr = null;			
+					while((infoStr = br.readLine()) != null)
+						infoSb.append(infoStr).append("\n");				
+					eventTitleVO.setInfo(infoSb.toString());
+				}
 				
-				br = new BufferedReader(rs.getCharacterStream("eticpurchaserules"));
-				StringBuilder eticpurchaserulesSb = new StringBuilder();
-				String eticpurchaserulesStr = null;			
-				while((eticpurchaserulesStr = br.readLine()) != null)
-					eticpurchaserulesSb.append(eticpurchaserulesStr).append("\n");				
-				eventTitleVO.setEticpurchaserules(eticpurchaserulesSb.toString());
+				if(rs.getCharacterStream("notices") == null) {
+					eventTitleVO.setNotices("");
+				} else {
+					br = new BufferedReader(rs.getCharacterStream("notices"));
+					StringBuilder noticesSb = new StringBuilder();
+					String noticesStr = null;			
+					while((noticesStr = br.readLine()) != null)
+						noticesSb.append(noticesStr).append("\n");				
+					eventTitleVO.setNotices(noticesSb.toString());
+				}
 				
-				br = new BufferedReader(rs.getCharacterStream("eticrules"));
-				StringBuilder eticrulesSb = new StringBuilder();
-				String eticrulesStr = null;			
-				while((eticrulesStr = br.readLine()) != null)
-					eticrulesSb.append(eticrulesStr).append("\n");				
-				eventTitleVO.setEticrules(eticrulesSb.toString());
+				if(rs.getCharacterStream("eticpurchaserules") == null) {
+					eventTitleVO.setEticpurchaserules("");
+				} else {
+					br = new BufferedReader(rs.getCharacterStream("eticpurchaserules"));
+					StringBuilder eticpurchaserulesSb = new StringBuilder();
+					String eticpurchaserulesStr = null;			
+					while((eticpurchaserulesStr = br.readLine()) != null)
+						eticpurchaserulesSb.append(eticpurchaserulesStr).append("\n");				
+					eventTitleVO.setEticpurchaserules(eticpurchaserulesSb.toString());
+				}
+				
+				if(rs.getCharacterStream("eticrules") == null) {
+					eventTitleVO.setEticrules("");
+				} else {
+					br = new BufferedReader(rs.getCharacterStream("eticrules"));
+					StringBuilder eticrulesSb = new StringBuilder();
+					String eticrulesStr = null;			
+					while((eticrulesStr = br.readLine()) != null)
+						eticrulesSb.append(eticrulesStr).append("\n");				
+					eventTitleVO.setEticrules(eticrulesSb.toString());
+				}
 
-				br = new BufferedReader(rs.getCharacterStream("refundrules"));
-				StringBuilder refundrulesSb = new StringBuilder();
-				String refundrulesStr = null;			
-				while((refundrulesStr = br.readLine()) != null)
-					refundrulesSb.append(refundrulesStr).append("\n");				
-				eventTitleVO.setRefundrules(refundrulesSb.toString());
+				if(rs.getCharacterStream("refundrules") == null) {
+					eventTitleVO.setRefundrules("");
+				} else {
+					br = new BufferedReader(rs.getCharacterStream("refundrules"));
+					StringBuilder refundrulesSb = new StringBuilder();
+					String refundrulesStr = null;			
+					while((refundrulesStr = br.readLine()) != null)
+						refundrulesSb.append(refundrulesStr).append("\n");				
+					eventTitleVO.setRefundrules(refundrulesSb.toString());
+				}
 						
 				eventTitleVO.setEvetit_sessions(rs.getInt("evetit_sessions"));
 				eventTitleVO.setEvetit_status(rs.getString("evetit_status"));				
