@@ -11,15 +11,16 @@ public class EventService {
 		eventDao = new EventDAO();
 	}
 
-	public EventVO addEvent(String evetit_no, String venue_no, String eve_session, String eve_sessionname, 
-			byte[] eve_seatmap, Timestamp eve_startdate, Timestamp eve_enddate,
-			Timestamp eve_onsaledate, Timestamp eve_offsaledate, Integer ticlimit, Timestamp fullrefundenddate, String eve_status) {
+	public EventVO addEvent(String evetit_no, String venue_no, String eve_session, String eve_sessionname,
+			byte[] eve_seatmap, Timestamp eve_startdate, Timestamp eve_enddate, Timestamp eve_onsaledate,
+			Timestamp eve_offsaledate, Integer ticlimit, Timestamp fullrefundenddate, String eve_status) {
 
 		EventVO eventVO = new EventVO();
 
 		eventVO.setEvetit_no(evetit_no);
 		eventVO.setVenue_no(venue_no);
 		eventVO.setEve_session(eve_session);
+		eventVO.setEve_no(eventVO.getEvetit_no() + eventVO.getEve_session());
 		eventVO.setEve_sessionname(eve_sessionname);
 		eventVO.setEve_seatmap(eve_seatmap);
 		eventVO.setEve_startdate(eve_startdate);
@@ -29,23 +30,20 @@ public class EventService {
 		eventVO.setTiclimit(ticlimit);
 		eventVO.setFullrefundenddate(fullrefundenddate);
 		eventVO.setEve_status(eve_status);
-	
+
 		eventDao.insert(eventVO);
 
 		return eventVO;
 	}
-	
-	
-	public EventVO updateEvent(String eve_no, String evetit_no, String venue_no, String eve_session, String eve_sessionname, 
-			byte[] eve_seatmap, Timestamp eve_startdate, Timestamp eve_enddate,
-			Timestamp eve_onsaledate, Timestamp eve_offsaledate, Integer ticlimit, Timestamp fullrefundenddate, String eve_status) {
+
+	public EventVO updateEvent(String eve_no, String venue_no, String eve_sessionname, byte[] eve_seatmap,
+			Timestamp eve_startdate, Timestamp eve_enddate, Timestamp eve_onsaledate, Timestamp eve_offsaledate,
+			Integer ticlimit, Timestamp fullrefundenddate, String eve_status) {
 
 		EventVO eventVO = new EventVO();
 
 		eventVO.setEve_no(eve_no);
-		eventVO.setEvetit_no(evetit_no);
 		eventVO.setVenue_no(venue_no);
-		eventVO.setEve_session(eve_session);
 		eventVO.setEve_sessionname(eve_sessionname);
 		eventVO.setEve_seatmap(eve_seatmap);
 		eventVO.setEve_startdate(eve_startdate);
@@ -55,12 +53,12 @@ public class EventService {
 		eventVO.setTiclimit(ticlimit);
 		eventVO.setFullrefundenddate(fullrefundenddate);
 		eventVO.setEve_status(eve_status);
-	
+
 		eventDao.update(eventVO);
 
 		return eventVO;
 	}
-	
+
 	public void deleteEvent(String eve_no) {
 		eventDao.delete(eve_no);
 	}
