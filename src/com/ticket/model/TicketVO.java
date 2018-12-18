@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class TicketVO implements Serializable{
-    //test Commit/pull potential conflick
+    //test Commit/pull potential conflict 2
 	private String ticket_no;
 	private String ticarea_no;
 	private String ticket_order_no;
