@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>TicketOrder_select_page</title>
+<title>IBM Emp: Home</title>
 
 <style>
   table#table-1 {
@@ -30,10 +30,10 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>TicketOrder: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>ETICKETS</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for TicketOrder: Home</p>
+<p>This is the Home page for ETICKETS Home</p>
 
 <h3>資料查詢:</h3>
 	
@@ -48,38 +48,39 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllTicketOrder.jsp'>List</a> all TicketOrders.  <br><br></li>
-  
-  
-  <li>
-    <FORM METHOD="post" ACTION="ticketorder.do" >
-        <b>輸入訂票訂單編號 (如TO_20181225_000001):</b>
-        <input type="text" name="ticket_order_no">
+<li><a href='listAllGoods.jsp'>List</a> all Goods.  <br><br></li>
+
+
+<li>
+    <FORM METHOD="post" ACTION="goods.do" >
+        <b>輸入商品編號 (如P0000001):</b>
+        <input type="text" name="goods_no">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
   </li>
 
-  <jsp:useBean id="TicketOrderSvc" scope="page" class="com.ticketorder.controller.TicketOrderService" />
-  
+  <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
+   
   <li>
-     <FORM METHOD="post" ACTION="ticketorder.do" >
-       <b>選擇某一張訂票訂單的狀態:</b>
-       <select size="1" name="ticket_order_no">
-         <c:forEach var="TicketOrderVO" items="${TicketOrderSvc.all}" > 
-          <option value="${TicketOrderVO.ticket_order_no}">${TicketOrderVO.ticket_order_no}
+     <FORM METHOD="post" ACTION="goods.do" >
+       <b>選擇商品編號:</b>
+       <select size="1" name="goods_no">
+         <c:forEach var="goodsVO" items="${empSvc.all}" > 
+          <option value="${goodsVO.goods_no}">${goodsVO.goods_no}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
        <input type="submit" value="送出">
     </FORM>
   </li>
+  
   <li>
-     <FORM METHOD="post" ACTION="ticketorder.do" >
-       <b>選擇某一張訂票訂單的狀態:</b>
-       <select size="1" name="ticket_order_no">
-         <c:forEach var="TicketOrderVO" items="${TicketOrderSvc.all}" > 
-          <option value="${TicketOrderVO.ticket_order_no}">${TicketOrderVO.ticket_order_status}
+     <FORM METHOD="post" ACTION="goods.do" >
+       <b>選擇商品名稱:</b>
+       <select size="1" name="goods_name">
+         <c:forEach var="goodsVO" items="${goodsSvc.all}" > 
+          <option value="${goodsVO.goods_no}">${goodsVO.goods_name}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -89,10 +90,10 @@
 </ul>
 
 
-<h3>訂票訂單管理</h3>
+<h3>商品管理</h3>
 
 <ul>
-  <li><a href='addTicketOrder.jsp'>Add</a> a new TicketOrder.</li>
+  <li><a href='addGoods.jsp'>Add</a> a new Goods.</li>
 </ul>
 
 </body>
