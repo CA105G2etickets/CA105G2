@@ -192,7 +192,7 @@ public class MemberServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				MemberService memberService = new MemberService();
-				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+//				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 //				member = memberService.updateMember(memberNo, memberFullnameReg, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
@@ -281,7 +281,7 @@ public class MemberServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				MemberService memberService = new MemberService();
-				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+//				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/emp/listAllEmp.jsp";
