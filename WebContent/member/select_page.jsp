@@ -59,7 +59,7 @@
 				<span class="sr-only">選單切換</span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
 			</button>
-			<img src="https://i.imgur.com/5zoCxw2.png" href="#" alt="LOGO"
+			<img src="images/LOGO_back-end.png" href="#" alt="LOGO"
 				width="202.25px" height="165.5px">
 		</div>
 
