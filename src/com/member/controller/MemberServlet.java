@@ -292,7 +292,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/addEmp.jsp");
+						.getRequestDispatcher("/member/addMember.jsp");
 				failureView.forward(req, res);
 			}
 		}

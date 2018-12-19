@@ -56,7 +56,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>所有會員資料 - listAllMember.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.png" width="373" height="163" border="0"></a></h4>
+		 <h4><a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a></h4>
 	</td></tr>
 </table>
 
