@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<title>所有員工資料 - listAllEmp.jsp</title>
+<title>所有會員資料 - listAllMember.jsp</title>
 
 <style>
   table#table-1 {
@@ -55,8 +55,8 @@
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>所有員工資料 - listAllEmp.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h3>所有會員資料 - listAllMember.jsp</h3>
+		 <h4><a href="select_page.jsp"><img src="images/back1.png" width="373" height="163" border="0"></a></h4>
 	</td></tr>
 </table>
 
@@ -72,37 +72,43 @@
 
 <table>
 	<tr>
-		<th>員工編號</th>
-		<th>員工姓名</th>
-		<th>職位</th>
-		<th>雇用日期</th>
-		<th>薪水</th>
-		<th>獎金</th>
-		<th>部門</th>
-		<th>修改</th>
-		<th>刪除</th>
+		<th>會員編號</th>
+		<th>會員姓名</th>
+		<th>會員Email</th>
+		<th>會員電話</th>
+		<th>會員身分證字號</th>
+		<th>會員帳號</th>
+		<th>會員密碼</th>
+		<th>會員電子錢包餘額</th>
+		<th>會員帳號建立日期</th>
+		<th>會員大頭貼</th>
+		<th>會員狀態</th>
 	</tr>
 	<%@ include file="page1.file" %> 
-	<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="member" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
-			<td>${empVO.empno}</td>
-			<td>${empVO.ename}</td>
-			<td>${empVO.job}</td>
-			<td><fmt:formatDate value="${empVO.hiredate}" pattern="yyyy-MM-dd ZZZ"/></td>
-			<td>${empVO.sal}</td>
-			<td>${empVO.comm}</td> 
-			<td>${empVO.deptno}</td>
+			<td>${member.memberNo}</td>
+			<td>${member.memberFullname}</td>
+			<td>${member.email}</td>
+			<td>${member.phone}</td>
+			<td>${member.idcard}</td>
+			<td>${member.memberAccount}</td>
+			<td>${member.memberPassword}</td>
+			<td>${member.ewalletBalance}</td>
+			<td><fmt:formatDate value="${member.creationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td>${member.profilePicture}</td>
+			<td>${member.memberStatus}</td> 
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
-			     <input type="hidden" name="empno"  value="${empVO.empno}">
+			     <input type="hidden" name="memberno"  value="${member.memberNo}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
-			     <input type="hidden" name="empno"  value="${empVO.empno}">
+			     <input type="hidden" name="memberno"  value="${member.memberNo}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 		</tr>
