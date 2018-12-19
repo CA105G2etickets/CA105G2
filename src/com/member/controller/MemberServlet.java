@@ -69,7 +69,7 @@ public class MemberServlet extends HttpServlet {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/member/select_page.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
