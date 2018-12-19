@@ -1,4 +1,4 @@
-package com.GOODSa.model;
+package com.goods.model;
 
 import java.util.List;
 
