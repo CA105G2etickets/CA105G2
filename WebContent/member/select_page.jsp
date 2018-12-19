@@ -63,7 +63,7 @@
 				width="202.25px" height="165.5px">
 		</div>
 
-		<!-- 手機隱藏選單區 -->
+		<!-- 手機隱藏選單區  -->
 
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<!-- 右選單 -->
