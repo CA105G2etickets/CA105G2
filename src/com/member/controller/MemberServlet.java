@@ -59,8 +59,8 @@ public class MemberServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始查詢資料*****************************************/
-				MemberService memberservice = new MemberService();
-				MemberVO member = memberservice.getOneMember(memberNo);
+				MemberService memberService = new MemberService();
+				MemberVO member = memberService.getOneMember(memberNo);
 				if (member == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -100,8 +100,8 @@ public class MemberServlet extends HttpServlet {
 				String memberNo = new String(req.getParameter("memberno"));
 				
 				/***************************2.開始查詢資料****************************************/
-				MemberService memberservice = new MemberService();
-				MemberVO member = memberservice.getOneMember(memberNo);
+				MemberService memberService = new MemberService();
+				MemberVO member = memberService.getOneMember(memberNo);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("member", member);         // 資料庫取出的empVO物件,存入req
@@ -191,9 +191,9 @@ public class MemberServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				MemberService memberservice = new MemberService();
-				member = memberservice.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
-//				member = memberservice.updateMember(memberNo, memberFullnameReg, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+				MemberService memberService = new MemberService();
+				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+//				member = memberService.updateMember(memberNo, memberFullnameReg, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("member", member); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -280,8 +280,8 @@ public class MemberServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始新增資料***************************************/
-				MemberService memberservice = new MemberService();
-				member = memberservice.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+				MemberService memberService = new MemberService();
+				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/emp/listAllEmp.jsp";
@@ -310,8 +310,8 @@ public class MemberServlet extends HttpServlet {
 				String memberNo = new String(req.getParameter("memberno"));
 				
 				/***************************2.開始刪除資料***************************************/
-				MemberService memberservice = new MemberService();
-				memberservice.deleteMember(memberNo);
+				MemberService memberService = new MemberService();
+				memberService.deleteMember(memberNo);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
 				String url = "/member/listAllMember.jsp";
