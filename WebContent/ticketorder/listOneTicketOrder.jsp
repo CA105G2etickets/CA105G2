@@ -4,7 +4,7 @@
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("TicketOrderVO");
+TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 pageContext.setAttribute("toVO",toVO);
 %>
 

@@ -61,10 +61,10 @@
   </li>
 
   <jsp:useBean id="TicketOrderSvc" scope="page" class="com.ticketorder.model.TicketOrderService" />
-  <%-- 
+  
   <li>
      <FORM METHOD="post" ACTION="ticketorder.do" >
-       <b>選擇訂票訂單編號:</b>
+       <b>選擇某一張訂票訂單的狀態:</b>
        <select size="1" name="ticket_order_no">
          <c:forEach var="TicketOrderVO" items="${TicketOrderSvc.all}" > 
           <option value="${TicketOrderVO.ticket_order_no}">${TicketOrderVO.ticket_order_no}
@@ -74,7 +74,18 @@
        <input type="submit" value="送出">
     </FORM>
   </li>
- --%>
+  <li>
+     <FORM METHOD="post" ACTION="ticketorder.do" >
+       <b>選擇某一張訂票訂單的狀態:</b>
+       <select size="1" name="ticket_order_no">
+         <c:forEach var="TicketOrderVO" items="${TicketOrderSvc.all}" > 
+          <option value="${TicketOrderVO.ticket_order_no}">${TicketOrderVO.ticket_order_status}
+         </c:forEach>   
+       </select>
+       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="submit" value="送出">
+     </FORM>
+  </li>
 </ul>
 
 

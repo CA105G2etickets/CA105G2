@@ -6,7 +6,8 @@ public class TicketOrderService {
 	private TicketOrderDAO_interface dao;
 	
 	public TicketOrderService() {
-		dao = new TicketOrderDAOJDBC();
+//		dao = new TicketOrderDAOJDBC();
+		dao = new TicketOrderDAO();
 	}
 	public TicketOrderVO addTicketOrder(String member_no, String ticarea_no, Integer total_price, Integer total_amount,Timestamp ticket_order_time,String payment_method,String ticket_order_status) {
 		TicketOrderVO toVO = new TicketOrderVO();
