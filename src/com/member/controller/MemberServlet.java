@@ -97,15 +97,15 @@ public class MemberServlet extends HttpServlet {
 			
 			try {
 				/***************************1.接收請求參數****************************************/
-				Integer empno = new Integer(req.getParameter("empno"));
+				String memberNo = new String(req.getParameter("memberno"));
 				
 				/***************************2.開始查詢資料****************************************/
-				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.getOneEmp(empno);
+				MemberService memberservice = new MemberService();
+				MemberVO member = memberservice.getOneMember(memberNo);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("empVO", empVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/emp/update_emp_input.jsp";
+				req.setAttribute("member", member);         // 資料庫取出的empVO物件,存入req
+				String url = "/member/update_member_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
@@ -113,7 +113,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
+						.getRequestDispatcher("/member/listAllMember.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -128,72 +128,76 @@ public class MemberServlet extends HttpServlet {
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				Integer empno = new Integer(req.getParameter("empno").trim());
+				String memberNo = new String(req.getParameter("memberno").trim());
 				
-				String ename = req.getParameter("ename");
-				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (ename == null || ename.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
-				} else if(!ename.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				String memberFullname = req.getParameter("memberFullname");
+				String memberFullnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-)]{3,10}$";
+				if (memberFullname == null || memberFullname.trim().length() == 0) {
+					errorMsgs.add("姓名: 請勿空白");
+				} else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
 	            }
 				
-				String job = req.getParameter("job").trim();
-				if (job == null || job.trim().length() == 0) {
-					errorMsgs.add("職位請勿空白");
-				}	
+//				String job = req.getParameter("job").trim();
+//				if (job == null || job.trim().length() == 0) {
+//					errorMsgs.add("職位請勿空白");
+//				}	
 				
-				java.sql.Date hiredate = null;
+				java.sql.Timestamp creationDate = null;
 				try {
-					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+					creationDate = java.sql.Timestamp.valueOf(req.getParameter("creationDate").trim());
 				} catch (IllegalArgumentException e) {
-					hiredate=new java.sql.Date(System.currentTimeMillis());
+					creationDate=new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 
-				Double sal = null;
-				try {
-					sal = new Double(req.getParameter("sal").trim());
-				} catch (NumberFormatException e) {
-					sal = 0.0;
-					errorMsgs.add("薪水請填數字.");
-				}
+//				Double sal = null;
+//				try {
+//					sal = new Double(req.getParameter("sal").trim());
+//				} catch (NumberFormatException e) {
+//					sal = 0.0;
+//					errorMsgs.add("薪水請填數字.");
+//				}
 
-				Double comm = null;
-				try {
-					comm = new Double(req.getParameter("comm").trim());
-				} catch (NumberFormatException e) {
-					comm = 0.0;
-					errorMsgs.add("獎金請填數字.");
-				}
+//				Double comm = null;
+//				try {
+//					comm = new Double(req.getParameter("comm").trim());
+//				} catch (NumberFormatException e) {
+//					comm = 0.0;
+//					errorMsgs.add("獎金請填數字.");
+//				}
 
-				Integer deptno = new Integer(req.getParameter("deptno").trim());
+//				Integer deptno = new Integer(req.getParameter("deptno").trim());
 
-				EmpVO empVO = new EmpVO();
-				empVO.setEmpno(empno);
-				empVO.setEname(ename);
-				empVO.setJob(job);
-				empVO.setHiredate(hiredate);
-				empVO.setSal(sal);
-				empVO.setComm(comm);
-				empVO.setDeptno(deptno);
+				MemberVO member = new MemberVO();
+				member.setMemberFullname(memberFullname);
+//				member.setEmail(email);
+//				member.setPhone(phone);
+//				member.setIdcard(idcard);
+//				member.setMemberAccount(memberAccount);
+//				member.setMemberPassword(memberPassword);
+//				member.setEwalletBalance(ewalletBalance);
+				member.setCreationDate(creationDate);
+//				member.setProfilePicture(profilePicture);
+//				member.setMemberStatus(memberStatus);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("member", member); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/update_emp_input.jsp");
+							.getRequestDispatcher("/member/update_member_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				EmpService empSvc = new EmpService();
-				empVO = empSvc.updateEmp(empno, ename, job, hiredate, sal,comm, deptno);
+				MemberService memberservice = new MemberService();
+				member = memberservice.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+//				member = memberservice.updateMember(memberNo, memberFullnameReg, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/emp/listOneEmp.jsp";
+				req.setAttribute("member", member); // 資料庫update成功後,正確的的empVO物件,存入req
+				String url = "/member/listOneMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -201,7 +205,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/update_emp_input.jsp");
+						.getRequestDispatcher("/member/update_member_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -215,65 +219,69 @@ public class MemberServlet extends HttpServlet {
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				String ename = req.getParameter("ename");
-				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (ename == null || ename.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
-				} else if(!ename.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				String memberFullname = req.getParameter("memberFullname");
+				String memberFullnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-)]{3,10}$";
+				if (memberFullname == null || memberFullname.trim().length() == 0) {
+					errorMsgs.add("姓名: 請勿空白");
+				} else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
 	            }
 				
-				String job = req.getParameter("job").trim();
-				if (job == null || job.trim().length() == 0) {
-					errorMsgs.add("職位請勿空白");
-				}
+//				String job = req.getParameter("job").trim();
+//				if (job == null || job.trim().length() == 0) {
+//					errorMsgs.add("職位請勿空白");
+//				}
 				
-				java.sql.Date hiredate = null;
+				java.sql.Timestamp creationDate = null;
 				try {
-					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+					creationDate = java.sql.Timestamp.valueOf(req.getParameter("creationDate").trim());
 				} catch (IllegalArgumentException e) {
-					hiredate=new java.sql.Date(System.currentTimeMillis());
+					creationDate=new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 				
-				Double sal = null;
-				try {
-					sal = new Double(req.getParameter("sal").trim());
-				} catch (NumberFormatException e) {
-					sal = 0.0;
-					errorMsgs.add("薪水請填數字.");
-				}
+//				Double sal = null;
+//				try {
+//					sal = new Double(req.getParameter("sal").trim());
+//				} catch (NumberFormatException e) {
+//					sal = 0.0;
+//					errorMsgs.add("薪水請填數字.");
+//				}
 				
-				Double comm = null;
-				try {
-					comm = new Double(req.getParameter("comm").trim());
-				} catch (NumberFormatException e) {
-					comm = 0.0;
-					errorMsgs.add("獎金請填數字.");
-				}
+//				Double comm = null;
+//				try {
+//					comm = new Double(req.getParameter("comm").trim());
+//				} catch (NumberFormatException e) {
+//					comm = 0.0;
+//					errorMsgs.add("獎金請填數字.");
+//				}
 				
-				Integer deptno = new Integer(req.getParameter("deptno").trim());
+//				Integer deptno = new Integer(req.getParameter("deptno").trim());
 
-				EmpVO empVO = new EmpVO();
-				empVO.setEname(ename);
-				empVO.setJob(job);
-				empVO.setHiredate(hiredate);
-				empVO.setSal(sal);
-				empVO.setComm(comm);
-				empVO.setDeptno(deptno);
+				MemberVO member = new MemberVO();
+				member.setMemberFullname(memberFullname);
+//				member.setEmail(email);
+//				member.setPhone(phone);
+//				member.setIdcard(idcard);
+//				member.setMemberAccount(memberAccount);
+//				member.setMemberPassword(memberPassword);
+//				member.setEwalletBalance(ewalletBalance);
+				member.setCreationDate(creationDate);
+//				member.setProfilePicture(profilePicture);
+//				member.setMemberStatus(memberStatus);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("member", member); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/addEmp.jsp");
+							.getRequestDispatcher("/member/addMember.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				/***************************2.開始新增資料***************************************/
-				EmpService empSvc = new EmpService();
-				empVO = empSvc.addEmp(ename, job, hiredate, sal, comm, deptno);
+				MemberService memberservice = new MemberService();
+				member = memberservice.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/emp/listAllEmp.jsp";
@@ -299,14 +307,14 @@ public class MemberServlet extends HttpServlet {
 	
 			try {
 				/***************************1.接收請求參數***************************************/
-				Integer empno = new Integer(req.getParameter("empno"));
+				String memberNo = new String(req.getParameter("memberno"));
 				
 				/***************************2.開始刪除資料***************************************/
-				EmpService empSvc = new EmpService();
-				empSvc.deleteEmp(empno);
+				MemberService memberservice = new MemberService();
+				memberservice.deleteMember(memberNo);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/emp/listAllEmp.jsp";
+				String url = "/member/listAllMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -314,7 +322,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
+						.getRequestDispatcher("/member/listAllMember.jsp");
 				failureView.forward(req, res);
 			}
 		}
