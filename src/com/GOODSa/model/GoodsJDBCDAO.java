@@ -1,25 +1,15 @@
-package com.GOODS.model;
+package com.GOODSa.model;
 
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
+public class GoodsJDBCDAO implements GoodsDAO_interface {
 
-public class GoodsDAO implements GoodsDAO_interface {
-
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	private static final String USER = "CA105G2";
+	private static final String PASSWORD = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO GOODS VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
 
@@ -38,8 +28,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 		try {
 
-			
-			con = ds.getConnection();
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, goodsVO.getEvetit_no());
@@ -62,6 +52,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------Inserted----------");
 
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -90,8 +82,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			
-			con = ds.getConnection();
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
 			pstmt.setString(1, goodsVO.getEvetit_no());
@@ -114,6 +106,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------Updated----------");
 
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -141,8 +135,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			
-			con = ds.getConnection();
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
 
 			pstmt.setString(1, goods_no);
@@ -151,6 +145,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------Deleted----------");
 
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -182,8 +178,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 		
 
 		try {
-			
-			con = ds.getConnection();
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, goods_no);
@@ -212,6 +208,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------findByPrimaryKey finished----------");
 
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException se) {
 			se.printStackTrace();
 		} finally {
@@ -251,8 +249,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			
-			con = ds.getConnection();
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -278,6 +276,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------getAll finished----------");
 
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException se) {
 			se.printStackTrace();
 		} finally {
@@ -306,4 +306,171 @@ public class GoodsDAO implements GoodsDAO_interface {
 		return list;
 	}
 
+	public static void main(String[] args) {
+
+		GoodsJDBCDAO dao = new GoodsJDBCDAO();
+
+		// 新增
+//		FileInputStream fis1 = null;
+//		FileInputStream fis2 = null;
+//		FileInputStream fis3 = null;
+//		ByteArrayOutputStream baos1 = null;
+//		ByteArrayOutputStream baos2 = null;
+//		ByteArrayOutputStream baos3 = null;
+//		try {
+//			GoodsVO goodsVO1 = new GoodsVO();
+//			goodsVO1.setEvetit_no("E0003");
+//			goodsVO1.setGoods_name("Goods_name");
+//			goodsVO1.setGoods_price(500);
+//			
+//			fis1 = new FileInputStream("writeImgJDBC/java.jpg"); // B
+//			baos1 = new ByteArrayOutputStream();
+//			int y;
+//			while ((y = fis1.read()) != -1)
+//				baos1.write(y);
+//			goodsVO1.setGoods_picture1(baos1.toByteArray());
+//			
+//			fis2= new FileInputStream("writeImgJDBC/tomcat.jpg"); // B
+//			baos2 = new ByteArrayOutputStream();
+//			int i;
+//			while ((i = fis2.read()) != -1)
+//				baos2.write(i);
+//			goodsVO1.setGoods_picture2(baos2.toByteArray());
+//		
+//			fis3 = new FileInputStream("writeImgJDBC/tomcat.jpg"); // B
+//			baos3 = new ByteArrayOutputStream();
+//			int j;
+//			while ((j = fis3.read()) != -1)
+//				baos3.write(j);
+//			goodsVO1.setGoods_picture3(baos3.toByteArray());
+//			
+//			goodsVO1.setGoods_introduction("Goods_introduction");
+//			goodsVO1.setForsales_a(400);
+//			goodsVO1.setFavorite_count(2);
+//			goodsVO1.setGoods_status("已上架");
+//			goodsVO1.setLaunchdate(Timestamp.valueOf("2018-08-20 12:00:00"));
+//			goodsVO1.setOffdate(Timestamp.valueOf("2018-09-01 10:00:00"));
+//			goodsVO1.setGoods_group_count(1);
+//			goodsVO1.setGoods_want_count(2);
+//			goodsVO1.setGoods_sales_count(1);
+//
+//			dao.insert(goodsVO1);
+//
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (baos1 != null) {
+//				try {
+//					baos1.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (fis1 != null) {
+//				try {
+//					fis1.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+
+//		// 刪除
+//		dao.delete("P0000005");
+//		System.out.println("------------------------------");
+//		
+
+//		
+//
+//			 查詢一個
+//		GoodsVO aGoodsVO = dao.findByPrimarykey("P0000019");
+//		System.out.println(aGoodsVO.getGoods_no());
+//		System.out.println(aGoodsVO.getEvetit_no());
+//		System.out.println(aGoodsVO.getGoods_name());
+//		System.out.println(aGoodsVO.getGoods_price());
+//
+//		try (PrintStream ps = new PrintStream(new FileOutputStream("readImgJDBC/eventTitleTest.jpg"), true)) {
+//			if (aGoodsVO.getGoods_picture1() == null) {
+//
+//			} else {
+//				ps.write(aGoodsVO.getGoods_picture1());
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		try (PrintStream ps = new PrintStream(new FileOutputStream("readImgJDBC/eventTitleTest.jpg"), true)) {
+//			if (aGoodsVO.getGoods_picture2() == null) {
+//
+//			} else {
+//				ps.write(aGoodsVO.getGoods_picture2());
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		try (PrintStream ps = new PrintStream(new FileOutputStream("readImgJDBC/eventTitleTest.jpg"), true)) {
+//			if (aGoodsVO.getGoods_picture3() == null) {
+//
+//			} else {
+//				ps.write(aGoodsVO.getGoods_picture3());
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println(aGoodsVO.getGoods_picture1());
+//		System.out.println(aGoodsVO.getGoods_picture2());
+//		System.out.println(aGoodsVO.getGoods_picture3());
+//		System.out.println(aGoodsVO.getGoods_introduction());
+//		System.out.println(aGoodsVO.getForsales_a());
+//		System.out.println(aGoodsVO.getFavorite_count());
+//		System.out.println(aGoodsVO.getGoods_status());
+//		System.out.println(aGoodsVO.getLaunchdate());
+//		System.out.println(aGoodsVO.getOffdate());
+//		System.out.println(aGoodsVO.getGoods_group_count());
+//		System.out.println(aGoodsVO.getGoods_want_count());
+//		System.out.println(aGoodsVO.getGoods_sales_count());
+
+//			 查詢全部
+//		List<GoodsVO> list = dao.getAll();
+//		for (GoodsVO aGoodsVO : list) {
+//			System.out.println(aGoodsVO.getGoods_no());
+//			System.out.println(aGoodsVO.getEvetit_no());
+//			System.out.println(aGoodsVO.getGoods_name());
+//			System.out.println(aGoodsVO.getGoods_price());
+//			System.out.println(aGoodsVO.getGoods_picture1());
+//			System.out.println(aGoodsVO.getGoods_picture2());
+//			System.out.println(aGoodsVO.getGoods_picture3());
+//			System.out.println(aGoodsVO.getGoods_introduction());
+//			System.out.println(aGoodsVO.getForsales_a());
+//			System.out.println(aGoodsVO.getFavorite_count());
+//			System.out.println(aGoodsVO.getGoods_status());
+//			System.out.println(aGoodsVO.getLaunchdate());
+//			System.out.println(aGoodsVO.getOffdate());
+//			System.out.println(aGoodsVO.getGoods_group_count());
+//			System.out.println(aGoodsVO.getGoods_want_count());
+//			System.out.println(aGoodsVO.getGoods_sales_count());
+//		}
+
+//	}
+// 
+//
+//		public static byte[] getPictureByteArray(String path) throws IOException {
+//			File file = new File(path);
+//			FileInputStream fis = new FileInputStream(file);
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			byte[] buffer = new byte[8192];
+//			int i;
+//			while ((i = fis.read(buffer)) != -1) {
+//				baos.write(buffer, 0, 1);
+//			}
+//			baos.close();
+//			fis.close();
+//
+//			return baos.toByteArray();
+//		}
+//
+	}
 }

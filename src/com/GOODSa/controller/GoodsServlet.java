@@ -1,4 +1,4 @@
-package com.GOODS.controller;
+package com.GOODSa.controller;
 
 import java.io.*;
 import java.util.*;
@@ -6,7 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import com.GOODS.model.*;
+import com.GOODSa.model.*;
 
 public class GoodsServlet extends HttpServlet {
 	

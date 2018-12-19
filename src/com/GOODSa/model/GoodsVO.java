@@ -1,4 +1,4 @@
-package com.GOODS.model;
+package com.GOODSa.model;
 
 import java.sql.*;
 
