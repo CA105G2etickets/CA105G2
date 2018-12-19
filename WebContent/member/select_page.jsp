@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>ETIckeTs Member: Home</title>
+<title>ETIckeTs Member</title>
 
 <style>
   table#table-1 {
@@ -30,10 +30,10 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>ETIckeTs Member: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>ETIckeTs Member</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for ETIckeTs Member: Home</p>
+<p>ETIckeTs Member管理頁面</p>
 
 <h3>資料查詢:</h3>
 	
@@ -60,14 +60,14 @@
     </FORM>
   </li>
 
-  <jsp:useBean id="empSvc" scope="page" class="com.member.model.MemberService" />
+  <jsp:useBean id="memberservice" scope="page" class="com.member.model.MemberService" />
    
   <li>
      <FORM METHOD="post" ACTION="member.do" >
        <b>選擇會員編號:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.empno}
+       <select size="1" name="memberno">
+         <c:forEach var="member" items="${MemberService.all}" > 
+          <option value="${member.memberno}">${member.memberno}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -76,11 +76,11 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="emp.do" >
+     <FORM METHOD="post" ACTION="member.do" >
        <b>選擇員工姓名:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.ename}
+       <select size="1" name="memberno">
+         <c:forEach var="member" items="${MemberService.all}" > 
+          <option value="${member.memberno}">${member.memberno}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -90,10 +90,10 @@
 </ul>
 
 
-<h3>員工管理</h3>
+<h3>會員管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
+  <li><a href='addMember.jsp'>Add</a> a new Member.</li>
 </ul>
 
 </body>
