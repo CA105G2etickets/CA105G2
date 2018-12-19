@@ -102,7 +102,7 @@ public class MemberServlet extends HttpServlet {
 				/***************************2.開始查詢資料****************************************/
 				MemberService memberService = new MemberService();
 				MemberVO member = memberService.getOneMember(memberNo);
-								
+				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("member", member);         // 資料庫取出的empVO物件,存入req
 				String url = "/member/update_member_input.jsp";
