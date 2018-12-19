@@ -3,10 +3,7 @@ package com.GOODS_QA.model;
 import java.sql.*;
 import java.util.*;
 
-import com.ADVERTISEMENT.model.AdvertisementVO;
-import com.EVENT_CLASSIFICATION.model.EventClassificationJDBCDAO;
-
-public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
+public class GoodsQaDAO implements GoodsQaDAO_interface {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "CA105G2";
@@ -267,54 +264,5 @@ public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 			}
 		}
 		return list;
-	}
-
-	public static void main(String[] args) {
-
-		GoodsQaJDBCDAO dao = new GoodsQaJDBCDAO();
-
-		// 新增
-//	GoodsQaVO aGoodsQa = new GoodsQaVO();	
-//	aGoodsQa.setGoods_no("P0000001");
-//	aGoodsQa.setMember_no("M000002");
-//	aGoodsQa.setAdministrator_no("A001");
-//	aGoodsQa.setQuestions_content("questions_content");
-//	aGoodsQa.setAnswer_content("answer_content");
-//	aGoodsQa.setQuestions_date(Timestamp.valueOf("2018-08-20 12:00:00"));
-//	aGoodsQa.setAnswer_date(Timestamp.valueOf("2018-08-20 12:00:00"));
-//	dao.insert(aGoodsQa);
-//	
-		// 修改
-//	EventClassificationVO EventClassificationVO2 = new EventClassificationVO();
-//	EventClassificationVO2.setEveclass_no("B");
-//	EventClassificationVO2.setEveclass_name("比賽");
-//	dao.update(EventClassificationVO2);
-
-		// 刪除
-//dao.delete("GF0000002");
-//System.out.println("------------------------------");
-		// 查詢一個
-//	GoodsQaVO aGoodsQa3 = dao.findByPrimaryKey("GF0000001");
-//	System.out.println(aGoodsQa3.getGfaq_no());
-//	System.out.println(aGoodsQa3.getGoods_no());
-//	System.out.println(aGoodsQa3.getMember_no());
-//	System.out.println(aGoodsQa3.getAdministrator_no());
-//	System.out.println(aGoodsQa3.getQuestions_content());
-//	System.out.println(aGoodsQa3.getAnswer_content());
-//	System.out.println(aGoodsQa3.getQuestions_date());
-//	System.out.println(aGoodsQa3.getAnswer_date());
-//
-		// 查詢全部
-		List<GoodsQaVO> list = dao.getAll();
-		for (GoodsQaVO aGoodsQaVO : list) {
-			System.out.println(aGoodsQaVO.getGfaq_no());
-			System.out.println(aGoodsQaVO.getGoods_no());
-			System.out.println(aGoodsQaVO.getMember_no());
-			System.out.println(aGoodsQaVO.getAdministrator_no());
-			System.out.println(aGoodsQaVO.getQuestions_content());
-			System.out.println(aGoodsQaVO.getAnswer_content());
-			System.out.println(aGoodsQaVO.getQuestions_date());
-			System.out.println(aGoodsQaVO.getAnswer_date());
-		}
 	}
 }

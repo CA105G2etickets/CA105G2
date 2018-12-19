@@ -10,27 +10,27 @@ public class GoodsQaVO implements java.io.Serializable{
 	private String gfaq_no;
 	private String goods_no;
 	private String member_no;
-	private String administrator;
+	private String administrator_no;
 	private String questions_content;
 	private String answer_content;
-	private Timestamp qustions_date;
+	private Timestamp questions_date;
 	private Timestamp answer_date;
 	
 	public GoodsQaVO() {
 		super();
 	}
 	
-	public GoodsQaVO(String gfaq_no, String goods_no, String member_no,	String administrator,String questions_content
-,String answer_content,Timestamp qustions_date,Timestamp answer_date) {
+	public GoodsQaVO(String gfaq_no, String goods_no, String member_no, String administrator_no,String questions_content
+,String answer_content,Timestamp questions_date,Timestamp answer_date) {
 		super();
 	
 	this.gfaq_no = gfaq_no; 
 	this.goods_no = goods_no;
 	this.member_no = member_no;
-	this.administrator = administrator;
+	this.administrator_no = administrator_no;
 	this.questions_content = questions_content;
 	this.answer_content = answer_content;
-	this.qustions_date = qustions_date;
+	this.questions_date = questions_date;
 	this.answer_date = answer_date;
 	}
 
@@ -58,12 +58,12 @@ public class GoodsQaVO implements java.io.Serializable{
 		this.member_no = member_no;
 	}
 
-	public String getAdministrator() {
-		return administrator;
+	public String getAdministrator_no() {
+		return administrator_no;
 	}
 
-	public void setAdministrator(String administrator) {
-		this.administrator = administrator;
+	public void setAdministrator_no(String administrator_no) {
+		this.administrator_no = administrator_no;
 	}
 
 	public String getQuestions_content() {
@@ -82,12 +82,12 @@ public class GoodsQaVO implements java.io.Serializable{
 		this.answer_content = answer_content;
 	}
 
-	public Timestamp getQustions_date() {
-		return qustions_date;
+	public Timestamp getQuestions_date() {
+		return questions_date;
 	}
 
-	public void setQustions_date(Timestamp qustions_date) {
-		this.qustions_date = qustions_date;
+	public void setQuestions_date(Timestamp Questions_date) {
+		this.questions_date = Questions_date;
 	}
 
 	public Timestamp getAnswer_date() {
