@@ -18,6 +18,7 @@ import com.ticket.model.*;
 //@WebServlet("/TicketOrderServlet")
 public class TicketServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+//	private static boolean checkInputValueAtAddTicketNo = false;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req,res);
@@ -49,6 +50,16 @@ public class TicketServlet extends HttpServlet {
 					errorMsgs.add("票券編號格式不正確");
 				}
 				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/ticket/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				if (this.containsHanScript(str)) {
+					errorMsgs.add("票券編號格式不能有中文");
+				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/ticket/select_page.jsp");
@@ -134,7 +145,9 @@ public class TicketServlet extends HttpServlet {
 				String ticket_order_no = req.getParameter("ticket_order_no");
 				if (ticket_order_no == null || ticket_order_no.trim().length() == 0) {
 					errorMsgs.add("訂票訂單編號: 請勿空白");
-				} else if(!ticket_order_no.trim().contains("TO_20181225_00000")) {
+				} else if(!ticket_order_no.trim().contains("TO_20181225_00000") || ticket_order_no.trim().length()>18) {
+	            	errorMsgs.add("訂票訂單編號格式不正確");
+	            } else if(!this.checkInputTicketOrderNo(ticket_order_no)) {
 	            	errorMsgs.add("訂票訂單編號 目前只能是TO_20181225_000001 or TO_20181225_000002 or TO_20181225_000003");
 	            }
 				
@@ -148,9 +161,11 @@ public class TicketServlet extends HttpServlet {
 				String ticket_status = req.getParameter("ticket_status").trim();
 				if (ticket_status == null || ticket_status.trim().length() == 0) {
 					errorMsgs.add("票券狀態請勿空白");
-				}else if(ticket_status.length()>9) {
+				} else if(ticket_status.length()>9) {
 					errorMsgs.add("票券狀態請勿超過9碼");
-				}
+				} else if(this.containsHanScript(ticket_status)) {
+					errorMsgs.add("票券狀態請勿使用中文");
+				} 
 				
 				java.sql.Timestamp ticket_create_time = null;
 				try {
@@ -163,13 +178,18 @@ public class TicketServlet extends HttpServlet {
 				String ticket_resale_status = req.getParameter("ticket_resale_status").trim();
 				if (ticket_resale_status == null || ticket_resale_status.trim().length() == 0) {
 					errorMsgs.add("票券轉讓狀態請勿空白");
-				}else if(ticket_resale_status.length()>12) {
+				} else if(ticket_resale_status.length()>12) {
 					errorMsgs.add("票券轉讓狀態請勿超過12碼");
+				} else if(this.containsHanScript(ticket_resale_status)) {
+					errorMsgs.add("票券轉讓狀態請勿使用中文");
 				}
 				
 				Integer ticket_resale_price = null;
 				try {
 					ticket_resale_price = new Integer(req.getParameter("ticket_resale_price").trim());
+					if(ticket_resale_price > 100100100 || ticket_resale_price <0) {
+						errorMsgs.add("轉讓價格請勿亂填數字.");
+					}
 				} catch (NumberFormatException e) {
 					ticket_resale_price = 0;
 					errorMsgs.add("轉讓價格請填數字.");
@@ -178,8 +198,10 @@ public class TicketServlet extends HttpServlet {
 				String is_from_resale = req.getParameter("is_from_resale").trim();
 				if (is_from_resale == null || is_from_resale.trim().length() == 0) {
 					errorMsgs.add("是否來自轉讓請勿空白");
-				}else if(is_from_resale.length()>3) {
+				} else if(is_from_resale.length()>3) {
 					errorMsgs.add("是否來自轉讓請勿超過3碼");
+				} else if(this.containsHanScript(is_from_resale)) {
+					errorMsgs.add("是否來自轉讓請勿使用中文");
 				}
 				
 				TicketVO tVO = new TicketVO();
@@ -239,8 +261,10 @@ public class TicketServlet extends HttpServlet {
 				String ticket_order_no = req.getParameter("ticket_order_no");
 				if (ticket_order_no == null || ticket_order_no.trim().length() == 0) {
 					errorMsgs.add("訂票訂單編號: 請勿空白");
-				} else if(!ticket_order_no.trim().equals("TO_20181225_000001")) { 
-					errorMsgs.add("訂票訂單編號 目前只能是TO_20181225_000001");
+				} else if(!ticket_order_no.trim().contains("TO_20181225_00000") || ticket_order_no.trim().length()>18) {
+	            	errorMsgs.add("訂票訂單編號格式不正確");
+	            } else if(!this.checkInputTicketOrderNo(ticket_order_no)) {
+	            	errorMsgs.add("訂票訂單編號 目前只能是TO_20181225_000001 or TO_20181225_000002 or TO_20181225_000003");
 	            }
 				
 				String member_no = req.getParameter("member_no");
@@ -253,8 +277,10 @@ public class TicketServlet extends HttpServlet {
 				String ticket_status = req.getParameter("ticket_status").trim();
 				if (ticket_status == null || ticket_status.trim().length() == 0) {
 					errorMsgs.add("票券狀態請勿空白");
-				}else if(ticket_status.length()>9) {
+				} else if(ticket_status.length()>9) {
 					errorMsgs.add("票券狀態請勿超過9碼");
+				} else if(this.containsHanScript(ticket_status)) {
+					errorMsgs.add("票券狀態請勿使用中文");
 				}
 				
 				java.sql.Timestamp ticket_create_time = null;
@@ -268,13 +294,18 @@ public class TicketServlet extends HttpServlet {
 				String ticket_resale_status = req.getParameter("ticket_resale_status").trim();
 				if (ticket_resale_status == null || ticket_resale_status.trim().length() == 0) {
 					errorMsgs.add("票券轉讓狀態請勿空白");
-				}else if(ticket_resale_status.length()>12) {
+				} else if(ticket_resale_status.length()>12) {
 					errorMsgs.add("票券轉讓狀態請勿超過12碼");
+				} else if(this.containsHanScript(ticket_resale_status)) {
+					errorMsgs.add("票券轉讓狀態請勿使用中文");
 				}
 				
 				Integer ticket_resale_price = null;
 				try {
 					ticket_resale_price = new Integer(req.getParameter("ticket_resale_price").trim());
+					if(ticket_resale_price > 100100100 || ticket_resale_price <0) {
+						errorMsgs.add("轉讓價格請勿亂填數字.");
+					}
 				} catch (NumberFormatException e) {
 					ticket_resale_price = 0;
 					errorMsgs.add("轉讓價格請填數字.");
@@ -283,8 +314,10 @@ public class TicketServlet extends HttpServlet {
 				String is_from_resale = req.getParameter("is_from_resale").trim();
 				if (is_from_resale == null || is_from_resale.trim().length() == 0) {
 					errorMsgs.add("是否來自轉讓請勿空白");
-				}else if(is_from_resale.length()>3) {
+				} else if(is_from_resale.length()>3) {
 					errorMsgs.add("是否來自轉讓請勿超過3碼");
+				} else if(this.containsHanScript(is_from_resale)) {
+					errorMsgs.add("是否來自轉讓請勿使用中文");
 				}
 				
 				TicketVO tVO = new TicketVO();
@@ -299,7 +332,7 @@ public class TicketServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("tVO", tVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("tVO", tVO); 
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/ticket/addTicket.jsp");
 					failureView.forward(req, res);
@@ -353,6 +386,27 @@ public class TicketServlet extends HttpServlet {
 		}
 		
 		
+	}
+	public boolean checkInputTicketOrderNo(String str) {
+		String strTest = str.substring(str.length()-1, str.length());
+		Integer iTest = Integer.parseInt(strTest);
+		if(iTest<0) {
+			return false;
+		}else if (iTest >3) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+	public boolean containsHanScript(String s) {
+	    for (int i = 0; i < s.length(); ) {
+	        int codepoint = s.codePointAt(i);
+	        i += Character.charCount(codepoint);
+	        if (Character.UnicodeScript.of(codepoint) == Character.UnicodeScript.HAN) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 
 }

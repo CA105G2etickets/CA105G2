@@ -82,7 +82,7 @@
 		<th>票券轉讓價格</th>
 		<th>是否來自轉讓</th>
 	</tr>
-	<%@ include file="page1.file" %> 
+	<%@ include file="page1.file" %>
 	<c:forEach var="TicketVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 	<tr>

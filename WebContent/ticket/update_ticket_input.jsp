@@ -121,7 +121,6 @@ pageContext.setAttribute("tVO",tVO);
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="ticket_no" value="${tVO.ticket_no}">
 <input type="submit" value="送出修改"></FORM>
-<h1>${TicketOrderVO.ticket_order_no}</h1>
 </body>
 
 
