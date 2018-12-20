@@ -186,6 +186,7 @@
 		<th>會員帳號建立日期</th>
 		<th>會員大頭貼</th>
 		<th>會員狀態</th>
+		<th>會員第三方登入UID</th>
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="member" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -202,6 +203,7 @@
 			<td><fmt:formatDate value="${member.creationDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${member.profilePicture}</td>
 			<td>${member.memberStatus}</td> 
+			<td>${member.thirduid}</td> 
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
