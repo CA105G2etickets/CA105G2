@@ -98,6 +98,7 @@ th, td {
 				<td><input type="TEXT" name="goods_picture1" size="45"
 					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_picture1()%>" /></td>
 			</tr>
+			
 			<tr>
 				<td>圖2:</td>
 				<td><input type="TEXT" name="goods_picture2" size="45"
