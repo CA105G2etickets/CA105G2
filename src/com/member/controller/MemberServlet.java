@@ -138,10 +138,35 @@ public class MemberServlet extends HttpServlet {
 					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
 	            }
 				
-//				String job = req.getParameter("job").trim();
-//				if (job == null || job.trim().length() == 0) {
-//					errorMsgs.add("職位請勿空白");
-//				}	
+				String email = req.getParameter("email").trim();
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("電子郵件請勿空白");
+				}	
+				
+				String phone = req.getParameter("phone").trim();
+				if (phone == null || phone.trim().length() == 0) {
+					errorMsgs.add("電話號碼請勿空白");
+				}	
+				
+				String idcard = req.getParameter("idcard").trim();
+				if (idcard == null || idcard.trim().length() == 0) {
+					errorMsgs.add("身份證字號請勿空白");
+				}	
+				
+				String account = req.getParameter("account").trim();
+				if (account == null || account.trim().length() == 0) {
+					errorMsgs.add("帳號請勿空白");
+				}	
+				
+				String password = req.getParameter("password").trim();
+				if (password == null || password.trim().length() == 0) {
+					errorMsgs.add("密碼請勿空白");
+				}	
+				
+				String number = req.getParameter("number").trim();
+				if (number == null || number.trim().length() == 0) {
+					errorMsgs.add("電子郵件請勿空白");
+				}	
 				
 				java.sql.Timestamp creationDate = null;
 				try {
@@ -150,6 +175,16 @@ public class MemberServlet extends HttpServlet {
 					creationDate=new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
+				
+//				String picture = req.getParameter("picture").trim();
+//				if (picture == null || picture.trim().length() == 0) {
+//					errorMsgs.add("密碼請勿空白");
+//				}
+				
+//				String states = req.getParameter("states").trim();
+//				if (states == null || states.trim().length() == 0) {
+//					errorMsgs.add("狀態請勿空白");
+//				}	
 
 //				Double sal = null;
 //				try {
