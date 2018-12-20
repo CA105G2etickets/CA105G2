@@ -10,6 +10,23 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>會員資料修改 - update_emp_input.jsp</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+  table#table-1 {
+	width: 450px;
+	background-color: #CCCCFF;
+	margin-top: 5px;
+	margin-bottom: 10px;
+    border: 3px ridge Gray;
+    height: 80px;
+    text-align: center;
+  }
+  table#table-1 h4 {
+    color: red;
+    display: block;
+    margin-bottom: 1px;
+  }
+</style>
 <style>
 .memberphoto {
 	border-radius: 50px;
@@ -38,7 +55,6 @@
 }
 
 </style>
-
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -141,12 +157,6 @@
 	</div>
 </div>
 </nav>
-<table id="table-1">
-	<tr><td>
-		 <h3>會員資料修改 - update_emp_input.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0">回首頁</a></h4>
-	</td></tr>
-</table>
 
 <h3>資料修改:</h3>
 
@@ -161,7 +171,7 @@
 </c:if>
 
 <FORM METHOD="post" ACTION="member.do" name="form1">
-<table>
+<table class="table">
 	<tr>
 		<td>會員編號:<font color=red><b>*</b></font></td>
 		<td><%=member.getMemberNo()%></td>
@@ -222,6 +232,7 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="memberno" value="<%=member.getMemberNo()%>">
 <input type="submit" value="送出修改"></FORM>
+<a href="listAllMember.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a>
 </body>
 
 

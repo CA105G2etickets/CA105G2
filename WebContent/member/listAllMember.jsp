@@ -15,6 +15,23 @@
 <html>
 <head>
 <title>所有會員資料 - listAllMember.jsp</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+  table#table-1 {
+	width: 450px;
+	background-color: #CCCCFF;
+	margin-top: 5px;
+	margin-bottom: 10px;
+    border: 3px ridge Gray;
+    height: 80px;
+    text-align: center;
+  }
+  table#table-1 h4 {
+    color: red;
+    display: block;
+    margin-bottom: 1px;
+  }
+</style>
 <style>
 .memberphoto {
 	border-radius: 50px;
@@ -43,7 +60,6 @@
 }
 
 </style>
-
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -147,14 +163,6 @@
 	</div>
 </div>
 </nav>
-<h4>此頁練習採用 EL 的寫法取值:</h4>
-<table id="table-1">
-	<tr><td>
-		 <h3>所有會員資料 - listAllMember.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a></h4>
-	</td></tr>
-</table>
-
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -165,7 +173,7 @@
 	</ul>
 </c:if>
 
-<table>
+<table class="table">
 	<tr>
 		<th>會員編號</th>
 		<th>會員姓名</th>
@@ -210,6 +218,6 @@
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-
+<a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a>
 </body>
 </html>
