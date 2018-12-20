@@ -81,15 +81,13 @@ th, td {
 	<table>
 		<tr>
 			<th>商品編號</th>
-			<th>活動</th>
+			<th>活動編號</th>
 			<th>商品名稱</th>
 			<th>售價</th>
-			<th>下架日期</th>
 			<th>圖1</th>
 			<th>圖2</th>
 			<th>圖3</th>
 			<th>商品介紹</th>
-			<th>售價</th>
 			<th>促銷價</th>
 			<th>喜愛人數</th>
 			<th>商品狀態</th>

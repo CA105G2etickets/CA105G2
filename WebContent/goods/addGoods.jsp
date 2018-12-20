@@ -79,19 +79,19 @@ th, td {
 	<FORM METHOD="post" ACTION="goods.do" name="form1">
 		<table>
 			<tr>
-				<td>活動編號:</td>
+				<td>活動編號</td>
 				<td><input type="TEXT" name="evetit_no" size="45"
-					value="<%=(goodsVO == null) ? "E0003" : goodsVO.getEvetit_no()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getEvetit_no()%>" /></td>
 			</tr>
 						<tr>
 				<td>商品名稱</td>
 				<td><input type="TEXT" name="goods_name" size="45"
-					value="<%=(goodsVO == null) ? "五度歸巢 T" : goodsVO.getGoods_name()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_name()%>" /></td>
 			</tr>
 			<tr>
 				<td>售價</td>
 				<td><input type="TEXT" name="goods_price" size="45"
-					value="<%=(goodsVO == null) ? "400" : goodsVO.getGoods_price()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_price()%>" /></td>
 			</tr>
 						<tr>
 				<td>圖1</td>
@@ -100,7 +100,7 @@ th, td {
 			</tr>
 			
 			<tr>
-				<td>圖2:</td>
+				<td>圖2</td>
 				<td><input type="TEXT" name="goods_picture2" size="45"
 					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_picture2()%>" /></td>
 			</tr>
@@ -112,18 +112,18 @@ th, td {
 			<tr>
 				<td>商品介紹</td>
 				<td><input type="TEXT" name="goods_introduction" size="45"
-					value="<%=(goodsVO == null) ? "五度歸巢 T" : goodsVO.getGoods_introduction()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_introduction()%>" /></td>
 			</tr>
 				<tr>
-				<td>:促銷價</td>
+				<td>促銷價</td>
 				<td><input type="TEXT" name="forsales_a" size="45"
-					value="<%=(goodsVO == null) ? "200" : goodsVO.getForsales_a()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getForsales_a()%>" /></td>
 			</tr>
-			<tr>
-				<td>喜愛人數:</td>
+		<%--	<tr>
+				<td>喜愛人數</td>
 				<td><input type="TEXT" name="favorite_count" size="45"
-					value="<%=(goodsVO == null) ? "1" : goodsVO.getFavorite_count()%>" /></td>
-			</tr>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getFavorite_count()%>" /></td>
+			</tr>--%>
 			<tr>
 				<td>商品狀態</td>
 				<td><input type="TEXT" name="goods_status" size="45"
@@ -134,24 +134,24 @@ th, td {
 				<td><input type="datetime-local" name="launchdate" id=""></td>
 			</tr>
 			<tr>
-				<td>下架日期:</td>
+				<td>下架日期</td>
 				<td><input type="datetime-local" name="offdate" id=""></td>
 			</tr>
 			
-			<tr>
+		<%--	<tr>
 				<td>開團數</td>
 				<td><input type="TEXT" name="goods_group_count" size="45"
-					value="<%=(goodsVO == null) ? "1" : goodsVO.getGoods_group_count()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_group_count()%>" /></td>
 			</tr>
 			<tr>
-				<td>許願數:</td>
+				<td>許願數</td>
 				<td><input type="TEXT" name="goods_want_count" size="45"
-					value="<%=(goodsVO == null) ? "1" : goodsVO.getGoods_want_count()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_want_count()%>" /></td>
 			</tr>
 			<tr>
-				<td>銷售量:</td>
+				<td>銷售量</td>
 				<td><input type="TEXT" name="goods_sales_count" size="45"
-					value="<%=(goodsVO == null) ? "1" : goodsVO.getGoods_sales_count()%>" /></td>
+					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_sales_count()%>" /></td>
 			</tr>
 
 			<%--<tr>
