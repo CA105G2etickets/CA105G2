@@ -78,7 +78,7 @@
   <li>
      <FORM METHOD="post" ACTION="goods.do" >
        <b>選擇商品名稱:</b>
-       <select size="1" name="goods_name">
+       <select size="1" name=goods_no>
          <c:forEach var="goodsVO" items="${goodsSvc.all}" > 
           <option value="${goodsVO.goods_no}">${goodsVO.goods_name}
          </c:forEach>   
