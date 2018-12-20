@@ -248,7 +248,7 @@ public class GoodsServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				GoodsService goodsSvc = new GoodsService();
-				goodsVO = goodsSvc.updateGoods(goods_name, goods_price, launchdate, offdate);
+				goodsVO = goodsSvc.updateGoods(goods_name, goods_nameReg, goods_nameReg, goods_price, null, null, null, goods_nameReg, goods_price, goods_price, goods_nameReg, launchdate, offdate, goods_price, goods_price, goods_price);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -396,7 +396,7 @@ public class GoodsServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				GoodsService goodsSvc = new GoodsService();
-				goodsVO = goodsSvc.addGoods(goods_name, goods_price, launchdate, offdate);
+				goodsVO = goodsSvc.addGoods(goods_name, goods_nameReg, goods_price, null, null, null, goods_nameReg, goods_price, goods_price, goods_nameReg, launchdate, offdate, goods_price, goods_price, goods_price);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
