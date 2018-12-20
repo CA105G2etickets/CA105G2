@@ -60,8 +60,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------Inserted----------");
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -81,7 +80,6 @@ public class GoodsDAO implements GoodsDAO_interface {
 		}
 
 	}
-
 
 	@Override
 	public void update(GoodsVO goodsVO) {
@@ -113,8 +111,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------Updated----------");
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -152,8 +149,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			System.out.println("----------Deleted----------");
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -213,8 +209,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -260,6 +255,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			while (rs.next()) {
 				goodsVO = new GoodsVO();
 				goodsVO.setGoods_no(rs.getString("goods_no"));
+				goodsVO.setEvetit_no(rs.getString("evetit_no"));
 				goodsVO.setGoods_name(rs.getString("goods_name"));
 				goodsVO.setGoods_price(rs.getInt("goods_price"));
 				goodsVO.setGoods_picture1(rs.getBytes("goods_picture1"));
@@ -280,8 +276,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			System.out.println("----------getAll finished----------");
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {

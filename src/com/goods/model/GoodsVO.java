@@ -1,8 +1,8 @@
 package com.goods.model;
 
 import java.sql.*;
-
-public class GoodsVO implements java.io.Serializable{
+import java.io.*;
+public class GoodsVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 3095677796845677385L;
 	private String goods_no;
@@ -21,15 +21,15 @@ public class GoodsVO implements java.io.Serializable{
 	private Integer goods_group_count;
 	private Integer goods_want_count;
 	private Integer goods_sales_count;
-	
+
 	public GoodsVO() {
 		super();
 	}
-	
-	public GoodsVO(String goods_no, String evetit_no, String goods_name,
-			Integer goods_price, byte[] goods_picture1, byte[] goods_picture2, byte[] goods_picture3,
-			String goods_introduction, Integer forsales_a,Integer favorite_count,String goods_status,
-			Timestamp launchdate, Timestamp offdate, Integer goods_group_count, Integer goods_want_count, Integer goods_sales_count) {
+
+	public GoodsVO(String goods_no, String evetit_no, String goods_name, Integer goods_price, byte[] goods_picture1,
+			byte[] goods_picture2, byte[] goods_picture3, String goods_introduction, Integer forsales_a,
+			Integer favorite_count, String goods_status, Timestamp launchdate, Timestamp offdate,
+			Integer goods_group_count, Integer goods_want_count, Integer goods_sales_count) {
 		super();
 		this.goods_no = goods_no;
 		this.evetit_no = evetit_no;
@@ -177,6 +177,4 @@ public class GoodsVO implements java.io.Serializable{
 		this.goods_sales_count = goods_sales_count;
 	}
 
-	
-	
 }
