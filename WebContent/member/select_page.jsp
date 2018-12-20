@@ -154,8 +154,7 @@
 			</li>
 			<a href='listAllMember.jsp'>列出所有會員</a>
 
-			<jsp:useBean id="memberservice" scope="page"
-				class="com.member.model.MemberService" />
+			<jsp:useBean id="memberservice" scope="page" class="com.member.model.MemberService" />
 
 			<!--   <li> -->
 			<!--      <FORM METHOD="post" ACTION="member.do" > -->
