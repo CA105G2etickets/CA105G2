@@ -333,7 +333,7 @@
       	       timepicker:false,       //timepicker:true,
       	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
       	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-      		   value: '<%=offdate%>''
+      		   value: '<%=offdate%>'
 	', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
