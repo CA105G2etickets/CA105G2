@@ -1,15 +1,24 @@
-package com.GOODS.model;
+package com.goods.model;
 
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class GoodsDAO implements GoodsDAO_interface {
 
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G2";
-	private static final String PASSWORD = "123456";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO GOODS VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
 
@@ -17,9 +26,9 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 	private static final String GET_ONE_STMT = "SELECT * FROM GOODS WHERE GOODS_NO = ? ";
 
-	private static final String DELETE_STMT = "DELETE FROM GOODS WHERE GOODS_NO = ?";
+	private static final String DELETE = "DELETE FROM GOODS WHERE GOODS_NO = ?";
 
-	private static final String UPDATE_STMT = "UPDATE GOODS SET EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?,GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, ForsalesS_A=?, FAVORITE_COUNT=?,GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?, GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=?,  GOODS_NO=?";
+	private static final String UPDATE = "UPDATE GOODS SET EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?,GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, ForsalesS_A=?, FAVORITE_COUNT=?,GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?, GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=?,  GOODS_NO=?";
 
 	@Override
 	public void insert(GoodsVO goodsVO) {
@@ -28,8 +37,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 		try {
 
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, goodsVO.getEvetit_no());
@@ -51,11 +59,10 @@ public class GoodsDAO implements GoodsDAO_interface {
 			pstmt.executeUpdate();
 
 			System.out.println("----------Inserted----------");
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -75,6 +82,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 	}
 
+
 	@Override
 	public void update(GoodsVO goodsVO) {
 
@@ -82,9 +90,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(UPDATE_STMT);
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, goodsVO.getEvetit_no());
 			pstmt.setString(2, goodsVO.getGoods_name());
@@ -105,11 +112,10 @@ public class GoodsDAO implements GoodsDAO_interface {
 			pstmt.executeUpdate();
 
 			System.out.println("----------Updated----------");
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -126,6 +132,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 				}
 			}
 		}
+
 	}
 
 	@Override
@@ -135,9 +142,8 @@ public class GoodsDAO implements GoodsDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(DELETE_STMT);
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setString(1, goods_no);
 
@@ -145,10 +151,10 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------Deleted----------");
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -165,21 +171,19 @@ public class GoodsDAO implements GoodsDAO_interface {
 				}
 			}
 		}
+
 	}
 
 	@Override
 	public GoodsVO findByPrimarykey(String goods_no) {
 
 		GoodsVO goodsVO = null;
-
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, goods_no);
@@ -208,10 +212,10 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------findByPrimaryKey finished----------");
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException se) {
-			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
 				try {
@@ -249,8 +253,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -276,10 +279,10 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			System.out.println("----------getAll finished----------");
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException se) {
-			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
 				try {
@@ -305,5 +308,4 @@ public class GoodsDAO implements GoodsDAO_interface {
 		}
 		return list;
 	}
-
 }

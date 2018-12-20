@@ -1,4 +1,4 @@
-package com.GOODS.model;
+package com.goods.model;
 
 import java.io.*;
 import java.sql.*;

@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>IBM Emp: Home</title>
+<title>ETICKET: Home</title>
 
 <style>
   table#table-1 {
@@ -66,7 +66,7 @@
      <FORM METHOD="post" ACTION="goods.do" >
        <b>選擇商品編號:</b>
        <select size="1" name="goods_no">
-         <c:forEach var="goodsVO" items="${empSvc.all}" > 
+         <c:forEach var="goodsVO" items="${goodsSvc.all}" > 
           <option value="${goodsVO.goods_no}">${goodsVO.goods_no}
          </c:forEach>   
        </select>

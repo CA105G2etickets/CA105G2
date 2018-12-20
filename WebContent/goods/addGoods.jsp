@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.emp.model.*"%>
+<%@ page import="com.goods.model.*"%>
  
 <%
   GoodsVO goodsVO = (GoodsVO) request.getAttribute("goodsVO");
@@ -67,6 +67,11 @@
 
 <FORM METHOD="post" ACTION="goods.do" name="form1">
 <table>
+<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
 	<tr>
 		<td>商品名稱:</td>
 		<td><input type="TEXT" name="goods_name" size="45" 
@@ -78,12 +83,62 @@
 			 value="<%= (goodsVO==null)? "400" : goodsVO.getgoods_price()%>" /></td>
 	</tr>
 	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
 		<td>上架日期:</td>
 		<td><input type="datetime-local" name="launchdate" id=""></td>
 	</tr>
 	<tr>
 		<td>下架建立日期:</td>
 		<td><input type="datetime-local" name="offdate" id=""></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
+	</tr>
+	<tr>
+		<td>會員姓名:</td>
+		<td><input type="TEXT" name="name" size="45" 
+			 value="<%= (goodsVO==null)? "吳永志" : goodsVO.getMemberFullname()%>" /></td>
 	</tr>
 <%--<tr>
 		<td>獎金:</td>

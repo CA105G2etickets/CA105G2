@@ -25,6 +25,15 @@
 		<servlet-name>MemberServlet</servlet-name>
 		<url-pattern>/member/member.do</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>GoodsServlet</servlet-name>
+		<servlet-class>com.goods.controller.GoodsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GoodsServlet</servlet-name>
+		<url-pattern>/goods/goods.do</url-pattern>
+	</servlet-mapping>
   
   
 </web-app>
