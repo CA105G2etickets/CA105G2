@@ -166,7 +166,7 @@
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
            theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
+ 	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=orderDate%>', // value:   new Date(),
@@ -178,7 +178,7 @@
 
         $('#f_date2').datetimepicker({
            theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
+ 	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=orderEtd%>', // value:   new Date(),
@@ -190,7 +190,7 @@
         
         $('#f_date3').datetimepicker({
            theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
+ 	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=pickupDate%>', // value:   new Date(),
