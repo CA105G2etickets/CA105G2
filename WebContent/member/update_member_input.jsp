@@ -173,7 +173,7 @@
 <FORM METHOD="post" ACTION="member.do" name="form1">
 <table class="table">
 	<tr>
-		<td>會員編號:<font color=red><b>*</b></font></td>
+		<td>會員編號:<font color=red></font></td>
 		<td><%=member.getMemberNo()%></td>
 	</tr>
 	<tr>
