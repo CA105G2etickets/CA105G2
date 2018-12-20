@@ -6,8 +6,8 @@ import java.util.List;
 public class TicketService {
 	private TicketDAO_interface dao;
 	public TicketService() {
-		dao = new TicketDAOJDBC();
-//		dao = new TicketDAO();
+//		dao = new TicketDAOJDBC();
+		dao = new TicketDAO();
 	}
 	public TicketVO addTicket(String ticarea_no, String ticket_order_no, String member_no, 
 			String ticket_status, Timestamp ticket_create_time, String ticket_resale_status, 

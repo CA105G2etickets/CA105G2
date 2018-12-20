@@ -64,7 +64,7 @@
   
   <li>
      <FORM METHOD="post" ACTION="ticket.do" >
-       <b>選擇某一張票券編號:</b>
+       <b>選擇某一張票券的票券編號:</b>
        <select size="1" name="ticket_no">
          <c:forEach var="TicketVO" items="${TicketSvc.all}" > 
           <option value="${TicketVO.ticket_no}">${TicketVO.ticket_no}
@@ -89,7 +89,7 @@
 </ul>
 
 
-<h3>訂票訂單管理</h3>
+<h3>票券管理</h3>
 
 <ul>
   <li><a href='addTicket.jsp'>Add</a> a new Ticket.</li>

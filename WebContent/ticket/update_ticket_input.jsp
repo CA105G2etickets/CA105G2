@@ -80,7 +80,7 @@ pageContext.setAttribute("tVO",tVO);
 	</tr>
 	<jsp:useBean id="TicketOrderSvc" scope="page" class="com.ticketorder.model.TicketOrderService" />
 	<tr>
-		<td>假設此更新票券一定要對應到一張已存在的訂票訂單，此處將顯示某張訂票訂單的購買會員的會員編號:<font color=red><b>*</b></font></td>
+		<td>假設此更新票券一定要對應到一張已存在的訂票訂單，此處將顯示某張訂票訂單的購買會員的會員編號:(目前顯示的三個會員編號皆相同，但由上到下分別代表訂票訂單00001,00002,00003)<font color=red><b>*</b></font></td>
 		<td><select size="1" name="ticket_order_no">
 			<c:forEach var="TicketOrderVO" items="${TicketOrderSvc.all}">
 				<option value="${TicketOrderVO.ticket_order_no}" ${(tVO.ticket_order_no==TicketOrderVO.ticket_order_no)?'selected':'' } >${TicketOrderVO.member_no}
@@ -116,15 +116,12 @@ pageContext.setAttribute("tVO",tVO);
 		<td><input type="TEXT" name="is_from_resale" size="45"
 			 value="${tVO.is_from_resale }" /></td>
 	</tr>
-	
-
-
-
 </table>
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="ticket_no" value="${tVO.ticket_no}">
 <input type="submit" value="送出修改"></FORM>
+<h1>${TicketOrderVO.ticket_order_no}</h1>
 </body>
 
 

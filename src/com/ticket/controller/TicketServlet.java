@@ -134,8 +134,8 @@ public class TicketServlet extends HttpServlet {
 				String ticket_order_no = req.getParameter("ticket_order_no");
 				if (ticket_order_no == null || ticket_order_no.trim().length() == 0) {
 					errorMsgs.add("訂票訂單編號: 請勿空白");
-				} else if(!ticket_order_no.trim().equals("TO_20181225_000001")) { 
-					errorMsgs.add("訂票訂單編號 目前只能是TO_20181225_000001");
+				} else if(!ticket_order_no.trim().contains("TO_20181225_00000")) {
+	            	errorMsgs.add("訂票訂單編號 目前只能是TO_20181225_000001 or TO_20181225_000002 or TO_20181225_000003");
 	            }
 				
 				String member_no = req.getParameter("member_no");
