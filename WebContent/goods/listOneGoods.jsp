@@ -10,22 +10,24 @@
 <head>
 <title>商品資料 - listOneGoods.jsp</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
-  table#table-1 {
+table#table-1 {
 	width: 450px;
 	background-color: #CCCCFF;
 	margin-top: 5px;
 	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
+	border: 3px ridge Gray;
+	height: 80px;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
 </style>
 <style>
 .memberphoto {
@@ -53,38 +55,41 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
-
 </style>
 <style>
-  table#table-1 {
+table#table-1 {
 	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
+	border: 2px solid black;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: blue;
+	display: inline;
+}
 </style>
 
 <style>
-  table {
+table {
 	width: 450px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
+}
+
+table, th, td {
+	border: 0px solid #CCCCFF;
+}
+
+th, td {
+	padding: 1px;
+}
 </style>
 </head>
 <nav class="navbar navbar-inverse" role="navigation">
@@ -111,50 +116,50 @@
 			<ul class="nav navbar-nav navbar-right membermenu">
 				<li><a href="#">管理員登出</a></li>
 				<li><a href="#">設定</a></li>
-<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
-<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
-<!-- 					<ul class="dropdown-menu"> -->
-<!-- 						<li><a href="#">繁體中文</a></li> -->
-<!-- 						<li><a href="#">English</a></li> -->
-<!-- 						<li><a href="#">日本語</a></li> -->
-<!-- 					</ul> -->
-<!-- 				</li> -->
+				<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
+				<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
+				<!-- 					<ul class="dropdown-menu"> -->
+				<!-- 						<li><a href="#">繁體中文</a></li> -->
+				<!-- 						<li><a href="#">English</a></li> -->
+				<!-- 						<li><a href="#">日本語</a></li> -->
+				<!-- 					</ul> -->
+				<!-- 				</li> -->
 			</ul>
 		</div>
 		<!-- 手機隱藏選單區結束 -->
 	</div>
-<div class="topnav">
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">活動管理</a>
+	<div class="topnav">
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">活動管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">票券管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">商品管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">團購管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">常見問題管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">公告管理</a>
+			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">票券管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">商品管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">團購管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">常見問題管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">公告管理</a>
-		</div>
-	</div>
-</div>
 </nav>
 
 <table class="table">
@@ -181,9 +186,15 @@
 		<td><%=goodsVO.getEvetit_no()%></td>
 		<td><%=goodsVO.getGoods_name()%></td>
 		<td><%=goodsVO.getGoods_price()%></td>
-		<td><%=goodsVO.getGoods_picture1()%></td>
-		<td><%=goodsVO.getGoods_picture2()%></td>
-		<td><%=goodsVO.getGoods_picture3()%></td>
+		<td><img
+			src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}"
+			width=50% /></td>
+		<td><img
+			src="<%=request.getContextPath()%>/goods/goodsImg2.do?goods_no=${goodsVO.goods_no}"
+			width=50% /></td>
+		<td><img
+			src="<%=request.getContextPath()%>/goods/goodsImg3.do?goods_no=${goodsVO.goods_no}"
+			width=50% /></td>
 		<td><%=goodsVO.getGoods_introduction()%></td>
 		<td><%=goodsVO.getForsales_a()%></td>
 		<td><%=goodsVO.getFavorite_count()%></td>
@@ -196,6 +207,7 @@
 
 	</tr>
 </table>
-<a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0">
-</body>
+<a href="select_page.jsp"><img src="images/back1.png" width="186"
+	height="81" border="0">
+	</body>
 </html>

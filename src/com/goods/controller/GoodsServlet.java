@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.goods.model.*;
+import com.member.model.MemberVO;
 
 public class GoodsServlet extends HttpServlet {
 
@@ -89,7 +90,7 @@ public class GoodsServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String goods_no = new String(req.getParameter("goods_no"));
-
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				GoodsService goodsSvc = new GoodsService();
 				GoodsVO goodsVO = goodsSvc.getOneGoods(goods_no);
@@ -119,26 +120,30 @@ public class GoodsServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 //				String goods_no = new String(req.getParameter("goods_no").trim());
 //				String evetit_no = new String(req.getParameter("evetit_no").trim());
-//				
+								String evetit_no = req.getParameter("evetit_no").trim();
+				if (evetit_no == null || evetit_no.trim().length() == 0) {
+					errorMsgs.add("商品介紹請勿空白");
+				}
+				
 				String goods_name = req.getParameter("goods_name");
-				String goods_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				String goods_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,70}$";
 				if (goods_name == null || goods_name.trim().length() == 0) {
 					errorMsgs.add("商品名稱: 請勿空白");
 				} else if (!goods_name.trim().matches(goods_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("商品名稱: 只能是中、英文字母、數字");
 				}
 
-//				String goods_introduction = req.getParameter("goods_introduction").trim();
-//				if (goods_introduction == null || goods_introduction.trim().length() == 0) {
-//					errorMsgs.add("商品介紹請勿空白");
-//				}	
+				String goods_introduction = req.getParameter("goods_introduction").trim();
+				if (goods_introduction == null || goods_introduction.trim().length() == 0) {
+					errorMsgs.add("商品介紹請勿空白");
+				}	
 
 				Integer goods_price = null;
 				try {
 					goods_price = new Integer(req.getParameter("goods_price").trim());
 				} catch (NumberFormatException e) {
 					goods_price = 0;
-					errorMsgs.add("售價");
+					errorMsgs.add("請輸入售價");
 				}
 
 //				Integer forsales_a = null;
@@ -162,21 +167,21 @@ public class GoodsServlet extends HttpServlet {
 //					errorMsgs.add("商品狀態請勿空白");
 //				}	
 
-				java.sql.Timestamp launchdate = null;
-				try {
-					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
-				} catch (IllegalArgumentException e) {
-					launchdate = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入上架日期!");
-				}
-
-				java.sql.Timestamp offdate = null;
-				try {
-					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
-				} catch (IllegalArgumentException e) {
-					offdate = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入下架日期!");
-				}
+//				java.sql.Timestamp launchdate = null;
+//				try {
+//					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
+//				} catch (IllegalArgumentException e) {
+//					launchdate = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入上架日期!");
+//				}
+//
+//				java.sql.Timestamp offdate = null;
+//				try {
+//					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
+//				} catch (IllegalArgumentException e) {
+//					offdate = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入下架日期!");
+//				}
 
 //				Integer goods_group_count = null;
 //				try {
@@ -203,7 +208,7 @@ public class GoodsServlet extends HttpServlet {
 //				}
 
 				GoodsVO goodsVO = new GoodsVO();
-//				goodsVO.setEvetit_no(evetit_no);
+				goodsVO.setEvetit_no(evetit_no);
 				goodsVO.setGoods_name(goods_name);
 				goodsVO.setGoods_price(goods_price);
 //				goodsVO.setGoods_picture1(goods_picture1);
@@ -213,8 +218,8 @@ public class GoodsServlet extends HttpServlet {
 //				goodsVO.setForsales_a(forsales_a);
 //				goodsVO.setFavorite_count(favorite_count);
 //				goodsVO.setGoods_status(goods_status);
-				goodsVO.setLaunchdate(launchdate);
-				goodsVO.setOffdate(offdate);
+//				goodsVO.setLaunchdate(launchdate);
+//				goodsVO.setOffdate(offdate);
 //				goodsVO.setGoods_group_count(goods_group_count);
 //				goodsVO.setGoods_want_count(goods_want_count);
 //				goodsVO.setGoods_sales_count(goods_sales_count);
@@ -229,9 +234,9 @@ public class GoodsServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
-				goodsVO = goodsSvc.updateGoods(goods_name, goods_nameReg, goods_nameReg, goods_price, null, null, null,
-						goods_nameReg, goods_price, goods_price, goods_nameReg, launchdate, offdate, goods_price,
-						goods_price, goods_price);
+//				goodsVO = goodsSvc.updateGoods(goods_name, goods_nameReg, goods_nameReg, goods_price, null, null, null,
+//						goods_nameReg, goods_price, goods_price, goods_nameReg, launchdate, offdate, goods_price,
+//						goods_price, goods_price);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -256,16 +261,13 @@ public class GoodsServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//				String goods_no = new String(req.getParameter("goods_no").trim());
+				String goods_no = new String(req.getParameter("goods_no").trim());
 				String evetit_no = req.getParameter("evetit_no");
-				String evetit_noReg = "^[(a-zA-Z0-9_)]{2,10}$";
 				if (evetit_no == null || evetit_no.trim().length() == 0) {
 					errorMsgs.add("活動編號 請勿空白");
-				} else if (!evetit_no.trim().matches(evetit_noReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("活動編號: 只能是英文字母、數字");
 				}
 				String goods_name = req.getParameter("goods_name");
-				String goods_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				
 				if (goods_name == null || goods_name.trim().length() == 0)
 					errorMsgs.add("商品名稱: 請勿空白");
 
@@ -296,27 +298,23 @@ public class GoodsServlet extends HttpServlet {
 //					favorite_count = 0;
 //					errorMsgs.add("喜愛人數");
 //				}
-				String goods_status = req.getParameter("goods_status");
-				String goods_statusReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (goods_status == null || goods_status.trim().length() == 0) {
-					errorMsgs.add("商品狀態請勿空白");
-				}
+		
 
-				java.sql.Timestamp launchdate = null;
-				try {
-					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
-				} catch (IllegalArgumentException e) {
-					launchdate = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入開始日期!");
-				}
-
-				java.sql.Timestamp offdate = null;
-				try {
-					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
-				} catch (IllegalArgumentException e) {
-					offdate = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入結束日期!");
-				}
+//				java.sql.Timestamp launchdate = null;
+//				try {
+//					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
+//				} catch (IllegalArgumentException e) {
+//					launchdate = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入開始日期!");
+//				}
+//
+//				java.sql.Timestamp offdate = null;
+//				try {
+//					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
+//				} catch (IllegalArgumentException e) {
+//					offdate = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入結束日期!");
+//				}
 
 //				Integer goods_group_count = null;
 //				try {
@@ -343,18 +341,19 @@ public class GoodsServlet extends HttpServlet {
 //				}
 
 				GoodsVO goodsVO = new GoodsVO();
-//				goodsVO.setEvetit_no(evetit_no);
+				goodsVO.setGoods_no(goods_no);
+				goodsVO.setEvetit_no(evetit_no);
 				goodsVO.setGoods_name(goods_name);
 				goodsVO.setGoods_price(goods_price);
 //				goodsVO.setGoods_picture1(goods_picture1);
 //				goodsVO.setGoods_picture2(goods_picture2);
 //				goodsVO.setGoods_picture3(goods_picture3);
-//				goodsVO.setGoods_introduction(goods_introduction);
+				goodsVO.setGoods_introduction(goods_introduction);
 //				goodsVO.setForsales_a(forsales_a);
 //				goodsVO.setFavorite_count(favorite_count);
 //				goodsVO.setGoods_status(goods_status);
-				goodsVO.setLaunchdate(launchdate);
-				goodsVO.setOffdate(offdate);
+//				goodsVO.setLaunchdate(launchdate);
+//				goodsVO.setOffdate(offdate);
 //				goodsVO.setGoods_group_count(goods_group_count);
 //				goodsVO.setGoods_want_count(goods_want_count);
 //				goodsVO.setGoods_sales_count(goods_sales_count);
@@ -369,12 +368,12 @@ public class GoodsServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
-				goodsVO = goodsSvc.addGoods(goods_name, goods_nameReg, goods_price, null, null, null, goods_nameReg,
-						goods_price, goods_price, goods_nameReg, launchdate, offdate, goods_price, goods_price,
-						goods_price);
+//				goodsVO = goodsSvc.addGoods(goods_name,  goods_introduction, goods_price, null, null, null,
+//						goods_introduction, goods_price, goods_price, goods_introduction, null, null, goods_price, goods_price,
+//						goods_price);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
+//				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/goods/listAllGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);

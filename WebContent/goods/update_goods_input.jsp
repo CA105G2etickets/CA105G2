@@ -176,10 +176,10 @@ th, td {
 
 <FORM METHOD="post" ACTION="goods.do" name="form1">
 	<table>
-		<tr>
-			<td>商品編號:<font color=red></font></td>
-			<td><%=goodsVO.getGoods_no()%></td>
-		</tr>
+<!-- 		<tr> -->
+<!-- 			<td>商品編號:<font color=red></font></td> -->
+<%-- 			<td><%=goodsVO.getGoods_no()%></td> --%>
+<!-- 		</tr> -->
 		<tr>
 			<td>活動編號:</td>
 			<td><input type="TEXT" name="evetit_no" size="45"
@@ -196,62 +196,62 @@ th, td {
 				value="<%=goodsVO.getGoods_price()%>" /></td>
 		</tr>
 		<tr>
-		<tr>
-			<td>圖1</td>
-			<td><input type="file" accept="image/jpeg, image/png"
-				name="picture1" size="45"
-				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture1()%>" /></td>
-		</tr>
-		<tr>
-			<td>圖2</td>
-			<td><input type="file" accept="image/jpeg, image/png"
-				name="picture2" size="45"
-				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture2()%>" /></td>
-		</tr>
-		<tr>
-			<td>圖3</td>
-			<td><input type="file" accept="image/jpeg, image/png"
-				name="picture3" size="45"
-				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture3()%>" /></td>
-		</tr>
-		<tr>
-			<td>促銷價</td>
-			<td><input type="TEXT" name="forsales_a" size="45"
-				value="<%=goodsVO.getForsales_a()%>" /></td>
-		</tr>
-		<tr>
-			<td>喜愛人數:</td>
-			<td><input type="TEXT" name="favorite_count" size="45"
-				value="<%=goodsVO.getFavorite_count()%> " /></td>
-		</tr>
-		<tr>
-			<td>商品狀態</td>
-			<td><input type="TEXT" name="goods_status" size="45"
-				value="<%=goodsVO.getGoods_status()%>" /></td>
-		</tr>
-		<tr>
-			<td>上架日期:</td>
-			<td><input type="datetime-local" name="launchdate" id='#f_date1'></td>
-		</tr>
-		<tr>
-			<td>下架日期:</td>
-			<td><input type="datetime-local" name="offdate" id='#f_date2'></td>
-		</tr>
-		<tr>
-			<td>開團數:</td>
-			<td><input type="TEXT" name="goods_group_count" size="45"
-				value="<%=goodsVO.getGoods_group_count()%>" /></td>
-		</tr>
-		<tr>
-			<td>許願數</td>
-			<td><input type="TEXT" name="goods_want_count" size="45"
-				value="<%=goodsVO.getGoods_want_count()%>" /></td>
-		</tr>
-		<tr>
-			<td>銷售量</td>
-			<td><input type="TEXT" name="goods_sales_count" size="45"
-				value="<%=goodsVO.getGoods_sales_count()%>" /></td>
-		</tr>
+<!-- 		<tr> -->
+<!-- 			<td>圖1</td> -->
+<!-- 			<td><input type="file" accept="image/jpeg, image/png" -->
+<!-- 				name="picture1" size="45" -->
+<%-- 				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture1()%>" /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>圖2</td> -->
+<!-- 			<td><input type="file" accept="image/jpeg, image/png" -->
+<!-- 				name="picture2" size="45" -->
+<%-- 				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture2()%>" /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>圖3</td> -->
+<!-- 			<td><input type="file" accept="image/jpeg, image/png" -->
+<!-- 				name="picture3" size="45" -->
+<%-- 				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture3()%>" /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>促銷價</td> -->
+<!-- 			<td><input type="TEXT" name="forsales_a" size="45" -->
+<%-- 				value="<%=goodsVO.getForsales_a()%>" /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>喜愛人數:</td> -->
+<!-- 			<td><input type="TEXT" name="favorite_count" size="45" -->
+<%-- 				value="<%=goodsVO.getFavorite_count()%> " /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>商品狀態</td> -->
+<!-- 			<td><input type="TEXT" name="goods_status" size="45" -->
+<%-- 				value="<%=goodsVO.getGoods_status()%>" /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>上架日期:</td> -->
+<!-- 			<td><input type="datetime-local" name="launchdate" id='#f_date1'></td> -->
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>下架日期:</td> -->
+<!-- 			<td><input type="datetime-local" name="offdate" id='#f_date2'></td> -->
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>開團數:</td> -->
+<!-- 			<td><input type="TEXT" name="goods_group_count" size="45" -->
+<%-- 				value="<%=goodsVO.getGoods_group_count()%>" /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>許願數</td> -->
+<!-- 			<td><input type="TEXT" name="goods_want_count" size="45" -->
+<%-- 				value="<%=goodsVO.getGoods_want_count()%>" /></td> --%>
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<td>銷售量</td> -->
+<!-- 			<td><input type="TEXT" name="goods_sales_count" size="45" -->
+<%-- 				value="<%=goodsVO.getGoods_sales_count()%>" /></td> --%>
+<!-- 		</tr> -->
 
 		<%--<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
 	<tr>
@@ -274,65 +274,64 @@ th, td {
 
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script
-	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<!-- <link rel="stylesheet" type="text/css" -->
+<%-- 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" /> --%>
+<%-- <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script> --%>
+<!-- <script -->
+<%-- 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
 
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
+<!-- <style> -->
+/* .xdsoft_datetimepicker .xdsoft_datepicker { */
+/* 	width: 300px; /* width:  300px; */ */
+/* } */
 
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
+/* .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box { */
+/* 	height: 151px; /* height:  151px; */ */
+/* } */
+<!-- </style> -->
 
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:true,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-		   value: '<%=goodsVO.getLaunchdate()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
-        </script>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script
-	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<!-- <script> -->
+//         $.datetimepicker.setLocale('zh');
+//         $('#f_date1').datetimepicker({
+// 	       theme: '',              //theme: 'dark',
+// 	       timepicker:true,       //timepicker:true,
+// 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+// 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+<%-- 		   value: '<%=goodsVO.getLaunchdate()%>', // value:   new Date(), --%>
+//            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//            //startDate:	            '2017/07/10',  // 起始日
+//            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+//            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+//         });
+<!--         </script> -->
+<!-- <link rel="stylesheet" type="text/css" -->
+<%-- 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" /> --%>
+<%-- <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script> --%>
+<!-- <script -->
+<%-- 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
 
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
+<!-- <style> -->
+/* .xdsoft_datetimepicker .xdsoft_datepicker { */
+/* 	width: 300px; /* width:  300px; */ */
+/* } */
 
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
+/* .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box { */
+/* 	height: 151px; /* height:  151px; */ */
+/* } */
+<!-- </style> -->
 
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date2').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:true,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-		   value: '<%=goodsVO.getOffdate()%>
-	', // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
+<!-- <script> -->
+//         $.datetimepicker.setLocale('zh');
+//         $('#f_date2').datetimepicker({
+// 	       theme: '',              //theme: 'dark',
+// 	       timepicker:true,       //timepicker:true,
+// 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+// 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+<!-- // 	', // value:   new Date(), -->
+<!-- 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含 -->
+<!-- 	//startDate:	            '2017/07/10',  // 起始日 -->
+<!-- 	//minDate:               '-1970-01-01', // 去除今日(不含)之前 -->
+<!-- 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後 -->
+<!-- 	}); -->
 </script>
 </html>

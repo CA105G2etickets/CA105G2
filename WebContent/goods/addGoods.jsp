@@ -186,6 +186,11 @@ th, td {
 
 <FORM METHOD="post" ACTION="goods.do" name="form1">
 	<table class="table">
+	<tr>
+			<td>商品編號</td>
+			<td><input type="TEXT" placeholder="P0000019" name="goods_no"
+				size="45"></td>
+		</tr>
 		<tr>
 			<td>活動編號</td>
 			<td><input type="TEXT" placeholder="E0003" name="evetit_no"
@@ -201,24 +206,8 @@ th, td {
 			<td><input type="TEXT" placeholder="400" name="goods_price"
 				size="45"></td>
 		</tr>
-		<tr>
-			<td>圖1</td>
-		<td><input type="file" accept="image/jpeg, image/png"
-				name="picture1" size="45"
-				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture1()%>" /></td>
-		</tr>
-		<tr>
-			<td>圖2</td>
-			<td><input type="file" accept="image/jpeg, image/png"
-				name="picture2" size="45"
-				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture2()%>" /></td>
-		</tr>
-		<tr>
-			<td>圖3</td>
-			<td><input type="file" accept="image/jpeg, image/png"
-				name="picture3" size="45"
-				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture3()%>" /></td>
-		</tr>
+	
+
 		<tr>
 			<td>商品介紹</td>
 			<td><input type="TEXT" placeholder="應援手環"
@@ -230,11 +219,7 @@ th, td {
 				size="45"></td>
 		</tr>
 
-		<tr>
-			<td>商品狀態</td>
-			<td><input type="TEXT" placeholder="上架中" name="goods_status"
-				size="45"></td>
-		</tr>
+	
 	
 
 
