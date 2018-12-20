@@ -10,7 +10,51 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>新增會員 - addMember.jsp</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+  table#table-1 {
+	width: 450px;
+	background-color: #CCCCFF;
+	margin-top: 5px;
+	margin-bottom: 10px;
+    border: 3px ridge Gray;
+    height: 80px;
+    text-align: center;
+  }
+  table#table-1 h4 {
+    color: red;
+    display: block;
+    margin-bottom: 1px;
+  }
+</style>
+<style>
+.memberphoto {
+	border-radius: 50px;
+	margin-top: 20px;
+}
 
+.membermenu {
+	margin-top: 100px;
+	margin-left: 200px;
+}
+
+.topnav {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+.topnav {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+</style>
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -42,16 +86,76 @@
     padding: 1px;
   }
 </style>
-
 </head>
-<body bgcolor='white'>
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-ex1-collapse">
+				<span class="sr-only">選單切換</span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<img src="images/LOGO_back-end.png" href="#" alt="LOGO"
+				width="202.25px" height="165.5px">
+		</div>
 
-<table id="table-1">
-	<tr><td>
-		 <h3>新增會員 - addMember.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a></h4>
-	</td></tr>
-</table>
+		<!-- 手機隱藏選單區  -->
+
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<!-- 右選單 -->
+			<img
+				src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7"
+				class="memberphoto" href="#" alt="LOGO" style="float: right"
+				width="80px" height="80px">
+
+			<ul class="nav navbar-nav navbar-right membermenu">
+				<li><a href="#">管理員登出</a></li>
+				<li><a href="#">設定</a></li>
+<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
+<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
+<!-- 					<ul class="dropdown-menu"> -->
+<!-- 						<li><a href="#">繁體中文</a></li> -->
+<!-- 						<li><a href="#">English</a></li> -->
+<!-- 						<li><a href="#">日本語</a></li> -->
+<!-- 					</ul> -->
+<!-- 				</li> -->
+			</ul>
+		</div>
+		<!-- 手機隱藏選單區結束 -->
+	</div>
+<div class="topnav">
+	<div class="col-xs-12 col-sm-2">
+		<div>
+			<a href="#" class="topnav" align="center">活動管理</a>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<div>
+			<a href="#" class="topnav" align="center">票券管理</a>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<div>
+			<a href="#" class="topnav" align="center">商品管理</a>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<div>
+			<a href="#" class="topnav" align="center">團購管理</a>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<div>
+			<a href="#" class="topnav" align="center">常見問題管理</a>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<div>
+			<a href="#" class="topnav" align="center">公告管理</a>
+		</div>
+	</div>
+</div>
+</nav>
 
 <h3>新增會員資料:</h3>
 
@@ -66,45 +170,38 @@
 </c:if>
 
 <FORM METHOD="post" ACTION="member.do" name="form1">
-<table>
+<table class="table">
 	<tr>
 		<td>會員姓名:</td>
-		<td><input type="TEXT" name="name" size="45" 
-			 value="<%= (member==null)? "吳永志" : member.getMemberFullname()%>" /></td>
+		<td><input type="TEXT" placeholder="吳永志" name="name" size="45"></td>
 	</tr>
 	<tr>
 		<td>會員電子郵件:</td>
-		<td><input type="email" name="email" size="45"
-			 value="<%= (member==null)? "xxx@email.com" : member.getEmail()%>" /></td>
+		<td><input type="email" placeholder="xxx@email.com"name="email" size="45"></td>
 	</tr>
 	<tr>
 		<td>會員手機號碼:</td>
-		<td><input type="TEXT" name="phone" size="45"
-			 value="<%= (member==null)? "0923-123456" : member.getPhone()%>" /></td>
+		<td><input type="TEXT" placeholder="0923-123456" name="phone" size="45"></td>
 	</tr>
 	<tr>
 		<td>會員身分證字號:</td>
-		<td><input type="TEXT" name="idcard" size="45"
-			 value="<%= (member==null)? "T100123456" : member.getIdcard()%>" /></td>
+		<td><input type="TEXT" placeholder="T100123456" name="idcard" size="45"></td>
 	</tr>
 	<tr>
 		<td>會員帳號:</td>
-		<td><input type="TEXT" name="account" size="45"
-			 value="<%= (member==null)? "memberAccount" : member.getMemberAccount()%>" /></td>
+		<td><input type="TEXT" placeholder="eticketsTest" name="account" size="45"></td>
 	</tr>
 	<tr>
 		<td>會員密碼:</td>
-		<td><input type="TEXT" name="password" size="45"
-			 value="<%= (member==null)? "memberPassword" : member.getMemberPassword()%>" /></td>
+		<td><input type="TEXT" placeholder="123456" name="password" size="45"></td>
 	</tr>
 	<tr>
 		<td>會員電子錢包餘額:</td>
-		<td><input type="number" min="0" max="999999" name="ewalletBalance" size="45"
-			 value="<%= (member==null)? "10000" : member.getEwalletBalance()%>" /></td>
+		<td><input type="number" min="0" max="999999" name="ewalletBalance" size="45"></td>
 	</tr>
 	<tr>
-		<td>帳號建立日期:</td>
-		<td><input type="datetime-local" name="creationDate" id=""></td>
+		<td>帳號建立日期時間:</td>
+		<td>系統新增時間</td>
 	</tr>
 	<tr>
 		<td>會員大頭貼:</td>
@@ -113,8 +210,7 @@
 	</tr>
 	<tr>
 		<td>會員狀態:</td>
-		<td><input type="TEXT" name="states" size="45"
-			 value="<%= (member==null)? "normal" : member.getMemberStatus()%>" /></td>
+		<td>normal</td>
 	</tr>
 
 <%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
@@ -131,6 +227,7 @@
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+<a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a>
 </body>
 
 
