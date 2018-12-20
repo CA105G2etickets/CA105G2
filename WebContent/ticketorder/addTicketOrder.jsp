@@ -4,7 +4,7 @@
 
 
 <%
-TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("TicketOrderVO");
+TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 %>
 
 <html>

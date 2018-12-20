@@ -58,6 +58,17 @@ public class TicketOrderServlet extends HttpServlet {
 					return;//程式中斷
 				}
 				
+				if (this.containsHanScript(str)) {
+					errorMsgs.add("訂票訂單編號不可包含中文");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/ticketorder/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
 				/***************************2.開始查詢資料*****************************************/
 				TicketOrderService toSvc = new TicketOrderService();
 				TicketOrderVO toVO = toSvc.getOneTicketOrder(str);
@@ -143,6 +154,9 @@ public class TicketOrderServlet extends HttpServlet {
 				Integer total_price = null;
 				try {
 					total_price = new Integer(req.getParameter("total_price").trim());
+					if(total_price > 100100100 || total_price <0) {
+						errorMsgs.add("總價請勿亂填數字.");
+					}
 				} catch (NumberFormatException e) {
 					total_price = 0;
 					errorMsgs.add("總價請填數字.");
@@ -151,6 +165,9 @@ public class TicketOrderServlet extends HttpServlet {
 				Integer total_amount = null;
 				try {
 					total_amount = new Integer(req.getParameter("total_amount").trim());
+					if(total_amount > 100100 || total_amount <0) {
+						errorMsgs.add("總張數請勿亂填數字.");
+					}
 				} catch (NumberFormatException e) {
 					total_amount = 0;
 					errorMsgs.add("總張數請填數字.");
@@ -167,16 +184,20 @@ public class TicketOrderServlet extends HttpServlet {
 				String payment_method = req.getParameter("payment_method").trim();
 				if (payment_method == null || payment_method.trim().length() == 0) {
 					errorMsgs.add("付款方式請勿空白");
-				}else if(payment_method.length()>12) {
+				} else if(payment_method.length()>12) {
 					errorMsgs.add("付款方式請勿超過12碼");
+				} else if(this.containsHanScript(payment_method)) {
+					errorMsgs.add("付款方式請勿使用中文");
 				}
 				
 				String ticket_order_status = req.getParameter("ticket_order_status").trim();
 				if (ticket_order_status == null || ticket_order_status.trim().length() == 0) {
 					errorMsgs.add("訂票訂單狀態請勿空白");
-				}else if(ticket_order_status.length()>12) {
+				} else if(ticket_order_status.length()>12) {
 					errorMsgs.add("訂票訂單狀態請勿超過12碼");
-				}				
+				} else if(this.containsHanScript(ticket_order_status)) {
+					errorMsgs.add("訂票訂單狀態請勿使用中文");
+				}		
 				
 				TicketOrderVO toVO = new TicketOrderVO();
 				toVO.setTicket_order_no(ticket_order_no);
@@ -241,6 +262,9 @@ public class TicketOrderServlet extends HttpServlet {
 				Integer total_price = null;
 				try {
 					total_price = new Integer(req.getParameter("total_price").trim());
+					if(total_price > 100100100 || total_price <0) {
+						errorMsgs.add("總價請勿亂填數字.");
+					}
 				} catch (NumberFormatException e) {
 					total_price = 0;
 					errorMsgs.add("總價請填數字.");
@@ -249,6 +273,9 @@ public class TicketOrderServlet extends HttpServlet {
 				Integer total_amount = null;
 				try {
 					total_amount = new Integer(req.getParameter("total_amount").trim());
+					if(total_amount > 100100 || total_amount <0) {
+						errorMsgs.add("總張數請勿亂填數字.");
+					}
 				} catch (NumberFormatException e) {
 					total_amount = 0;
 					errorMsgs.add("總張數請填數字.");
@@ -265,15 +292,19 @@ public class TicketOrderServlet extends HttpServlet {
 				String payment_method = req.getParameter("payment_method").trim();
 				if (payment_method == null || payment_method.trim().length() == 0) {
 					errorMsgs.add("付款方式請勿空白");
-				}else if(payment_method.length()>12) {
+				} else if(payment_method.length()>12) {
 					errorMsgs.add("付款方式請勿超過12碼");
+				} else if(this.containsHanScript(payment_method)) {
+					errorMsgs.add("付款方式請勿使用中文");
 				}
 				
 				String ticket_order_status = req.getParameter("ticket_order_status").trim();
 				if (ticket_order_status == null || ticket_order_status.trim().length() == 0) {
 					errorMsgs.add("訂票訂單狀態請勿空白");
-				}else if(ticket_order_status.length()>12) {
+				} else if(ticket_order_status.length()>12) {
 					errorMsgs.add("訂票訂單狀態請勿超過12碼");
+				} else if(this.containsHanScript(ticket_order_status)) {
+					errorMsgs.add("訂票訂單狀態請勿使用中文");
 				}			
 				
 				TicketOrderVO toVO = new TicketOrderVO();
@@ -339,8 +370,16 @@ public class TicketOrderServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
-		
+	}
+	public boolean containsHanScript(String s) {
+	    for (int i = 0; i < s.length(); ) {
+	        int codepoint = s.codePointAt(i);
+	        i += Character.charCount(codepoint);
+	        if (Character.UnicodeScript.of(codepoint) == Character.UnicodeScript.HAN) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 
 }
