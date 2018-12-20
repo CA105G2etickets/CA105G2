@@ -44,6 +44,33 @@
     <url-pattern>/OrderHistory/OrderHistory.do</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>GoodsImgServlet1</servlet-name>
+    <servlet-class>com.goods.controller.GoodsImgServlet1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsImgServlet1</servlet-name>
+    <url-pattern>/goods/goodsImg1.do</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>GoodsImgServlet2</servlet-name>
+    <servlet-class>com.goods.controller.GoodsImgServlet2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsImgServlet2</servlet-name>
+    <url-pattern>/goods/goodsImg2.do</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>GoodsImgServlet3</servlet-name>
+    <servlet-class>com.goods.controller.GoodsImgServlet3</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsImgServlet3</servlet-name>
+    <url-pattern>/goods/goodsImg3.do</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
 

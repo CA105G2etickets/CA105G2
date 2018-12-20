@@ -3,8 +3,6 @@ package com.goods.model;
 import java.sql.Timestamp;
 import java.util.List;
 import java.io.*;
-import javax.servlet.*;
-
 
 public class GoodsService {
 

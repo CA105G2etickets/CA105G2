@@ -17,31 +17,52 @@ public class MemberVO implements Serializable{
 	private Timestamp creationDate;
 	private byte[] profilePicture;
 	private String memberStatus;
+	private String thirduid;
 
 	public MemberVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MemberVO(String memberNo, String memberFullname, String email, String phone, String idcard,
-			String memberAccount, String memberPassword, Integer ewalletBalance, Timestamp creationDate,
-			byte[] profilePicture, String memberStatus) {
-		super();
-		this.memberNo = memberNo;
-		this.memberFullname = memberFullname;
-		this.email = email;
-		this.phone = phone;
-		this.idcard = idcard;
-		this.memberAccount = memberAccount;
-		this.memberPassword = memberPassword;
-		this.ewalletBalance = ewalletBalance;
-		this.creationDate = creationDate;
-		this.profilePicture = profilePicture;
-		this.memberStatus = memberStatus;
-	}
+//	public MemberVO(String memberNo, String memberFullname, String email, String phone, String idcard,
+//			String memberAccount, String memberPassword, Integer ewalletBalance, Timestamp creationDate,
+//			byte[] profilePicture, String memberStatus, String thirdid) {
+//		super();
+//		this.memberNo = memberNo;
+//		this.memberFullname = memberFullname;
+//		this.email = email;
+//		this.phone = phone;
+//		this.idcard = idcard;
+//		this.memberAccount = memberAccount;
+//		this.memberPassword = memberPassword;
+//		this.ewalletBalance = ewalletBalance;
+//		this.creationDate = creationDate;
+//		this.profilePicture = profilePicture;
+//		this.memberStatus = memberStatus;
+//		this.thirdid = 
+//	}
 
 	public String getMemberNo() {
 		return memberNo;
 	}
+
+
+	public MemberVO(String memberNo, String memberFullname, String email, String phone, String idcard, String memberAccount,
+		String memberPassword, Integer ewalletBalance, Timestamp creationDate, byte[] profilePicture,
+		String memberStatus, String thirduid) {
+	super();
+	this.memberNo = memberNo;
+	this.memberFullname = memberFullname;
+	this.email = email;
+	this.phone = phone;
+	this.idcard = idcard;
+	this.memberAccount = memberAccount;
+	this.memberPassword = memberPassword;
+	this.ewalletBalance = ewalletBalance;
+	this.creationDate = creationDate;
+	this.profilePicture = profilePicture;
+	this.memberStatus = memberStatus;
+	this.thirduid = thirduid;
+}
 
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
@@ -133,6 +154,14 @@ public class MemberVO implements Serializable{
 				+ phone + ", idcard=" + idcard + ", memberAccount=" + memberAccount + ", memberPassword="
 				+ memberPassword + ", ewalletBalance=" + ewalletBalance + ", creationDate=" + creationDate
 				+ ", profilePicture=" + Arrays.toString(profilePicture) + ", memberStatus=" + memberStatus + "]";
+	}
+
+	public String getThirduid() {
+		return thirduid;
+	}
+
+	public void setThirduid(String thirduid) {
+		this.thirduid = thirduid;
 	}
 
 }

@@ -169,6 +169,7 @@
 		<th>會員帳號建立日期</th>
 		<th>會員大頭貼</th>
 		<th>會員狀態</th>
+		<th>會員第三方登入UID</th>
 	</tr>
 	<tr>
 		<td><%=member.getMemberNo()%></td>
@@ -182,6 +183,7 @@
 		<td><%=member.getCreationDate()%></td>
 		<td><%=member.getProfilePicture()%></td>
 		<td><%=member.getMemberStatus()%></td>
+		<td><%=member.getThirduid()%></td>
 	</tr>
 </table>
 <a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0">

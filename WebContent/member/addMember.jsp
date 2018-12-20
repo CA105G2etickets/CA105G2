@@ -177,11 +177,11 @@
 	</tr>
 	<tr>
 		<td>會員電子郵件:</td>
-		<td><input type="email" placeholder="xxx@email.com"name="email" size="45"></td>
+		<td><input type="email" placeholder="xxx@gmail.com"name="email" size="45"></td>
 	</tr>
 	<tr>
 		<td>會員手機號碼:</td>
-		<td><input type="TEXT" placeholder="0923-123456" name="phone" size="45"></td>
+		<td><input type="TEXT" placeholder="0923" name="phone1" size="10">&nbsp;-&nbsp;<input type="TEXT" placeholder="123456" name="phone2" size="15"></td>
 	</tr>
 	<tr>
 		<td>會員身分證字號:</td>
@@ -197,7 +197,7 @@
 	</tr>
 	<tr>
 		<td>會員電子錢包餘額:</td>
-		<td><input type="number" min="0" max="999999" name="ewalletBalance" size="45"></td>
+		<td>0</td>
 	</tr>
 	<tr>
 		<td>帳號建立日期時間:</td>
@@ -211,6 +211,10 @@
 	<tr>
 		<td>會員狀態:</td>
 		<td>normal</td>
+	</tr>
+	<tr>
+		<td>會員第三方登入ID:</td>
+		<td>625549954</td>
 	</tr>
 
 <%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
@@ -226,6 +230,8 @@
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
+<input type="hidden" name="thirduid" value="625549954">
+
 <input type="submit" value="送出新增"></FORM>
 <a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a>
 </body>

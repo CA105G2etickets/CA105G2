@@ -12,8 +12,8 @@ public class MemberService {
 	}
 
 	public MemberVO addMember(String memberFullname, String email, String phone, String idcard,
-			String memberAccount, String memberPassword, Integer ewalletBalance, Timestamp creationDate,
-			byte[] profilePicture, String memberStatus) {
+			String memberAccount, String memberPassword, Integer ewalletBalance,
+			String memberStatus, String thirduid) {
 
 		MemberVO member = new MemberVO();
 
@@ -24,17 +24,18 @@ public class MemberService {
 		member.setMemberAccount(memberAccount);
 		member.setMemberPassword(memberPassword);
 		member.setEwalletBalance(ewalletBalance);
-		member.setCreationDate(creationDate);
-		member.setProfilePicture(profilePicture);
+//		member.setCreationDate(creationDate);
+//		member.setProfilePicture(profilePicture);
 		member.setMemberStatus(memberStatus);
+		member.setThirduid(thirduid);
 		dao.insert(member);
 
 		return member;
 	}
 
-	public MemberVO updateMember(String memberNo, String memberFullname, String email, String phone, String idcard,
-			String memberAccount, String memberPassword, Integer ewalletBalance, Timestamp creationDate,
-			byte[] profilePicture, String memberStatus) {
+	public MemberVO updateMember(String memberNo, String memberFullname, String email, String phone,
+			String memberAccount, String memberPassword,
+			String memberStatus) {
 
 		MemberVO member = new MemberVO();
 
@@ -42,13 +43,14 @@ public class MemberService {
 		member.setMemberFullname(memberFullname);
 		member.setEmail(email);
 		member.setPhone(phone);
-		member.setIdcard(idcard);
+//		member.setIdcard(idcard);
 		member.setMemberAccount(memberAccount);
 		member.setMemberPassword(memberPassword);
-		member.setEwalletBalance(ewalletBalance);
-		member.setCreationDate(creationDate);
-		member.setProfilePicture(profilePicture);
+//		member.setEwalletBalance(ewalletBalance);
+//		member.setCreationDate(creationDate);
+//		member.setProfilePicture(profilePicture);
 		member.setMemberStatus(memberStatus);
+//		member.setThirduid(thirduid);
 		dao.update(member);
 
 		return member;

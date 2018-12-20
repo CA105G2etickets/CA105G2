@@ -1,6 +1,7 @@
 package com.member.controller;
 
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.*;
@@ -130,27 +131,71 @@ public class MemberServlet extends HttpServlet {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String memberNo = new String(req.getParameter("memberno").trim());
 				
-				String memberFullname = req.getParameter("memberFullname");
-				String memberFullnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-)]{3,10}$";
+				String memberFullname = req.getParameter("name");
 				if (memberFullname == null || memberFullname.trim().length() == 0) {
-					errorMsgs.add("姓名: 請勿空白");
-				} else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
-	            }
+					errorMsgs.add("姓名請勿空白");
+				}
+//				String memberFullnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-)]{3,10}$";
+//				if (memberFullname == null || memberFullname.trim().length() == 0) {
+//					errorMsgs.add("姓名: 請勿空白");
+//				} else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
+//	            }
 				
-//				String job = req.getParameter("job").trim();
-//				if (job == null || job.trim().length() == 0) {
-//					errorMsgs.add("職位請勿空白");
+				String email = req.getParameter("email").trim();
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("電子郵件請勿空白");
+				}	
+				
+				String phone = req.getParameter("phone").trim();
+				if (phone == null || phone.trim().length() == 0) {
+					errorMsgs.add("電話號碼請勿空白");
+				}	
+				
+//				String idcard = req.getParameter("idcard").trim();
+//				if (idcard == null || idcard.trim().length() == 0) {
+//					errorMsgs.add("身份證字號請勿空白");
 //				}	
 				
-				java.sql.Timestamp creationDate = null;
-				try {
-					creationDate = java.sql.Timestamp.valueOf(req.getParameter("creationDate").trim());
-				} catch (IllegalArgumentException e) {
-					creationDate=new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
+				String account = req.getParameter("account").trim();
+				if (account == null || account.trim().length() == 0) {
+					errorMsgs.add("帳號請勿空白");
+				}	
+				
+				String password = req.getParameter("password").trim();
+				if (password == null || password.trim().length() == 0) {
+					errorMsgs.add("密碼請勿空白");
+				}	
+				
+//				Integer ewalletBalance = req.getParameter("ewalletBalance");
+//				if (ewalletBalance == null || ewalletBalance.trim().length() == 0) {
+//					errorMsgs.add("餘額請勿空白");
+//				}
+				
+//				java.sql.Timestamp creationDate = (Timestamp)System.currentTimeMillis();
+//				java.sql.Timestamp creationDate = null;
+//				try {
+//				Timestamp creationDate = req.getParameter("creationDate");
+//				} catch (IllegalArgumentException e) {
+//					creationDate=new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入日期!");
+//				}
+				
+//				String picture = req.getParameter("profilePicture").trim();
+//				if (picture == null || picture.trim().length() == 0) {
+//					errorMsgs.add("大頭貼請勿空白");
+//				}
+				
+				String states = req.getParameter("states").trim();
+				if (states == null || states.trim().length() == 0) {
+					errorMsgs.add("狀態請勿空白");
 				}
-
+				
+//				String thirduid = req.getParameter("thirduid").trim();
+//				if (thirduid == null || thirduid.trim().length() == 0) {
+//					errorMsgs.add("請勿空白");
+//				}
+				
 //				Double sal = null;
 //				try {
 //					sal = new Double(req.getParameter("sal").trim());
@@ -158,7 +203,7 @@ public class MemberServlet extends HttpServlet {
 //					sal = 0.0;
 //					errorMsgs.add("薪水請填數字.");
 //				}
-
+				
 //				Double comm = null;
 //				try {
 //					comm = new Double(req.getParameter("comm").trim());
@@ -166,20 +211,21 @@ public class MemberServlet extends HttpServlet {
 //					comm = 0.0;
 //					errorMsgs.add("獎金請填數字.");
 //				}
-
-//				Integer deptno = new Integer(req.getParameter("deptno").trim());
-
+				
 				MemberVO member = new MemberVO();
+				member.setMemberNo(memberNo);
 				member.setMemberFullname(memberFullname);
-//				member.setEmail(email);
-//				member.setPhone(phone);
+				member.setEmail(email);
+				member.setPhone(phone);
 //				member.setIdcard(idcard);
-//				member.setMemberAccount(memberAccount);
-//				member.setMemberPassword(memberPassword);
+				member.setMemberAccount(account);
+				member.setMemberPassword(password);
 //				member.setEwalletBalance(ewalletBalance);
-				member.setCreationDate(creationDate);
+//				member.setCreationDate(creationDate);
 //				member.setProfilePicture(profilePicture);
-//				member.setMemberStatus(memberStatus);
+				member.setMemberStatus(states);
+//				member.setThirduid(thirduid);
+				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -192,7 +238,8 @@ public class MemberServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				MemberService memberService = new MemberService();
-//				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+//				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, account, password, ewalletBalance, creationDate, req.getParameter("profilePicture"), req.getParameter("memberStatus"));
+				memberService.updateMember(memberNo, memberFullname, email, phone, account, password, states);
 //				member = memberService.updateMember(memberNo, memberFullnameReg, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
@@ -220,24 +267,69 @@ public class MemberServlet extends HttpServlet {
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String memberFullname = req.getParameter("memberFullname");
-				String memberFullnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-)]{3,10}$";
-				if (memberFullname == null || memberFullname.trim().length() == 0) {
-					errorMsgs.add("姓名: 請勿空白");
-				} else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
-	            }
+//				String memberFullnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-)]{3,10}$";
+//				if (memberFullname == null || memberFullname.trim().length() == 0) {
+//					errorMsgs.add("姓名: 請勿空白");
+//				} else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
+//	            }
 				
-//				String job = req.getParameter("job").trim();
-//				if (job == null || job.trim().length() == 0) {
-//					errorMsgs.add("職位請勿空白");
+				String email = req.getParameter("email").trim();
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("電子郵件請勿空白");
+				}	
+				
+				String phone = req.getParameter("phone1").trim() + req.getParameter("phone2").trim();
+				if (phone == null || phone.trim().length() == 0) {
+					errorMsgs.add("電話號碼請勿空白");
+				}	
+				
+				String idcard = req.getParameter("idcard").trim();
+				if (idcard == null || idcard.trim().length() == 0) {
+					errorMsgs.add("身份證字號請勿空白");
+				}	
+				
+				String account = req.getParameter("account").trim();
+				if (account == null || account.trim().length() == 0) {
+					errorMsgs.add("帳號請勿空白");
+				}	
+				
+				String password = req.getParameter("password").trim();
+				if (password == null || password.trim().length() == 0) {
+					errorMsgs.add("密碼請勿空白");
+				}	
+				
+				Integer ewalletBalance = 0;
+//				try {
+//					ewalletBalance = new Integer(req.getParameter("ewalletBalance").trim());
+//				} catch (NumberFormatException e) {
+//					ewalletBalance = 0;
+//					errorMsgs.add("餘額請填數字.");
 //				}
 				
-				java.sql.Timestamp creationDate = null;
-				try {
-					creationDate = java.sql.Timestamp.valueOf(req.getParameter("creationDate").trim());
-				} catch (IllegalArgumentException e) {
-					creationDate=new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
+//				java.sql.Timestamp creationDate = (Timestamp)System.currentTimeMillis();
+//				java.sql.Timestamp creationDate = null;
+//				try {
+//					creationDate = java.sql.Timestamp.valueOf(req.getParameter("creationDate").trim());
+//				} catch (IllegalArgumentException e) {
+//					creationDate=new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入日期!");
+//				}
+				
+//				String picture = req.getParameter("profilePicture").trim();
+//				if (picture == null || picture.trim().length() == 0) {
+//					errorMsgs.add("大頭貼請勿空白");
+//				}
+				
+				String states = "normal";
+//				String states = req.getParameter("states").trim();
+//				if (states == null || states.trim().length() == 0) {
+//					errorMsgs.add("狀態請勿空白");
+//				}
+				
+				String thirduid = req.getParameter("thirduid").trim();
+				if (thirduid == null || thirduid.trim().length() == 0) {
+					errorMsgs.add("請勿空白");
 				}
 				
 //				Double sal = null;
@@ -260,15 +352,16 @@ public class MemberServlet extends HttpServlet {
 
 				MemberVO member = new MemberVO();
 				member.setMemberFullname(memberFullname);
-//				member.setEmail(email);
-//				member.setPhone(phone);
-//				member.setIdcard(idcard);
-//				member.setMemberAccount(memberAccount);
-//				member.setMemberPassword(memberPassword);
-//				member.setEwalletBalance(ewalletBalance);
-				member.setCreationDate(creationDate);
+				member.setEmail(email);
+				member.setPhone(phone);
+				member.setIdcard(idcard);
+				member.setMemberAccount(account);
+				member.setMemberPassword(password);
+				member.setEwalletBalance(ewalletBalance);
+//				member.setCreationDate(creationDate);
 //				member.setProfilePicture(profilePicture);
-//				member.setMemberStatus(memberStatus);
+				member.setMemberStatus(states);
+				member.setThirduid(thirduid);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -281,10 +374,10 @@ public class MemberServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				MemberService memberService = new MemberService();
-//				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
+				member = memberService.addMember(memberFullname, email, phone, idcard, account, password, ewalletBalance, states, thirduid);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/emp/listAllEmp.jsp";
+				String url = "/member/listAllMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				

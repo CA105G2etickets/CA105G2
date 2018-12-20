@@ -173,7 +173,7 @@
 <FORM METHOD="post" ACTION="member.do" name="form1">
 <table class="table">
 	<tr>
-		<td>會員編號:<font color=red><b>*</b></font></td>
+		<td>會員編號:<font color=red></font></td>
 		<td><%=member.getMemberNo()%></td>
 	</tr>
 	<tr>
@@ -190,7 +190,7 @@
 	</tr>
 	<tr>
 		<td>會員身分證字號:</td>
-		<td><input type="TEXT" name="idcard" size="45"	value="<%=member.getIdcard()%>" /></td>
+		<td><%=member.getIdcard()%></td>
 	</tr>
 	<tr>
 		<td>會員帳號:</td>
@@ -202,11 +202,11 @@
 	</tr>
 	<tr>
 		<td>會員電子錢包餘額:</td>
-		<td><input type="number" min="0" max="999999" name="ewalletBalance" size="45" value="<%=member.getEwalletBalance()%>" /></td>
+		<td><%=member.getEwalletBalance()%></td>
 	</tr>
 	<tr>
 		<td>帳號建立日期:</td>
-		<td><input type="datetime-local" name="creationDate" id=""></td>
+		<td><span id="f_date1"><%=member.getCreationDate()%></span></td>
 	</tr>
 	<tr>
 		<td>會員大頭貼:</td>
@@ -215,6 +215,30 @@
 	<tr>
 		<td>會員狀態:</td>
 		<td><input type="TEXT" name="states" size="45" value="<%=member.getMemberStatus()%>" /></td>
+	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>會員狀態:</td> -->
+<!-- 		<td> -->
+<!-- 		<select size="1" name="states"> -->
+<%-- 			<c:forEach var="state" items="${memberService.all}"> --%>
+<%-- 				<option value="${member.memberno}" ${(member.memberStatus==member.memberStatus)? 'selected':'' } > --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>會員狀態:</td> -->
+<!-- 		<td> -->
+<!-- 		<select size="1" name="states"> -->
+<!-- 			<option value="normal" >normal</option> -->
+<!-- 			<option value="abnormal">abnormal</option> -->
+<!-- 		</select> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+	<tr>
+		<td>會員第三方登入UID:</td>
+		<td><%=member.getThirduid()%></td>
+<%-- 		<td><%=(member.getThirduid().isEmpty() ? "" : member.getThirduid())%></td> --%>
 	</tr>
 
 <%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
@@ -258,7 +282,7 @@
            theme: '',              //theme: 'dark',
  	       timepicker:false,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+ 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=member.getCreationDate()%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
