@@ -44,6 +44,15 @@
     <url-pattern>/OrderHistory/OrderHistory.do</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>GoodsImgServlet</servlet-name>
+    <servlet-class>com.goods.controller.GoodsImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsImgServlet</servlet-name>
+    <url-pattern>/goods/goodsImg.do</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
 

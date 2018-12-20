@@ -257,6 +257,7 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			while (rs.next()) {
 				goodsVO = new GoodsVO();
 				goodsVO.setGoods_no(rs.getString("goods_no"));
+				goodsVO.setEvetit_no(rs.getString("evetit_no"));
 				goodsVO.setGoods_name(rs.getString("goods_name"));
 				goodsVO.setGoods_price(rs.getInt("goods_price"));
 				goodsVO.setGoods_picture1(rs.getBytes("goods_picture1"));
@@ -434,25 +435,25 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 //		System.out.println(aGoodsVO.getGoods_sales_count());
 
 //			 查詢全部
-//		List<GoodsVO> list = dao.getAll();
-//		for (GoodsVO aGoodsVO : list) {
-//			System.out.println(aGoodsVO.getGoods_no());
-//			System.out.println(aGoodsVO.getEvetit_no());
-//			System.out.println(aGoodsVO.getGoods_name());
-//			System.out.println(aGoodsVO.getGoods_price());
-//			System.out.println(aGoodsVO.getGoods_picture1());
-//			System.out.println(aGoodsVO.getGoods_picture2());
-//			System.out.println(aGoodsVO.getGoods_picture3());
-//			System.out.println(aGoodsVO.getGoods_introduction());
-//			System.out.println(aGoodsVO.getForsales_a());
-//			System.out.println(aGoodsVO.getFavorite_count());
-//			System.out.println(aGoodsVO.getGoods_status());
-//			System.out.println(aGoodsVO.getLaunchdate());
-//			System.out.println(aGoodsVO.getOffdate());
-//			System.out.println(aGoodsVO.getGoods_group_count());
-//			System.out.println(aGoodsVO.getGoods_want_count());
-//			System.out.println(aGoodsVO.getGoods_sales_count());
-//		}
+		List<GoodsVO> list = dao.getAll();
+		for (GoodsVO aGoodsVO : list) {
+			System.out.println(aGoodsVO.getGoods_no());
+			System.out.println(aGoodsVO.getEvetit_no());
+			System.out.println(aGoodsVO.getGoods_name());
+			System.out.println(aGoodsVO.getGoods_price());
+			System.out.println(aGoodsVO.getGoods_picture1());
+			System.out.println(aGoodsVO.getGoods_picture2());
+			System.out.println(aGoodsVO.getGoods_picture3());
+			System.out.println(aGoodsVO.getGoods_introduction());
+			System.out.println(aGoodsVO.getForsales_a());
+			System.out.println(aGoodsVO.getFavorite_count());
+			System.out.println(aGoodsVO.getGoods_status());
+			System.out.println(aGoodsVO.getLaunchdate());
+			System.out.println(aGoodsVO.getOffdate());
+			System.out.println(aGoodsVO.getGoods_group_count());
+			System.out.println(aGoodsVO.getGoods_want_count());
+			System.out.println(aGoodsVO.getGoods_sales_count());
+		}
 
 //	}
 // 

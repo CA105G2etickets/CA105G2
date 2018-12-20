@@ -260,6 +260,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			while (rs.next()) {
 				goodsVO = new GoodsVO();
 				goodsVO.setGoods_no(rs.getString("goods_no"));
+				goodsVO.setEvetit_no(rs.getString("evetit_no"));
 				goodsVO.setGoods_name(rs.getString("goods_name"));
 				goodsVO.setGoods_price(rs.getInt("goods_price"));
 				goodsVO.setGoods_picture1(rs.getBytes("goods_picture1"));

@@ -389,7 +389,7 @@ public class GoodsServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("goodsVO", goodsVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/goods/addGoods_input.jsp");
+							.getRequestDispatcher("/goods/addGoods.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -400,7 +400,7 @@ public class GoodsServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/goods/listOneGoods.jsp";
+				String url = "/goods/listAllGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -408,7 +408,7 @@ public class GoodsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/goods/addGoods__input.jsp");
+						.getRequestDispatcher("/goods/addGoods.jsp");
 				failureView.forward(req, res);
 			}
 		}
