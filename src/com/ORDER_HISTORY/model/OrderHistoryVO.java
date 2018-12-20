@@ -22,6 +22,23 @@ public class OrderHistoryVO implements java.io.Serializable {
 	public OrderHistoryVO() {
 		
 	}
+	public OrderHistoryVO(String orderNo, String memberNo, Double orderPrice, String payMethods, 
+			String shippingMethods, Timestamp orderDate, Timestamp orderEtd, Timestamp pickupDate,
+			String receiverAdd, String receiverName, String receiverTel, String orderStatus) {
+		this.orderNo = orderNo;
+		this.memberNo = memberNo;
+		this.orderPrice = orderPrice;
+		this.payMethods = payMethods;
+		this.shippingMethods = shippingMethods;
+		this.orderDate = orderDate;
+		this.orderEtd = orderEtd;
+		this.pickupDate = pickupDate;
+		this.receiverAdd = receiverAdd;
+		this.receiverName = receiverName;
+		this.receiverTel = receiverTel;
+		this.orderStatus = orderStatus;
+	}
+	
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -94,5 +111,5 @@ public class OrderHistoryVO implements java.io.Serializable {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	
+		
 }

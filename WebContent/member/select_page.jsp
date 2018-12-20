@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.member.model.*"%>
 
 <html>
 <head>
@@ -154,8 +155,7 @@
 			</li>
 			<a href='listAllMember.jsp'>列出所有會員</a>
 
-			<jsp:useBean id="memberservice" scope="page"
-				class="com.member.model.MemberService" />
+		<jsp:useBean id="memberservice" scope="page" class="com.member.model.MemberService" />
 
 			<!--   <li> -->
 			<!--      <FORM METHOD="post" ACTION="member.do" > -->

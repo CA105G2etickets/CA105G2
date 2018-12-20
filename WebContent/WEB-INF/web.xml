@@ -34,6 +34,15 @@
 		<servlet-name>GoodsServlet</servlet-name>
 		<url-pattern>/goods/goods.do</url-pattern>
 	</servlet-mapping>
+	
+	  <servlet>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <servlet-class>com.ORDER_HISTORY.controller.OrderHistoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <url-pattern>/OrderHistory/OrderHistory.do</url-pattern>
+  </servlet-mapping>
   
   
 </web-app>
