@@ -9,7 +9,9 @@ public class TicketOrderService {
 //		dao = new TicketOrderDAOJDBC();
 		dao = new TicketOrderDAO();
 	}
-	public TicketOrderVO addTicketOrder(String member_no, String ticarea_no, Integer total_price, Integer total_amount,Timestamp ticket_order_time,String payment_method,String ticket_order_status) {
+	public TicketOrderVO addTicketOrder(String member_no, String ticarea_no, Integer total_price, 
+			Integer total_amount,Timestamp ticket_order_time,String payment_method,
+			String ticket_order_status) {
 		TicketOrderVO toVO = new TicketOrderVO();
 		toVO.setMember_no(member_no);
 		toVO.setTicarea_no(ticarea_no);
@@ -22,7 +24,9 @@ public class TicketOrderService {
 		
 		return toVO;
 	}
-	public TicketOrderVO updateTicketOrder(String ticket_order_no,String member_no, String ticarea_no, Integer total_price, Integer total_amount,Timestamp ticket_order_time,String payment_method,String ticket_order_status) {
+	public TicketOrderVO updateTicketOrder(String ticket_order_no,String member_no, String ticarea_no, 
+			Integer total_price, Integer total_amount,Timestamp ticket_order_time,
+			String payment_method,String ticket_order_status) {
 		TicketOrderVO toVO = new TicketOrderVO();
 		toVO.setTicket_order_no(ticket_order_no);
 		toVO.setMember_no(member_no);

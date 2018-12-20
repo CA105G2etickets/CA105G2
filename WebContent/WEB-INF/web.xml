@@ -23,4 +23,12 @@
     <servlet-name>TicketOrderServlet</servlet-name>
     <url-pattern>/ticketorder/ticketorder.do</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>TicketServlet</servlet-name>
+    <servlet-class>com.ticket.controller.TicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TicketServlet</servlet-name>
+    <url-pattern>/ticket/ticket.do</url-pattern>
+  </servlet-mapping>
 </web-app>

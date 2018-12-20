@@ -268,71 +268,71 @@ public class TicketOrderDAO implements TicketOrderDAO_interface{
 		}
 		return list;
 	}
-	public static void main (String[] args) {
-		TicketOrderDAO dao = new TicketOrderDAO();
-		//ADD
-		TicketOrderVO ticketorderVO = new TicketOrderVO();
-		ticketorderVO.setMember_no("M000001");
-		ticketorderVO.setTicarea_no("E000101A01");
-		ticketorderVO.setTotal_price(9999);
-		ticketorderVO.setTotal_amount(2);
-		long Ltime = new Date().getTime();
-		Timestamp times = new Timestamp(Ltime);
-		ticketorderVO.setTicket_order_time(times);
-		ticketorderVO.setPayment_method("CREDITCARD");
-		ticketorderVO.setTicket_order_status("WAITPAY1");
-		dao.insert(ticketorderVO);
-		
-		//SELECT WITH LIST
-		System.out.println("------selectAll after add start--------");
-		List<TicketOrderVO> list = dao.getAll();
-		for(TicketOrderVO aVO :list) {
-			System.out.print(aVO.getTicket_order_no() + ",");
-			System.out.print(aVO.getMember_no() + ",");
-			System.out.print(aVO.getTicarea_no() + ",");
-			System.out.print(aVO.getTotal_price() + ",");
-			System.out.print(aVO.getTotal_amount() + ",");
-			System.out.print(aVO.getTicket_order_time() + ",");
-			System.out.print(aVO.getPayment_method() + ",");
-			System.out.print(aVO.getTicket_order_status() + ",");
-			System.out.println();
-		}
-		System.out.println("---------------------");
-		
-		//DELETE
-//		dao.delete("TO_20181214_000004"); 
-		
-		//SELECT WITH PK
-		TicketOrderVO VO2 = dao.findByPrimaryKey("TO_20181225_000001");
-		System.out.println("------select1 start--------");
-		System.out.print(VO2.getTicket_order_no() + ",");
-		System.out.print(VO2.getMember_no() + ",");
-		System.out.print(VO2.getTicarea_no() + ",");
-		System.out.print(VO2.getTotal_price() + ",");
-		System.out.print(VO2.getTotal_amount() + ",");
-		System.out.print(VO2.getTicket_order_time() + ",");
-		System.out.print(VO2.getPayment_method() + ",");
-		System.out.print(VO2.getTicket_order_status() + ",");
-		System.out.println("---------------------");
-		
-		//UPDATE
-		VO2.setTotal_price(9870); //update VO2.price to 9000;
-//		dao.update(VO2);
-		
-		//SELECT WITH LIST
-		System.out.println("------Final selectAll start--------");
-		List<TicketOrderVO> list2 = dao.getAll();
-		for(TicketOrderVO aVO :list2) {
-			System.out.print(aVO.getTicket_order_no() + ",");
-			System.out.print(aVO.getMember_no() + ",");
-			System.out.print(aVO.getTicarea_no() + ",");
-			System.out.print(aVO.getTotal_price() + ",");
-			System.out.print(aVO.getTotal_amount() + ",");
-			System.out.print(aVO.getTicket_order_time() + ",");
-			System.out.print(aVO.getPayment_method() + ",");
-			System.out.print(aVO.getTicket_order_status() + ",");
-			System.out.println();
-		}
-		System.out.println("---------------------");
-	}
+//	public static void main (String[] args) {
+//		TicketOrderDAO dao = new TicketOrderDAO();
+//		//ADD
+//		TicketOrderVO ticketorderVO = new TicketOrderVO();
+//		ticketorderVO.setMember_no("M000001");
+//		ticketorderVO.setTicarea_no("E000101A01");
+//		ticketorderVO.setTotal_price(9999);
+//		ticketorderVO.setTotal_amount(2);
+//		long Ltime = new Date().getTime();
+//		Timestamp times = new Timestamp(Ltime);
+//		ticketorderVO.setTicket_order_time(times);
+//		ticketorderVO.setPayment_method("CREDITCARD");
+//		ticketorderVO.setTicket_order_status("WAITPAY1");
+//		dao.insert(ticketorderVO);
+//		
+//		//SELECT WITH LIST
+//		System.out.println("------selectAll after add start--------");
+//		List<TicketOrderVO> list = dao.getAll();
+//		for(TicketOrderVO aVO :list) {
+//			System.out.print(aVO.getTicket_order_no() + ",");
+//			System.out.print(aVO.getMember_no() + ",");
+//			System.out.print(aVO.getTicarea_no() + ",");
+//			System.out.print(aVO.getTotal_price() + ",");
+//			System.out.print(aVO.getTotal_amount() + ",");
+//			System.out.print(aVO.getTicket_order_time() + ",");
+//			System.out.print(aVO.getPayment_method() + ",");
+//			System.out.print(aVO.getTicket_order_status() + ",");
+//			System.out.println();
+//		}
+//		System.out.println("---------------------");
+//		
+//		//DELETE
+////		dao.delete("TO_20181214_000004"); 
+//		
+//		//SELECT WITH PK
+//		TicketOrderVO VO2 = dao.findByPrimaryKey("TO_20181225_000001");
+//		System.out.println("------select1 start--------");
+//		System.out.print(VO2.getTicket_order_no() + ",");
+//		System.out.print(VO2.getMember_no() + ",");
+//		System.out.print(VO2.getTicarea_no() + ",");
+//		System.out.print(VO2.getTotal_price() + ",");
+//		System.out.print(VO2.getTotal_amount() + ",");
+//		System.out.print(VO2.getTicket_order_time() + ",");
+//		System.out.print(VO2.getPayment_method() + ",");
+//		System.out.print(VO2.getTicket_order_status() + ",");
+//		System.out.println("---------------------");
+//		
+//		//UPDATE
+//		VO2.setTotal_price(9870); //update VO2.price to 9000;
+////		dao.update(VO2);
+//		
+//		//SELECT WITH LIST
+//		System.out.println("------Final selectAll start--------");
+//		List<TicketOrderVO> list2 = dao.getAll();
+//		for(TicketOrderVO aVO :list2) {
+//			System.out.print(aVO.getTicket_order_no() + ",");
+//			System.out.print(aVO.getMember_no() + ",");
+//			System.out.print(aVO.getTicarea_no() + ",");
+//			System.out.print(aVO.getTotal_price() + ",");
+//			System.out.print(aVO.getTotal_amount() + ",");
+//			System.out.print(aVO.getTicket_order_time() + ",");
+//			System.out.print(aVO.getPayment_method() + ",");
+//			System.out.print(aVO.getTicket_order_status() + ",");
+//			System.out.println();
+//		}
+//		System.out.println("---------------------");
+//	}
 }
