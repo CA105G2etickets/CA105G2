@@ -175,7 +175,6 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 
 		try {
 			Class.forName(DRIVER);

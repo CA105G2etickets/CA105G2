@@ -8,8 +8,27 @@
 
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>新增商品 - addGoods.jsp</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>新增商品- addGoods.jsp</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+table#table-1 {
+	width: 450px;
+	background-color: #CCCCFF;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 3px ridge Gray;
+	height: 80px;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+</style>
 <style>
 .memberphoto {
 	border-radius: 50px;
@@ -36,41 +55,42 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
-
 </style>
-
 <style>
-  table#table-1 {
+table#table-1 {
 	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
+	border: 2px solid black;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: blue;
+	display: inline;
+}
 </style>
 
 <style>
-  table {
+table {
 	width: 450px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
-</style>
+}
 
+table, th, td {
+	border: 0px solid #CCCCFF;
+}
+
+th, td {
+	padding: 1px;
+}
+</style>
 </head>
 <nav class="navbar navbar-inverse" role="navigation">
 	<div class="container">
@@ -96,180 +116,146 @@
 			<ul class="nav navbar-nav navbar-right membermenu">
 				<li><a href="#">管理員登出</a></li>
 				<li><a href="#">設定</a></li>
-<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
-<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
-<!-- 					<ul class="dropdown-menu"> -->
-<!-- 						<li><a href="#">繁體中文</a></li> -->
-<!-- 						<li><a href="#">English</a></li> -->
-<!-- 						<li><a href="#">日本語</a></li> -->
-<!-- 					</ul> -->
-<!-- 				</li> -->
+				<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
+				<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
+				<!-- 					<ul class="dropdown-menu"> -->
+				<!-- 						<li><a href="#">繁體中文</a></li> -->
+				<!-- 						<li><a href="#">English</a></li> -->
+				<!-- 						<li><a href="#">日本語</a></li> -->
+				<!-- 					</ul> -->
+				<!-- 				</li> -->
 			</ul>
 		</div>
 		<!-- 手機隱藏選單區結束 -->
 	</div>
-<div class="topnav">
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">活動管理</a>
+	<div class="topnav">
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">活動管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">票券管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">商品管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">團購管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">常見問題管理</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<div>
+				<a href="#" class="topnav" align="center">公告管理</a>
+			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">票券管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">商品管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">團購管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">常見問題管理</a>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		<div>
-			<a href="#" class="topnav" align="center">公告管理</a>
-		</div>
-	</div>
-</div>
 </nav>
-<table id="table-1">
-	<tr><td>
-		 <h3>新增商品 - addGoods.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a></h4>
-	</td></tr>
+
+<h3>新增商品 - addGoods.jsp</h3>
+</td>
+<td>
+	<h4>
+		<a href="select_page.jsp"><img src="images/back1.png" width="186"
+			height="81" border="0"></a>
+	</h4>
+</td>
+</tr>
 </table>
-	<h3>資料新增:</h3>
+<h3>資料新增:</h3>
 
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+<%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color: red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color: red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 
-	<FORM METHOD="post" ACTION="goods.do" name="form1">
-		<table>
-			<tr>
-				<td>活動編號</td>
-				<td><input type="TEXT" name="evetit_no" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getEvetit_no()%>" /></td>
-			</tr>
-						<tr>
-				<td>商品名稱</td>
-				<td><input type="TEXT" name="goods_name" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_name()%>" /></td>
-			</tr>
-			<tr>
-				<td>售價</td>
-				<td><input type="TEXT" name="goods_price" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_price()%>" /></td>
-			</tr>
-						<tr>
-				<td>圖1</td>
-				<td><input type="TEXT" name="goods_picture1" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_picture1()%>" /></td>
-			</tr>
-			
-			<tr>
-				<td>圖2</td>
-				<td><input type="TEXT" name="goods_picture2" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_picture2()%>" /></td>
-			</tr>
-			<tr>
-				<td>圖3</td>
-				<td><input type="TEXT" name="goods_picture3" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_picture3()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品介紹</td>
-				<td><input type="TEXT" name="goods_introduction" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_introduction()%>" /></td>
-			</tr>
-				<tr>
-				<td>促銷價</td>
-				<td><input type="TEXT" name="forsales_a" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getForsales_a()%>" /></td>
-			</tr>
-		<%--	<tr>
-				<td>喜愛人數</td>
-				<td><input type="TEXT" name="favorite_count" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getFavorite_count()%>" /></td>
-			</tr>--%>
-			<tr>
-				<td>商品狀態</td>
-				<td><input type="TEXT" name="goods_status" size="45"
-					value="<%=(goodsVO == null) ? "上架中" : goodsVO.getGoods_status()%>" /></td>
-			</tr>
-			<tr>
-				<td>上架日期:</td>
-				<td><input type="datetime-local" name="launchdate" id=""></td>
-			</tr>
-			<tr>
-				<td>下架日期</td>
-				<td><input type="datetime-local" name="offdate" id=""></td>
-			</tr>
-			
-		<%--	<tr>
-				<td>開團數</td>
-				<td><input type="TEXT" name="goods_group_count" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_group_count()%>" /></td>
-			</tr>
-			<tr>
-				<td>許願數</td>
-				<td><input type="TEXT" name="goods_want_count" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_want_count()%>" /></td>
-			</tr>
-			<tr>
-				<td>銷售量</td>
-				<td><input type="TEXT" name="goods_sales_count" size="45"
-					value="<%=(goodsVO == null) ? "" : goodsVO.getGoods_sales_count()%>" /></td>
-			</tr>
+<FORM METHOD="post" ACTION="goods.do" name="form1">
+	<table class="table">
+		<tr>
+			<td>活動編號</td>
+			<td><input type="TEXT" placeholder="E0003" name="evetit_no"
+				size="45"></td>
+		</tr>
+		<tr>
+			<td>商品名稱</td>
+			<td><input type="TEXT" placeholder="應援手環" name="goods_name"
+				size="45"></td>
+		</tr>
+		<tr>
+			<td>售價</td>
+			<td><input type="TEXT" placeholder="400" name="goods_price"
+				size="45"></td>
+		</tr>
+		<tr>
+			<td>圖1</td>
+		<td><input type="file" accept="image/jpeg, image/png"
+				name="picture1" size="45"
+				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture1()%>" /></td>
+		</tr>
+		<tr>
+			<td>圖2</td>
+			<td><input type="file" accept="image/jpeg, image/png"
+				name="picture2" size="45"
+				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture2()%>" /></td>
+		</tr>
+		<tr>
+			<td>圖3</td>
+			<td><input type="file" accept="image/jpeg, image/png"
+				name="picture3" size="45"
+				value="<%=(goodsVO == null) ? "10000" : goodsVO.getGoods_picture3()%>" /></td>
+		</tr>
+		<tr>
+			<td>商品介紹</td>
+			<td><input type="TEXT" placeholder="應援手環"
+				name="goods_introduction" size="45"></td>
+		</tr>
+		<tr>
+			<td>促銷價</td>
+			<td><input type="TEXT" placeholder="300" name="forsales_a"
+				size="45"></td>
+		</tr>
 
-			<%--<tr>
-		<td>獎金:</td>
-		<td><input type="TEXT" name="comm" size="45"
-			 value="<%= (goodsVO==null)? "100" : goodsVO.getComm()%>" /></td>
-	</tr>
+		<tr>
+			<td>商品狀態</td>
+			<td><input type="TEXT" placeholder="上架中" name="goods_status"
+				size="45"></td>
+		</tr>
+	
 
-	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
-	<tr>
-		<td>部門:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="deptno">
-			<c:forEach var="deptVO" items="${deptSvc.all}">
-				<option value="${deptVO.deptno}" ${(GoodsVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname}
-			</c:forEach>
-		</select></td>
-	</tr>!-->--%>
 
-		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="送出新增">
-	</FORM>
+	</table>
+<br>
+<input type="hidden" name="action" value="insert">
+<input type="submit" value="送出新增"></FORM>
+<a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a>
 </body>
 
 
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
-<% 
-  java.sql.Timestamp launchdate = null;
-  try {
-	  launchdate = goodsVO.getLaunchdate();
-   } catch (Exception e) {
-	   launchdate = new java.sql.Timestamp(System.currentTimeMillis());
-   }
+<%
+	java.sql.Timestamp launchdate = null;
+	try {
+		launchdate = goodsVO.getLaunchdate();
+	} catch (Exception e) {
+		launchdate = new java.sql.Timestamp(System.currentTimeMillis());
+	}
 %>
 
 <link rel="stylesheet" type="text/css"
@@ -292,9 +278,9 @@
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
+	       timepicker:true,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	       format:'Y-m-d  H:i:s',         //format:'Y-m-d H:i:s',
 		   value: '<%=launchdate%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
@@ -302,13 +288,13 @@
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
         </script>
-<% 
-  java.sql.Timestamp offdate = null;
-  try {
-	  offdate = goodsVO.getOffdate();
-   } catch (Exception e) {
-	   offdate = new java.sql.Timestamp(System.currentTimeMillis());
-   }
+<%
+	java.sql.Timestamp offdate = null;
+	try {
+		offdate = goodsVO.getOffdate();
+	} catch (Exception e) {
+		offdate = new java.sql.Timestamp(System.currentTimeMillis());
+	}
 %>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
@@ -328,13 +314,14 @@
 
 <script>
               $.datetimepicker.setLocale('zh');
-              $('#f_date1').datetimepicker({
+              $('#f_date2').datetimepicker({
       	       theme: '',              //theme: 'dark',
       	       timepicker:false,       //timepicker:true,
       	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-      	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-      		   value: '<%=offdate%>'
+      	       format:'Y-m-d  H:i:s',         //format:'Y-m-d H:i:s',
+      		   value: '<%=offdate%>
 	', // value:   new Date(),
+
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
