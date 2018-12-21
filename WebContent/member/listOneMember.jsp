@@ -181,7 +181,7 @@
 		<td><%=member.getMemberPassword()%></td>
 		<td><%=member.getEwalletBalance()%></td>
 		<td><%=member.getCreationDate()%></td>
-		<td><%=member.getProfilePicture()%></td>
+		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberNo=${member.memberNo}"></td>
 		<td><%=member.getMemberStatus()%></td>
 		<td><%=member.getThirduid()%></td>
 	</tr>

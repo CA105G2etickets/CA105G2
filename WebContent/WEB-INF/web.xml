@@ -29,6 +29,15 @@
 		<servlet-name>MemberServlet</servlet-name>
 		<url-pattern>/member/member.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MemberImageServlet</servlet-name>
+		<servlet-class>com.member.controller.MemberImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberImageServlet</servlet-name>
+		<url-pattern>/member/memberImg.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>GoodsServlet</servlet-name>

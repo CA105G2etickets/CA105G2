@@ -208,7 +208,7 @@ th, td {
 			<td>${member.ewalletBalance}</td>
 			<td><fmt:formatDate value="${member.creationDate}"
 					pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			<td>${member.profilePicture}</td>
+			<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberNo=${member.memberNo}"></td>
 			<td>${member.memberStatus}</td> 
 			<td>${member.thirduid}</td> 
 			<td>
