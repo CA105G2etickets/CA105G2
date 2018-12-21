@@ -1,19 +1,24 @@
 package com.ticketorder.model;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.sql.*;
 
-public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "CA105G2";
-	String passwd = "123456";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class TicketOrderDAO implements TicketOrderDAO_interface{
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static final String INSERT_STMT=
 			"INSERT INTO ticket_order (ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status) VALUES ('TO_'||(TO_CHAR(SYSDATE,'YYYYMMDD'))||'_'||LPAD(to_char(TICKET_ORDER_SEQ.NEXTVAL), 6, '0'),?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT=
@@ -31,8 +36,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setString(1, ticketorderVO.getMember_no());
 			pstmt.setString(2, ticketorderVO.getTicarea_no());
@@ -45,10 +49,6 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -77,8 +77,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, ticketorderVO.getMember_no());
 			pstmt.setString(2, ticketorderVO.getTicarea_no());
@@ -92,10 +91,6 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -124,8 +119,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setString(1, ticket_order_no);
@@ -133,10 +127,6 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -168,8 +158,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, ticket_order_no);
@@ -190,10 +179,6 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -235,8 +220,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -255,10 +239,6 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -289,7 +269,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 		return list;
 	}
 //	public static void main (String[] args) {
-//		TicketOrderDAOJDBC dao = new TicketOrderDAOJDBC();
+//		TicketOrderDAO dao = new TicketOrderDAO();
 //		//ADD
 //		TicketOrderVO ticketorderVO = new TicketOrderVO();
 //		ticketorderVO.setMember_no("M000001");
@@ -320,7 +300,7 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 //		System.out.println("---------------------");
 //		
 //		//DELETE
-//		dao.delete("TO_20181214_000004"); 
+////		dao.delete("TO_20181214_000004"); 
 //		
 //		//SELECT WITH PK
 //		TicketOrderVO VO2 = dao.findByPrimaryKey("TO_20181225_000001");
