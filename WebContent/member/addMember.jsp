@@ -169,7 +169,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="member.do" name="form1">
+<FORM METHOD="post" ACTION="member.do" name="form1" enctype="multipart/form-data">
 <table class="table">
 	<tr>
 		<td>會員姓名:</td>

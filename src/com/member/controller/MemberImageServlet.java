@@ -13,9 +13,7 @@ import com.member.model.MemberService;
 public class MemberImageServlet extends HttpServlet{
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, res);
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String memberno = req.getParameter("memberno");
 		MemberService memberService = new MemberService();
@@ -26,7 +24,15 @@ public class MemberImageServlet extends HttpServlet{
 		res.setContentType("image/*");
 		output.write(memberPic);
 		output.close();
+		doPost(req,res);
 		
 	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doPost(req, res);
+	}
+	
 
 }

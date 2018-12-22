@@ -147,7 +147,7 @@
 
 			<li>
 				<FORM METHOD="post" ACTION="member.do">
-					輸入會員編號 <input type="text" placeholder="例M000001" name="memberno">
+					輸入會員編號 <input type="text" placeholder="例 : M000001" name="memberno">
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="submit" value="送出">
 				</FORM>

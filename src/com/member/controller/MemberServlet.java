@@ -5,11 +5,13 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class MemberServlet extends HttpServlet {
 
 //	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -316,10 +318,10 @@ public class MemberServlet extends HttpServlet {
 //					errorMsgs.add("請輸入日期!");
 //				}
 				
-//				String picture = req.getParameter("profilePicture").trim();
-//				if (picture == null || picture.trim().length() == 0) {
-//					errorMsgs.add("大頭貼請勿空白");
-//				}
+				byte[] picture = req.getParameter("profilePicture");
+				if (picture == null || picture.trim().length() == 0) {
+					errorMsgs.add("大頭貼請勿空白");
+				}
 				
 				String states = "normal";
 //				String states = req.getParameter("states").trim();
@@ -359,7 +361,7 @@ public class MemberServlet extends HttpServlet {
 				member.setMemberPassword(password);
 				member.setEwalletBalance(ewalletBalance);
 //				member.setCreationDate(creationDate);
-//				member.setProfilePicture(profilePicture);
+				member.setProfilePicture(profilePicture);
 				member.setMemberStatus(states);
 				member.setThirduid(thirduid);
 
