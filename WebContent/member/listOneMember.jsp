@@ -69,6 +69,9 @@
     color: blue;
     display: inline;
   }
+  img {
+  border-radius: 90%;
+}
 </style>
 
 <style>

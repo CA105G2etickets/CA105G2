@@ -12,7 +12,7 @@ public class MemberService {
 	}
 
 	public MemberVO addMember(String memberFullname, String email, String phone, String idcard,
-			String memberAccount, String memberPassword, Integer ewalletBalance,
+			String memberAccount, String memberPassword, Integer ewalletBalance, byte[] profilePicture,
 			String memberStatus, String thirduid) {
 
 		MemberVO member = new MemberVO();
@@ -25,7 +25,7 @@ public class MemberService {
 		member.setMemberPassword(memberPassword);
 		member.setEwalletBalance(ewalletBalance);
 //		member.setCreationDate(creationDate);
-//		member.setProfilePicture(profilePicture);
+		member.setProfilePicture(profilePicture);
 		member.setMemberStatus(memberStatus);
 		member.setThirduid(thirduid);
 		dao.insert(member);
@@ -34,7 +34,7 @@ public class MemberService {
 	}
 
 	public MemberVO updateMember(String memberNo, String memberFullname, String email, String phone,
-			String memberAccount, String memberPassword,
+			String memberAccount, String memberPassword, byte[] profilePicture,
 			String memberStatus) {
 
 		MemberVO member = new MemberVO();
@@ -48,7 +48,7 @@ public class MemberService {
 		member.setMemberPassword(memberPassword);
 //		member.setEwalletBalance(ewalletBalance);
 //		member.setCreationDate(creationDate);
-//		member.setProfilePicture(profilePicture);
+		member.setProfilePicture(profilePicture);
 		member.setMemberStatus(memberStatus);
 //		member.setThirduid(thirduid);
 		dao.update(member);

@@ -86,7 +86,19 @@
     padding: 1px;
   }
 </style>
-
+<script>
+function readURL(input){
+  if(input.files && input.files[0]){
+    var imageID = input.getAttribute("targetID");
+    var reader = new FileReader();
+    reader.onload = function (e) {
+       var img = document.getElementById(imageID);
+       img.setAttribute("src", e.target.result)
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
 </head>
 <nav class="navbar navbar-inverse" role="navigation">
 	<div class="container">
@@ -170,7 +182,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="member.do" name="form1">
+<FORM METHOD="post" ACTION="member.do" name="form1" enctype="multipart/form-data">
 <table class="table">
 	<tr>
 		<td>會員編號:<font color=red></font></td>
@@ -208,9 +220,12 @@
 		<td>帳號建立日期:</td>
 		<td><span id="f_date1"><%=member.getCreationDate()%></span></td>
 	</tr>
-	<tr>
+	<tr height="145">
 		<td>會員大頭貼:</td>
-		<td><input type="file" accept="image/jpeg, image/png" name="picture" size="45"	value="<%=member.getProfilePicture()%>" /></td>
+		<td>
+		<input type="file" accept="image/jpeg, image/png" name="picture" onchange="readURL(this)" targetID="previewImg">
+		<img id="previewImg" src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="100" width="100">
+		</td>
 	</tr>
 	<tr>
 		<td>會員狀態:</td>
