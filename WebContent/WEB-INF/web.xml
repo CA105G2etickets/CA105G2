@@ -83,6 +83,7 @@
 		<servlet-name>GoodsImgServlet3</servlet-name>
 		<url-pattern>/goods/goodsImg3.do</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>AndroidMemberServlet</servlet-name>
 		<servlet-class>android.com.MEMBER.controller.MemberServlet</servlet-class>
@@ -91,6 +92,7 @@
 		<servlet-name>AndroidMemberServlet</servlet-name>
 		<url-pattern>/member/MemberServlet.do</url-pattern>
 	</servlet-mapping>
+	
     <servlet>
         <servlet-name>TicketOrderServlet</servlet-name>
         <servlet-class>com.ticketorder.controller.TicketOrderServlet</servlet-class>
@@ -99,6 +101,7 @@
         <servlet-name>TicketOrderServlet</servlet-name>
         <url-pattern>/ticketorder/ticketorder.do</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>TicketServlet</servlet-name>
         <servlet-class>com.ticket.controller.TicketServlet</servlet-class>
