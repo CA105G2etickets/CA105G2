@@ -405,27 +405,27 @@ public class Group_openDAO implements Group_openDAO_interface {
 //		System.out.println(grov.getGROUP_PRICE());
 
 		// 查詢
-//		List<Group_openVO> list = dao.getAll();
-//		for (Group_openVO gro1 : list) {
-//			System.out.println(gro1.getGROUP_NO() + ",");
-//			System.out.println(gro1.getMEMBER_NO() + ",");
-//			System.out.println(gro1.getGOODS_NO() + ",");
-//			System.out.println(gro1.getGROUP_NAME() + ",");
-//			System.out.println(gro1.getGROUP_LIMIT() + ",");
-//			System.out.println(gro1.getGROUP_INTRODUCTION() + ",");
-//			System.out.println(gro1.getGROUP_MIND() + ",");
-//			System.out.println(gro1.getGROUP_START_DATE() + ",");
-//			System.out.println(gro1.getGROUP_CLOSE_DATE() + ",");
-//			System.out.println(gro1.getGROUP_BANNER_1() + ",");
-//			System.out.println(gro1.getGROUP_BANNER_2() + ",");
-//			System.out.println(gro1.getGROUP_STATUS()+",");
-//			System.out.println(gro1.getGROUP_ADDRESS() + ",");
-//			System.out.println(gro1.getLATITUDE() + ",");
-//			System.out.println(gro1.getLONGITUDE() + ",");
-//			System.out.println(gro1.getGROUP_TIME() + ",");
-//			System.out.println(gro1.getGROUP_PRICE());
-//			System.out.println();
-//		}
+		List<Group_openVO> list = dao.getAll();
+		for (Group_openVO gro1 : list) {
+			System.out.println(gro1.getGROUP_NO() + ",");
+			System.out.println(gro1.getMEMBER_NO() + ",");
+			System.out.println(gro1.getGOODS_NO() + ",");
+			System.out.println(gro1.getGROUP_NAME() + ",");
+			System.out.println(gro1.getGROUP_LIMIT() + ",");
+			System.out.println(gro1.getGROUP_INTRODUCTION() + ",");
+			System.out.println(gro1.getGROUP_MIND() + ",");
+			System.out.println(gro1.getGROUP_START_DATE() + ",");
+			System.out.println(gro1.getGROUP_CLOSE_DATE() + ",");
+			System.out.println(gro1.getGROUP_BANNER_1() + ",");
+			System.out.println(gro1.getGROUP_BANNER_2() + ",");
+			System.out.println(gro1.getGROUP_STATUS()+",");
+			System.out.println(gro1.getGROUP_ADDRESS() + ",");
+			System.out.println(gro1.getLATITUDE() + ",");
+			System.out.println(gro1.getLONGITUDE() + ",");
+			System.out.println(gro1.getGROUP_TIME() + ",");
+			System.out.println(gro1.getGROUP_PRICE());
+			System.out.println();
+		}
 
 	}
 

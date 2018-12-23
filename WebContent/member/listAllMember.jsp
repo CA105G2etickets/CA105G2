@@ -96,6 +96,10 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
+img {
+  border-radius: 90%;
+}
 </style>
 
 </head>
@@ -208,7 +212,7 @@ th, td {
 			<td>${member.ewalletBalance}</td>
 			<td><fmt:formatDate value="${member.creationDate}"
 					pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			<td>${member.profilePicture}</td>
+			<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
 			<td>${member.memberStatus}</td> 
 			<td>${member.thirduid}</td> 
 			<td>

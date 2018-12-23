@@ -2,25 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
+
 <head>
 <title>ETIckeTs Member</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-</style>
 <style>
 .memberphoto {
 	border-radius: 50px;
@@ -47,10 +32,9 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
-
 </style>
-
 </head>
+
 <nav class="navbar navbar-inverse" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -124,17 +108,18 @@
 	<!-- <table id="table-1"> -->
 	<!--    <tr><td><h3>ETIckeTs Member</h3><h4>( MVC )</h4></td></tr> -->
 	<!-- </table> -->
-	<div class="container">
+<div class="container">
 	<div class="col-xs-12 col-sm-12">
-		<p>ETIckeTs Member管理頁面</p>
+		<font size="6px">ETIckeTs會員管理頁面</font>
 	</div>
-	</div>
-	<div class="container">
+</div>
+<div class="container">
 	<div class="col-xs-12 col-sm-12">
-		會員查詢
+		<font size="5px">會員查詢</font>
 
 		<%-- 錯誤表列 --%>
-		<c:if test="${not empty errorMsgs}"><br>
+		<c:if test="${not empty errorMsgs}">
+			<br>
 			<font style="color: red">請修正以下錯誤:</font>
 			<ul>
 				<c:forEach var="message" items="${errorMsgs}">
@@ -144,17 +129,17 @@
 		</c:if>
 
 		<ul>
-
-			<li>
+			<font size="4px">
 				<FORM METHOD="post" ACTION="member.do">
-					輸入會員編號 <input type="text" placeholder="例M000001" name="memberno">
+					輸入會員編號 <input type="text" placeholder="例 : M000001" name="memberno">
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="submit" value="送出">
 				</FORM>
-			</li>
-			<a href='listAllMember.jsp'>列出所有會員</a>
+				<a href='listAllMember.jsp'>列出所有會員</a>
+			</font>
 
-		<jsp:useBean id="memberservice" scope="page" class="com.member.model.MemberService" />
+			<jsp:useBean id="memberservice" scope="page"
+				class="com.member.model.MemberService" />
 
 			<!--   <li> -->
 			<!--      <FORM METHOD="post" ACTION="member.do" > -->
@@ -182,16 +167,16 @@
 			<!--      </FORM> -->
 			<!--   </li> -->
 		</ul>
-		</div>
 	</div>
-	<div class="container">
+</div>
+<div class="container">
 	<div class="col-xs-12 col-sm-12">
-		會員管理
-
+		<font size="5px">會員管理</font>
 		<ul>
-			<li><a href='addMember.jsp'>新增會員</a></li>
+			<font size="4px"> <a href='addMember.jsp'>新增會員</a>
+			</font>
 		</ul>
 	</div>
-	</div>
-	</body>
+</div>
+</body>
 </html>

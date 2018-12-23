@@ -5,11 +5,13 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class MemberServlet extends HttpServlet {
 
 //	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -181,10 +183,26 @@ public class MemberServlet extends HttpServlet {
 //					errorMsgs.add("請輸入日期!");
 //				}
 				
-//				String picture = req.getParameter("profilePicture").trim();
-//				if (picture == null || picture.trim().length() == 0) {
-//					errorMsgs.add("大頭貼請勿空白");
-//				}
+				byte[] profilePicture = null;
+				Part part = req.getPart("picture");
+				try {
+					String uploadFileName = part.getSubmittedFileName();
+					if (uploadFileName != null && part.getContentType() != null) {
+						InputStream in = part.getInputStream();
+						profilePicture = new byte[in.available()];
+						in.read(profilePicture);
+						in.close();
+					}
+				} catch (FileNotFoundException e) {
+					errorMsgs.add("找不到檔案");
+				}
+				if (part.getSize() == 0) {
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+				}
 				
 				String states = req.getParameter("states").trim();
 				if (states == null || states.trim().length() == 0) {
@@ -222,7 +240,7 @@ public class MemberServlet extends HttpServlet {
 				member.setMemberPassword(password);
 //				member.setEwalletBalance(ewalletBalance);
 //				member.setCreationDate(creationDate);
-//				member.setProfilePicture(profilePicture);
+				member.setProfilePicture(profilePicture);
 				member.setMemberStatus(states);
 //				member.setThirduid(thirduid);
 				
@@ -239,7 +257,7 @@ public class MemberServlet extends HttpServlet {
 				/***************************2.開始修改資料*****************************************/
 				MemberService memberService = new MemberService();
 //				member = memberService.updateMember(memberNo, memberFullname, email, phone, idcard, account, password, ewalletBalance, creationDate, req.getParameter("profilePicture"), req.getParameter("memberStatus"));
-				memberService.updateMember(memberNo, memberFullname, email, phone, account, password, states);
+				memberService.updateMember(memberNo, memberFullname, email, phone, account, password, profilePicture, states);
 //				member = memberService.updateMember(memberNo, memberFullnameReg, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
@@ -266,11 +284,12 @@ public class MemberServlet extends HttpServlet {
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				String memberFullname = req.getParameter("memberFullname");
+				String memberFullname = req.getParameter("name");
 //				String memberFullnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-)]{3,10}$";
-//				if (memberFullname == null || memberFullname.trim().length() == 0) {
-//					errorMsgs.add("姓名: 請勿空白");
-//				} else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
+				if (memberFullname == null || memberFullname.trim().length() == 0) {
+					errorMsgs.add("姓名請勿空白");
+				}
+//				else if(!memberFullname.trim().matches(memberFullnameReg)) { //以下練習正則(規)表示式(regular-expression)
 //					errorMsgs.add("姓名: 只能是中、英文字母、數字和- , 且長度必需在3到10之間");
 //	            }
 				
@@ -281,7 +300,7 @@ public class MemberServlet extends HttpServlet {
 				
 				String phone = req.getParameter("phone1").trim() + req.getParameter("phone2").trim();
 				if (phone == null || phone.trim().length() == 0) {
-					errorMsgs.add("電話號碼請勿空白");
+					errorMsgs.add("手機號碼請勿空白");
 				}	
 				
 				String idcard = req.getParameter("idcard").trim();
@@ -316,10 +335,30 @@ public class MemberServlet extends HttpServlet {
 //					errorMsgs.add("請輸入日期!");
 //				}
 				
-//				String picture = req.getParameter("profilePicture").trim();
-//				if (picture == null || picture.trim().length() == 0) {
-//					errorMsgs.add("大頭貼請勿空白");
-//				}
+				byte[] profilePicture = null;
+				Part part = req.getPart("picture");
+				try {
+					String uploadFileName = part.getSubmittedFileName();
+					if (uploadFileName != null && part.getContentType() != null) {
+						InputStream in = part.getInputStream();
+						profilePicture = new byte[in.available()];
+						in.read(profilePicture);
+						in.close();
+					}
+				} catch (FileNotFoundException e) {
+					errorMsgs.add("找不到檔案");
+				}
+				if (part.getSize() == 0) {
+					errorMsgs.add("請上傳大頭貼");
+				}
+				
+//				String realPath = getServletContext().getRealPath(saveDirectory);
+//				System.out.println("realPath="+realPath); // 測試用
+//				File fsaveDirectory = new File(realPath);
+//				if (!fsaveDirectory.exists())
+//					 fsaveDirectory.mkdirs(); // 於 ContextPath 之下,自動建立目地目錄
+//
+//				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
 				
 				String states = "normal";
 //				String states = req.getParameter("states").trim();
@@ -359,7 +398,7 @@ public class MemberServlet extends HttpServlet {
 				member.setMemberPassword(password);
 				member.setEwalletBalance(ewalletBalance);
 //				member.setCreationDate(creationDate);
-//				member.setProfilePicture(profilePicture);
+				member.setProfilePicture(profilePicture);
 				member.setMemberStatus(states);
 				member.setThirduid(thirduid);
 
@@ -374,7 +413,7 @@ public class MemberServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				MemberService memberService = new MemberService();
-				member = memberService.addMember(memberFullname, email, phone, idcard, account, password, ewalletBalance, states, thirduid);
+				member = memberService.addMember(memberFullname, email, phone, idcard, account, password, ewalletBalance, profilePicture, states, thirduid);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/member/listAllMember.jsp";

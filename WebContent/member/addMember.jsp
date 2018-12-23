@@ -85,7 +85,26 @@
   th, td {
     padding: 1px;
   }
+  img {
+  border-radius: 90%;
+}
 </style>
+<script>
+function readURL(input){
+  if(input.files && input.files[0]){
+    var imageID = input.getAttribute("targetID");
+    var reader = new FileReader();
+    reader.onload = function (e) {
+       var img = document.getElementById(imageID);
+       img.setAttribute("src", e.target.result)
+       img.setAttribute("height", 100)
+       img.setAttribute("width", 100)
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+</script>
 </head>
 <nav class="navbar navbar-inverse" role="navigation">
 	<div class="container">
@@ -157,6 +176,7 @@
 </div>
 </nav>
 
+<div class="container">
 <h3>新增會員資料:</h3>
 
 <%-- 錯誤表列 --%>
@@ -169,51 +189,53 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="member.do" name="form1">
+<FORM METHOD="post" ACTION="member.do" name="form1" enctype="multipart/form-data">
 <table class="table">
 	<tr>
-		<td>會員姓名:</td>
+		<td>會員姓名</td>
 		<td><input type="TEXT" placeholder="吳永志" name="name" size="45"></td>
 	</tr>
 	<tr>
-		<td>會員電子郵件:</td>
+		<td>會員電子郵件</td>
 		<td><input type="email" placeholder="xxx@gmail.com"name="email" size="45"></td>
 	</tr>
 	<tr>
-		<td>會員手機號碼:</td>
+		<td>會員手機號碼</td>
 		<td><input type="TEXT" placeholder="0923" name="phone1" size="10">&nbsp;-&nbsp;<input type="TEXT" placeholder="123456" name="phone2" size="15"></td>
 	</tr>
 	<tr>
-		<td>會員身分證字號:</td>
+		<td>會員身分證字號</td>
 		<td><input type="TEXT" placeholder="T100123456" name="idcard" size="45"></td>
 	</tr>
 	<tr>
-		<td>會員帳號:</td>
+		<td>會員帳號</td>
 		<td><input type="TEXT" placeholder="eticketsTest" name="account" size="45"></td>
 	</tr>
 	<tr>
-		<td>會員密碼:</td>
+		<td>會員密碼</td>
 		<td><input type="TEXT" placeholder="123456" name="password" size="45"></td>
 	</tr>
 	<tr>
-		<td>會員電子錢包餘額:</td>
+		<td>會員電子錢包餘額</td>
 		<td>0</td>
 	</tr>
 	<tr>
-		<td>帳號建立日期時間:</td>
+		<td>帳號建立日期時間</td>
 		<td>系統新增時間</td>
 	</tr>
-	<tr>
-		<td>會員大頭貼:</td>
-		<td><input type="file" accept="image/jpeg, image/png" name="picture" size="45"
-			 value="<%= (member==null)? "10000" : member.getProfilePicture()%>" /></td>
+	<tr height="145">
+		<td>會員大頭貼</td>
+		<td>
+		<input type="file" accept="image/jpeg, image/png" name="picture" onchange="readURL(this)" targetID="previewImg">
+		<img id="previewImg" src="" height="" width="">
+		</td>
 	</tr>
 	<tr>
-		<td>會員狀態:</td>
+		<td>會員狀態</td>
 		<td>normal</td>
 	</tr>
 	<tr>
-		<td>會員第三方登入ID:</td>
+		<td>會員第三方登入ID</td>
 		<td>625549954</td>
 	</tr>
 
@@ -234,6 +256,7 @@
 
 <input type="submit" value="送出新增"></FORM>
 <a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a>
+</div>
 </body>
 
 

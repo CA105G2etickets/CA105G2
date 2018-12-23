@@ -22,13 +22,13 @@ public class MemberDAO implements MemberDAO_interface {
 	}
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO MEMBER (MEMBER_NO,MEMBER_FULLNAME,EMAIL,PHONE,IDCARD,MEMBER_ACCOUNT,MEMBER_PASSWORD,EWALLET_BALANCE,CREATION_DATE,MEMBER_STATUS,THIRDUID) VALUES ('M'||LPAD(to_char(member_no_seq.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?, ?,CURRENT_TIMESTAMP, ?, ?)";
+			"INSERT INTO MEMBER (MEMBER_NO,MEMBER_FULLNAME,EMAIL,PHONE,IDCARD,MEMBER_ACCOUNT,MEMBER_PASSWORD,EWALLET_BALANCE,CREATION_DATE,PROFILE_PICTURE,MEMBER_STATUS,THIRDUID) VALUES ('M'||LPAD(to_char(member_no_seq.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?, ?,CURRENT_TIMESTAMP, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM MEMBER ORDER BY MEMBER_NO";
 	private static final String DELETE = 
 			"DELETE FROM MEMBER WHERE MEMBER_NO = ?";
 	private static final String UPDATE = 
-			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, MEMBER_STATUS = ? WHERE MEMBER_NO = ?";
+			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, PROFILE_PICTURE = ?, MEMBER_STATUS = ? WHERE MEMBER_NO = ?";
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM MEMBER WHERE MEMBER_NO = ?";
 
@@ -51,9 +51,9 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(6, member.getMemberPassword());
 			pstmt.setInt(7, member.getEwalletBalance());
 //			pstmt.setTimestamp(8, member.getCreationDate());
-//			pstmt.setBytes(9, member.getProfilePicture());
-			pstmt.setString(8, member.getMemberStatus());
-			pstmt.setString(9, member.getThirduid());
+			pstmt.setBytes(8, member.getProfilePicture());
+			pstmt.setString(9, member.getMemberStatus());
+			pstmt.setString(10, member.getThirduid());
 
 			pstmt.executeUpdate();
 
@@ -98,10 +98,10 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(5, member.getMemberPassword());
 //			pstmt.setInt(7, member.getEwalletBalance());
 //			pstmt.setTimestamp(7, member.getCreationDate());
-//			pstmt.setBytes(9, member.getProfilePicture());
-			pstmt.setString(6, member.getMemberStatus());
+			pstmt.setBytes(6, member.getProfilePicture());
+			pstmt.setString(7, member.getMemberStatus());
 //			pstmt.setString(9, member.getThirduid());
-			pstmt.setString(7, member.getMemberNo());
+			pstmt.setString(8, member.getMemberNo());
 
 			pstmt.executeUpdate();
 
