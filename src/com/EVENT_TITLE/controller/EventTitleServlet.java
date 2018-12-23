@@ -8,12 +8,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Base64;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -26,7 +22,7 @@ import javax.servlet.http.Part;
 import com.EVENT_TITLE.model.EventTitleService;
 import com.EVENT_TITLE.model.EventTitleVO;
 
-
+ 
 
 @WebServlet("/EVENT_TITLE/EventTitleServlet.do")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
@@ -219,16 +215,16 @@ public class EventTitleServlet extends HttpServlet {
 					eventTitleErrorMsgs.add("請輸入結束日期");
 				}
 				
-				java.sql.Date today = new java.sql.Date(System.currentTimeMillis());				
-				if (today.compareTo(evetit_startdate) > 0) {
-					eventTitleErrorMsgs.add("開始日期不得早於今天");
-				}				
-				if (today.compareTo(evetit_enddate) > 0) {
-					eventTitleErrorMsgs.add("結束日期不得早於今天");
-				} 				
-				if (evetit_startdate.compareTo(evetit_enddate) > 0) {
-					eventTitleErrorMsgs.add("結束日期不得早於開始日期");
-				} 
+//				java.sql.Date today = new java.sql.Date(System.currentTimeMillis());				
+//				if (today.compareTo(evetit_startdate) > 0) {
+//					eventTitleErrorMsgs.add("開始日期不得早於今天");
+//				}				
+//				if (today.compareTo(evetit_enddate) > 0) {
+//					eventTitleErrorMsgs.add("結束日期不得早於今天");
+//				} 				
+//				if (evetit_startdate.compareTo(evetit_enddate) > 0) {
+//					eventTitleErrorMsgs.add("結束日期不得早於開始日期");
+//				} 
 				
 				java.sql.Date launchdate = null;
 				try {
@@ -243,15 +239,15 @@ public class EventTitleServlet extends HttpServlet {
 					eventTitleErrorMsgs.add("請輸入下架日期");
 				}
 				
-				if (today.compareTo(launchdate) > 0) {
-					eventTitleErrorMsgs.add("上架日期不得早於今天");
-				}				
-				if (today.compareTo(offdate) > 0) {
-					eventTitleErrorMsgs.add("下架日期不得早於今天");
-				} 				
-				if (launchdate.compareTo(offdate) > 0) {
-					eventTitleErrorMsgs.add("下架日期不得早於上架日期");
-				} 
+//				if (today.compareTo(launchdate) > 0) {
+//					eventTitleErrorMsgs.add("上架日期不得早於今天");
+//				}				
+//				if (today.compareTo(offdate) > 0) {
+//					eventTitleErrorMsgs.add("下架日期不得早於今天");
+//				} 				
+//				if (launchdate.compareTo(offdate) > 0) {
+//					eventTitleErrorMsgs.add("下架日期不得早於上架日期");
+//				} 
 				
 				String eveclass_no = request.getParameter("eveclass_no");
 				Integer promotionranking = new Integer(request.getParameter("promotionranking"));
@@ -342,7 +338,7 @@ public class EventTitleServlet extends HttpServlet {
 
 			ByteArrayOutputStream baos = null;
 
-//			try {
+			try {
 				/****************************** 1.接收請求參數 - 輸入格式的錯誤處理 **************************************************/
 				
 				String evetit_name = request.getParameter("evetit_name");
@@ -397,7 +393,7 @@ public class EventTitleServlet extends HttpServlet {
 //				} 				
 //				if (launchdate.compareTo(offdate) > 0) {
 //					eventTitleErrorMsgs.add("下架日期不得早於上架日期");
-				} 
+//				} 
 				
 				String eveclass_no = request.getParameter("eveclass_no");
 				Integer promotionranking = new Integer(request.getParameter("promotionranking"));
@@ -471,7 +467,7 @@ public class EventTitleServlet extends HttpServlet {
 				//====================================================================================================
 				
 				String evetit_poster_path = (String) request.getSession().getAttribute("evetit_poster_path");
-				String evetit_poster_path_forUse = evetit_poster_path.substring(16).replace("/", "\\");
+				String evetit_poster_path_forUse = evetit_poster_path.replace(request.getContextPath(), "").replace("/", "\\");
 				String realPath = getServletContext().getRealPath("/") + evetit_poster_path_forUse;
 
 				InputStream in = new FileInputStream(realPath);
@@ -510,11 +506,11 @@ public class EventTitleServlet extends HttpServlet {
 				successView.forward(request, response);
 
 				/****************************** 其他可能的錯誤處理 **************************************************/
-//			} catch (Exception e) {
-//				eventTitleErrorMsgs.add("修改資料失敗 : "+e.getMessage());
-//				RequestDispatcher failureView = request.getRequestDispatcher("/back-end/EVENT_TITLE/addEventTitle.jsp");
-//				failureView.forward(request, response);
-//			}
+			} catch (Exception e) {
+				eventTitleErrorMsgs.add("修改資料失敗 : "+e.getMessage());
+				RequestDispatcher failureView = request.getRequestDispatcher("/back-end/EVENT_TITLE/updateEventTitle.jsp");
+				failureView.forward(request, response);
+			}
 
 		}
 
