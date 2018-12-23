@@ -128,6 +128,9 @@
 		<td><%=member.getThirduid()%></td>
 	</tr>
 </table>
-<a href="select_page.jsp"><img src="images/back1.png" width="186" height="81" border="0">
+<div class="col-xs-12 col-sm-12">
+<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<br>
+</div>
 </body>
 </html>

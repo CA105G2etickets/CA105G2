@@ -214,7 +214,10 @@ function readURL(input){
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="memberno" value="<%=member.getMemberNo()%>">
 <input type="submit" value="送出修改"></FORM>
-<a href="listAllMember.jsp"><img src="images/back1.png" width="186" height="81" border="0"></a>
+<div class="col-xs-12 col-sm-12">
+<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<br>
+</div>
 </body>
 
 
