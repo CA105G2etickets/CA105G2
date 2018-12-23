@@ -218,7 +218,7 @@ function readURL(input){
 	</tr>
 	<tr>
 		<td>帳號建立日期:</td>
-		<td><span id="f_date1"><%=member.getCreationDate()%></span></td>
+		<td><%=member.getCreationDate()%></td>
 	</tr>
 	<tr height="145">
 		<td>會員大頭貼:</td>
@@ -229,7 +229,12 @@ function readURL(input){
 	</tr>
 	<tr>
 		<td>會員狀態:</td>
-		<td><input type="TEXT" name="states" size="45" value="<%=member.getMemberStatus()%>" /></td>
+		<td>
+			<select name="states">
+				<option value="normal" ${(member.memberStatus.equals("normal"))? 'selected':'' }>正常</option>
+				<option value="abnormal" ${(member.memberStatus.equals("abnormal"))? 'selected':'' }>異常</option>
+			</select>
+		</td>
 	</tr>
 <!-- 	<tr> -->
 <!-- 		<td>會員狀態:</td> -->
