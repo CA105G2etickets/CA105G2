@@ -192,7 +192,8 @@ function readURL(input){
 <input type="hidden" name="action" value="insert">
 <input type="hidden" name="thirduid" value="625549954">
 
-<input type="submit" value="送出新增"></FORM>
+<input type="submit" value="送出新增" >
+</FORM>
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
