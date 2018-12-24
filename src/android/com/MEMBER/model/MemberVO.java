@@ -16,6 +16,15 @@ public class MemberVO {
 	private Timestamp creationDate;
 	private byte[] profilePicture;
 	private String memberStatus;
+	private String thirdUID;
+
+	public String getThirdUID() {
+		return thirdUID;
+	}
+
+	public void setThirdUID(String thirdUID) {
+		this.thirdUID = thirdUID;
+	}
 
 	public MemberVO() {
 		// TODO Auto-generated constructor stub

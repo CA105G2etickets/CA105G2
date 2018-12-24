@@ -10,7 +10,7 @@ public interface MemberDAO_interface {
     public MemberVO findByPrimaryKey(String memberNo);
     public List<MemberVO> getAll();
 //    public boolean isMember(String userName, String userPassword);
-    public String isMember(String userName, String userPassword);
+    public String isMember(String userName, String userPassword,String thirdUID);
     public byte[] getImage(String memberNo);
     
 }
