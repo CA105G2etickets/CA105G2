@@ -6,110 +6,109 @@ public class OrderHistoryVO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 3974699486176517592L;
 	
-	private String orderNo;
-	private String memberNo;
-	private Double orderPrice;
-	private String payMethods;
-	private String shippingMethods;
-	private Timestamp orderDate;
-	private Timestamp orderEtd;
-	private Timestamp pickupDate;
-	private String receiverAdd;
-	private String receiverName;
-	private String receiverTel;
-	private String orderStatus;
+	private String order_no;
+	private String member_no;
+	private Double order_price;
+	private String pay_methods;
+	private String shipping_methods;
+	private Timestamp order_date;
+	private Timestamp order_etd;
+	private Timestamp pickup_date;
+	private String receiver_add;
+	private String receiver_name;
+	private String receiver_tel;
+	private String order_status;
 	
 	public OrderHistoryVO() {
 		
 	}
-	public OrderHistoryVO(String orderNo, String memberNo, Double orderPrice, String payMethods, 
-			String shippingMethods, Timestamp orderDate, Timestamp orderEtd, Timestamp pickupDate,
-			String receiverAdd, String receiverName, String receiverTel, String orderStatus) {
-		this.orderNo = orderNo;
-		this.memberNo = memberNo;
-		this.orderPrice = orderPrice;
-		this.payMethods = payMethods;
-		this.shippingMethods = shippingMethods;
-		this.orderDate = orderDate;
-		this.orderEtd = orderEtd;
-		this.pickupDate = pickupDate;
-		this.receiverAdd = receiverAdd;
-		this.receiverName = receiverName;
-		this.receiverTel = receiverTel;
-		this.orderStatus = orderStatus;
+	public OrderHistoryVO(String order_no, String member_no, Double order_price, String pay_methods, 
+			String shipping_methods, Timestamp order_date, Timestamp order_etd, Timestamp pickup_date,
+			String receiver_add, String receiver_name, String receiver_tel, String order_status) {
+		this.order_no = order_no;
+		this.member_no = member_no;
+		this.order_price = order_price;
+		this.pay_methods = pay_methods;
+		this.shipping_methods = shipping_methods;
+		this.order_date = order_date;
+		this.order_etd = order_etd;
+		this.pickup_date = pickup_date;
+		this.receiver_add = receiver_add;
+		this.receiver_name = receiver_name;
+		this.receiver_tel = receiver_tel;
+		this.order_status = order_status;
 	}
-	
-	public String getOrderNo() {
-		return orderNo;
+	public String getOrder_no() {
+		return order_no;
 	}
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
+	public void setOrder_no(String order_no) {
+		this.order_no = order_no;
 	}
-	public String getMemberNo() {
-		return memberNo;
+	public String getMember_no() {
+		return member_no;
 	}
-	public void setMemberNo(String memberNo) {
-		this.memberNo = memberNo;
+	public void setMember_no(String member_no) {
+		this.member_no = member_no;
 	}
-	public Double getOrderPrice() {
-		return orderPrice;
+	public Double getOrder_price() {
+		return order_price;
 	}
-	public void setOrderPrice(Double orderPrice) {
-		this.orderPrice = orderPrice;
+	public void setOrder_price(Double order_price) {
+		this.order_price = order_price;
 	}
-	public String getPayMethods() {
-		return payMethods;
+	public String getPay_methods() {
+		return pay_methods;
 	}
-	public void setPayMethods(String payMethods) {
-		this.payMethods = payMethods;
+	public void setPay_methods(String pay_methods) {
+		this.pay_methods = pay_methods;
 	}
-	public String getShippingMethods() {
-		return shippingMethods;
+	public String getShipping_methods() {
+		return shipping_methods;
 	}
-	public void setShippingMethods(String shippingMethods) {
-		this.shippingMethods = shippingMethods;
+	public void setShipping_methods(String shipping_methods) {
+		this.shipping_methods = shipping_methods;
 	}
-	public Timestamp getOrderDate() {
-		return orderDate;
+	public Timestamp getOrder_date() {
+		return order_date;
 	}
-	public void setOrderDate(Timestamp orderDate) {
-		this.orderDate = orderDate;
+	public void setOrder_date(Timestamp order_date) {
+		this.order_date = order_date;
 	}
-	public Timestamp getOrderEtd() {
-		return orderEtd;
+	public Timestamp getOrder_etd() {
+		return order_etd;
 	}
-	public void setOrderEtd(Timestamp orderEtd) {
-		this.orderEtd = orderEtd;
+	public void setOrder_etd(Timestamp order_etd) {
+		this.order_etd = order_etd;
 	}
-	public Timestamp getPickupDate() {
-		return pickupDate;
+	public Timestamp getPickup_date() {
+		return pickup_date;
 	}
-	public void setPickupDate(Timestamp pickupDate) {
-		this.pickupDate = pickupDate;
+	public void setPickup_date(Timestamp pickup_date) {
+		this.pickup_date = pickup_date;
 	}
-	public String getReceiverAdd() {
-		return receiverAdd;
+	public String getReceiver_add() {
+		return receiver_add;
 	}
-	public void setReceiverAdd(String receiverAdd) {
-		this.receiverAdd = receiverAdd;
+	public void setReceiver_add(String receiver_add) {
+		this.receiver_add = receiver_add;
 	}
-	public String getReceiverName() {
-		return receiverName;
+	public String getReceiver_name() {
+		return receiver_name;
 	}
-	public void setReceiverName(String receiverName) {
-		this.receiverName = receiverName;
+	public void setReceiver_name(String receiver_name) {
+		this.receiver_name = receiver_name;
 	}
-	public String getReceiverTel() {
-		return receiverTel;
+	public String getReceiver_tel() {
+		return receiver_tel;
 	}
-	public void setReceiverTel(String receiverTel) {
-		this.receiverTel = receiverTel;
+	public void setReceiver_tel(String receiver_tel) {
+		this.receiver_tel = receiver_tel;
 	}
-	public String getOrderStatus() {
-		return orderStatus;
+	public String getOrder_status() {
+		return order_status;
 	}
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
+	public void setOrder_status(String order_status) {
+		this.order_status = order_status;
 	}
-		
+			
 }

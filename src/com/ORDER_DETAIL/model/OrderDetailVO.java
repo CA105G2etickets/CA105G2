@@ -4,37 +4,45 @@ public class OrderDetailVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 7973064175273608162L;
 	
-	private String orderNo;
-	private String goodsNo;
-	private Double goodsBonus;
-	private Double goodsPc;
+	private String order_no;
+	private String goods_no;
+	private Double goods_bonus;
+	private Double goods_pc;
 	
 	public OrderDetailVO() {
 		
+	}
+	public String getOrder_no() {
+		return order_no;
+	}
+
+	public void setOrder_no(String order_no) {
+		this.order_no = order_no;
+	}
+
+	public String getGoods_no() {
+		return goods_no;
+	}
+
+	public void setGoods_no(String goods_no) {
+		this.goods_no = goods_no;
+	}
+
+	public Double getGoods_bonus() {
+		return goods_bonus;
+	}
+
+	public void setGoods_bonus(Double goods_bonus) {
+		this.goods_bonus = goods_bonus;
+	}
+
+	public Double getGoods_pc() {
+		return goods_pc;
+	}
+
+	public void setGoods_pc(Double goods_pc) {
+		this.goods_pc = goods_pc;
 	}	
-	public String getOrderNo() {
-		return orderNo;
-	}
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
-	}
-	public String getGoodsNo() {
-		return goodsNo;
-	}
-	public void setGoodsNo(String goodsNo) {
-		this.goodsNo = goodsNo;
-	}
-	public Double getGoodsBonus() {
-		return goodsBonus;
-	}
-	public void setGoodsBonus(Double goodsBonus) {
-		this.goodsBonus = goodsBonus;
-	}
-	public Double getGoodsPc() {
-		return goodsPc;
-	}
-	public void setGoodsPc(Double goodsPc) {
-		this.goodsPc = goodsPc;
-	}	
+
 
 }

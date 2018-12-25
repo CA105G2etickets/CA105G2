@@ -4,23 +4,27 @@ public class FavoriteGoodsVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = -5775565293428691932L;
 	
-	private String memberNo;
-	private String goodsNo;
+	private String member_no;
+	private String goods_no;
 	
 	public FavoriteGoodsVO() {
 		
 	}
-	public String getMemberNo() {
-		return memberNo;
+
+	public String getMember_no() {
+		return member_no;
 	}
-	public void setMemberNo(String memberNo) {
-		this.memberNo = memberNo;
+
+	public void setMember_no(String member_no) {
+		this.member_no = member_no;
 	}
-	public String getGoodsNo() {
-		return goodsNo;
+
+	public String getGoods_no() {
+		return goods_no;
 	}
-	public void setGoodsNo(String goodsNo) {
-		this.goodsNo = goodsNo;
+
+	public void setGoods_no(String goods_no) {
+		this.goods_no = goods_no;
 	}
 	
 }

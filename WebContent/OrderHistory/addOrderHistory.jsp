@@ -16,14 +16,20 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		
+		<div>                   
+			<c:import url="/navbar_back-end.html" charEncoding="UTF-8"/>
+		</div>
+		
 	</head>
 	<body>
-		<div class="container">
+		<div class="container-fluid">
+		<div class="col-xs-12 col-sm-1"></div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-12">
-					<h4><a href="select_page.jsp"><img src="images/LOGO1.png" width="70" height="50" border="0"><b>首頁</b></a></h4>
+				<div class="col-xs-12 col-sm-10">
+	<!-- 					<h4><a href="select_page.jsp"><img src="images/LOGO1.png" width="70" height="50" border="0"><b>首頁</b></a></h4> -->
 					<div class="panel panel-info">
-						
+							
 						<div class="panel-heading">
 							<h3 class="panel-title">新增訂單紀錄</h3>
 						</div>
@@ -35,92 +41,90 @@
 								</c:forEach>
 							</ul>
 						</c:if>
-						<div class="panel-body">
-							<FORM METHOD="post" ACTION="OrderHistory.do" name="form1">
-								<table>
-									<tr>
-										<td>會員編號：</td>
-										<td><input type="TEXT" name="memberNo" size="15" 
-											 value="<%= (orderHistoryVO==null)? "M000001" : orderHistoryVO.getMemberNo()%>" /></td>
-									</tr>
-									<tr>
-										<td>訂單總金額：</td>
-										<td><input type="TEXT" name="orderPrice" size="15"
-											 value="<%= (orderHistoryVO==null)? "1000000" : orderHistoryVO.getOrderPrice()%>" /></td>
-									</tr>
-									
-									<jsp:useBean id="OrderHistorySvc" scope="page" class="com.ORDER_HISTORY.model.OrderHistoryService" />
-									
-									<tr>
-										<td>付款方式：</td>
-										<td>
-											<select size="1" name="payMethods">
-												<option value='' selected>請選擇</option>
-												<option value="CREDITCARD">電子錢包</option>
-												<option value="EWALLET">信用卡</option>
-										   </select>
-										</td>
-									</tr>
-									<tr>
-										<td>出貨方式：</td>
-										<td><select size="1" name="shippingMethods">
-												<option value='' selected>請選擇</option>
-												<option value="STOREPICKUP">超商取貨</option>
-												<option value="HOMEDELIVERY">宅配</option>
-										</select></td>
-									</tr>
-									<tr>
-										<td>訂購日期：</td>
-										<td><input name="orderDate" id="f_date1" type="text" ></td>
-									</tr>
-									<tr>
-										<td>出貨日期：</td>
-										<td><input name="orderEtd" id="f_date2" type="text" ></td>
-									</tr>
-									<tr>
-										<td>取貨日期：</td>
-										<td><input name="pickupDate" id="f_date3" type="text" ></td>
-									</tr>
-									<tr>
-										<td>收件人地址：</td>
-										<td><input type="TEXT" name="receiverAdd" size="45"
-											 value="<%= (orderHistoryVO==null)? "320桃園市中壢區福德一路177巷60弄2號" : orderHistoryVO.getReceiverAdd()%>" /></td>
-									</tr>
-									<tr>
-										<td>收件人名稱：</td>
-										<td><input type="TEXT" name="receiverName" size="15" 
-											 value="<%= (orderHistoryVO==null)? "Peter1" : orderHistoryVO.getReceiverName()%>" /></td>
-									</tr>
-									<tr>
-										<td>收件人電話：</td>
-										<td><input type="TEXT" name="receiverTel" size="15" 
-											 value="<%= (orderHistoryVO==null)? "0912345678" : orderHistoryVO.getReceiverTel()%>" /></td>
-									</tr>
-									<tr>
-										<td>訂單狀態：</td>
-										<td><select size="1" name="orderStatus">
-												<option value='' selected>請選擇</option>
-												<option value="PAYMENT1">已付款</option>
-												<option value="SHIPPING2">出貨中</option>
-												<option value="SHIPMENT3">已出貨</option>
-												<option value="COMPLETE4">已完成</option>
-												<option value="CANCEL5">已取消</option>
-										</select></td>
-									</tr>
-
-								</table>
-							<br>
-							<input type="hidden" name="action" value="insert">
-							<input type="submit" value="送出新增">
-							</FORM>
-						</div>
+							<div class="panel-body">
+								<FORM METHOD="post" ACTION="OrderHistory.do" name="form1">
+									<table>
+										<tr>
+											<td>會員編號：</td>
+											<td><input type="TEXT" name="member_no" size="15" 
+												 value="<%= (orderHistoryVO==null)? "M000001" : orderHistoryVO.getMember_no()%>" /></td>
+										</tr>
+										<tr>
+											<td>訂單總金額：</td>
+											<td><input type="TEXT" name="order_price" size="15"
+												 value="<%= (orderHistoryVO==null)? "1000000" : orderHistoryVO.getOrder_price()%>" /></td>
+										</tr>
+										
+										<jsp:useBean id="OrderHistorySvc" scope="page" class="com.ORDER_HISTORY.model.OrderHistoryService" />
+										
+										<tr>
+											<td>付款方式：</td>
+											<td>
+												<select size="1" name="pay_methods">
+													<option value='' selected>請選擇</option>
+													<option value="CREDITCARD">電子錢包</option>
+													<option value="EWALLET">信用卡</option>
+											   </select>
+											</td>
+										</tr>
+										<tr>
+											<td>出貨方式：</td>
+											<td><select size="1" name="shipping_methods">
+													<option value='' selected>請選擇</option>
+													<option value="STOREPICKUP">超商取貨</option>
+													<option value="HOMEDELIVERY">宅配</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>訂購日期：</td>
+											<td><input name="order_date" id="f_date1" type="text" ></td>
+										</tr>
+										<tr>
+											<td>出貨日期：</td>
+											<td><input name="order_etd" id="f_date2" type="text" ></td>
+										</tr>
+										<tr>
+											<td>取貨日期：</td>
+											<td><input name="pickup_date" id="f_date3" type="text" ></td>
+										</tr>
+										<tr>
+											<td>收件人地址：</td>
+											<td><input type="TEXT" name="receiver_add" size="45"
+												 value="<%= (orderHistoryVO==null)? "320桃園市中壢區福德一路177巷60弄2號" : orderHistoryVO.getReceiver_add()%>" /></td>
+										</tr>
+										<tr>
+											<td>收件人名稱：</td>
+											<td><input type="TEXT" name="receiver_name" size="15" 
+												 value="<%= (orderHistoryVO==null)? "Peter1" : orderHistoryVO.getReceiver_name()%>" /></td>
+										</tr>
+										<tr>
+											<td>收件人電話：</td>
+											<td><input type="TEXT" name="receiver_tel" size="15" 
+												 value="<%= (orderHistoryVO==null)? "0912345678" : orderHistoryVO.getReceiver_tel()%>" /></td>
+										</tr>
+										<tr>
+											<td>訂單狀態：</td>
+											<td><select size="1" name="order_status">
+													<option value='' selected>請選擇</option>
+													<option value="PAYMENT1">已付款</option>
+													<option value="SHIPPING2">出貨中</option>
+													<option value="SHIPMENT3">已出貨</option>
+													<option value="COMPLETE4">已完成</option>
+													<option value="CANCEL5">已取消</option>
+											</select></td>
+										</tr>
+	
+									</table>
+								<br>
+								<input type="hidden" name="action" value="insert">
+								<input type="submit" value="送出新增" class="btn btn-primary">
+								</FORM>
+							</div>
 					</div>
-
+	
 				</div>
 			</div>
 		</div>
-
-		
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -128,25 +132,25 @@
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 <% 
-  java.sql.Timestamp orderDate = null;
+  java.sql.Timestamp order_date = null;
   try {
-		orderDate = orderHistoryVO.getOrderDate();
+		order_date = orderHistoryVO.getOrder_date();
    } catch (Exception e) {
-		orderDate = new java.sql.Timestamp(System.currentTimeMillis());
+		order_date = new java.sql.Timestamp(System.currentTimeMillis());
    }
   
-  java.sql.Timestamp orderEtd = null;
+  java.sql.Timestamp order_etd = null;
   try {
-		orderEtd = orderHistoryVO.getOrderEtd();
+		order_etd = orderHistoryVO.getOrder_etd();
    } catch (Exception e) {
-		orderEtd = new java.sql.Timestamp(System.currentTimeMillis());
+		order_etd = new java.sql.Timestamp(System.currentTimeMillis());
    }
   
-  java.sql.Timestamp pickupDate = null;
+  java.sql.Timestamp pickup_date = null;
   try {
-		pickupDate = orderHistoryVO.getPickupDate();
+		pickup_date = orderHistoryVO.getPickup_date();
    } catch (Exception e) {
-		pickupDate = new java.sql.Timestamp(System.currentTimeMillis());
+		pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
    }
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/OrderHistory/datetimepicker/jquery.datetimepicker.css" />
@@ -169,7 +173,7 @@
  	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderDate%>', // value:   new Date(),
+ 		   value: '<%=order_date%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -181,7 +185,7 @@
  	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderEtd%>', // value:   new Date(),
+ 		   value: '<%=order_etd%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -193,7 +197,7 @@
  	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=pickupDate%>', // value:   new Date(),
+ 		   value: '<%=pickup_date%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前

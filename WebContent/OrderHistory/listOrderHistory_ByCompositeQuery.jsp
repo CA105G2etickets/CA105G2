@@ -4,56 +4,50 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.ORDER_HISTORY.model.*"%>
 
-<%
-    OrderHistoryService orderHistorySvc = new OrderHistoryService();
-    List<OrderHistoryVO> list = orderHistorySvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
+<%-- 萬用複合查詢-可由客戶端select_page.jsp隨意增減任何想查詢的欄位 --%>
+<%-- 此頁只作為複合查詢時之結果練習，可視需要再增加分頁、送出修改、刪除之功能--%>
+
+<jsp:useBean id="listOrderHistory_ByCompositeQuery" scope="request" type="java.util.List<OrderHistoryVO>" /> <!-- 於EL此行可省略 -->
+<jsp:useBean id="OrderHistorySvc" scope="page" class="com.ORDER_HISTORY.model.OrderHistoryService" />
+
+
 <html>
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title>訂單紀錄新增</title>
+		<title>萬用複合查詢</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
+		<div>                   
+			<c:import url="/navbar_back-end.html" charEncoding="UTF-8"/>
+		</div>
+		
 		<style>
 			table {
 	 			margin-top: 1px;
 				margin-bottom: 1px;
 				font-size: 10px;
+				table-layout: auto;
 			}
-
-		</style>
-		
-		<div>                   
-			<c:import url="/navbar_back-end.html" charEncoding="UTF-8"/>
-		</div>	
-		
+		</style>	
 	</head>
 	<body>
 	
-		<c:if test="${not empty errorMsgs}">
-		<font style="color:red">請修正以下錯誤:</font>
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color:red">${message}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
-
 		<div class="container-fluid">
-			<div class="col-xs-12 col-sm-1"></div>
+		
+		<div class="col-xs-12 col-sm-1"></div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-10">
 <!-- 					<h4><a href="select_page.jsp"><img src="images/LOGO1.png" width="70" height="50" border="0"><b>首頁</b></a></h4> -->
 					<div class="panel panel-info">
 						<div class="panel-heading">
-					  		<h3 class="panel-title">所有訂單紀錄查詢</h3><%@ include file="pages/page1.file" %>
+							<h3 class="panel-title">萬用複合查詢</h3><font color=red>已增加分頁、送出修改、刪除之功能</font>
+					  		<%@ include file="pages/page1_ByCompositeQuery.file" %>
 						</div>
 						<table class="table table-bordered table-striped table-hover">
 							<thead>
@@ -75,11 +69,10 @@
 								</tr>
 							</thead>
 								
-								
 							<tbody>
-								<c:forEach var="orderHistoryVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">							
-									<tr>
-										<td>${orderHistoryVO.order_no}</td>
+								<c:forEach var="orderHistoryVO" items="${listOrderHistory_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+									<tr align='center' valign='middle' ${(orderHistoryVO.order_no==param.order_no) ? 'bgcolor=#CCCCFF':''}><!--將修改的那一筆加入對比色而已-->
+								 		<td>${orderHistoryVO.order_no}</td>
 										<td>${orderHistoryVO.member_no}</td>
 										<td>${orderHistoryVO.order_price}</td>
 										<td>${orderHistoryVO.pay_methods}</td>
@@ -90,31 +83,33 @@
 										<td>${orderHistoryVO.receiver_add}</td>
 										<td>${orderHistoryVO.receiver_name}</td> 
 										<td>${orderHistoryVO.receiver_tel}</td>
-										<td>${orderHistoryVO.order_status}</td>
-										
+										<td>${orderHistoryVO.order_status}</td> 			
+
 										<td>
 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderHistory/OrderHistory.do" style="margin-bottom: 0px;">
-										     <input type="submit" value="修改" class="btn btn-warning">
-										     <input type="hidden" name="order_no"  value="${orderHistoryVO.order_no}">
-										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+										     <input type="submit" value="修改" class="btn btn-warning"> 
+										     <input type="hidden" name="order_no"      value="${orderHistoryVO.order_no}">
+										     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+										     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
+										     <input type="hidden" name="action"	    value="getOne_For_Update"></FORM>
 										</td>
 										<td>
 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderHistory/OrderHistory.do" style="margin-bottom: 0px;">
 										     <input type="submit" value="刪除" class="btn btn-danger">
-										     <input type="hidden" name="order_no"  value="${orderHistoryVO.order_no}">
-										     <input type="hidden" name="action" value="delete"></FORM>
+										     <input type="hidden" name="order_no"      value="${orderHistoryVO.order_no}">
+										     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+										     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
+										     <input type="hidden" name="action"     value="delete"></FORM>
 										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
-					<%@ include file="pages/page2.file" %>
+					<%@ include file="pages/page2_ByCompositeQuery.file" %>
 				</div>
 			</div>
 		</div>
-		
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	</body>
+
+</body>
 </html>

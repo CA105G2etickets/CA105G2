@@ -9,7 +9,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<title>修改訂單紀錄</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -17,12 +17,17 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		
+		<div>                   
+			<c:import url="/navbar_back-end.html" charEncoding="UTF-8"/>
+		</div>
 	</head>
 	<body>
-		<div class="container">
+	<div class="container-fluid">
+		<div class="col-xs-12 col-sm-1"></div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-12">
-					<h4><a href="select_page.jsp"><img src="images/LOGO1.png" width="70" height="50" border="0"><b>首頁</b></a></h4>
+				<div class="col-xs-12 col-sm-10">
+<!-- 					<h4><a href="select_page.jsp"><img src="images/LOGO1.png" width="70" height="50" border="0"><b>首頁</b></a></h4> -->
 					<div class="panel panel-info">
 						
 						<div class="panel-heading">
@@ -43,15 +48,15 @@
 								<table>
 									<tr>
 										<td>訂單編號：</td>
-										<td><%=orderHistoryVO.getOrderNo()%></td>
+										<td><%=orderHistoryVO.getOrder_no()%></td>
 									</tr>
 									<tr>
 										<td>會員編號：</td>
-										<td><%=orderHistoryVO.getMemberNo()%></td>
+										<td><%=orderHistoryVO.getMember_no()%></td>
 									</tr>
 									<tr>
 										<td>訂單總金額：</td>
-										<td><input type="TEXT" name="orderPrice" size="15"	value="<%=orderHistoryVO.getOrderPrice()%>" /></td>
+										<td><input type="TEXT" name="order_price" size="15"	value="<%=orderHistoryVO.getOrder_price()%>" /></td>
 									</tr>
 									
 									<jsp:useBean id="orderHistorySvc" scope="page" class="com.ORDER_HISTORY.model.OrderHistoryService" />
@@ -59,7 +64,7 @@
 									<tr>
 										<td>付款方式：</td>
 										<td>
-											<select size="1" name="payMethods">
+											<select size="1" name="pay_methods">
 
 												<option value='' selected>請選擇</option>
 												<option value="CREDITCARD">電子錢包</option>
@@ -70,7 +75,7 @@
 									<tr>
 										<td>出貨方式：</td>
 										<td>
-											<select size="1" name="shippingMethods">
+											<select size="1" name="shipping_methods">
 												<option value='' selected>請選擇</option>
 												<option value="STOREPICKUP">超商取貨</option>
 												<option value="HOMEDELIVERY">宅配</option>
@@ -79,32 +84,32 @@
 									</tr>
 									<tr>
 										<td>訂購日期：</td>
-										<td><input name="orderDate" id="f_date1" type="text" ></td>
+										<td><input name="order_date" id="f_date1" type="text" ></td>
 									</tr>
 									<tr>
 										<td>出貨日期：</td>
-										<td><input name="orderEtd" id="f_date2" type="text" ></td>
+										<td><input name="order_etd" id="f_date2" type="text" ></td>
 									</tr>
 									<tr>
 										<td>取貨日期：</td>
-										<td><input name="pickupDate" id="f_date3" type="text" ></td>
+										<td><input name="pickup_date" id="f_date3" type="text" ></td>
 									</tr>
 									<tr>
 										<td>收件人地址：</td>
-										<td><input type="TEXT" name="receiverAdd" size="45" value="<%=orderHistoryVO.getReceiverAdd()%>" /></td>
+										<td><input type="TEXT" name="receiver_add" size="45" value="<%=orderHistoryVO.getReceiver_add()%>" /></td>
 									</tr>
 									<tr>
 										<td>收件人名稱：</td>
-										<td><input type="TEXT" name="receiverName" size="15" value="<%=orderHistoryVO.getReceiverName()%>" /></td>
+										<td><input type="TEXT" name="receiver_name" size="15" value="<%=orderHistoryVO.getReceiver_name()%>" /></td>
 									</tr>
 									<tr>
 										<td>收件人電話：</td>
-										<td><input type="TEXT" name="receiverTel" size="15" value="<%=orderHistoryVO.getReceiverTel()%>" /></td>
+										<td><input type="TEXT" name="receiver_tel" size="15" value="<%=orderHistoryVO.getReceiver_tel()%>" /></td>
 									</tr>
 									<tr>
 										<td>訂單狀態：</td>
 										<td>
-											<select size="1" name="orderStatus">
+											<select size="1" name="order_status">
 												<option value='' selected>請選擇</option>
 												<option value="PAYMENT1">已付款</option>
 												<option value="SHIPPING2">出貨中</option>
@@ -118,9 +123,9 @@
 								</table>
 								<br>
 								<input type="hidden" name="action" value="update">
-								<input type="hidden" name="orderNo" value="<%=orderHistoryVO.getOrderNo()%>">
-								<input type="hidden" name="memberNo" value="<%=orderHistoryVO.getMemberNo()%>">
-								<input type="submit" value="送出修改">
+								<input type="hidden" name="order_no" value="<%=orderHistoryVO.getOrder_no()%>">
+								<input type="hidden" name="member_no" value="<%=orderHistoryVO.getMember_no()%>">
+								<input type="submit" value="送出修改" class="btn btn-primary">
 							</FORM>
 						</div>
 					</div>
@@ -157,7 +162,7 @@
  	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderHistoryVO.getOrderDate()%>', // value:   new Date(),
+ 		   value: '<%=orderHistoryVO.getOrder_date()%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -170,7 +175,7 @@
  	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderHistoryVO.getOrderEtd()%>', // value:   new Date(),
+ 		   value: '<%=orderHistoryVO.getOrder_etd()%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -183,7 +188,7 @@
  	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderHistoryVO.getPickupDate()%>', // value:   new Date(),
+ 		   value: '<%=orderHistoryVO.getPickup_date()%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
