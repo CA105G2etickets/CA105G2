@@ -1,8 +1,9 @@
-package com.NEWS.model;
+package com.news.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class NewsVO {
+public class NewsVO implements Serializable {
 	
 	private String newsNo;
 	private String newsClassificationNo;

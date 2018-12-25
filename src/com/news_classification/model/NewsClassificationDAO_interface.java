@@ -1,4 +1,4 @@
-package com.NEWS_CLASSIFICATION.model;
+package com.news_classification.model;
 
 import java.util.List;
 

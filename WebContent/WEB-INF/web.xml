@@ -38,6 +38,15 @@
 		<servlet-name>MemberImageServlet</servlet-name>
 		<url-pattern>/member/memberImg.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>NewsClassificationServlet</servlet-name>
+		<servlet-class>com.news_classification.controller.NewsClassificationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsClassificationServlet</servlet-name>
+		<url-pattern>/newsClassification/newsClassification.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>GoodsServlet</servlet-name>

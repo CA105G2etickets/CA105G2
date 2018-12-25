@@ -1,6 +1,8 @@
-package com.NEWS_CLASSIFICATION.model;
+package com.news_classification.model;
 
-public class NewsClassificationVO {
+import java.io.Serializable;
+
+public class NewsClassificationVO implements Serializable {
 	
 	private String newsClassificationNo;
 	private String newsClassification;

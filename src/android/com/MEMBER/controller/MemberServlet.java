@@ -16,6 +16,8 @@ import com.google.gson.JsonObject;
 import com.mysql.fabric.xmlrpc.base.Member;
 
 import android.com.MEMBER.model.MemberJDBCDAO;
+import android.com.MEMBER.model.MemberJNDIDAO;
+import android.com.MEMBER.model.MemberService;
 import android.com.MEMBER.model.MemberVO;
 import android.com.main.ImageUtil;
 
@@ -37,14 +39,18 @@ public class MemberServlet extends HttpServlet{
 			while ((line = br.readLine()) != null) {
 				jsonin.append(line);
 			}
-			MemberJDBCDAO memberDAO = new MemberJDBCDAO();
+			MemberService memberDAO = new MemberService();
 			JsonObject jsonObject = gson.fromJson(jsonin.toString(),JsonObject.class);
 			String action = jsonObject.get("action").getAsString();
 			
 			if("isMember".equals(action)) {
 				String userName = jsonObject.get("userName").getAsString();
 				String userPassword = jsonObject.get("userPassword").getAsString();
-				writeText(res,memberDAO.isMember(userName, userPassword));
+				String thirdUID = jsonObject.get("userUID").getAsString();
+				if(thirdUID == null) {
+					thirdUID = "";
+				}
+				writeText(res,memberDAO.isMember(userName, userPassword, thirdUID));
 			}else if("getImage".equals(action)) {
 				OutputStream os = res.getOutputStream();
 				String memberNo = jsonObject.get("memberNo").getAsString();
@@ -68,6 +74,9 @@ public class MemberServlet extends HttpServlet{
 				memberJson.addProperty("memberPhone", memberVO.getPhone());
 				memberJson.addProperty("memberID", memberVO.getIdcard());
 				memberJson.addProperty("memberWallet", String.valueOf(memberVO.getEwalletBalance()));
+				memberJson.addProperty("memberStatus", memberVO.getMemberStatus());
+				memberJson.addProperty("memberDate", memberVO.getCreationDate().toString());
+				memberJson.addProperty("thirdUID", memberVO.getThirdUID());
 				writeText(res, memberJson.toString());
 			}
 		}

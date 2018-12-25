@@ -1,4 +1,4 @@
-package com.NEWS_CLASSIFICATION.model;
+package com.news_classification.model;
 
 import java.sql.*;
 import java.util.*;
@@ -12,13 +12,15 @@ public class NewsClassificationJDBCDAO implements NewsClassificationDAO_interfac
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO NEWS_CLASSIFICATION (NEWS_CLASSIFICATION_NO,NEWS_CLASSIFICATION) VALUES ( ?, ?)";
-	private static final String GET_ALL_STMT = 
-			"SELECT * FROM NEWS_CLASSIFICATION";
-	private static final String DELETE = 
-			"DELETE FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
 	private static final String UPDATE = 
 			"UPDATE NEWS_CLASSIFICATION SET NEWS_CLASSIFICATION_NO = ?, NEWS_CLASSIFICATION = ?";
-
+//	private static final String DELETE = 
+//			"DELETE FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
+//	private static final String FIND_BY_PK_SQL = 
+//			"SELECT * FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
+	private static final String GET_ALL_STMT = 
+			"SELECT * FROM NEWS_CLASSIFICATION";
+	
 	@Override
 	public void insert(NewsClassificationVO newsClassification) {
 
@@ -55,7 +57,6 @@ public class NewsClassificationJDBCDAO implements NewsClassificationDAO_interfac
 				}
 			}
 		}
-		
 		
 	}
 
@@ -100,45 +101,12 @@ public class NewsClassificationJDBCDAO implements NewsClassificationDAO_interfac
 
 	@Override
 	public void delete(String newsClassificationNo) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(DELETE);
-
-			pstmt.setString(1, newsClassificationNo);
-
-			pstmt.executeUpdate();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. QAQ guess ClassNotFoundException or SQLException ?"
-					+ e.getMessage());
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		
+		//公告分類部分不可刪除
 	}
 
 	@Override
 	public NewsClassificationVO findByPrimaryKey(String newsClassificationNo) {
-		// 此方法這邊不實作
+		//公告分類部分暫時不給單一查詢(分類過多時再新增此功能)
 		return null;
 	}
 
@@ -161,8 +129,8 @@ public class NewsClassificationJDBCDAO implements NewsClassificationDAO_interfac
 
 			while (rs.next()) {
 				newsClassification = new NewsClassificationVO();
-				newsClassification.setNewsClassificationNo(rs.getString("newsClassificationNo"));
-				newsClassification.setNewsClassification(rs.getString("newsClassification"));
+				newsClassification.setNewsClassificationNo(rs.getString("NEWS_CLASSIFICATION_NO"));
+				newsClassification.setNewsClassification(rs.getString("NEWS_CLASSIFICATION"));
 				list.add(newsClassification);
 			}
 

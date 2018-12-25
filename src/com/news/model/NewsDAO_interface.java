@@ -1,4 +1,4 @@
-package com.NEWS.model;
+package com.news.model;
 
 import java.util.List;
 
