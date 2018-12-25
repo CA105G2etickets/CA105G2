@@ -13,7 +13,7 @@ public class NewsClassificationJDBCDAO implements NewsClassificationDAO_interfac
 	private static final String INSERT_STMT = 
 			"INSERT INTO NEWS_CLASSIFICATION (NEWS_CLASSIFICATION_NO,NEWS_CLASSIFICATION) VALUES ( ?, ?)";
 	private static final String UPDATE = 
-			"UPDATE NEWS_CLASSIFICATION SET NEWS_CLASSIFICATION_NO = ?, NEWS_CLASSIFICATION = ?";
+			"UPDATE NEWS_CLASSIFICATION SET NEWS_CLASSIFICATION_NO = ?, NEWS_CLASSIFICATION = ? WHERE NEWS_CLASSIFICATION_NO = ?";
 //	private static final String DELETE = 
 //			"DELETE FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
 //	private static final String FIND_BY_PK_SQL = 
@@ -74,6 +74,7 @@ public class NewsClassificationJDBCDAO implements NewsClassificationDAO_interfac
 
 			pstmt.setString(1, newsClassification.getNewsClassificationNo());
 			pstmt.setString(2, newsClassification.getNewsClassification());
+			pstmt.setString(3, newsClassification.getNewsClassificationNo());
 
 			pstmt.executeUpdate();
 
@@ -106,7 +107,7 @@ public class NewsClassificationJDBCDAO implements NewsClassificationDAO_interfac
 
 	@Override
 	public NewsClassificationVO findByPrimaryKey(String newsClassificationNo) {
-		//公告分類部分暫時不給單一查詢(分類過多時再新增此功能)
+		//公告分類部分不給單一查詢，但修改按鈕需用到，在DAO直接實作
 		return null;
 	}
 

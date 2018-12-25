@@ -8,6 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.member.model.MemberVO;
+
 public class NewsClassificationDAO implements NewsClassificationDAO_interface {
 
 	private static DataSource ds = null;
@@ -23,11 +25,11 @@ public class NewsClassificationDAO implements NewsClassificationDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO NEWS_CLASSIFICATION (NEWS_CLASSIFICATION_NO,NEWS_CLASSIFICATION) VALUES ( ?, ?)";
 	private static final String UPDATE = 
-			"UPDATE NEWS_CLASSIFICATION SET NEWS_CLASSIFICATION_NO = ?, NEWS_CLASSIFICATION = ?";
+			"UPDATE NEWS_CLASSIFICATION SET NEWS_CLASSIFICATION_NO = ?, NEWS_CLASSIFICATION = ? WHERE NEWS_CLASSIFICATION_NO = ?";
 //	private static final String DELETE = 
 //			"DELETE FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
-//	private static final String FIND_BY_PK_SQL = 
-//			"SELECT * FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
+	private static final String GET_ONE_STMT = 
+			"SELECT * FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM NEWS_CLASSIFICATION";
 
@@ -82,6 +84,7 @@ public class NewsClassificationDAO implements NewsClassificationDAO_interface {
 
 			pstmt.setString(1, newsClassification.getNewsClassificationNo());
 			pstmt.setString(2, newsClassification.getNewsClassification());
+			pstmt.setString(3, newsClassification.getNewsClassificationNo());
 
 			pstmt.executeUpdate();
 
@@ -114,8 +117,53 @@ public class NewsClassificationDAO implements NewsClassificationDAO_interface {
 
 	@Override
 	public NewsClassificationVO findByPrimaryKey(String newsClassificationNo) {
-		//公告分類部分暫時不給單一查詢(分類過多時再新增此功能)
-		return null;
+		NewsClassificationVO newsClass = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setString(1, newsClassificationNo);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				newsClass = new NewsClassificationVO();
+				newsClass.setNewsClassificationNo(rs.getString("NEWS_CLASSIFICATION_NO"));
+				newsClass.setNewsClassification(rs.getString("NEWS_CLASSIFICATION"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("BuBu!"
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return newsClass;
 	}
 
 	@Override

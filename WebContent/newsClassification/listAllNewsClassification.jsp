@@ -1,9 +1,7 @@
-<%@page import="com.news_classification.model.NewsClassificationVO"%>
-<%@page import="com.news_classification.model.NewsClassificationService"%>
+<%@page import="com.news_classification.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.member.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
@@ -17,71 +15,9 @@
 <html>
 <head>
 <title>所有公告分類資料</title>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-</style>
-<style>
-.memberphoto {
-	border-radius: 50px;
-	margin-top: 20px;
-}
-
-.membermenu {
-	margin-top: 100px;
-	margin-left: 200px;
-}
-
-.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-.topnav {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-</style>
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
 <style>
 table {
 	width: 800px;
@@ -98,7 +34,6 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-
 </style>
 
 </head>
@@ -138,7 +73,7 @@ th, td {
 					ACTION="<%=request.getContextPath()%>/newsClassification/newsClassification.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
-						name="newsClassificationNo" value="${newsClass.newsClassificationNo}"> <input
+						name="newsClassificationNo" value="${newsClassification.newsClassificationNo}"> <input
 						type="hidden" name="action" value="getOne_For_Update">
 				</FORM>
 			</td>
