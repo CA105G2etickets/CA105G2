@@ -40,7 +40,7 @@
 <!-- 					<input type="hidden" name="action" value="getOne_For_Display"> -->
 <!-- 					<input type="submit" value="送出"> -->
 <!-- 				</FORM> -->
-				<a href='listAllMember.jsp'>列出所有公告分類</a>
+				<a href='listAllNewsClassification.jsp'>列出所有公告分類</a>
 			</font>
 
 			<jsp:useBean id="NewsClassificationService" scope="page"
@@ -78,7 +78,7 @@
 	<div class="col-xs-12 col-sm-12">
 		<font size="5px">公告分類管理</font>
 		<ul>
-			<font size="4px"> <a href='addMember.jsp'>新增公告分類</a>
+			<font size="4px"> <a href='addNewsClassification.jsp'>新增公告分類</a>
 			</font>
 		</ul>
 	</div>

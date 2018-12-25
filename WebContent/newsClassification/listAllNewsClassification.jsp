@@ -1,3 +1,5 @@
+<%@page import="com.news_classification.model.NewsClassificationVO"%>
+<%@page import="com.news_classification.model.NewsClassificationService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
@@ -6,15 +8,15 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-	MemberService memberService = new MemberService();
-	List<MemberVO> list = memberService.getAll();
+	NewsClassificationService newsClassificationService = new NewsClassificationService();
+	List<NewsClassificationVO> list = newsClassificationService.getAll();
 	pageContext.setAttribute("list", list);
 %>
 
 
 <html>
 <head>
-<title>所有會員資料 - listAllMember.jsp</title>
+<title>所有公告分類資料</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
@@ -97,9 +99,6 @@ th, td {
 	text-align: center;
 }
 
-/* img { */
-/*   border-radius: 90%; */
-/* } */
 </style>
 
 </head>
@@ -121,64 +120,45 @@ th, td {
 	</ul>
 </c:if>
 
+<div class="container table-responsive-md">
 <table class="table">
 	<tr>
-		<th>會員編號</th>
-		<th>會員姓名</th>
-		<th>會員Email</th>
-		<th>會員電話</th>
-		<th>會員身分證字號</th>
-		<th>會員帳號</th>
-		<th>會員密碼</th>
-		<th>會員電子錢包餘額</th>
-		<th>會員帳號建立日期</th>
-		<th>會員大頭貼</th>
-		<th>會員狀態</th>
-		<th>會員第三方登入UID</th>
+		<th>公告分類編號代碼</th>
+		<th>公告分類內容描述</th>
 	</tr>
 	<%@ include file="page1.file"%>
-	<c:forEach var="member" items="${list}" begin="<%=pageIndex%>"
+	<c:forEach var="newsClassification" items="${list}" begin="<%=pageIndex%>"
 		end="<%=pageIndex+rowsPerPage-1%>">
 
 		<tr>
-			<td>${member.memberNo}</td>
-			<td>${member.memberFullname}</td>
-			<td>${member.email}</td>
-			<td>${member.phone}</td>
-			<td>${member.idcard}</td>
-			<td>${member.memberAccount}</td>
-			<td>${member.memberPassword}</td>
-			<td>${member.ewalletBalance}</td>
-			<td><fmt:formatDate value="${member.creationDate}"
-					pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			<td><img class="img-circle" src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
-			<td>${member.memberStatus}</td> 
-			<td>${member.thirduid}</td> 
+			<td>${newsClassification.newsClassificationNo}</td>
+			<td>${newsClassification.newsClassification}</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/member/member.do"
+					ACTION="<%=request.getContextPath()%>/newsClassification/newsClassification.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
-						name="memberno" value="${member.memberNo}"> <input
+						name="newsClassificationNo" value="${newsClass.newsClassificationNo}"> <input
 						type="hidden" name="action" value="getOne_For_Update">
 				</FORM>
 			</td>
-			<td>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/member/member.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="刪除"> <input type="hidden"
-						name="memberno" value="${member.memberNo}"> <input
-						type="hidden" name="action" value="delete">
-				</FORM>
-			</td>
+<!-- 			<td> -->
+<!-- 				<FORM METHOD="post" -->
+<%-- 					ACTION="<%=request.getContextPath()%>/newsClassification/newsClassification.do" --%>
+<!-- 					style="margin-bottom: 0px;"> -->
+<!-- 					<input type="submit" value="刪除"> <input type="hidden" -->
+<%-- 						name="newsClassificationNo" value="${newsClass.newsClassificationNo}"> <input --%>
+<!-- 						type="hidden" name="action" value="delete"> -->
+<!-- 				</FORM> -->
+<!-- 			</td> -->
 		</tr>
 	</c:forEach>
 </table>
-<%@ include file="page2.file"%>
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
+</div>
+<%@ include file="page2.file"%>
 </body>
 </html>

@@ -36,4 +36,4 @@
   <b><font color=red>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
 <%}%>
 
-<b>查詢結果共<font color=red><%=rowNumber%></font>筆會員資料</b>
+<b>查詢結果共<font color=red><%=rowNumber%></font>筆公告分類資料</b>
