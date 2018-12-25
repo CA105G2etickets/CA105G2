@@ -35,21 +35,21 @@
 
 		<ul>
 			<font size="4px">
-				<FORM METHOD="post" ACTION="newsClassification.do">
-					輸入公告分類編號 <input type="text" placeholder="例 : M000001" name="memberno">
-					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
-				</FORM>
+<!-- 				<FORM METHOD="post" ACTION="newsClassification.do"> -->
+<!-- 					輸入公告分類編號 <input type="text" placeholder="例 : S" name="newsClassificationNo"> -->
+<!-- 					<input type="hidden" name="action" value="getOne_For_Display"> -->
+<!-- 					<input type="submit" value="送出"> -->
+<!-- 				</FORM> -->
 				<a href='listAllMember.jsp'>列出所有公告分類</a>
 			</font>
 
-			<jsp:useBean id="memberservice" scope="page"
-				class="com.member.model.MemberService" />
+			<jsp:useBean id="NewsClassificationService" scope="page"
+				class="com.news_classification.model.NewsClassificationService" />
 
 			<!--   <li> -->
-			<!--      <FORM METHOD="post" ACTION="member.do" > -->
+			<!--      <FORM METHOD="post" ACTION="newsClassification.do" > -->
 			<!--        選擇公告分類編號 -->
-			<!--        <select size="1" name="memberno"> -->
+			<!--        <select size="1" name="newsClassificationNo"> -->
 			<%--          <c:forEach var="member" items="${MemberService.all}" >  --%>
 			<%--           <option value="${member.memberno}">${member.memberno} --%>
 			<%--          </c:forEach>    --%>
@@ -60,9 +60,9 @@
 			<!--   </li> -->
 
 			<!--   <li> -->
-			<!--      <FORM METHOD="post" ACTION="member.do" > -->
+			<!--      <FORM METHOD="post" ACTION="newsClassification.do" > -->
 			<!--        <b>選擇員工姓名:</b> -->
-			<!--        <select size="1" name="memberno"> -->
+			<!--        <select size="1" name="newsClassificationNo"> -->
 			<%--          <c:forEach var="member" items="${MemberService.all}" >  --%>
 			<%--           <option value="${member.memberno}">${member.memberno} --%>
 			<%--          </c:forEach>    --%>
