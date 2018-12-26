@@ -15,7 +15,7 @@ public class MemberDAO implements MemberDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

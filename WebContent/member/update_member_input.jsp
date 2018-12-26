@@ -169,8 +169,8 @@ function readURL(input){
 		<td>會員狀態:</td>
 		<td>
 			<select name="states">
-				<option value="normal" ${(member.memberStatus.equals("normal"))? 'selected':'' }>正常</option>
-				<option value="abnormal" ${(member.memberStatus.equals("abnormal"))? 'selected':'' }>異常</option>
+				<option value="normal" ${(member.memberStatus eq 'normal')? 'selected':'' }>正常</option>
+				<option value="abnormal" ${(member.memberStatus eq 'abnormal')? 'selected':'' }>異常</option>
 			</select>
 		</td>
 	</tr>
