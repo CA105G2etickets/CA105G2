@@ -1,4 +1,4 @@
-package com.GOODS_QA.model;
+package com.goods_qa.model;
 
 import java.util.List;
 
