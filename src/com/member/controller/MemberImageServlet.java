@@ -24,7 +24,7 @@ public class MemberImageServlet extends HttpServlet{
 		res.setContentType("image/*");
 		output.write(memberPic);
 		output.close();
-		doPost(req,res);
+//		doPost(req,res);
 		
 	}
 
