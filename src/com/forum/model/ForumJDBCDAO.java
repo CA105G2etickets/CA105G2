@@ -1,4 +1,4 @@
-package com.FORUM.model;
+package com.forum.model;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForumDAO implements ForumDAO_interface {
+public class ForumJDBCDAO implements ForumDAO_interface {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "Wilson";
@@ -31,8 +31,8 @@ public class ForumDAO implements ForumDAO_interface {
 	private static final String GET_ALL = "SELECT * FROM FORUM";
 
 	@Override
-	// Êñ∞Â¢û
-	public void add(ForumVO forum) {
+	// ?ñ∞Â¢?
+	public void add(ForumVO forumVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -41,10 +41,10 @@ public class ForumDAO implements ForumDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, forum.getGROUP_NO());
-			pstmt.setString(2, forum.getMEMBER_NO());
-			pstmt.setString(3, forum.getFORUM_CONTENT());
-			pstmt.setTimestamp(4, forum.getFORUM_TIME());
+			pstmt.setString(1, forumVO.getGroup_no());
+			pstmt.setString(2, forumVO.getMember_no());
+			pstmt.setString(3, forumVO.getForum_content());
+			pstmt.setTimestamp(4, forumVO.getForum_time());
 
 			pstmt.executeUpdate();
 
@@ -75,7 +75,7 @@ public class ForumDAO implements ForumDAO_interface {
 
 	@Override
 	// ‰øÆÊîπ
-	public void update(ForumVO forum) {
+	public void update(ForumVO forumVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -84,11 +84,11 @@ public class ForumDAO implements ForumDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
-			pstmt.setString(5, forum.getFORUM_NO());
-			pstmt.setString(1, forum.getGROUP_NO());
-			pstmt.setString(2, forum.getMEMBER_NO());
-			pstmt.setString(3, forum.getFORUM_CONTENT());
-			pstmt.setTimestamp(4, forum.getFORUM_TIME());
+			pstmt.setString(5, forumVO.getForum_no());
+			pstmt.setString(1, forumVO.getGroup_no());
+			pstmt.setString(2, forumVO.getMember_no());
+			pstmt.setString(3, forumVO.getForum_content());
+			pstmt.setTimestamp(4, forumVO.getForum_time());
 
 			pstmt.executeUpdate();
 
@@ -118,8 +118,8 @@ public class ForumDAO implements ForumDAO_interface {
 	}
 
 	@Override
-	// Âà™Èô§
-	public void delete(String fORUM_NO) {
+	// ?à™?ô§
+	public void delete(String forum_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -127,7 +127,7 @@ public class ForumDAO implements ForumDAO_interface {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
-			pstmt.setString(1, fORUM_NO);
+			pstmt.setString(1, forum_no);
 
 			pstmt.executeUpdate();
 
@@ -157,8 +157,8 @@ public class ForumDAO implements ForumDAO_interface {
 	}
 
 	@Override
-	// Êü•Ë©¢
-	public ForumVO findByPK(String forum) {
+	// ?ü•Ë©?
+	public ForumVO findByPK(String forum_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -168,16 +168,16 @@ public class ForumDAO implements ForumDAO_interface {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(FIND_BY_PK);
-			pstmt.setString(1, forum);
+			pstmt.setString(1, forum_no);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				forum1 = new ForumVO();
-				forum1.setFORUM_NO(rs.getString("FORUM_NO"));
-				forum1.setGROUP_NO(rs.getString("GROUP_NO"));
-				forum1.setMEMBER_NO(rs.getString("MEMBER_NO"));
-				forum1.setFORUM_CONTENT((rs.getString("FORUM_CONTENT")));
-				forum1.setFORUM_TIME(rs.getTimestamp("FORUM_TIME"));
+				forum1.setForum_no(rs.getString("FORUM_NO"));
+				forum1.setGroup_no(rs.getString("GROUP_NO"));
+				forum1.setMember_no(rs.getString("MEMBER_NO"));
+				forum1.setForum_content((rs.getString("FORUM_CONTENT")));
+				forum1.setForum_time(rs.getTimestamp("FORUM_TIME"));
 
 			}
 
@@ -207,7 +207,7 @@ public class ForumDAO implements ForumDAO_interface {
 	}
 
 	@Override
-	// Êü•Ë©¢
+	// ?ü•Ë©?
 	public List<ForumVO> getAll() {
 
 		List<ForumVO> ForumList = new ArrayList<>();
@@ -224,11 +224,11 @@ public class ForumDAO implements ForumDAO_interface {
 
 			while (rs.next()) {
 				forum1 = new ForumVO();
-				forum1.setFORUM_NO(rs.getString("FORUM_NO"));
-				forum1.setGROUP_NO(rs.getString("GROUP_NO"));
-				forum1.setMEMBER_NO(rs.getString("MEMBER_NO"));
-				forum1.setFORUM_CONTENT(rs.getString("FORUM_CONTENT"));
-				forum1.setFORUM_TIME(rs.getTimestamp("FORUM_TIME"));
+				forum1.setForum_no(rs.getString("FORUM_NO"));
+				forum1.setGroup_no(rs.getString("GROUP_NO"));
+				forum1.setMember_no(rs.getString("MEMBER_NO"));
+				forum1.setForum_content((rs.getString("FORUM_CONTENT")));
+				forum1.setForum_time(rs.getTimestamp("FORUM_TIME"));
 				ForumList.add(forum1);
 			}
 
@@ -265,37 +265,37 @@ public class ForumDAO implements ForumDAO_interface {
 	}
 
 	public static void main(String[] args) throws IOException {
-		ForumDAO dao = new ForumDAO();
-		// Êñ∞Â¢û
-		ForumVO forumVO = new ForumVO();
-		forumVO.setGROUP_NO("G0001");
-		forumVO.setMEMBER_NO("M000008");
-		forumVO.setFORUM_CONTENT("Â•Ω‰πÖÊ≤íÂúò‰∫ÜÂ∏åÊúõÊàêÂúò");
-//      TimeStamp Ê≠£Ë¶èÂåñ ÂèñÂá∫ÊôÇÂàÜÁßí Áâ©‰ª∂ Âà©Áî® Format ËΩâÊàêË¶ÅÁöÑÊ†ºÂºè
+		ForumJDBCDAO dao = new ForumJDBCDAO();
+		// ?ñ∞Â¢?
+//		ForumVO forumVO = new ForumVO();
+//		forumVO.setGROUP_NO("G0001");
+//		forumVO.setMEMBER_NO("M000008");
+//		forumVO.setFORUM_CONTENT("Â•Ω‰?ÖÊ?íÂ?ò‰?ÜÂ?åÊ?õÊ?êÂ??");
+//      TimeStamp Ê≠?Ë¶èÂ?? ??ñÂá∫??ÇÂ?ÜÁ?? ?â©‰ª? ?à©?î® Format ËΩâÊ?êË?ÅÁ?ÑÊ†ºÂº?
 //		Timestamp Timestamp1 = new Timestamp(System.currentTimeMillis());
 //		Format tsft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //		String time = tsft.format(Timestamp1);
 //		System.out.println(time);
-		forumVO.setFORUM_TIME(Timestamp.valueOf("2018-12-11 18:00:00"));
-		dao.add(forumVO);
-		System.out.println("Êñ∞Â¢ûÊàêÂäü‰∫Ü");
+//		forumVO.setFORUM_TIME(Timestamp.valueOf("2018-12-11 18:00:00"));
+//		dao.add(forumVO);
+//		System.out.println("?ñ∞Â¢ûÊ?êÂ?ü‰??");
 
 		// ‰øÆÊîπ
 //		ForumVO forum2 = new ForumVO();
 //		forum2.setFORUM_NO("F0001");
 //		forum2.setGROUP_NO("G0001");
 //		forum2.setMEMBER_NO("M000004");
-//		forum2.setFORUM_CONTENT("ÈñãÂúòÊàêÂäü‰∫Ü");
+//		forum2.setFORUM_CONTENT("??ãÂ?òÊ?êÂ?ü‰??");
 //		Timestamp Timestamp2 = new Timestamp(System.currentTimeMillis());
 //		forum2.setFORUM_TIME(Timestamp2);
 //		dao.update(forum2);
-//		System.out.println("‰øÆÊîπÊàêÂäü");
+//		System.out.println("‰øÆÊîπ??êÂ??");
 
-		// Âà™Èô§
+		// ?à™?ô§
 //		dao.delete("F0001");
-//		System.out.println("Âà™Èô§ÂÆåÊàê");
+//		System.out.println("?à™?ô§ÂÆåÊ??");
 
-		// Êü•Ë©¢
+		// ?ü•Ë©?
 //		ForumVO forum4 = dao.findByPK("F0002");
 //
 //		System.out.println(forum4.getFORUM_NO());
@@ -304,7 +304,7 @@ public class ForumDAO implements ForumDAO_interface {
 //		System.out.println(forum4.getFORUM_CONTENT());
 //		System.out.println(forum4.getFORUM_TIME());
 
-//		 Êü•Ë©¢
+//		 ?ü•Ë©?
 //		List<ForumVO> list = dao.getAll();
 //		String str;
 //		for (ForumVO forum5 : list) {
@@ -315,19 +315,19 @@ public class ForumDAO implements ForumDAO_interface {
 //			System.out.println(forum5.getFORUM_TIME());
 //			System.out.println("==================");
 //		}
-	};
+//	};
 
-	public static String getLongString(String path) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(path));
-		StringBuilder sb = new StringBuilder(); // StringBuffer is thread-safe!
-		String str;
-		while ((str = br.readLine()) != null) {
-			sb.append(str);
-			sb.append("\n");
-		}
-		br.close();
-
-		return sb.toString();
+//	public static String getLongString(String path) throws IOException {
+//		BufferedReader br = new BufferedReader(new FileReader(path));
+//		StringBuilder sb = new StringBuilder(); // StringBuffer is thread-safe!
+//		String str;
+//		while ((str = br.readLine()) != null) {
+//			sb.append(str);
+//			sb.append("\n");
+//		}
+//		br.close();
+//
+//		return sb.toString();
 	}
 
 }
