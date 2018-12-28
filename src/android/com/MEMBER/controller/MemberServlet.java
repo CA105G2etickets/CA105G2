@@ -53,7 +53,7 @@ public class MemberServlet extends HttpServlet{
 				writeText(res,memberDAO.isMember(userName, userPassword, thirdUID));
 			}else if("getImage".equals(action)) {
 				OutputStream os = res.getOutputStream();
-				String memberNo = jsonObject.get("memberNo").getAsString();
+				String memberNo = jsonObject.get("No").getAsString();
 				int imageSize = jsonObject.get("imageSize").getAsInt();
 				byte[] image = memberDAO.getImage(memberNo);
 				if(image != null) {
@@ -65,7 +65,6 @@ public class MemberServlet extends HttpServlet{
 			}else if("getOne".equals(action)) {
 				String memberNo = jsonObject.get("memberNo").getAsString();
 				MemberVO memberVO = memberDAO.findByPrimaryKey(memberNo);
-				System.out.println(memberVO);
 				JsonObject memberJson = new JsonObject();
 				memberJson.addProperty("memberName", memberVO.getMemberFullname());
 				memberJson.addProperty("memberEmail", memberVO.getEmail());

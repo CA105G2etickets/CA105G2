@@ -102,6 +102,15 @@
 		<url-pattern>/member/MemberServlet.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>AndroidEventTitleServlet</servlet-name>
+		<servlet-class>android.com.EVENT_TITLE.controller.Event_titleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidEventTitleServlet</servlet-name>
+		<url-pattern>/event/AndroidEventTitleServlet.do</url-pattern>
+	</servlet-mapping>
+	
     <servlet>
         <servlet-name>TicketOrderServlet</servlet-name>
         <servlet-class>com.ticketorder.controller.TicketOrderServlet</servlet-class>
