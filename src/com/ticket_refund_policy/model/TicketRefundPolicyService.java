@@ -1,4 +1,4 @@
-package com.TICKET_REFUND_POLICY.model;
+package com.ticket_refund_policy.model;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class TicketRefundPolicyService {
 		ticketRefundPolicyDAO = new TicketRefundPolicyDAO();
 	}
 
-	public TicketRefundPolicyVO addTicketRefundPolicyVO(String ticRefPolicy_no, String ticRefPolicy_name, String ticRefPolicy_content) {
+	public TicketRefundPolicyVO addTicketRefundPolicy(String ticRefPolicy_no, String ticRefPolicy_name, String ticRefPolicy_content) {
 		TicketRefundPolicyVO ticketRefundPolicyVO = new TicketRefundPolicyVO();
 		ticketRefundPolicyVO.setTicRefPolicy_no(ticRefPolicy_no);
 		ticketRefundPolicyVO.setTicRefPolicy_name(ticRefPolicy_name);
@@ -19,7 +19,7 @@ public class TicketRefundPolicyService {
 		return ticketRefundPolicyVO;
 	}
 
-	public TicketRefundPolicyVO updateTicketRefundPolicyVO(String ticRefPolicy_no, String ticRefPolicy_name, String ticRefPolicy_content) {
+	public TicketRefundPolicyVO updateTicketRefundPolicy(String ticRefPolicy_no, String ticRefPolicy_name, String ticRefPolicy_content) {
 		TicketRefundPolicyVO ticketRefundPolicyVO = new TicketRefundPolicyVO();
 		ticketRefundPolicyVO.setTicRefPolicy_no(ticRefPolicy_no);
 		ticketRefundPolicyVO.setTicRefPolicy_name(ticRefPolicy_name);
@@ -28,7 +28,7 @@ public class TicketRefundPolicyService {
 		return ticketRefundPolicyVO;
 	}
 
-	public void deleteTicketRefundPolicyVO(String ticRefPolicy_no) {
+	public void deleteTicketRefundPolicy(String ticRefPolicy_no) {
 		ticketRefundPolicyDAO.delete(ticRefPolicy_no);
 	}
 

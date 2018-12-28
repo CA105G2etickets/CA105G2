@@ -1,4 +1,4 @@
-package com.EVENT_CLASSIFICATION.model;
+package com.event_classification.model;
 
 import java.io.Serializable;
 

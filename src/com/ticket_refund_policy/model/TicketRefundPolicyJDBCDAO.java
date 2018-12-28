@@ -1,7 +1,6 @@
-package com.ADVERTISEMENT.model;
+package com.ticket_refund_policy.model;
 
 import java.sql.Connection;
-//import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.event_classification.model.EventClassificationJDBCDAO;
 
-public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
+
+
+public class TicketRefundPolicyJDBCDAO implements TicketRefundPolicyDAO_interface {
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -18,38 +20,36 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 	private static final String PASSWORD = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO ADVERTISEMENT (AD_NO, EVETIT_NO, AD_STARTDATE, AD_ENDDATE) VALUES ('AD'||LPAD(TO_CHAR(AD_SEQ.NEXTVAL),4,'0'), ?, ?, ?)";
+			"INSERT INTO TICKET_REFUND_POLICY (TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT) VALUES (?,?,?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE ADVERTISEMENT SET EVETIT_NO=?,AD_STARTDATE=?,AD_ENDDATE=? WHERE AD_NO=?";
+			"UPDATE TICKET_REFUND_POLICY SET TICREFPOLICY_NAME=?,TICREFPOLICY_CONTENT=? WHERE TICREFPOLICY_NO=?";
 	
 	private static final String DELETE_STMT = 
-			"DELETE FROM ADVERTISEMENT WHERE AD_NO=?";
+			"DELETE FROM TICKET_REFUND_POLICY WHERE TICREFPOLICY_NO=?";
 
 	private static final String GET_ONE_STMT = 
-			"SELECT AD_NO,EVETIT_NO,AD_STARTDATE,AD_ENDDATE FROM ADVERTISEMENT WHERE AD_NO = ?";
+			"SELECT TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT FROM TICKET_REFUND_POLICY WHERE TICREFPOLICY_NO = ?";
 
 	private static final String GET_ALL_STMT = 
-			"SELECT AD_NO,EVETIT_NO,AD_STARTDATE,AD_ENDDATE FROM ADVERTISEMENT";
+			"SELECT TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT FROM TICKET_REFUND_POLICY";
 	
 	@Override
-	public void insert(AdvertisementVO advertisementVO) {
+	public void insert(TicketRefundPolicyVO ticketRefundPolicyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-		
+
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1,advertisementVO.getEvetit_no());
-			pstmt.setDate(2,advertisementVO.getAd_startdate());
-			pstmt.setDate(3,advertisementVO.getAd_enddate());
+			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_no());
+			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_name());
+			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_content());
 			
 			pstmt.executeUpdate();
-			
 			System.out.println("----------Inserted----------");
-
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
@@ -73,22 +73,20 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 	}
 
 	@Override
-	public void update(AdvertisementVO advertisementVO) {
+	public void update(TicketRefundPolicyVO ticketRefundPolicyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-		
+
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
-			pstmt.setString(1,advertisementVO.getEvetit_no());
-			pstmt.setDate(2,advertisementVO.getAd_startdate());
-			pstmt.setDate(3,advertisementVO.getAd_enddate());
-			pstmt.setString(4,advertisementVO.getAd_no());
-		
-			pstmt.executeUpdate();
+			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_name());
+			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_content());
+			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_no());
 			
+			pstmt.executeUpdate();
 			System.out.println("----------Updated----------");
 
 		} catch (ClassNotFoundException e) {
@@ -114,7 +112,7 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 	}
 
 	@Override
-	public void delete(String ad_no) {
+	public void delete(String ticRefPolicy_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		
@@ -123,7 +121,7 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
 
-			pstmt.setString(1, ad_no);
+			pstmt.setString(1, ticRefPolicy_no);
 
 			pstmt.executeUpdate();
 			
@@ -149,11 +147,13 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 				}
 			}
 		}
+		
 	}
 
 	@Override
-	public AdvertisementVO findByPrimaryKey(String ad_no) {
-		AdvertisementVO advertisementVO = null;
+	public TicketRefundPolicyVO findByPrimaryKey(String ticRefPolicy_no) {
+		
+		TicketRefundPolicyVO ticketRefundPolicyVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;
@@ -163,16 +163,15 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
-			pstmt.setString(1, ad_no); 
-					
+			pstmt.setString(1,ticRefPolicy_no);
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				advertisementVO = new AdvertisementVO();
-				advertisementVO.setAd_no(rs.getString("AD_NO"));
-				advertisementVO.setEvetit_no(rs.getString("EVETIT_NO"));
-				advertisementVO.setAd_startdate(rs.getDate("AD_STARTDATE"));
-				advertisementVO.setAd_enddate(rs.getDate("AD_ENDDATE"));
+				ticketRefundPolicyVO = new TicketRefundPolicyVO();
+				ticketRefundPolicyVO.setTicRefPolicy_no(rs.getString("TICREFPOLICY_NO"));
+				ticketRefundPolicyVO.setTicRefPolicy_name(rs.getString("TICREFPOLICY_NAME"));
+				ticketRefundPolicyVO.setTicRefPolicy_content(rs.getString("TICREFPOLICY_CONTENT"));
 			}
 			
 			System.out.println("----------findByPrimaryKey finished----------");
@@ -182,13 +181,6 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -204,46 +196,39 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 				}
 			}
 		}
-		return advertisementVO;
+		return ticketRefundPolicyVO;
 	}
 
 	@Override
-	public List<AdvertisementVO> getAll() {
-		List<AdvertisementVO> list = new ArrayList<>();
-		AdvertisementVO advertisementVO = null;
+	public List<TicketRefundPolicyVO> getAll() {
+		List<TicketRefundPolicyVO> list = new ArrayList<TicketRefundPolicyVO>();
+		TicketRefundPolicyVO ticketRefundPolicyVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-		ResultSet rs = null;
+		ResultSet rs = null;	
 		
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				advertisementVO = new AdvertisementVO();
-				advertisementVO.setAd_no(rs.getString("AD_NO"));
-				advertisementVO.setEvetit_no(rs.getString("EVETIT_NO"));
-				advertisementVO.setAd_startdate(rs.getDate("AD_STARTDATE"));
-				advertisementVO.setAd_enddate(rs.getDate("AD_ENDDATE"));
-				list.add(advertisementVO);
+				ticketRefundPolicyVO = new TicketRefundPolicyVO();
+				ticketRefundPolicyVO.setTicRefPolicy_no(rs.getString("TICREFPOLICY_NO"));
+				ticketRefundPolicyVO.setTicRefPolicy_name(rs.getString("TICREFPOLICY_NAME"));
+				ticketRefundPolicyVO.setTicRefPolicy_content(rs.getString("TICREFPOLICY_CONTENT"));
+				list.add(ticketRefundPolicyVO);
 			}
 			
-			System.out.println("----------findByPrimaryKey finished----------");
+			System.out.println("----------getAll finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -261,45 +246,48 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 		}
 		return list;
 	}
- 
+	
+	
 	public static void main(String[] args) {
 		
-		AdvertisementJDBCDAO dao = new AdvertisementJDBCDAO();
+		TicketRefundPolicyJDBCDAO dao = new TicketRefundPolicyJDBCDAO();
+
+		
+//		TicketRefundPolicyDAO_interface
+		
 		
 		// 新增
-		AdvertisementVO advertisementVO = new AdvertisementVO();		
-		advertisementVO.setEvetit_no("E0001"); 
-		advertisementVO.setAd_startdate(java.sql.Date.valueOf("2019-01-31"));
-		advertisementVO.setAd_enddate(java.sql.Date.valueOf("2019-01-31"));
-		dao.insert(advertisementVO);
+//		TicketRefundPolicyVO TicketRefundPolicyVO1 = new TicketRefundPolicyVO();
+//		TicketRefundPolicyVO1.setTicRefPolicy_no("TRP5");
+//		TicketRefundPolicyVO1.setTicRefPolicy_name("方案五");
+//		TicketRefundPolicyVO1.setTicRefPolicy_content("拉拉拉拉拉");
+//		dao.insert(TicketRefundPolicyVO1);
 		
 		// 修改
-		AdvertisementVO advertisementVO2 = new AdvertisementVO();
-		advertisementVO2.setAd_no("AD0001"); 
-		advertisementVO2.setEvetit_no("E0002"); 
-		advertisementVO2.setAd_startdate(java.sql.Date.valueOf("2020-01-31"));
-		advertisementVO2.setAd_enddate(java.sql.Date.valueOf("2020-01-31"));
-		dao.update(advertisementVO2);
+//		TicketRefundPolicyVO TicketRefundPolicyVO2 = new TicketRefundPolicyVO();
+//		TicketRefundPolicyVO2.setTicRefPolicy_no("TRP2");
+//		TicketRefundPolicyVO2.setTicRefPolicy_name("方案五");
+//		TicketRefundPolicyVO2.setTicRefPolicy_content("拉拉拉拉拉");
+//		dao.update(TicketRefundPolicyVO2);
 		
 		// 刪除
-		dao.delete("AD0005");
+//		dao.delete("TRP5");
+//		System.out.println("------------------------------");
 		
 		// 查詢一個
-		AdvertisementVO advertisementVO3 = dao.findByPrimaryKey("AD0001");
-		System.out.println(advertisementVO3.getAd_no());
-		System.out.println(advertisementVO3.getEvetit_no());
-		System.out.println(advertisementVO3.getAd_startdate());
-		System.out.println(advertisementVO3.getAd_enddate());
-		System.out.println("------------------------------");
+//		TicketRefundPolicyVO TicketRefundPolicyVO3 = dao.findByPrimaryKey("TRP1");
+//		System.out.println(TicketRefundPolicyVO3.getTicRefPolicy_no());
+//		System.out.println(TicketRefundPolicyVO3.getTicRefPolicy_name());
+//		System.out.println(TicketRefundPolicyVO3.getTicRefPolicy_content());
+//		System.out.println("------------------------------");
 		
-		//查詢全部	
-		List<AdvertisementVO> list = dao.getAll();
-		for (AdvertisementVO aAdvertisementVO4 : list) {
-			System.out.println(aAdvertisementVO4.getAd_no());
-			System.out.println(aAdvertisementVO4.getEvetit_no());
-			System.out.println(aAdvertisementVO4.getAd_startdate());
-			System.out.println(aAdvertisementVO4.getAd_enddate());
-			System.out.println("------------------------------");
-		}
+		// 查詢全部
+//		List<TicketRefundPolicyVO> list = dao.getAll();
+//		for (TicketRefundPolicyVO aTicketRefundPolicyVO : list) {
+//			System.out.println(aTicketRefundPolicyVO.getTicRefPolicy_no());
+//			System.out.println(aTicketRefundPolicyVO.getTicRefPolicy_name());
+//			System.out.println(aTicketRefundPolicyVO.getTicRefPolicy_content());
+//			System.out.println("------------------------------");
+//		}
 	}
 }

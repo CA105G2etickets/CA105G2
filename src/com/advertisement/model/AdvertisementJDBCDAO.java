@@ -1,6 +1,7 @@
-package com.EVENT_CLASSIFICATION.model;
+package com.advertisement.model;
 
 import java.sql.Connection;
+//import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventClassificationJDBCDAO implements EventClassificationDAO_interface{
+
+public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -16,24 +18,22 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 	private static final String PASSWORD = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO EVENT_CLASSIFICATION (EVECLASS_NO,EVECLASS_NAME) VALUES (?, ?)";
+			"INSERT INTO ADVERTISEMENT (AD_NO, EVETIT_NO, AD_STARTDATE, AD_ENDDATE) VALUES ('AD'||LPAD(TO_CHAR(AD_SEQ.NEXTVAL),4,'0'), ?, ?, ?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE EVENT_CLASSIFICATION SET EVECLASS_NAME=? WHERE EVECLASS_NO=?";
+			"UPDATE ADVERTISEMENT SET EVETIT_NO=?,AD_STARTDATE=?,AD_ENDDATE=? WHERE AD_NO=?";
 	
 	private static final String DELETE_STMT = 
-			"DELETE FROM EVENT_CLASSIFICATION WHERE EVECLASS_NO=?";
+			"DELETE FROM ADVERTISEMENT WHERE AD_NO=?";
 
 	private static final String GET_ONE_STMT = 
-			"SELECT EVECLASS_NO, EVECLASS_NAME FROM EVENT_CLASSIFICATION WHERE EVECLASS_NO = ?";
+			"SELECT AD_NO,EVETIT_NO,AD_STARTDATE,AD_ENDDATE FROM ADVERTISEMENT WHERE AD_NO = ?";
 
 	private static final String GET_ALL_STMT = 
-			"SELECT EVECLASS_NO, EVECLASS_NAME FROM EVENT_CLASSIFICATION";
-	
-	
+			"SELECT AD_NO,EVETIT_NO,AD_STARTDATE,AD_ENDDATE FROM ADVERTISEMENT";
 	
 	@Override
-	public void insert(EventClassificationVO eventClassificationVO) {
+	public void insert(AdvertisementVO advertisementVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		
@@ -42,8 +42,9 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1,eventClassificationVO.getEveclass_no());
-			pstmt.setString(2,eventClassificationVO.getEveclass_name());
+			pstmt.setString(1,advertisementVO.getEvetit_no());
+			pstmt.setDate(2,advertisementVO.getAd_startdate());
+			pstmt.setDate(3,advertisementVO.getAd_enddate());
 			
 			pstmt.executeUpdate();
 			
@@ -72,7 +73,7 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 	}
 
 	@Override
-	public void update(EventClassificationVO eventClassificationVO) {
+	public void update(AdvertisementVO advertisementVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		
@@ -80,10 +81,12 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
-			pstmt.setString(1,eventClassificationVO.getEveclass_name());
-			pstmt.setString(2,eventClassificationVO.getEveclass_no());
-	
 			
+			pstmt.setString(1,advertisementVO.getEvetit_no());
+			pstmt.setDate(2,advertisementVO.getAd_startdate());
+			pstmt.setDate(3,advertisementVO.getAd_enddate());
+			pstmt.setString(4,advertisementVO.getAd_no());
+		
 			pstmt.executeUpdate();
 			
 			System.out.println("----------Updated----------");
@@ -111,7 +114,7 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 	}
 
 	@Override
-	public void delete(String eveclass_no) {
+	public void delete(String ad_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		
@@ -120,8 +123,8 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
 
-			pstmt.setString(1, eveclass_no);
-			
+			pstmt.setString(1, ad_no);
+
 			pstmt.executeUpdate();
 			
 			System.out.println("----------Deleted----------");
@@ -149,10 +152,8 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 	}
 
 	@Override
-	public EventClassificationVO findByPrimaryKey(String eveclass_no) {
-		
-		EventClassificationVO eventClassificationVO = null;
-		
+	public AdvertisementVO findByPrimaryKey(String ad_no) {
+		AdvertisementVO advertisementVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;
@@ -162,14 +163,16 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
-			pstmt.setString(1,eveclass_no);
-			
+			pstmt.setString(1, ad_no); 
+					
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				eventClassificationVO = new EventClassificationVO();
-				eventClassificationVO.setEveclass_no(rs.getString("EVECLASS_NO"));
-				eventClassificationVO.setEveclass_name(rs.getString("EVECLASS_NAME"));
+				advertisementVO = new AdvertisementVO();
+				advertisementVO.setAd_no(rs.getString("AD_NO"));
+				advertisementVO.setEvetit_no(rs.getString("EVETIT_NO"));
+				advertisementVO.setAd_startdate(rs.getDate("AD_STARTDATE"));
+				advertisementVO.setAd_enddate(rs.getDate("AD_ENDDATE"));
 			}
 			
 			System.out.println("----------findByPrimaryKey finished----------");
@@ -179,6 +182,13 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -194,38 +204,46 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 				}
 			}
 		}
-		return eventClassificationVO;
+		return advertisementVO;
 	}
 
 	@Override
-	public List<EventClassificationVO> getAll() {
-		List<EventClassificationVO> list = new ArrayList<EventClassificationVO>();
-		EventClassificationVO eventClassificationVO = null;
+	public List<AdvertisementVO> getAll() {
+		List<AdvertisementVO> list = new ArrayList<>();
+		AdvertisementVO advertisementVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-		ResultSet rs = null;	
+		ResultSet rs = null;
 		
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
-
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				eventClassificationVO = new EventClassificationVO();
-				eventClassificationVO.setEveclass_no(rs.getString("EVECLASS_NO"));
-				eventClassificationVO.setEveclass_name(rs.getString("EVECLASS_NAME"));
-				list.add(eventClassificationVO);
+				advertisementVO = new AdvertisementVO();
+				advertisementVO.setAd_no(rs.getString("AD_NO"));
+				advertisementVO.setEvetit_no(rs.getString("EVETIT_NO"));
+				advertisementVO.setAd_startdate(rs.getDate("AD_STARTDATE"));
+				advertisementVO.setAd_enddate(rs.getDate("AD_ENDDATE"));
+				list.add(advertisementVO);
 			}
 			
-			System.out.println("----------getAll finished----------");
+			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -243,41 +261,45 @@ public class EventClassificationJDBCDAO implements EventClassificationDAO_interf
 		}
 		return list;
 	}
-	
-	
+ 
 	public static void main(String[] args) {
 		
-		EventClassificationJDBCDAO dao = new EventClassificationJDBCDAO();
+		AdvertisementJDBCDAO dao = new AdvertisementJDBCDAO();
 		
 		// 新增
-//		EventClassificationVO EventClassificationVO1 = new EventClassificationVO();
-//		EventClassificationVO1.setEveclass_no("M");
-//		EventClassificationVO1.setEveclass_name("比賽");
-//		dao.insert(EventClassificationVO1);
+		AdvertisementVO advertisementVO = new AdvertisementVO();		
+		advertisementVO.setEvetit_no("E0001"); 
+		advertisementVO.setAd_startdate(java.sql.Date.valueOf("2019-01-31"));
+		advertisementVO.setAd_enddate(java.sql.Date.valueOf("2019-01-31"));
+		dao.insert(advertisementVO);
 		
 		// 修改
-//		EventClassificationVO EventClassificationVO2 = new EventClassificationVO();
-//		EventClassificationVO2.setEveclass_no("B");
-//		EventClassificationVO2.setEveclass_name("比賽");
-//		dao.update(EventClassificationVO2);
+		AdvertisementVO advertisementVO2 = new AdvertisementVO();
+		advertisementVO2.setAd_no("AD0001"); 
+		advertisementVO2.setEvetit_no("E0002"); 
+		advertisementVO2.setAd_startdate(java.sql.Date.valueOf("2020-01-31"));
+		advertisementVO2.setAd_enddate(java.sql.Date.valueOf("2020-01-31"));
+		dao.update(advertisementVO2);
 		
 		// 刪除
-//		dao.delete("M");
-//		System.out.println("------------------------------");
+		dao.delete("AD0005");
 		
 		// 查詢一個
-//		EventClassificationVO EventClassificationVO3 = dao.findByPrimaryKey("C");
-//		System.out.println(EventClassificationVO3.getEveclass_no());
-//		System.out.println(EventClassificationVO3.getEveclass_name());
-//		System.out.println("------------------------------");		
+		AdvertisementVO advertisementVO3 = dao.findByPrimaryKey("AD0001");
+		System.out.println(advertisementVO3.getAd_no());
+		System.out.println(advertisementVO3.getEvetit_no());
+		System.out.println(advertisementVO3.getAd_startdate());
+		System.out.println(advertisementVO3.getAd_enddate());
+		System.out.println("------------------------------");
 		
-		// 查詢全部
-//		List<EventClassificationVO> list = dao.getAll();
-//		for (EventClassificationVO aEventClassificationVO : list) {
-//			System.out.println(aEventClassificationVO.getEveclass_no());
-//			System.out.println(aEventClassificationVO.getEveclass_name());
-//			System.out.println("------------------------------");	
-//		}
+		//查詢全部	
+		List<AdvertisementVO> list = dao.getAll();
+		for (AdvertisementVO aAdvertisementVO4 : list) {
+			System.out.println(aAdvertisementVO4.getAd_no());
+			System.out.println(aAdvertisementVO4.getEvetit_no());
+			System.out.println(aAdvertisementVO4.getAd_startdate());
+			System.out.println(aAdvertisementVO4.getAd_enddate());
+			System.out.println("------------------------------");
+		}
 	}
-
 }

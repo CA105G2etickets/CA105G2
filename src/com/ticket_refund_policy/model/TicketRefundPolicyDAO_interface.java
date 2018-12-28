@@ -1,4 +1,4 @@
-package com.TICKET_REFUND_POLICY.model;
+package com.ticket_refund_policy.model;
 
 import java.util.List;
 

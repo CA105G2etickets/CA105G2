@@ -1,4 +1,4 @@
-package com.TICKET_REFUND_POLICY.model;
+package com.event_classification.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,11 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.EVENT_CLASSIFICATION.model.EventClassificationJDBCDAO;
-
-
-
-public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
+public class EventClassificationJDBCDAO implements EventClassificationDAO_interface{
 
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -20,36 +16,39 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 	private static final String PASSWORD = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO TICKET_REFUND_POLICY (TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT) VALUES (?,?,?)";
+			"INSERT INTO EVENT_CLASSIFICATION (EVECLASS_NO,EVECLASS_NAME) VALUES (?, ?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE TICKET_REFUND_POLICY SET TICREFPOLICY_NAME=?,TICREFPOLICY_CONTENT=? WHERE TICREFPOLICY_NO=?";
+			"UPDATE EVENT_CLASSIFICATION SET EVECLASS_NAME=? WHERE EVECLASS_NO=?";
 	
 	private static final String DELETE_STMT = 
-			"DELETE FROM TICKET_REFUND_POLICY WHERE TICREFPOLICY_NO=?";
+			"DELETE FROM EVENT_CLASSIFICATION WHERE EVECLASS_NO=?";
 
 	private static final String GET_ONE_STMT = 
-			"SELECT TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT FROM TICKET_REFUND_POLICY WHERE TICREFPOLICY_NO = ?";
+			"SELECT EVECLASS_NO, EVECLASS_NAME FROM EVENT_CLASSIFICATION WHERE EVECLASS_NO = ?";
 
 	private static final String GET_ALL_STMT = 
-			"SELECT TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT FROM TICKET_REFUND_POLICY";
+			"SELECT EVECLASS_NO, EVECLASS_NAME FROM EVENT_CLASSIFICATION";
+	
+	
 	
 	@Override
-	public void insert(TicketRefundPolicyVO ticketRefundPolicyVO) {
+	public void insert(EventClassificationVO eventClassificationVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-
+		
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_no());
-			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_name());
-			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_content());
+			pstmt.setString(1,eventClassificationVO.getEveclass_no());
+			pstmt.setString(2,eventClassificationVO.getEveclass_name());
 			
 			pstmt.executeUpdate();
+			
 			System.out.println("----------Inserted----------");
+
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
@@ -73,20 +72,20 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 	}
 
 	@Override
-	public void update(TicketRefundPolicyVO ticketRefundPolicyVO) {
+	public void update(EventClassificationVO eventClassificationVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-
+		
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
-			
-			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_name());
-			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_content());
-			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_no());
+			pstmt.setString(1,eventClassificationVO.getEveclass_name());
+			pstmt.setString(2,eventClassificationVO.getEveclass_no());
+	
 			
 			pstmt.executeUpdate();
+			
 			System.out.println("----------Updated----------");
 
 		} catch (ClassNotFoundException e) {
@@ -112,7 +111,7 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 	}
 
 	@Override
-	public void delete(String ticRefPolicy_no) {
+	public void delete(String eveclass_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		
@@ -121,8 +120,8 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE_STMT);
 
-			pstmt.setString(1, ticRefPolicy_no);
-
+			pstmt.setString(1, eveclass_no);
+			
 			pstmt.executeUpdate();
 			
 			System.out.println("----------Deleted----------");
@@ -147,13 +146,13 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 				}
 			}
 		}
-		
 	}
 
 	@Override
-	public TicketRefundPolicyVO findByPrimaryKey(String ticRefPolicy_no) {
+	public EventClassificationVO findByPrimaryKey(String eveclass_no) {
 		
-		TicketRefundPolicyVO ticketRefundPolicyVO = null;
+		EventClassificationVO eventClassificationVO = null;
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;
@@ -163,15 +162,14 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
-			pstmt.setString(1,ticRefPolicy_no);
+			pstmt.setString(1,eveclass_no);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				ticketRefundPolicyVO = new TicketRefundPolicyVO();
-				ticketRefundPolicyVO.setTicRefPolicy_no(rs.getString("TICREFPOLICY_NO"));
-				ticketRefundPolicyVO.setTicRefPolicy_name(rs.getString("TICREFPOLICY_NAME"));
-				ticketRefundPolicyVO.setTicRefPolicy_content(rs.getString("TICREFPOLICY_CONTENT"));
+				eventClassificationVO = new EventClassificationVO();
+				eventClassificationVO.setEveclass_no(rs.getString("EVECLASS_NO"));
+				eventClassificationVO.setEveclass_name(rs.getString("EVECLASS_NAME"));
 			}
 			
 			System.out.println("----------findByPrimaryKey finished----------");
@@ -196,13 +194,13 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 				}
 			}
 		}
-		return ticketRefundPolicyVO;
+		return eventClassificationVO;
 	}
 
 	@Override
-	public List<TicketRefundPolicyVO> getAll() {
-		List<TicketRefundPolicyVO> list = new ArrayList<TicketRefundPolicyVO>();
-		TicketRefundPolicyVO ticketRefundPolicyVO = null;
+	public List<EventClassificationVO> getAll() {
+		List<EventClassificationVO> list = new ArrayList<EventClassificationVO>();
+		EventClassificationVO eventClassificationVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;	
@@ -215,11 +213,10 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				ticketRefundPolicyVO = new TicketRefundPolicyVO();
-				ticketRefundPolicyVO.setTicRefPolicy_no(rs.getString("TICREFPOLICY_NO"));
-				ticketRefundPolicyVO.setTicRefPolicy_name(rs.getString("TICREFPOLICY_NAME"));
-				ticketRefundPolicyVO.setTicRefPolicy_content(rs.getString("TICREFPOLICY_CONTENT"));
-				list.add(ticketRefundPolicyVO);
+				eventClassificationVO = new EventClassificationVO();
+				eventClassificationVO.setEveclass_no(rs.getString("EVECLASS_NO"));
+				eventClassificationVO.setEveclass_name(rs.getString("EVECLASS_NAME"));
+				list.add(eventClassificationVO);
 			}
 			
 			System.out.println("----------getAll finished----------");
@@ -245,6 +242,42 @@ public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
 			}
 		}
 		return list;
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		EventClassificationJDBCDAO dao = new EventClassificationJDBCDAO();
+		
+		// 新增
+//		EventClassificationVO EventClassificationVO1 = new EventClassificationVO();
+//		EventClassificationVO1.setEveclass_no("M");
+//		EventClassificationVO1.setEveclass_name("比賽");
+//		dao.insert(EventClassificationVO1);
+		
+		// 修改
+//		EventClassificationVO EventClassificationVO2 = new EventClassificationVO();
+//		EventClassificationVO2.setEveclass_no("B");
+//		EventClassificationVO2.setEveclass_name("比賽");
+//		dao.update(EventClassificationVO2);
+		
+		// 刪除
+//		dao.delete("M");
+//		System.out.println("------------------------------");
+		
+		// 查詢一個
+//		EventClassificationVO EventClassificationVO3 = dao.findByPrimaryKey("C");
+//		System.out.println(EventClassificationVO3.getEveclass_no());
+//		System.out.println(EventClassificationVO3.getEveclass_name());
+//		System.out.println("------------------------------");		
+		
+		// 查詢全部
+//		List<EventClassificationVO> list = dao.getAll();
+//		for (EventClassificationVO aEventClassificationVO : list) {
+//			System.out.println(aEventClassificationVO.getEveclass_no());
+//			System.out.println(aEventClassificationVO.getEveclass_name());
+//			System.out.println("------------------------------");	
+//		}
 	}
 
 }

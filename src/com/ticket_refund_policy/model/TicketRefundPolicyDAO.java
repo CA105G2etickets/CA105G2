@@ -1,4 +1,4 @@
-package com.EVENT_CLASSIFICATION.model;
+package com.ticket_refund_policy.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,49 +8,57 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventClassificationDAO implements EventClassificationDAO_interface{
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String USER = "CA105G2";
-	private static final String PASSWORD = "123456";
+import com.event_classification.model.EventClassificationJDBCDAO;
+
+
+
+public class TicketRefundPolicyDAO implements TicketRefundPolicyDAO_interface {
+	
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO EVENT_CLASSIFICATION (EVECLASS_NO,EVECLASS_NAME) VALUES (?, ?)";
+			"INSERT INTO TICKET_REFUND_POLICY (TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT) VALUES (?,?,?)";
 
 	private static final String UPDATE_STMT = 
-			"UPDATE EVENT_CLASSIFICATION SET EVECLASS_NAME=? WHERE EVECLASS_NO=?";
+			"UPDATE TICKET_REFUND_POLICY SET TICREFPOLICY_NAME=?,TICREFPOLICY_CONTENT=? WHERE TICREFPOLICY_NO=?";
 	
 	private static final String DELETE_STMT = 
-			"DELETE FROM EVENT_CLASSIFICATION WHERE EVECLASS_NO=?";
+			"DELETE FROM TICKET_REFUND_POLICY WHERE TICREFPOLICY_NO=?";
 
 	private static final String GET_ONE_STMT = 
-			"SELECT EVECLASS_NO, EVECLASS_NAME FROM EVENT_CLASSIFICATION WHERE EVECLASS_NO = ?";
+			"SELECT TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT FROM TICKET_REFUND_POLICY WHERE TICREFPOLICY_NO = ?";
 
 	private static final String GET_ALL_STMT = 
-			"SELECT EVECLASS_NO, EVECLASS_NAME FROM EVENT_CLASSIFICATION";
-	
-	
+			"SELECT TICREFPOLICY_NO,TICREFPOLICY_NAME,TICREFPOLICY_CONTENT FROM TICKET_REFUND_POLICY";
 	
 	@Override
-	public void insert(EventClassificationVO eventClassificationVO) {
+	public void insert(TicketRefundPolicyVO ticketRefundPolicyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-		
+
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1,eventClassificationVO.getEveclass_no());
-			pstmt.setString(2,eventClassificationVO.getEveclass_name());
+			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_no());
+			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_name());
+			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_content());
 			
 			pstmt.executeUpdate();
-			
 			System.out.println("----------Inserted----------");
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -72,24 +80,21 @@ public class EventClassificationDAO implements EventClassificationDAO_interface{
 	}
 
 	@Override
-	public void update(EventClassificationVO eventClassificationVO) {
+	public void update(TicketRefundPolicyVO ticketRefundPolicyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
-		
+
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
-			pstmt.setString(1,eventClassificationVO.getEveclass_name());
-			pstmt.setString(2,eventClassificationVO.getEveclass_no());
-	
+			
+			pstmt.setString(1, ticketRefundPolicyVO.getTicRefPolicy_name());
+			pstmt.setString(2, ticketRefundPolicyVO.getTicRefPolicy_content());
+			pstmt.setString(3, ticketRefundPolicyVO.getTicRefPolicy_no());
 			
 			pstmt.executeUpdate();
-			
 			System.out.println("----------Updated----------");
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -111,23 +116,20 @@ public class EventClassificationDAO implements EventClassificationDAO_interface{
 	}
 
 	@Override
-	public void delete(String eveclass_no) {
+	public void delete(String ticRefPolicy_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE_STMT);
 
-			pstmt.setString(1, eveclass_no);
-			
+			pstmt.setString(1, ticRefPolicy_no);
+
 			pstmt.executeUpdate();
 			
 			System.out.println("----------Deleted----------");
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -146,36 +148,34 @@ public class EventClassificationDAO implements EventClassificationDAO_interface{
 				}
 			}
 		}
+		
 	}
 
 	@Override
-	public EventClassificationVO findByPrimaryKey(String eveclass_no) {
+	public TicketRefundPolicyVO findByPrimaryKey(String ticRefPolicy_no) {
 		
-		EventClassificationVO eventClassificationVO = null;
-		
+		TicketRefundPolicyVO ticketRefundPolicyVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
-			pstmt.setString(1,eveclass_no);
+			pstmt.setString(1,ticRefPolicy_no);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				eventClassificationVO = new EventClassificationVO();
-				eventClassificationVO.setEveclass_no(rs.getString("EVECLASS_NO"));
-				eventClassificationVO.setEveclass_name(rs.getString("EVECLASS_NAME"));
+				ticketRefundPolicyVO = new TicketRefundPolicyVO();
+				ticketRefundPolicyVO.setTicRefPolicy_no(rs.getString("TICREFPOLICY_NO"));
+				ticketRefundPolicyVO.setTicRefPolicy_name(rs.getString("TICREFPOLICY_NAME"));
+				ticketRefundPolicyVO.setTicRefPolicy_content(rs.getString("TICREFPOLICY_CONTENT"));
 			}
 			
 			System.out.println("----------findByPrimaryKey finished----------");
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -194,35 +194,33 @@ public class EventClassificationDAO implements EventClassificationDAO_interface{
 				}
 			}
 		}
-		return eventClassificationVO;
+		return ticketRefundPolicyVO;
 	}
 
 	@Override
-	public List<EventClassificationVO> getAll() {
-		List<EventClassificationVO> list = new ArrayList<EventClassificationVO>();
-		EventClassificationVO eventClassificationVO = null;
+	public List<TicketRefundPolicyVO> getAll() {
+		List<TicketRefundPolicyVO> list = new ArrayList<TicketRefundPolicyVO>();
+		TicketRefundPolicyVO ticketRefundPolicyVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;	
 		ResultSet rs = null;	
 		
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				eventClassificationVO = new EventClassificationVO();
-				eventClassificationVO.setEveclass_no(rs.getString("EVECLASS_NO"));
-				eventClassificationVO.setEveclass_name(rs.getString("EVECLASS_NAME"));
-				list.add(eventClassificationVO);
+				ticketRefundPolicyVO = new TicketRefundPolicyVO();
+				ticketRefundPolicyVO.setTicRefPolicy_no(rs.getString("TICREFPOLICY_NO"));
+				ticketRefundPolicyVO.setTicRefPolicy_name(rs.getString("TICREFPOLICY_NAME"));
+				ticketRefundPolicyVO.setTicRefPolicy_content(rs.getString("TICREFPOLICY_CONTENT"));
+				list.add(ticketRefundPolicyVO);
 			}
 			
 			System.out.println("----------getAll finished----------");
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {

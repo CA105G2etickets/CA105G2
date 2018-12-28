@@ -3,8 +3,8 @@ package com.goods_qa.model;
 import java.sql.*;
 import java.util.*;
 
-import com.ADVERTISEMENT.model.AdvertisementVO;
-import com.EVENT_CLASSIFICATION.model.EventClassificationJDBCDAO;
+import com.advertisement.model.AdvertisementVO;
+import com.event_classification.model.EventClassificationJDBCDAO;
 
 public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
