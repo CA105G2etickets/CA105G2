@@ -1,4 +1,4 @@
-package com.EVENT_TITLE.model;
+package com.event_title.model;
 
 import java.sql.Date;
 
