@@ -14,25 +14,25 @@
 //	static {
 //		try {
 //			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
 //		} catch (NamingException e) {
 //			e.printStackTrace();
 //		}
 //	}
 //
 //	private static final String INSERT_STMT = 
-//			"INSERT INTO NEWS (NEWS_NO,NEWS_CLASSIFICATION_NO,NEWS_TITLE,NEWS_CONTENT,ANNOUNCE_DATE,ADMINISTRATOR_NO) VALUES ('M'||LPAD(to_char(member_no_seq.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?, ?,CURRENT_TIMESTAMP, ?, ?, ?)";
-//	private static final String GET_ALL_STMT = 
-//			"SELECT * FROM NEWS ORDER BY NEWS_NO";
+//			"INSERT INTO NEWS (NEWS_NO,NEWS_CLASSIFICATION_NO,NEWS_TITLE,NEWS_CONTENT,ANNOUNCE_DATE,ADMINISTRATOR_NO) VALUES ('?'||LPAD(to_char(news_S_seq.NEXTVAL), 2, '0'), ?, ?, ?,CURRENT_DATE, ?)";
+//	private static final String UPDATE = 
+//			"UPDATE NEWS SET NEWS_CLASSIFICATION_NO = ?, NEWS_TITLE = ?, NEWS_CONTENT = ?, ADMINISTRATOR_NO = ? WHERE NEWS_NO = ?";
 //	private static final String DELETE = 
 //			"DELETE FROM NEWS WHERE NEWS_NO = ?";
-//	private static final String UPDATE = 
-//			"UPDATE NEWS SET NEWS_CLASSIFICATION_NO = ?, NEWS_TITLE = ?, NEWS_CONTENT = ?, ANNOUNCE_DATE = ?, ADMINISTRATOR_NO = ? WHERE MEMBER_NO = ?";
 //	private static final String GET_ONE_STMT = 
-//			"SELECT * FROM MEMBER WHERE MEMBER_NO = ?";
+//			"SELECT * FROM NEWS WHERE NEWS_NO = ?";
+//	private static final String GET_ALL_STMT = 
+//			"SELECT * FROM NEWS ORDER BY NEWS_NO";
 //
 //	@Override
-//	public void insert(MemberVO member) {
+//	public void insert(NewsVO newsVO) {
 //
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -42,22 +42,16 @@
 //			con = ds.getConnection();
 //			pstmt = con.prepareStatement(INSERT_STMT);
 //
-//			pstmt.setString(1, member.getMemberFullname());
-//			pstmt.setString(2, member.getEmail());
-//			pstmt.setString(3, member.getPhone());
-//			pstmt.setString(4, member.getIdcard());
-//			pstmt.setString(5, member.getMemberAccount());
-//			pstmt.setString(6, member.getMemberPassword());
-//			pstmt.setInt(7, member.getEwalletBalance());
-////			pstmt.setTimestamp(8, member.getCreationDate());
-//			pstmt.setBytes(8, member.getProfilePicture());
-//			pstmt.setString(9, member.getMemberStatus());
-//			pstmt.setString(10, member.getThirduid());
+//			pstmt.setString(1, newsVO.getNews_classification_no());
+//			pstmt.setString(2, newsVO.getNews_classification_no());
+//			pstmt.setString(3, newsVO.getNews_title());
+//			pstmt.setString(4, newsVO.getNews_content());
+//			pstmt.setString(5, newsVO.getAdministrator_no());
 //
 //			pstmt.executeUpdate();
 //
 //		} catch (SQLException se) {
-//			throw new RuntimeException("BuBu!"
+//			throw new RuntimeException("錯誤!"
 //					+ se.getMessage());
 //		} finally {
 //			if (pstmt != null) {
@@ -79,7 +73,7 @@
 //	}
 //
 //	@Override
-//	public void update(MemberVO member) {
+//	public void update(NewsVO newsVO) {
 //
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -89,23 +83,16 @@
 //			con = ds.getConnection();
 //			pstmt = con.prepareStatement(UPDATE);
 //
-//			pstmt.setString(1, member.getMemberFullname());
-//			pstmt.setString(2, member.getEmail());
-//			pstmt.setString(3, member.getPhone());
-////			pstmt.setString(4, member.getIdcard());
-//			pstmt.setString(4, member.getMemberAccount());
-//			pstmt.setString(5, member.getMemberPassword());
-////			pstmt.setInt(7, member.getEwalletBalance());
-////			pstmt.setTimestamp(7, member.getCreationDate());
-//			pstmt.setBytes(6, member.getProfilePicture());
-//			pstmt.setString(7, member.getMemberStatus());
-////			pstmt.setString(9, member.getThirduid());
-//			pstmt.setString(8, member.getMemberNo());
+//			pstmt.setString(1, newsVO.getNews_classification_no());
+//			pstmt.setString(2, newsVO.getNews_title());
+//			pstmt.setString(3, newsVO.getNews_content());
+//			pstmt.setString(4, newsVO.getAdministrator_no());
+//			pstmt.setString(5, newsVO.getNews_no());
 //
 //			pstmt.executeUpdate();
 //
 //		} catch (SQLException se) {
-//			throw new RuntimeException("BuBu!"
+//			throw new RuntimeException("錯誤!"
 //					+ se.getMessage());
 //		} finally {
 //			if (pstmt != null) {
@@ -127,7 +114,7 @@
 //	}
 //
 //	@Override
-//	public void delete(String memberNo) {
+//	public void delete(String news_no) {
 //
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -135,14 +122,14 @@
 //		try {
 //
 //			con = ds.getConnection();
-//			pstmt = con.prepareStatement(DELETE);
+//			pstmt = con.prepareStatement(news_no);
 //
-//			pstmt.setString(1, memberNo);
+//			pstmt.setString(1, news_no);
 //
 //			pstmt.executeUpdate();
 //
 //		} catch (SQLException se) {
-//			throw new RuntimeException("BuBu!"
+//			throw new RuntimeException("錯誤!"
 //					+ se.getMessage());
 //		} finally {
 //			if (pstmt != null) {
@@ -164,9 +151,9 @@
 //	}
 //
 //	@Override
-//	public MemberVO findByPrimaryKey(String memberNo) {
+//	public NewsVO findByPrimaryKey(String news_no) {
 //
-//		MemberVO member = null;
+//		NewsVO member = null;
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //		ResultSet rs = null;
@@ -197,7 +184,7 @@
 //			}
 //
 //		} catch (SQLException se) {
-//			throw new RuntimeException("BuBu!"
+//			throw new RuntimeException("錯誤!"
 //					+ se.getMessage());
 //		} finally {
 //			if (rs != null) {
@@ -258,7 +245,7 @@
 //			}
 //
 //		} catch (SQLException se) {
-//			throw new RuntimeException("BuBu!"
+//			throw new RuntimeException("錯誤!"
 //					+ se.getMessage());
 //		} finally {
 //			if (rs != null) {

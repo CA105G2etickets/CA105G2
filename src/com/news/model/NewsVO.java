@@ -5,81 +5,81 @@ import java.sql.Date;
 
 public class NewsVO implements Serializable {
 	
-	private String newsNo;
-	private String newsClassificationNo;
-	private String newsTitle;
-	private String newsContent;
-	private Date announceDate;
-	private String administratorNo;
+	private String news_no;
+	private String news_classification_no;
+	private String news_title;
+	private String news_content;
+	private Date announce_date;
+	private String administrator_no;
 
 	public NewsVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public NewsVO(String newsNo, String newsClassificationNo, String newsTitle, String newsContent, Date announceDate,
-			String administratorNo) {
+	public NewsVO(String news_no, String news_classification_no, String news_title, String news_content,
+			Date announce_date, String administrator_no) {
 		super();
-		this.newsNo = newsNo;
-		this.newsClassificationNo = newsClassificationNo;
-		this.newsTitle = newsTitle;
-		this.newsContent = newsContent;
-		this.announceDate = announceDate;
-		this.administratorNo = administratorNo;
+		this.news_no = news_no;
+		this.news_classification_no = news_classification_no;
+		this.news_title = news_title;
+		this.news_content = news_content;
+		this.announce_date = announce_date;
+		this.administrator_no = administrator_no;
 	}
 
-	public String getNewsNo() {
-		return newsNo;
+	public String getNews_no() {
+		return news_no;
 	}
 
-	public void setNewsNo(String newsNo) {
-		this.newsNo = newsNo;
+	public void setNews_no(String news_no) {
+		this.news_no = news_no;
 	}
 
-	public String getNewsClassificationNo() {
-		return newsClassificationNo;
+	public String getNews_classification_no() {
+		return news_classification_no;
 	}
 
-	public void setNewsClassificationNo(String newsClassificationNo) {
-		this.newsClassificationNo = newsClassificationNo;
+	public void setNews_classification_no(String news_classification_no) {
+		this.news_classification_no = news_classification_no;
 	}
 
-	public String getNewsTitle() {
-		return newsTitle;
+	public String getNews_title() {
+		return news_title;
 	}
 
-	public void setNewsTitle(String newsTitle) {
-		this.newsTitle = newsTitle;
+	public void setNews_title(String news_title) {
+		this.news_title = news_title;
 	}
 
-	public String getNewsContent() {
-		return newsContent;
+	public String getNews_content() {
+		return news_content;
 	}
 
-	public void setNewsContent(String newsContent) {
-		this.newsContent = newsContent;
+	public void setNews_content(String news_content) {
+		this.news_content = news_content;
 	}
 
-	public Date getAnnounceDate() {
-		return announceDate;
+	public Date getAnnounce_date() {
+		return announce_date;
 	}
 
-	public void setAnnounceDate(Date announceDate) {
-		this.announceDate = announceDate;
+	public void setAnnounce_date(Date announce_date) {
+		this.announce_date = announce_date;
 	}
 
-	public String getAdministratorNo() {
-		return administratorNo;
+	public String getAdministrator_no() {
+		return administrator_no;
 	}
 
-	public void setAdministratorNo(String administratorNo) {
-		this.administratorNo = administratorNo;
+	public void setAdministrator_no(String administrator_no) {
+		this.administrator_no = administrator_no;
 	}
 
 	@Override
 	public String toString() {
-		return "NewsVO [newsNo=" + newsNo + ", newsClassificationNo=" + newsClassificationNo + ", newsTitle="
-				+ newsTitle + ", newsContent=" + newsContent + ", announceDate=" + announceDate + ", administratorNo="
-				+ administratorNo + "]";
+		return "NewsVO [news_no=" + news_no + ", news_classification_no=" + news_classification_no + ", news_title="
+				+ news_title + ", news_content=" + news_content + ", announce_date=" + announce_date
+				+ ", administrator_no=" + administrator_no + "]";
 	}
 
 }
