@@ -1,4 +1,4 @@
-package android.com.EVENT_TITLE.controller;
+package com.android.event_title.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,14 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.android.event_title.model.Event_titleService;
+import com.android.event_title.model.Event_titleVO;
+import com.android.main.ImageUtil;
+import com.android.member.model.MemberService;
+import com.android.member.model.MemberVO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import android.com.EVENT_TITLE.model.Event_titleService;
-import android.com.EVENT_TITLE.model.Event_titleVO;
-import android.com.MEMBER.model.MemberService;
-import android.com.MEMBER.model.MemberVO;
-import android.com.main.ImageUtil;
 
 public class Event_titleServlet extends HttpServlet {
 	private final static String CONTENT_TYPE = "text/html; charset=UTF-8";

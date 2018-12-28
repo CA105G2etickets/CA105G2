@@ -95,16 +95,16 @@
 	
 	<servlet>
 		<servlet-name>AndroidMemberServlet</servlet-name>
-		<servlet-class>android.com.MEMBER.controller.MemberServlet</servlet-class>
+		<servlet-class>com.android.member.controller.MemberServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AndroidMemberServlet</servlet-name>
-		<url-pattern>/member/MemberServlet.do</url-pattern>
+		<url-pattern>/member/AndroidMemberServlet.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>AndroidEventTitleServlet</servlet-name>
-		<servlet-class>android.com.EVENT_TITLE.controller.Event_titleServlet</servlet-class>
+		<servlet-class>com.android.event_title.controller.Event_titleServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AndroidEventTitleServlet</servlet-name>

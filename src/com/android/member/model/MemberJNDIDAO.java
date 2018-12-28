@@ -1,4 +1,4 @@
-package android.com.MEMBER.model;
+package com.android.member.model;
 
 import java.sql.*;
 import java.util.*;
@@ -19,7 +19,7 @@ public class MemberJNDIDAO implements MemberDAO_interface {
 		static {
 			try {
 				Context ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+				ds = (DataSource) ctx.lookup(com.utility.Util.JNDI_DATABASE_NAME);
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}

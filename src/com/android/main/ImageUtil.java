@@ -1,4 +1,4 @@
-package android.com.main;
+package com.android.main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

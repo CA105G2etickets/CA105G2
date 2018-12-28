@@ -1,4 +1,4 @@
-package android.com.EVENT_TITLE.model;
+package com.android.event_title.model;
 
 import java.security.interfaces.RSAKey;
 import java.sql.Connection;
@@ -19,7 +19,7 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+			ds = (DataSource) ctx.lookup(com.utility.Util.JNDI_DATABASE_NAME);
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

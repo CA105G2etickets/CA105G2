@@ -1,4 +1,4 @@
-package android.com.MEMBER.model;
+package com.android.member.model;
 
 import java.util.List;
 

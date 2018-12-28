@@ -1,4 +1,4 @@
-package android.com.EVENT_TITLE.model;
+package com.android.event_title.model;
 
 import java.util.List;
 
