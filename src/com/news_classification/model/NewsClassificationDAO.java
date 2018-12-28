@@ -50,21 +50,21 @@ public class NewsClassificationDAO implements NewsClassificationDAO_interface {
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
-			throw new RuntimeException("BuBu!"
+			throw new RuntimeException("該公告分類代碼已使用"
 					+ se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+					se.printStackTrace();
 				}
 			}
 			if (con != null) {
 				try {
 					con.close();
 				} catch (Exception e) {
-					e.printStackTrace(System.err);
+					e.printStackTrace();
 				}
 			}
 		}

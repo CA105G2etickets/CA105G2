@@ -55,11 +55,11 @@
 <table class="table">
 	<tr>
 		<td>公告分類編號代碼</td>
-		<td><input type="TEXT" placeholder="A" name="newsClassificationNo" size="45"></td>
+		<td><input type="TEXT" placeholder="A" name="newsClassificationNo" size="45" maxlength="1"></td>
 	</tr>
 	<tr>
 		<td>公告分類內容描述</td>
-		<td><input type="TEXT" placeholder="其他公告"name="newsClassification" size="45"></td>
+		<td><input type="TEXT" placeholder="其他公告"name="newsClassification" size="45" maxlength="20"></td>
 	</tr>
 </table>
 <br>
