@@ -4,7 +4,10 @@
 
 
 <%
-TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
+TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO"); //first entry this will be null
+
+
+
 %>
 
 <html>
