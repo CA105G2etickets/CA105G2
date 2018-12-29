@@ -10,7 +10,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>訂票訂單資料新增 - addTicketOrder.jsp</title>
+<title>模擬訂票訂單資料附帶票券的新增 - buyTicketsSim.jsp</title>
 
 <style>
   table#table-1 {
@@ -29,7 +29,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
   }
 </style>
 
-<style>ˇ
+<style>
   table {
 	width: 450px;
 	background-color: white;
@@ -49,7 +49,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 
 <table id="table-1">
 	<tr><td>
-		 <h3>訂票訂單資料新增 - addTicketOrder.jsp</h3></td><td>
+		 <h3>模擬訂票訂單資料附帶票券的新增 - buyTicketsSim.jsp</h3></td><td>
 		 <h4><a href="select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -69,27 +69,26 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 <FORM METHOD="post" ACTION="ticketorder.do" name="form1">
 <table>
 	<tr>
-		<td>會員編號:</td>
-		<td><input type="TEXT" name="member_no" size="45"
-			 value="<%= (toVO==null)? "M000001" : toVO.getMember_no()%>" /></td>
+		<td>請選擇要買的活動:(目前寫死只能選 A01XXXXXX)</td>
+		<td>A01XXXXXX</td>
 	</tr>
 	<tr>
-		<td>座位區編號:</td>
+		<td>這裡顯示該活動最大座位數量:</td>
 		<td><input type="TEXT" name="ticarea_no" size="45"
 			 value="<%= (toVO==null)? "E000101A01" : toVO.getTicarea_no()%>" /></td>
 	</tr>
 	<tr>
-		<td>總價:</td>
+		<td>剩餘座位數量:</td>
 		<td><input type="TEXT" name="total_price" size="45"
 			 value="<%= (toVO==null)? "900" : toVO.getTotal_price()%>" /></td>
 	</tr>
 	<tr>
-		<td>總張數:</td>
+		<td>你的會員編號(目前寫死只能是'M000001'):</td>
 		<td><input type="TEXT" name="total_amount" size="45"
 			 value="<%= (toVO==null)? "2" : toVO.getTotal_amount()%>" /></td>
 	</tr>
 	<tr>
-		<td>訂票訂單成立時間:</td>
+		<td>:</td>
 		<td><input name="ticket_order_time" id="f_date1" type="text"></td>
 	</tr>
 	<tr>
@@ -105,7 +104,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 
 </table>
 <br>
-<input type="hidden" name="action" value="insert">
+<input type="hidden" name="action" value="insert_ticket_order_with_ticket">
 <input type="submit" value="送出新增"></FORM>
 </body>
 

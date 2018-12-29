@@ -8,12 +8,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.ticket.model.TicketVO;
+
 public class TicketOrderDAO implements TicketOrderDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -335,4 +337,16 @@ public class TicketOrderDAO implements TicketOrderDAO_interface{
 //		}
 //		System.out.println("---------------------");
 //	}
+
+	@Override
+	public Set<TicketVO> getTicketsByTicketOrder(String ticket_order_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertWithTickets(TicketOrderVO ticketorderVO, List<TicketVO> list) {
+		// TODO Auto-generated method stub
+		
+	}
 }

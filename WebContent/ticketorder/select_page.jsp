@@ -93,6 +93,7 @@
 
 <ul>
   <li><a href='addTicketOrder.jsp'>Add</a> a new TicketOrder.</li>
+  <li><a href='buyTicketsSim.jsp'>Buy</a> Tickets.</li>
 </ul>
 
 </body>

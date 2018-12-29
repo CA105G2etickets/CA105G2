@@ -22,7 +22,7 @@ public class TicketDAO implements TicketDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -332,4 +332,10 @@ public class TicketDAO implements TicketDAO_interface{
 //			System.out.println("---------------------");
 //		}
 //	}
+
+	@Override
+	public void insertTickets(TicketVO tickerVO, Connection con) {
+		// TODO Auto-generated method stub
+		
+	}
 }
