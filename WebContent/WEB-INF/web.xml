@@ -110,6 +110,24 @@
 		<servlet-name>AndroidEventTitleServlet</servlet-name>
 		<url-pattern>/event/AndroidEventTitleServlet.do</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AndroidNewsServlet</servlet-name>
+		<servlet-class>com.android.news.controller.NewsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidNewsServlet</servlet-name>
+		<url-pattern>/news/AndroidNewsServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AndroidNewsclassificationServlet</servlet-name>
+		<servlet-class>com.android.news_classification.controller.NewsClassificationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidNewsclassificationServlet</servlet-name>
+		<url-pattern>/news/AndroidNewsClassificationServlet.do</url-pattern>
+	</servlet-mapping>
 	
     <servlet>
         <servlet-name>TicketOrderServlet</servlet-name>
