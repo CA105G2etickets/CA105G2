@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>ETIckeTs NewsClassification</title>
+<title>ETIckeTs News</title>
 </head>
 
 <jsp:include page="/navbar_back-end.html" flush="true"/> 
@@ -17,7 +17,7 @@
 
 <div class="container">
 	<div class="col-xs-12 col-sm-12">
-		<font size="6px">ETIckeTse公告分類管理頁面</font>
+		<font size="6px">ETIckeTse公告管理頁面</font>
 	</div>
 </div>
 <div class="container">
@@ -37,16 +37,16 @@
 
 		<ul>
 			<font size="4px">
-<!-- 				<FORM METHOD="post" ACTION="newsClassification.do"> -->
-<!-- 					輸入公告分類編號 <input type="text" placeholder="例 : S" name="newsClassificationNo"> -->
-<!-- 					<input type="hidden" name="action" value="getOne_For_Display"> -->
-<!-- 					<input type="submit" value="送出"> -->
-<!-- 				</FORM> -->
-				<a href='listAllNewsClassification.jsp'>列出所有公告分類</a>
+				<FORM METHOD="post" ACTION="news.do">
+					輸入公告分類編號 <input type="text" placeholder="例 : N01" name="news_no">
+					<input type="hidden" name="action" value="getOne_For_Display">
+					<input type="submit" value="送出">
+				</FORM>
+				<a href='listAllNews.jsp'>列出所有公告分類</a>
 			</font>
 
-			<jsp:useBean id="NewsClassificationService" scope="page"
-				class="com.news_classification.model.NewsClassificationService" />
+			<jsp:useBean id="NewsService" scope="page"
+				class="com.news.model.NewsService" />
 
 			<!--   <li> -->
 			<!--      <FORM METHOD="post" ACTION="newsClassification.do" > -->
@@ -80,7 +80,7 @@
 	<div class="col-xs-12 col-sm-12">
 		<font size="5px">公告分類管理</font>
 		<ul>
-			<font size="4px"> <a href='addNewsClassification.jsp'>新增公告分類</a>
+			<font size="4px"> <a href='addNews.jsp'>新增公告分類</a>
 			</font>
 		</ul>
 	</div>
