@@ -222,7 +222,7 @@ public class NewsServlet extends HttpServlet {
 				newsVO.setNews_classification_no(news_classification_no);
 				newsVO.setNews_title(news_title);
 				newsVO.setNews_content(news_content);
-//				newsVO.setAnnounce_date(ANNOUNCE_DATE);
+//				newsVO.setAnnounce_date(announce_date);
 				newsVO.setAdministrator_no(administrator_no);
 
 				// Send the use back to the form, if there were errors

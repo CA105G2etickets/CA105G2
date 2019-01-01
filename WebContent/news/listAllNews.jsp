@@ -1,8 +1,8 @@
-<%@page import="com.news.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="com.news.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<title>所有公告分類資料</title>
+<title>所有公告資料</title>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -60,34 +60,42 @@ th, td {
 <div class="container table-responsive-md">
 <table class="table">
 	<tr>
-		<th>公告分類編號代碼</th>
-		<th>公告分類內容描述</th>
+		<th>公告編號</th>
+		<th>公告分類代碼</th>
+		<th>標題</th>
+		<th>內容</th>
+		<th>發布日期</th>
+		<th>發布管理員編號</th>
 	</tr>
 	<%@ include file="page1.file"%>
-	<c:forEach var="newsClassification" items="${list}" begin="<%=pageIndex%>"
+	<c:forEach var="news" items="${list}" begin="<%=pageIndex%>"
 		end="<%=pageIndex+rowsPerPage-1%>">
 
 		<tr>
-			<td>${newsClassification.newsClassificationNo}</td>
-			<td>${newsClassification.newsClassification}</td>
+			<td>${news.news_no}</td>
+			<td>${news.news_classification_no}</td>
+			<td>${news.news_title}</td>
+			<td>${news.news_content}</td>
+			<td>${news.announce_date}</td>
+			<td>${news.administrator_no}</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/newsClassification/newsClassification.do"
+					ACTION="<%=request.getContextPath()%>/news/news.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
-						name="newsClassificationNo" value="${newsClassification.newsClassificationNo}"> <input
+						name="news_no" value="${news.news_no}"> <input
 						type="hidden" name="action" value="getOne_For_Update">
 				</FORM>
 			</td>
-<!-- 			<td> -->
-<!-- 				<FORM METHOD="post" -->
-<%-- 					ACTION="<%=request.getContextPath()%>/newsClassification/newsClassification.do" --%>
-<!-- 					style="margin-bottom: 0px;"> -->
-<!-- 					<input type="submit" value="刪除"> <input type="hidden" -->
-<%-- 						name="newsClassificationNo" value="${newsClass.newsClassificationNo}"> <input --%>
-<!-- 						type="hidden" name="action" value="delete"> -->
-<!-- 				</FORM> -->
-<!-- 			</td> -->
+			<td>
+				<FORM METHOD="post"
+					ACTION="<%=request.getContextPath()%>/news/news.do"
+					style="margin-bottom: 0px;">
+					<input type="submit" value="刪除"> <input type="hidden"
+						name="news_no" value="${news.news_no}"> 
+						<input type="hidden" name="action" value="delete">
+				</FORM>
+			</td>
 		</tr>
 	</c:forEach>
 </table>

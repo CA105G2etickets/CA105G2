@@ -1,15 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.news_classification.model.*"%>
+<%@page import="com.news.model.*"%>
  
 <%
-	NewsClassificationVO newsClass = (NewsClassificationVO) request.getAttribute("newsClass");
+	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>新增公告分類</title>
+<title>新增公告</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
@@ -41,7 +41,7 @@
 <!-- </div> -->
 <%----%>
 <div class="container table-responsive-md">
-<h3>新增公告分類資料:</h3>
+<h3>新增公告資料:</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -53,15 +53,23 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="newsClassification.do" name="form1">
+<FORM METHOD="post" ACTION="news.do" name="form1">
 <table class="table">
 	<tr>
-		<td>公告分類編號代碼</td>
-		<td><input type="TEXT" placeholder="A" name="newsClassificationNo" size="45" maxlength="1"></td>
+		<td>公告分類代碼</td>
+		<td><input type="TEXT" placeholder="N" name="news_classification_no" size="45" maxlength="1"></td>
 	</tr>
 	<tr>
-		<td>公告分類內容描述</td>
-		<td><input type="TEXT" placeholder="其他公告"name="newsClassification" size="45" maxlength="20"></td>
+		<td>標題</td>
+		<td><input type="TEXT" placeholder="會員加入辦法"name="news_title" size="45" maxlength="20"></td>
+	</tr>
+	<tr>
+		<td>內容</td>
+		<td><input type="TEXT" placeholder="會員加入辦法如下......"name="news_content" size="45"></td>
+	</tr>
+	<tr>
+		<td>發布管理員編號</td>
+		<td><input type="TEXT" placeholder="A001"name="administrator_no" size="45" maxlength="4"></td>
 	</tr>
 </table>
 <br>

@@ -223,7 +223,7 @@ public class NewsDAO implements NewsDAO_interface {
 
 			while (rs.next()) {
 				newsVO = new NewsVO();
-				newsVO.setNews_no(rs.getString("newsNo"));
+				newsVO.setNews_no(rs.getString("NEWS_NO"));
 				newsVO.setNews_classification_no(rs.getString("NEWS_CLASSIFICATION_NO"));
 				newsVO.setNews_title(rs.getString("NEWS_TITLE"));
 				newsVO.setNews_content(rs.getString("NEWS_CONTENT"));

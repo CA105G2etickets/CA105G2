@@ -47,6 +47,15 @@
 		<servlet-name>NewsClassificationServlet</servlet-name>
 		<url-pattern>/newsClassification/newsClassification.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>NewsServlet</servlet-name>
+		<servlet-class>com.news.controller.NewsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsnServlet</servlet-name>
+		<url-pattern>/news/news.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>GoodsServlet</servlet-name>

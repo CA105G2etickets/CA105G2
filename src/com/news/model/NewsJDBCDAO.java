@@ -199,7 +199,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 				}
 			}
 		}
-		return news;
+		return newsVO;
 		
 	}
 

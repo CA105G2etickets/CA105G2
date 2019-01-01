@@ -1,9 +1,9 @@
-<%@page import="com.news_classification.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="com.news.model.*"%>
 
 <%
-	NewsClassificationVO newsClass = (NewsClassificationVO) request.getAttribute("newsClass");
+	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 %>
 <html>
 <head>
@@ -48,20 +48,36 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="newsClassification.do" name="form1">
+<FORM METHOD="post" ACTION="news.do" name="form1">
 <table class="table">
 	<tr>
-		<td>公告分類編號代碼</td>
-		<td><input type="TEXT" name="newsClassificationNo" size="45" value="<%=newsClass.getNewsClassificationNo()%>" /></td>
+		<td>公告編號</td>
+		<td><%=newsVO.getNews_no()%>" /></td>
 	</tr>
 	<tr>
-		<td>公告分類內容描述</td>
-		<td><input type="TEXT" name="newsClassification" size="45" value="<%=newsClass.getNewsClassification()%>" /></td>
+		<td>公告分類代碼</td>
+		<td><input type="TEXT" name="news_classification_no" size="45" value="<%=newsVO.getNews_classification_no()%>" maxlength="1"></td>
+	</tr>
+	<tr>
+		<td>標題</td>
+		<td><input type="TEXT" name="news_title" size="45" value="<%=newsVO.getNews_title()%>" maxlength="20"></td>
+	</tr>
+	<tr>
+		<td>內容</td>
+		<td><input type="TEXT" name="news_content" value="<%=newsVO.getNews_content()%>" size="45"></td>
+	</tr>
+	<tr>
+		<td>發布日期</td>
+		<td><%=newsVO.getAnnounce_date()%></td>
+	</tr>
+	<tr>
+		<td>發布管理員編號</td>
+		<td><input type="TEXT" name="administrator_no" size="45" value="<%=newsVO.getAdministrator_no()%>" maxlength="4"></td>
 	</tr>
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="newsClassificationNo" value="<%=newsClass.getNewsClassificationNo()%>">
+<input type="hidden" name="newsClassificationNo" value="<%=newsVO.getNews_no()%>">
 <input type="submit" value="送出修改"></FORM>
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>

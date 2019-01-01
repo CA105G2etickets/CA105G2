@@ -1,15 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.news_classification.model.*"%>
+<%@page import="com.news.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-	NewsClassificationVO newsClass = (NewsClassificationVO) request.getAttribute("newsClass");
+	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 %>
 
 <html>
 <head>
-<title>公告分類資料</title>
+<title>公告資料</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
@@ -40,12 +40,20 @@
 
 <table class="table">
 	<tr>
-		<th>公告分類編號代碼</th>
-		<th>公告分類內容描述</th>
+		<th>公告編號</th>
+		<th>公告分類代碼</th>
+		<th>標題</th>
+		<th>內容</th>
+		<th>發布日期</th>
+		<th>發布管理員編號</th>
 	</tr>
 	<tr>
-		<td><%=newsClass.getNewsClassificationNo()%></td>
-		<td><%=newsClass.getNewsClassification()%></td>
+		<td><%=newsVO.getNews_no()%></td>
+		<td><%=newsVO.getNews_classification_no()%></td>
+		<td><%=newsVO.getNews_title()%></td>
+		<td><%=newsVO.getNews_content()%></td>
+		<td><%=newsVO.getAnnounce_date()%></td>
+		<td><%=newsVO.getAdministrator_no()%></td>
 	</tr>
 </table>
 <div class="col-xs-12 col-sm-12">
