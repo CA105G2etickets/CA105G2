@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="C:/MyLib/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="C:/MyLib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="C:/MyLib/standard.jar"/>
+	<classpathentry kind="lib" path="WebContent/android/listOneEventTitle_forAndroid.jsp"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

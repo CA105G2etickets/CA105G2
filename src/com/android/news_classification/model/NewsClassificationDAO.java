@@ -22,28 +22,20 @@ public class NewsClassificationDAO implements NewsClassificationDAO_interface {
 		}
 	}
 
-//	private static final String INSERT_STMT = 
-//			"INSERT INTO NEWS_CLASSIFICATION (NEWS_CLASSIFICATION_NO,NEWS_CLASSIFICATION) VALUES ( ?, ?)";
-//	private static final String UPDATE = 
-//			"UPDATE NEWS_CLASSIFICATION SET NEWS_CLASSIFICATION_NO = ?, NEWS_CLASSIFICATION = ? WHERE NEWS_CLASSIFICATION_NO = ?";
-//	private static final String DELETE = 
-//			"DELETE FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
-//	private static final String GET_ONE_STMT = 
-//			"SELECT * FROM NEWS_CLASSIFICATION WHERE NEWS_CLASSIFICATION_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM NEWS_CLASSIFICATION";
 
 
 	@Override
-	public List<NewsClassificationVO> getAll() {
+	public List<String> getAll() {
 		
-		List<NewsClassificationVO> list = new ArrayList<NewsClassificationVO>();
-		NewsClassificationVO newsClassification = null;
+		List<String> list = new ArrayList<String>();
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+		list.add("全部種類");
 		try {
 
 			con = ds.getConnection();
@@ -51,10 +43,7 @@ public class NewsClassificationDAO implements NewsClassificationDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				newsClassification = new NewsClassificationVO();
-//				newsClassification.setNewsClassificationNo(rs.getString("NEWS_CLASSIFICATION_NO"));
-				newsClassification.setNewsClassification(rs.getString("NEWS_CLASSIFICATION"));
-				list.add(newsClassification);
+				list.add(rs.getString("news_Classification"));
 			}
 
 		} catch (SQLException se) {

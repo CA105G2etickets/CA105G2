@@ -7,4 +7,5 @@ public interface Event_titleDAO_interface {
 	public byte[] getImage(String evetit_no);
 	public List<String> getclass();
 	public List<Event_titleVO> getFavr(String memberNo);
+	public List<Event_titleVO> getAllByClass(String str);
 }

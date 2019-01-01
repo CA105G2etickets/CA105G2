@@ -36,7 +36,6 @@ public class NewsServlet extends HttpServlet{
 		
 		if("getAll".equals(action)) {
 			String search = jsonObject.get("search").getAsString();
-			System.out.println(search);
 			String list = gson.toJson(dao.getAll(search));
 			writeText(res, list);
 		}else if("findByClassification".equals(action)) {

@@ -121,6 +121,7 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		classList.add("全部種類");
 		
 		String getAll = "select * from event_classification";
 		
@@ -172,6 +173,54 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(getAll);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Event_titleVO evetitVO = new Event_titleVO();
+				evetitVO.setEvetitNo(rs.getString("EVETIT_NO"));
+				evetitVO.setEvetitName(rs.getString("EVETIT_NAME"));
+				evetitVO.setEveClass(rs.getString("EVECLASS_NAME"));
+				eventList.add(evetitVO);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return eventList;
+	}
+
+	@Override
+	public List<Event_titleVO> getAllByClass(String str) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Event_titleVO> eventList = new ArrayList<Event_titleVO>();
+		
+		String getAll = "select evetit_no , evetit_name , eveclass_name ,launchdate " + 
+				"from event_title left join event_classification " + 
+				"on event_title.eveclass_no = event_classification.eveclass_no " +
+				"where upper(eveclass_name) like upper('%"+str+"%') " +
+				"order by launchdate";
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(getAll);
+			
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

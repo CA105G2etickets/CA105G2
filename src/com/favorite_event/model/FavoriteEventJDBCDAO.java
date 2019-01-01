@@ -221,4 +221,10 @@ public class FavoriteEventJDBCDAO implements FavoriteEventDAO_interface{
 		// 新增:由會員編號與活動主題編號
 		dao.insertbyNo("M000002", "E0003");
 	}
+
+	@Override
+	public boolean isFavr(String member_no, String evetit_no) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

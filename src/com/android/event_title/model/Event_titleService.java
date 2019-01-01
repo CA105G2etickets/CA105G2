@@ -21,4 +21,8 @@ public class Event_titleService {
 	public List<Event_titleVO> getFavr(String memberNo) {
 		return dao.getFavr(memberNo);
 	}
+	
+	public List<Event_titleVO> getAllByClass(String str) {
+		return dao.getAllByClass(str);
+	}
 }

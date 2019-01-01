@@ -44,6 +44,11 @@ public class Event_titleServlet extends HttpServlet {
 			String search = jsonObject.get("search").getAsString();
 			String list = gson.toJson(dao.getAll(search));
 			writeText(res, list);
+		}else if ("getAllByClass".equals(action)) {
+			String className = jsonObject.get("className").getAsString();
+			System.out.println(className);
+			String list = gson.toJson(dao.getAllByClass(className));
+			writeText(res, list);
 		}else if("getFavrEvent".equals(action)) {
 				String memberNo = jsonObject.get("memberNo").getAsString();
 				String list = gson.toJson(dao.getFavr(memberNo));

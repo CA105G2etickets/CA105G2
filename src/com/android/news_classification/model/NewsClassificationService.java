@@ -12,7 +12,7 @@ public class NewsClassificationService {
 
 
 
-	public List<NewsClassificationVO> getAll() {
+	public List<String> getAll() {
 		return dao.getAll();
 	}
 	

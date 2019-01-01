@@ -112,6 +112,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>AndroidFavoriteEventServlet</servlet-name>
+		<servlet-class>com.android.favorite_event.controller.FavoriteEventServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidFavoriteEventServlet</servlet-name>
+		<url-pattern>/event/AndroidFavoriteEventServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>AndroidNewsServlet</servlet-name>
 		<servlet-class>com.android.news.controller.NewsServlet</servlet-class>
 	</servlet>
