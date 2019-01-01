@@ -53,7 +53,7 @@
 		<servlet-class>com.news.controller.NewsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>NewsnServlet</servlet-name>
+		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/news/news.do</url-pattern>
 	</servlet-mapping>
 

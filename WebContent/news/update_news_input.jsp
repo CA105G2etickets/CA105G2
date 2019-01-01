@@ -52,7 +52,7 @@
 <table class="table">
 	<tr>
 		<td>公告編號</td>
-		<td><%=newsVO.getNews_no()%>" /></td>
+		<td><%=newsVO.getNews_no()%></td>
 	</tr>
 	<tr>
 		<td>公告分類代碼</td>
