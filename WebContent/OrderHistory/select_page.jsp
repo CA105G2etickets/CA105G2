@@ -44,7 +44,7 @@
 				    <input type="submit" value="送出" class="btn btn-info">
 				</FORM>
 	
-				<jsp:useBean id="OrderHistorySvc" scope="page" class="com.ORDER_HISTORY.model.OrderHistoryService" />
+				<jsp:useBean id="OrderHistorySvc" scope="page" class="com.order_history.model.OrderHistoryService" />
 				
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderHistory/OrderHistory.do" >
 				  <b>選擇訂單編號:</b>
@@ -73,14 +73,10 @@
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderHistory/OrderHistory.do" name="form1">
 					<b><font color=blue>萬用複合查詢：</font></b><br>
 					<b>輸入訂單編號：</b>
-					<input type="text" name="order_no" value="O2018122410001"><br><br>
+					<input type="text" name="order_no" value="" placehoder="O2018123010001"><br><br>
 				    
 				    <b>選擇會員編號：</b>
-					<select size="1" name="member_no">
-						<c:forEach var="OrderHistoryVO" items="${OrderHistorySvc.allMemberNo}" > 
-							<option value="${OrderHistoryVO}">${OrderHistoryVO}
-						</c:forEach>   
-					</select><br><br>
+					<input type="text" name="member_no" value="" placehoder="M000001"><br><br>
 				    
 					<b>訂購日期：</b>
 					<input name="order_date" id="f_date1" type="text" size="10"><br><br>
@@ -92,13 +88,13 @@
 					<input name="pickup_date" id="f_date3" type="text" size="10"><br><br>
 					
 				   	<b>輸入送貨地址：</b>
-					<input type="text" name="receiver_add" size="40" value="320桃園市中壢區福德一路177巷60弄2號"><br><br>
+					<input type="text" name="receiver_add" size="40" value="" placehoder="320桃園市中壢區福德一路177巷60弄2號"><br><br>
 				    
 					<b>輸入收件人名稱：</b>
-					<input type="text" name="receiver_name" size="8" value="Peter"><br><br>
+					<input type="text" name="receiver_name" size="8" value="" placehoder="Peter"><br><br>
 				
 					<b>輸入收件人電話：</b>
-					<input type="text" name="receiver_tel" size="8" value="0912345678"><br><br>
+					<input type="text" name="receiver_tel" size="8" value="" placehoder="0912345678"><br><br>
 				      
 				    <input type="submit" value="送出" class="btn btn-info">
 				    <input type="hidden" name="action" value="listOrderHistory_ByCompositeQuery">
@@ -227,6 +223,8 @@
         //              }
         //              return [true, ""];
         //      }});
+        
+        
         
 </script>
 </html>

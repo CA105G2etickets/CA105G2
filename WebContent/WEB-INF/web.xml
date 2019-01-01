@@ -59,11 +59,29 @@
 
 	<servlet>
 		<servlet-name>OrderHistoryServlet</servlet-name>
-		<servlet-class>com.ORDER_HISTORY.controller.OrderHistoryServlet</servlet-class>
+		<servlet-class>com.order_history.controller.OrderHistoryServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>OrderHistoryServlet</servlet-name>
 		<url-pattern>/OrderHistory/OrderHistory.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>OrderDetailServlet</servlet-name>
+		<servlet-class>com.order_detail.controller.OrderDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderDetailServlet</servlet-name>
+		<url-pattern>/OrderDetail/OrderDetail.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FavoriteGoodsServlet</servlet-name>
+		<servlet-class>com.favorite_goods.controller.FavoriteGoodsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FavoriteGoodsServlet</servlet-name>
+		<url-pattern>/FavoriteGoods/FavoriteGoods.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

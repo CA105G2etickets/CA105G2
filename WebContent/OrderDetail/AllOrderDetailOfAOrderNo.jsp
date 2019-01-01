@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
-<%@ page import="com.order_history.model.*"%>
+<%@ page import="com.order_detail.model.*"%>
 
 <%
-List<OrderHistoryVO> list = (List<OrderHistoryVO>)request.getAttribute("orderHistoryVO");
+List<OrderDetailVO> list = (List<OrderDetailVO>)request.getAttribute("orderDetailVO");
 pageContext.setAttribute("list",list);
 %>
 
@@ -58,61 +58,32 @@ pageContext.setAttribute("list",list);
 							<thead>
 								<tr>
 									<th>訂單編號</th>
-									<th>會員編號</th>
-									<th>訂單總金額</th>
-									<th>付款方式</th>
-									<th>出貨方式</th>
-									<th>訂購日期</th>
-									<th>出貨日期</th>
-									<th>取貨日期</th>
-									<th>送貨地址</th>
-									<th>收件人名稱</th>
-									<th>收件人電話</th>
-									<th>訂單狀態</th>
+									<th>商品編號</th>
+									<th>實際交易單價</th>
+									<th>商品數量</th>
 									<th>修改</th>
 									<th>刪除</th>
 								</tr>
 							</thead>
 											
 							<tbody>
-								<c:forEach var="orderHistoryVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+								<c:forEach var="orderDetailVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 									<tr>
-										<td>${orderHistoryVO.order_no}</td>
-										<td>${orderHistoryVO.member_no}</td>
-										<td>${orderHistoryVO.order_price}</td>
+										<td>${orderDetailVO.order_no}</td>
+										<td>${orderDetailVO.goods_no}</td>
+										<td>${orderDetailVO.goods_bonus}</td>
+										<td>${orderDetailVO.goods_pc}</td>
 										<td>
-											${(orderHistoryVO.pay_methods == "CREDITCARD") ? '電子錢包' : '' }
-											${(orderHistoryVO.pay_methods == "EWALLET") ? '信用卡' : '' }
-										</td>
-										<td>
-											${(orderHistoryVO.shipping_methods == "STOREPICKUP") ? '超商取貨' : '' }
-											${(orderHistoryVO.shipping_methods == "HOMEDELIVERY") ? '宅配' : '' }
-										</td>
-										</td>
-										<td><fmt:formatDate value="${orderHistoryVO.order_date}" pattern="yyyy-MM-dd"/></td>
-										<td><fmt:formatDate value="${orderHistoryVO.order_etd}" pattern="yyyy-MM-dd"/></td>
-										<td><fmt:formatDate value="${orderHistoryVO.pickup_date}" pattern="yyyy-MM-dd"/></td>
-										<td>${orderHistoryVO.receiver_add}</td>
-										<td>${orderHistoryVO.receiver_name}</td> 
-										<td>${orderHistoryVO.receiver_tel}</td>
-										<td>
-											${(orderHistoryVO.order_status == "PAYMENT1") ? '已付款' : '' }
-											${(orderHistoryVO.order_status == "SHIPPING2") ? '出貨中' : '' }
-											${(orderHistoryVO.order_status == "SHIPMENT3") ? '已出貨' : '' }
-											${(orderHistoryVO.order_status == "COMPLETE4") ? '已完成' : '' }
-											${(orderHistoryVO.order_status == "CANCEL5") ? '已取消' : '' }
-										</td>
-												
-										<td>
-										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderHistory/OrderHistory.do" style="margin-bottom: 0px;">
+										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderDetail/OrderDetail.do" style="margin-bottom: 0px;">
 										     <input type="submit" value="修改" class="btn btn-warning">
-										     <input type="hidden" name="order_no"  value="${orderHistoryVO.order_no}">
+										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}">
 										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 										</td>
 										<td>
-										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderHistory/OrderHistory.do" style="margin-bottom: 0px;">
+										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderDetail/OrderDetail.do" style="margin-bottom: 0px;">
 										     <input type="submit" value="刪除" class="btn btn-danger">
-										     <input type="hidden" name="order_no"  value="${orderHistoryVO.order_no}">
+										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}">
+										     <input type="hidden" name="goods_no"  value="${orderDetailVO.goods_no}">
 										     <input type="hidden" name="action" value="delete"></FORM>
 										</td>
 									</tr>
