@@ -2,13 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
-<%@ page import="com.ORDER_HISTORY.model.*"%>
+<%@ page import="com.order_history.model.*"%>
 
 <%-- 萬用複合查詢-可由客戶端select_page.jsp隨意增減任何想查詢的欄位 --%>
 <%-- 此頁只作為複合查詢時之結果練習，可視需要再增加分頁、送出修改、刪除之功能--%>
 
 <jsp:useBean id="listOrderHistory_ByCompositeQuery" scope="request" type="java.util.List<OrderHistoryVO>" /> <!-- 於EL此行可省略 -->
-<jsp:useBean id="OrderHistorySvc" scope="page" class="com.ORDER_HISTORY.model.OrderHistoryService" />
+<jsp:useBean id="OrderHistorySvc" scope="page" class="com.order_history.model.OrderHistoryService" />
 
 
 <html>
@@ -74,16 +74,28 @@
 									<tr align='center' valign='middle' ${(orderHistoryVO.order_no==param.order_no) ? 'bgcolor=#CCCCFF':''}><!--將修改的那一筆加入對比色而已-->
 								 		<td>${orderHistoryVO.order_no}</td>
 										<td>${orderHistoryVO.member_no}</td>
-										<td>${orderHistoryVO.order_price}</td>
-										<td>${orderHistoryVO.pay_methods}</td>
-										<td>${orderHistoryVO.shipping_methods}</td>
+										<td>
+											${(orderHistoryVO.pay_methods == "CREDITCARD") ? '電子錢包' : '' }
+											${(orderHistoryVO.pay_methods == "EWALLET") ? '信用卡' : '' }
+										</td>
+										<td>
+											${(orderHistoryVO.shipping_methods == "STOREPICKUP") ? '超商取貨' : '' }
+											${(orderHistoryVO.shipping_methods == "HOMEDELIVERY") ? '宅配' : '' }
+										</td>
+										</td>
 										<td><fmt:formatDate value="${orderHistoryVO.order_date}" pattern="yyyy-MM-dd"/></td>
 										<td><fmt:formatDate value="${orderHistoryVO.order_etd}" pattern="yyyy-MM-dd"/></td>
 										<td><fmt:formatDate value="${orderHistoryVO.pickup_date}" pattern="yyyy-MM-dd"/></td>
 										<td>${orderHistoryVO.receiver_add}</td>
 										<td>${orderHistoryVO.receiver_name}</td> 
 										<td>${orderHistoryVO.receiver_tel}</td>
-										<td>${orderHistoryVO.order_status}</td> 			
+										<td>
+											${(orderHistoryVO.order_status == "PAYMENT1") ? '已付款' : '' }
+											${(orderHistoryVO.order_status == "SHIPPING2") ? '出貨中' : '' }
+											${(orderHistoryVO.order_status == "SHIPMENT3") ? '已出貨' : '' }
+											${(orderHistoryVO.order_status == "COMPLETE4") ? '已完成' : '' }
+											${(orderHistoryVO.order_status == "CANCEL5") ? '已取消' : '' }
+										</td>		
 
 										<td>
 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderHistory/OrderHistory.do" style="margin-bottom: 0px;">

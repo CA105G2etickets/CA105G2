@@ -34,6 +34,9 @@ public class FavoriteEventJNDIDAO implements FavoriteEventDAO_interface{
 
 	private static final String GET_ALL_STMT = 
 			"SELECT MEMBER_NO,EVETIT_NO FROM FAVORITE_EVENT WHERE MEMBER_NO=?";
+	private static final String ISFAVR = 
+			"SELECT MEMBER_NO,EVETIT_NO FROM FAVORITE_EVENT WHERE MEMBER_NO=? AND EVETIT_NO=?";
+
 
 	@Override
 	public void insert(FavoriteEventVO favoriteEventVO) {
@@ -194,6 +197,31 @@ public class FavoriteEventJNDIDAO implements FavoriteEventDAO_interface{
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean isFavr(String member_no, String evetit_no) {
+		boolean isFavr = false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(ISFAVR);
+			
+			pstmt.setString(1, member_no);
+			pstmt.setString(2, evetit_no);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				isFavr = true;
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return isFavr;
 	}
 
 }

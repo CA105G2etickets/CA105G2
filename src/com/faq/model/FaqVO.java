@@ -1,31 +1,33 @@
 package com.faq.model;
 
-public class FaqVO {
+import java.io.Serializable;
+
+public class FaqVO implements Serializable{
 	
-	private String faqNo;
+	private String faq_no;
 	private String question;
 	private String answer;
-	private String faqClassification;
+	private String faq_classification;
 
 	public FaqVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FaqVO(String faqNo, String question, String answer, String faqClassification) {
+	public FaqVO(String faq_no, String question, String answer, String faq_classification) {
 		super();
-		this.faqNo = faqNo;
+		this.faq_no = faq_no;
 		this.question = question;
 		this.answer = answer;
-		this.faqClassification = faqClassification;
+		this.faq_classification = faq_classification;
 	}
 
-	public String getFaqNo() {
-		return faqNo;
+	public String getFaq_no() {
+		return faq_no;
 	}
 
-	public void setFaqNo(String faqNo) {
-		this.faqNo = faqNo;
+	public void setFaq_no(String faq_no) {
+		this.faq_no = faq_no;
 	}
 
 	public String getQuestion() {
@@ -44,18 +46,18 @@ public class FaqVO {
 		this.answer = answer;
 	}
 
-	public String getFaqClassification() {
-		return faqClassification;
+	public String getFaq_classification() {
+		return faq_classification;
 	}
 
-	public void setFaqClassification(String faqClassification) {
-		this.faqClassification = faqClassification;
+	public void setFaq_classification(String faq_classification) {
+		this.faq_classification = faq_classification;
 	}
 
 	@Override
 	public String toString() {
-		return "FaqVO [faqNo=" + faqNo + ", question=" + question + ", answer=" + answer + ", faqClassification="
-				+ faqClassification + "]";
+		return "FaqVO [faq_no=" + faq_no + ", question=" + question + ", answer=" + answer + ", faq_classification="
+				+ faq_classification + "]";
 	}
 
 }

@@ -7,4 +7,5 @@ public interface FavoriteEventDAO_interface {
 	public void delete (String member_no, String evetit_no);
 	public List<FavoriteEventVO> findByMember (String member_no);
 	public void insertbyNo (String member_no, String evetit_no);
+	public boolean isFavr (String member_no, String evetit_no);
 }

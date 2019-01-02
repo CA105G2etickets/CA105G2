@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class Event_titleServlet extends HttpServlet {
-	private final static String CONTENT_TYPE = "text/html; charset=UTF-8";
+	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -41,8 +41,18 @@ public class Event_titleServlet extends HttpServlet {
 		String action = jsonObject.get("action").getAsString();
 		
 		if("getAll".equals(action)) {
-			String list = gson.toJson(dao.getAll());
+			String search = jsonObject.get("search").getAsString();
+			String list = gson.toJson(dao.getAll(search));
 			writeText(res, list);
+		}else if ("getAllByClass".equals(action)) {
+			String className = jsonObject.get("className").getAsString();
+			System.out.println(className);
+			String list = gson.toJson(dao.getAllByClass(className));
+			writeText(res, list);
+		}else if("getFavrEvent".equals(action)) {
+				String memberNo = jsonObject.get("memberNo").getAsString();
+				String list = gson.toJson(dao.getFavr(memberNo));
+				writeText(res, list);
 		}else if("getImage".equals(action)) {
 			OutputStream os = res.getOutputStream();
 			String evetit_no = jsonObject.get("No").getAsString();
@@ -63,11 +73,13 @@ public class Event_titleServlet extends HttpServlet {
 					os.close();
 				}
 			}
+		}else if("getClass".equals(action)){
+			writeText(res, gson.toJson(dao.getclass()));
 		}
 	}
 
 	private void writeText(HttpServletResponse res, String outText) throws IOException {
-		res.setContentType(CONTENT_TYPE);
+		res.setContentType(com.utility.Util.CONTENT_TYPE);
 		PrintWriter out = res.getWriter();
 		out.print(outText);
 		out.close();

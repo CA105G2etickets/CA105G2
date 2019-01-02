@@ -47,6 +47,15 @@
 		<servlet-name>NewsClassificationServlet</servlet-name>
 		<url-pattern>/newsClassification/newsClassification.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>NewsServlet</servlet-name>
+		<servlet-class>com.news.controller.NewsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsServlet</servlet-name>
+		<url-pattern>/news/news.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>GoodsServlet</servlet-name>
@@ -59,11 +68,29 @@
 
 	<servlet>
 		<servlet-name>OrderHistoryServlet</servlet-name>
-		<servlet-class>com.ORDER_HISTORY.controller.OrderHistoryServlet</servlet-class>
+		<servlet-class>com.order_history.controller.OrderHistoryServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>OrderHistoryServlet</servlet-name>
 		<url-pattern>/OrderHistory/OrderHistory.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>OrderDetailServlet</servlet-name>
+		<servlet-class>com.order_detail.controller.OrderDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderDetailServlet</servlet-name>
+		<url-pattern>/OrderDetail/OrderDetail.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FavoriteGoodsServlet</servlet-name>
+		<servlet-class>com.favorite_goods.controller.FavoriteGoodsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FavoriteGoodsServlet</servlet-name>
+		<url-pattern>/FavoriteGoods/FavoriteGoods.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -109,6 +136,33 @@
 	<servlet-mapping>
 		<servlet-name>AndroidEventTitleServlet</servlet-name>
 		<url-pattern>/event/AndroidEventTitleServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AndroidFavoriteEventServlet</servlet-name>
+		<servlet-class>com.android.favorite_event.controller.FavoriteEventServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidFavoriteEventServlet</servlet-name>
+		<url-pattern>/event/AndroidFavoriteEventServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AndroidNewsServlet</servlet-name>
+		<servlet-class>com.android.news.controller.NewsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidNewsServlet</servlet-name>
+		<url-pattern>/news/AndroidNewsServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AndroidNewsclassificationServlet</servlet-name>
+		<servlet-class>com.android.news_classification.controller.NewsClassificationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidNewsclassificationServlet</servlet-name>
+		<url-pattern>/news/AndroidNewsClassificationServlet.do</url-pattern>
 	</servlet-mapping>
 	
     <servlet>

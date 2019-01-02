@@ -18,10 +18,8 @@ import com.android.member.model.MemberService;
 import com.android.member.model.MemberVO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.mysql.fabric.xmlrpc.base.Member;
 
 public class MemberServlet extends HttpServlet{
-		private final static String CONTENT_TYPE = "text/html; charset=UTF-8";
 		
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -80,7 +78,7 @@ public class MemberServlet extends HttpServlet{
 		}
 	
 		private void writeText(HttpServletResponse res, String outText) throws IOException {
-			res.setContentType(CONTENT_TYPE);
+			res.setContentType(com.utility.Util.CONTENT_TYPE);
 			PrintWriter out = res.getWriter();
 			out.print(outText);
 			out.close();

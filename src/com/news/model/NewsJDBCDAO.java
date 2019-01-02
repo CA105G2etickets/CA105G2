@@ -12,18 +12,18 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 	private static final String PASSWORD = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO NEWS (NEWS_NO,NEWS_CLASSIFICATION_NO,NEWS_TITLE,NEWS_CONTENT,ANNOUNCE_DATE,ADMINISTRATOR_NO) VALUES ('N'||LPAD(to_char(news_N_seq.NEXTVAL), 2, '0'), ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
-			"SELECT * FROM NEWS ORDER BY NEWS_NO";
+			"INSERT INTO NEWS (NEWS_NO,NEWS_CLASSIFICATION_NO,NEWS_TITLE,NEWS_CONTENT,ANNOUNCE_DATE,ADMINISTRATOR_NO) VALUES ('N'||LPAD(to_char(news_N_seq.NEXTVAL), 2, '0'), ?, ?, ?,CURRENT_DATE, ?)";
+	private static final String UPDATE = 
+			"UPDATE NEWS SET NEWS_CLASSIFICATION_NO = ?, NEWS_TITLE = ?, NEWS_CONTENT = ?, ADMINISTRATOR_NO = ? WHERE NEWS_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM NEWS WHERE NEWS_NO = ?";
-	private static final String UPDATE = 
-			"UPDATE NEWS SET NEWS_CLASSIFICATION_NO = ?, NEWS_TITLE = ?, NEWS_CONTENT = ?, ANNOUNCE_DATE = ?, ADMINISTRATOR_NO = ? WHERE NEWS_NO = ?";
 	private static final String FIND_BY_PK_SQL = 
 			"SELECT * FROM NEWS WHERE NEWS_NO = ?";
-
+	private static final String GET_ALL_STMT = 
+			"SELECT * FROM NEWS ORDER BY NEWS_NO";
+	
 	@Override
-	public void insert(NewsVO news) {
+	public void insert(NewsVO newsVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -34,12 +34,12 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, news.getNewsNo());
-			pstmt.setString(2, news.getNewsClassificationNo());
-			pstmt.setString(3, news.getNewsTitle());
-			pstmt.setString(4, news.getNewsContent());
-			pstmt.setDate(5, news.getAnnounceDate());
-			pstmt.setString(6, news.getAdministratorNo());
+			pstmt.setString(1, newsVO.getNews_no());
+			pstmt.setString(2, newsVO.getNews_classification_no());
+			pstmt.setString(3, newsVO.getNews_title());
+			pstmt.setString(4, newsVO.getNews_content());
+			pstmt.setDate(5, newsVO.getAnnounce_date());
+			pstmt.setString(6, newsVO.getAdministrator_no());
 
 			pstmt.executeUpdate();
 			
@@ -66,7 +66,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 	}
 
 	@Override
-	public void update(NewsVO news) {
+	public void update(NewsVO newsVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -77,12 +77,11 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, news.getNewsClassificationNo());
-			pstmt.setString(2, news.getNewsTitle());
-			pstmt.setString(3, news.getNewsContent());
-			pstmt.setDate(4, news.getAnnounceDate());
-			pstmt.setString(5, news.getAdministratorNo());
-			pstmt.setString(6, news.getNewsNo());
+			pstmt.setString(1, newsVO.getNews_classification_no());
+			pstmt.setString(2, newsVO.getNews_title());
+			pstmt.setString(3, newsVO.getNews_content());
+			pstmt.setString(5, newsVO.getAdministrator_no());
+			pstmt.setString(6, newsVO.getNews_no());
 
 			pstmt.executeUpdate();
 
@@ -109,7 +108,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 	}
 
 	@Override
-	public void delete(String newsNo) {
+	public void delete(String news_no) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -120,7 +119,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setString(1, newsNo);
+			pstmt.setString(1, news_no);
 
 			pstmt.executeUpdate();
 
@@ -147,9 +146,9 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 	}
 
 	@Override
-	public NewsVO findByPrimaryKey(String newsNo) {
+	public NewsVO findByPrimaryKey(String news_no) {
 
-		NewsVO news = null;
+		NewsVO newsVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -160,18 +159,18 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(FIND_BY_PK_SQL);
 
-			pstmt.setString(1, newsNo);
+			pstmt.setString(1, news_no);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				news = new NewsVO();
-				news.setNewsNo(rs.getString("newsNo"));
-				news.setNewsClassificationNo(rs.getString("newsClassificationNo"));
-				news.setNewsTitle(rs.getString("newsTitle"));
-				news.setNewsContent(rs.getString("newsContent"));
-				news.setAnnounceDate(rs.getDate("announceDate"));
-				news.setAdministratorNo(rs.getString("administratorNo"));
+				newsVO = new NewsVO();
+				newsVO.setNews_no(rs.getString("NEWS_NO"));
+				newsVO.setNews_classification_no(rs.getString("NEWS_CLASSIFICATION_NO"));
+				newsVO.setNews_title(rs.getString("NEWS_TITLE"));
+				newsVO.setNews_content(rs.getString("NEWS_CONTENT"));
+				newsVO.setAnnounce_date(rs.getDate("ANNOUNCE_DATE"));
+				newsVO.setAdministrator_no(rs.getString("ADMINISTRATOR_NO"));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
@@ -200,7 +199,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 				}
 			}
 		}
-		return news;
+		return newsVO;
 		
 	}
 
@@ -208,7 +207,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 	public List<NewsVO> getAll() {
 
 		List<NewsVO> list = new ArrayList<NewsVO>();
-		NewsVO news = null;
+		NewsVO newsVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -222,14 +221,14 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				news = new NewsVO();
-				news.setNewsNo(rs.getString("newsNo"));
-				news.setNewsClassificationNo(rs.getString("newsClassificationNo"));
-				news.setNewsTitle(rs.getString("newsTitle"));
-				news.setNewsContent(rs.getString("newsContent"));
-				news.setAnnounceDate(rs.getDate("announceDate"));
-				news.setAdministratorNo(rs.getString("administratorNo"));
-				list.add(news);
+				newsVO = new NewsVO();
+				newsVO.setNews_no(rs.getString("newsNo"));
+				newsVO.setNews_classification_no(rs.getString("NEWS_CLASSIFICATION_NO"));
+				newsVO.setNews_title(rs.getString("NEWS_TITLE"));
+				newsVO.setNews_content(rs.getString("NEWS_CONTENT"));
+				newsVO.setAnnounce_date(rs.getDate("ANNOUNCE_DATE"));
+				newsVO.setAdministrator_no(rs.getString("ADMINISTRATOR_NO"));
+				list.add(newsVO);
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {

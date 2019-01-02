@@ -34,6 +34,8 @@ public class FavoriteEventDAO implements FavoriteEventDAO_interface{
 
 	private static final String GET_ALL_STMT = 
 			"SELECT MEMBER_NO,EVETIT_NO FROM FAVORITE_EVENT WHERE MEMBER_NO=?";
+	private static final String ISFAVR = 
+			"SELECT MEMBER_NO,EVETIT_NO FROM FAVORITE_EVENT WHERE MEMBER_NO=? AND EVETIT_NO=?";
 
 	@Override
 	public void insert(FavoriteEventVO favoriteEventVO) {
@@ -194,6 +196,46 @@ public class FavoriteEventDAO implements FavoriteEventDAO_interface{
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean isFavr(String member_no, String evetit_no) {
+		boolean isFavr = false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(ISFAVR);
+			
+			pstmt.setString(1, member_no);
+			pstmt.setString(2, evetit_no);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				isFavr = true;
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return isFavr;
 	}
 
 }
