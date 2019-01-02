@@ -67,7 +67,7 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>Administratorlet</servlet-name>
+		<servlet-name>AdministratorServlet</servlet-name>
 		<servlet-class>com.administrator.controller.AdministratorServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
