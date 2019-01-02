@@ -65,6 +65,24 @@
 		<servlet-name>FaqServlet</servlet-name>
 		<url-pattern>/faq/faq.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Administratorlet</servlet-name>
+		<servlet-class>com.administrator.controller.AdministratorServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdministratorServlet</servlet-name>
+		<url-pattern>/administrator/administrator.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AdministratorImageServlet</servlet-name>
+		<servlet-class>com.administrator.controller.AdministratorImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdministratorImageServlet</servlet-name>
+		<url-pattern>/administrator/administratorImg.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>GoodsServlet</servlet-name>
