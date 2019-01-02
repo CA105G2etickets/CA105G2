@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface FaqDAO_interface {
 	
-	public void insert(FaqVO faq);
-    public void update(FaqVO faq);
-    public void delete(String faqNo);
-    public FaqVO findByPrimaryKey(String faqNo);
+	public void insert(FaqVO faqVO);
+    public void update(FaqVO faqVO);
+    public void delete(String faq_no);
+    public FaqVO findByPrimaryKey(String faq_no);
     public List<FaqVO> getAll();
 
 }
