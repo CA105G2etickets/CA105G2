@@ -110,6 +110,7 @@ function readURL(input){
 <!-- </div> -->
 <%----%>
 
+<div class="container table-responsive-md">
 <h3>資料修改:</h3>
 
 <%-- 錯誤表列 --%>
@@ -130,15 +131,15 @@ function readURL(input){
 	</tr>
 	<tr>
 		<td>管理員姓名</td>
-		<td><input type="TEXT" name="administrator_name" value="<%=administratorVO.getAdministrator_name()%> size="45"></td>
+		<td><input type="TEXT" name="administrator_name" value="<%=administratorVO.getAdministrator_name()%>" size="45"></td>
 	</tr>
 	<tr>
 		<td>管理員帳號</td>
-		<td><input type="TEXT" name="administrator_account" value="<%=administratorVO.getAdministrator_account()%> size="45"></td>
+		<td><input type="TEXT" name="administrator_account" value="<%=administratorVO.getAdministrator_account()%>" size="45"></td>
 	</tr>
 	<tr>
 		<td>管理員密碼</td>
-		<td><input type="TEXT" name="administrator_password" value="<%=administratorVO.getAdministrator_password()%> size="45"></td>
+		<td><input type="TEXT" name="administrator_password" value="<%=administratorVO.getAdministrator_password()%>" size="45"></td>
 	</tr>
 	<tr>
 		<td>管理員帳號建立日期時間</td>
@@ -148,7 +149,7 @@ function readURL(input){
 		<td>管理員大頭貼</td>
 		<td>
 		<input type="file" accept="image/jpeg, image/png" name="administrator_picture" onchange="readURL(this)" targetID="previewImg">
-		<img id="previewImg" src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administrator.administrator_no}" height="100" width="100">
+		<img id="previewImg" src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="100" width="100">
 		</td>
 	</tr>
 	<tr>
@@ -169,6 +170,7 @@ function readURL(input){
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
+</div>
 </div>
 </body>
 
@@ -195,7 +197,7 @@ function readURL(input){
            theme: '',              //theme: 'dark',
  	       timepicker:false,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
  		   value: '<%=administratorVO.getCreation_date()%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
