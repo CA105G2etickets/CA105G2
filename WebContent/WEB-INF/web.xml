@@ -83,6 +83,15 @@
 		<servlet-name>AdministratorImageServlet</servlet-name>
 		<url-pattern>/administrator/administratorImg.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PermissionListServlet</servlet-name>
+		<servlet-class>com.permission_list.controller.PermissionListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PermissionListServlet</servlet-name>
+		<url-pattern>/permissionList/permissionList.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>GoodsServlet</servlet-name>
