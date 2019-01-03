@@ -30,6 +30,7 @@ public class FavoriteEventServlet extends HttpServlet{
 		FavoriteEventService dao = new FavoriteEventService();
 		JsonObject jsin = gson.fromJson(jsonin.toString(), JsonObject.class);
 		String action = jsin.get("action").getAsString();
+		System.out.println(action);
 		
 		if ("insert".equals(action)) {
 			String memberNo = jsin.get("memberNo").getAsString();

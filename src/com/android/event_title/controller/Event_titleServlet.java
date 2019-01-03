@@ -11,10 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.android.event_title.model.Event_titleService;
-import com.android.event_title.model.Event_titleVO;
 import com.android.main.ImageUtil;
-import com.android.member.model.MemberService;
-import com.android.member.model.MemberVO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -36,24 +33,29 @@ public class Event_titleServlet extends HttpServlet {
 		while ((line = br.readLine()) != null) {
 			jsonin.append(line);
 		}
+		System.out.println(jsonin);
 		Event_titleService dao = new Event_titleService();
 		JsonObject jsonObject = gson.fromJson(jsonin.toString(),JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
 		
 		if("getAll".equals(action)) {
 			String search = jsonObject.get("search").getAsString();
-			String list = gson.toJson(dao.getAll(search));
+			String className = jsonObject.get("className").getAsString();
+			String list = gson.toJson(dao.getAll(search,className));
 			writeText(res, list);
-		}else if ("getAllByClass".equals(action)) {
+		}
+		if ("getAllByClass".equals(action)) {
 			String className = jsonObject.get("className").getAsString();
 			System.out.println(className);
 			String list = gson.toJson(dao.getAllByClass(className));
 			writeText(res, list);
-		}else if("getFavrEvent".equals(action)) {
+		}
+		if("getFavrEvent".equals(action)) {
 				String memberNo = jsonObject.get("memberNo").getAsString();
 				String list = gson.toJson(dao.getFavr(memberNo));
 				writeText(res, list);
-		}else if("getImage".equals(action)) {
+		}
+		if("getImage".equals(action)) {
 			OutputStream os = res.getOutputStream();
 			String evetit_no = jsonObject.get("No").getAsString();
 			System.out.println(evetit_no);
@@ -73,7 +75,8 @@ public class Event_titleServlet extends HttpServlet {
 					os.close();
 				}
 			}
-		}else if("getClass".equals(action)){
+		}
+		if("getClass".equals(action)){
 			writeText(res, gson.toJson(dao.getclass()));
 		}
 	}

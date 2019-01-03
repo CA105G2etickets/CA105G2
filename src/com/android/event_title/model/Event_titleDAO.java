@@ -32,7 +32,7 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 										"order by evetit_no";
 	private static final String GET_IMAGE = "select EVETIT_POSTER from event_title where evetit_no = ?";
 	@Override
-	public List<Event_titleVO> getAll(String str) {
+	public List<Event_titleVO> getAll(String str , String className) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -41,7 +41,7 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 		String getAll = "select evetit_no , evetit_name , eveclass_name ,launchdate " + 
 				"from event_title left join event_classification " + 
 				"on event_title.eveclass_no = event_classification.eveclass_no " +
-				"where upper(evetit_name) like upper('%"+str+"%') " +
+				"where upper(evetit_name) like upper('%"+str+"%') and eveclass_name like '%"+ className +"%' "+
 				"order by launchdate";
 		try {
 			con = ds.getConnection();

@@ -6,8 +6,8 @@ public class Event_titleService {
 
 	Event_titleDAO_interface dao = new Event_titleDAO();
 	
-	public List<Event_titleVO> getAll(String str){
-		return dao.getAll(str);
+	public List<Event_titleVO> getAll(String str,String className){
+		return dao.getAll(str,className);
 	}
 	
 	public byte[] getImage(String evetit_no) {
