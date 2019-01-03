@@ -11,18 +11,18 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	private static final String PASSWORD = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO ADMINISTRATOR (ADMINISTRATOR_NO,ADMINISTRATOR_NAME,ADMINISTRATOR_ACCOUNT,ADMINISTRATOR_PASSWORD,CREATION_DATE,ADMINISTRATOR_PICTURE,ADMINISTRATOR_STATUS) VALUES ('A'||LPAD(to_char(administrator_no_seq.NEXTVAL), 3, '0'), ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
-			"SELECT * FROM ADMINISTRATOR ORDER BY ADMINISTRATOR_NO";
+			"INSERT INTO ADMINISTRATOR (ADMINISTRATOR_NO,ADMINISTRATOR_NAME,ADMINISTRATOR_ACCOUNT,ADMINISTRATOR_PASSWORD,CREATION_DATE,ADMINISTRATOR_PICTURE,ADMINISTRATOR_STATUS) VALUES ('A'||LPAD(to_char(administrator_no_seq.NEXTVAL), 3, '0'), ?, ?, ?,CURRENT_TIMESTAMP, ?, ?)";
+	private static final String UPDATE = 
+			"UPDATE ADMINISTRATOR SET ADMINISTRATOR_NAME = ?, ADMINISTRATOR_ACCOUNT = ?, ADMINISTRATOR_PASSWORD = ?, ADMINISTRATOR_PICTURE = ?, ADMINISTRATOR_STATUS = ? WHERE ADMINISTRATOR_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM ADMINISTRATOR WHERE ADMINISTRATOR_NO = ?";
-	private static final String UPDATE = 
-			"UPDATE ADMINISTRATOR SET ADMINISTRATOR_NAME = ?, ADMINISTRATOR_ACCOUNT = ?, ADMINISTRATOR_PASSWORD = ?, CREATION_DATE = ?, ADMINISTRATOR_PICTURE = ?, ADMINISTRATOR_STATUS = ? WHERE ADMINISTRATOR_NO = ?";
-	private static final String FIND_BY_PK_SQL = 
+	private static final String GET_ONE_STMT = 
 			"SELECT * FROM ADMINISTRATOR WHERE ADMINISTRATOR_NO = ?";
+	private static final String GET_ALL_STMT = 
+			"SELECT * FROM ADMINISTRATOR ORDER BY ADMINISTRATOR_NO";
 
 	@Override
-	public void insert(AdministratorVO administrator) {
+	public void insert(AdministratorVO administratorVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -33,12 +33,12 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, administrator.getAdministratorName());
-			pstmt.setString(2, administrator.getAdministratorAccount());
-			pstmt.setString(3, administrator.getAdministratorPassword());
-			pstmt.setTimestamp(4, administrator.getCreationDate());
-			pstmt.setBytes(5, administrator.getAdministratorPicture());
-			pstmt.setString(6, administrator.getAdministratorStatus());
+			pstmt.setString(1, administratorVO.getAdministrator_name());
+			pstmt.setString(2, administratorVO.getAdministrator_account());
+			pstmt.setString(3, administratorVO.getAdministrator_password());
+//			pstmt.setTimestamp(5, administratorVO.getCreation_date());
+			pstmt.setBytes(5, administratorVO.getAdministrator_picture());
+			pstmt.setString(6, administratorVO.getAdministrator_status());
 
 			pstmt.executeUpdate();
 			
@@ -65,7 +65,7 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	}
 
 	@Override
-	public void update(AdministratorVO administrator) {
+	public void update(AdministratorVO administratorVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -76,13 +76,13 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, administrator.getAdministratorName());
-			pstmt.setString(2, administrator.getAdministratorAccount());
-			pstmt.setString(3, administrator.getAdministratorPassword());
-			pstmt.setTimestamp(4, administrator.getCreationDate());
-			pstmt.setBytes(5, administrator.getAdministratorPicture());
-			pstmt.setString(6, administrator.getAdministratorStatus());
-			pstmt.setString(7, administrator.getAdministratorNo());
+			pstmt.setString(1, administratorVO.getAdministrator_name());
+			pstmt.setString(2, administratorVO.getAdministrator_account());
+			pstmt.setString(3, administratorVO.getAdministrator_password());
+//			pstmt.setTimestamp(4, administratorVO.getCreation_date());
+			pstmt.setBytes(4, administratorVO.getAdministrator_picture());
+			pstmt.setString(5, administratorVO.getAdministrator_status());
+			pstmt.setString(6, administratorVO.getAdministrator_no());
 
 			pstmt.executeUpdate();
 
@@ -109,15 +109,15 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	}
 
 	@Override
-	public void delete(String administratorNo) {
+	public void delete(String administrator_no) {
 		// 管理員不可刪除!
 		
 	}
 
 	@Override
-	public AdministratorVO findByPrimaryKey(String administratorNo) {
+	public AdministratorVO findByPrimaryKey(String administrator_no) {
 
-		AdministratorVO administrator = null;
+		AdministratorVO administratorVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -126,21 +126,21 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(FIND_BY_PK_SQL);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setString(1, administratorNo);
+			pstmt.setString(1, administrator_no);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				administrator = new AdministratorVO();
-				administrator.setAdministratorNo(rs.getString("administratorNo"));
-				administrator.setAdministratorName(rs.getString("administratorName"));
-				administrator.setAdministratorAccount(rs.getString("administratorAccount"));
-				administrator.setAdministratorPassword(rs.getString("administratorPassword"));
-				administrator.setCreationDate(rs.getTimestamp("creationDate"));
-				administrator.setAdministratorPicture(rs.getBytes("administratorPicture"));
-				administrator.setAdministratorStatus(rs.getString("administratorStatus"));
+				administratorVO = new AdministratorVO();
+				administratorVO.setAdministrator_no(rs.getString("ADMINISTRATOR_NO"));
+				administratorVO.setAdministrator_name(rs.getString("ADMINISTRATOR_NAME"));
+				administratorVO.setAdministrator_account(rs.getString("ADMINISTRATOR_ACCOUNT"));
+				administratorVO.setAdministrator_password(rs.getString("ADMINISTRATOR_PASSWORD"));
+				administratorVO.setCreation_date(rs.getTimestamp("CREATION_DATE"));
+				administratorVO.setAdministrator_picture(rs.getBytes("ADMINISTRATOR_PICTURE"));
+				administratorVO.setAdministrator_status(rs.getString("ADMINISTRATOR_STATUS"));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
@@ -169,7 +169,7 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 				}
 			}
 		}
-		return administrator;
+		return administratorVO;
 		
 	}
 
@@ -177,7 +177,7 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	public List<AdministratorVO> getAll() {
 
 		List<AdministratorVO> list = new ArrayList<AdministratorVO>();
-		AdministratorVO administrator = null;
+		AdministratorVO administratorVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -191,15 +191,15 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				administrator = new AdministratorVO();
-				administrator.setAdministratorNo(rs.getString("administratorNo"));
-				administrator.setAdministratorName(rs.getString("administratorName"));
-				administrator.setAdministratorAccount(rs.getString("administratorAccount"));
-				administrator.setAdministratorPassword(rs.getString("administratorPassword"));
-				administrator.setCreationDate(rs.getTimestamp("creationDate"));
-				administrator.setAdministratorPicture(rs.getBytes("administratorPicture"));
-				administrator.setAdministratorStatus(rs.getString("administratorStatus"));
-				list.add(administrator);
+				administratorVO = new AdministratorVO();
+				administratorVO.setAdministrator_no(rs.getString("ADMINISTRATOR_NO"));
+				administratorVO.setAdministrator_name(rs.getString("ADMINISTRATOR_NAME"));
+				administratorVO.setAdministrator_account(rs.getString("ADMINISTRATOR_ACCOUNT"));
+				administratorVO.setAdministrator_password(rs.getString("ADMINISTRATOR_PASSWORD"));
+				administratorVO.setCreation_date(rs.getTimestamp("CREATION_DATE"));
+				administratorVO.setAdministrator_picture(rs.getBytes("ADMINISTRATOR_PICTURE"));
+				administratorVO.setAdministrator_status(rs.getString("ADMINISTRATOR_STATUS"));
+				list.add(administratorVO);
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {

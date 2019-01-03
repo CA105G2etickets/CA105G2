@@ -26,7 +26,8 @@ public class FavoriteEventService {
 		return favoriteEventDAO.findByMember(member_no);
 	}
 	
-	public boolean isFavr(String member_no, String evetit_no) {
-		return favoriteEventDAO.isFavr(member_no, evetit_no);
+	public boolean getOneFavoriteEvent(String member_no, String evetit_no) {
+		return favoriteEventDAO.getOneFavoriteEvent(member_no, evetit_no);
 	}
+	
 }

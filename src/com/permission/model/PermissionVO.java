@@ -1,34 +1,36 @@
 package com.permission.model;
 
-public class PermissionVO {
+import java.io.Serializable;
+
+public class PermissionVO implements Serializable{
 	
-	private String permissionListNo;
-	private String administratorNo;
+	private String permission_list_no;
+	private String administrator_no;
 
 	public PermissionVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PermissionVO(String permissionListNo, String administratorNo) {
+	public PermissionVO(String permission_list_no, String administrator_no) {
 		super();
-		this.permissionListNo = permissionListNo;
-		this.administratorNo = administratorNo;
+		this.permission_list_no = permission_list_no;
+		this.administrator_no = administrator_no;
 	}
 
-	public String getPermissionListNo() {
-		return permissionListNo;
+	public String getPermission_list_no() {
+		return permission_list_no;
 	}
 
-	public void setPermissionListNo(String permissionListNo) {
-		this.permissionListNo = permissionListNo;
+	public void setPermission_list_no(String permission_list_no) {
+		this.permission_list_no = permission_list_no;
 	}
 
-	public String getAdministratorNo() {
-		return administratorNo;
+	public String getAdministrator_no() {
+		return administrator_no;
 	}
 
-	public void setAdministratorNo(String administratorNo) {
-		this.administratorNo = administratorNo;
+	public void setAdministrator_no(String administrator_no) {
+		this.administrator_no = administrator_no;
 	}
 
 }

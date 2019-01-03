@@ -2,6 +2,11 @@ package com.event.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
+
+import com.event_title.model.EventTitleService;
+import com.event_title.model.EventTitleVO;
+import com.ticket_type.model.TicketTypeVO;
 
 public class EventService {
 
@@ -34,6 +39,15 @@ public class EventService {
 
 		return eventVO;
 	}
+	
+	public EventVO addEvent(String evetit_no) {
+		EventTitleService eventTitleService = new EventTitleService();
+		EventTitleVO EventTitleVO = eventTitleService.getOneEventTitle(evetit_no);
+		Integer evetit_sessions = EventTitleVO.getEvetit_sessions();
+		String eve_no = eventDao.insert(evetit_no, evetit_sessions);
+		EventVO eventVO = getOneEvent(eve_no);
+		return eventVO;
+	}
 
 	public EventVO updateEvent(String eve_no, String venue_no, String eve_sessionname, byte[] eve_seatmap,
 			Timestamp eve_startdate, Timestamp eve_enddate, Timestamp eve_onsaledate, Timestamp eve_offsaledate,
@@ -53,13 +67,20 @@ public class EventService {
 		eventVO.setFullrefundenddate(fullrefundenddate);
 		eventVO.setEve_status(eve_status);
 
-		eventDao.update(eventVO);
+		if(eve_seatmap == null || eve_seatmap.length == 0) {
+			eventDao.update_withoutSeatmap(eventVO);
+		} else {
+			eventDao.update(eventVO);
+		}
 
 		return eventVO;
 	}
 
-	public void deleteEvent(String eve_no) {
-		eventDao.delete(eve_no);
+	public void deleteEvent(String eve_no, String evetit_no) {
+		EventTitleService eventTitleService = new EventTitleService();
+		EventTitleVO EventTitleVO = eventTitleService.getOneEventTitle(evetit_no);
+		Integer evetit_sessions = EventTitleVO.getEvetit_sessions();
+		eventDao.delete(eve_no, evetit_no, evetit_sessions);
 	}
 
 	public EventVO getOneEvent(String eve_no) {
@@ -68,5 +89,9 @@ public class EventService {
 
 	public List<EventVO> getAll() {
 		return eventDao.getAll();
+	}
+	
+	public Set<TicketTypeVO> getTicketTypesByEvent(String eve_no) {
+		return eventDao.getTicketTypesByEvent(eve_no);
 	}
 }

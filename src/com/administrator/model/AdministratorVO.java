@@ -1,97 +1,99 @@
 package com.administrator.model;
 
+import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-public class AdministratorVO {
+public class AdministratorVO implements Serializable{
 	
-	private String administratorNo;
-	private String administratorName;
-	private String administratorAccount;
-	private String administratorPassword;
-	private Timestamp creationDate;
-	private byte[] administratorPicture;
-	private String administratorStatus;
+	private String administrator_no;
+	private String administrator_name;
+	private String administrator_account;
+	private String administrator_password;
+	private Timestamp creation_date;
+	private byte[] administrator_picture;
+	private String administrator_status;
 
 	public AdministratorVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AdministratorVO(String administratorNo, String administratorName, String administratorAccount,
-			String administratorPassword, Timestamp creationDate, byte[] administratorPicture,
-			String administratorStatus) {
+	public AdministratorVO(String administrator_no, String administrator_name, String administrator_account,
+			String administrator_password, Timestamp creation_date, byte[] administrator_picture,
+			String administrator_status) {
 		super();
-		this.administratorNo = administratorNo;
-		this.administratorName = administratorName;
-		this.administratorAccount = administratorAccount;
-		this.administratorPassword = administratorPassword;
-		this.creationDate = creationDate;
-		this.administratorPicture = administratorPicture;
-		this.administratorStatus = administratorStatus;
+		this.administrator_no = administrator_no;
+		this.administrator_name = administrator_name;
+		this.administrator_account = administrator_account;
+		this.administrator_password = administrator_password;
+		this.creation_date = creation_date;
+		this.administrator_picture = administrator_picture;
+		this.administrator_status = administrator_status;
 	}
 
-	public String getAdministratorNo() {
-		return administratorNo;
+	public String getAdministrator_no() {
+		return administrator_no;
 	}
 
-	public void setAdministratorNo(String administratorNo) {
-		this.administratorNo = administratorNo;
+	public void setAdministrator_no(String administrator_no) {
+		this.administrator_no = administrator_no;
 	}
 
-	public String getAdministratorName() {
-		return administratorName;
+	public String getAdministrator_name() {
+		return administrator_name;
 	}
 
-	public void setAdministratorName(String administratorName) {
-		this.administratorName = administratorName;
+	public void setAdministrator_name(String administrator_name) {
+		this.administrator_name = administrator_name;
 	}
 
-	public String getAdministratorAccount() {
-		return administratorAccount;
+	public String getAdministrator_account() {
+		return administrator_account;
 	}
 
-	public void setAdministratorAccount(String administratorAccount) {
-		this.administratorAccount = administratorAccount;
+	public void setAdministrator_account(String administrator_account) {
+		this.administrator_account = administrator_account;
 	}
 
-	public String getAdministratorPassword() {
-		return administratorPassword;
+	public String getAdministrator_password() {
+		return administrator_password;
 	}
 
-	public void setAdministratorPassword(String administratorPassword) {
-		this.administratorPassword = administratorPassword;
+	public void setAdministrator_password(String administrator_password) {
+		this.administrator_password = administrator_password;
 	}
 
-	public Timestamp getCreationDate() {
-		return creationDate;
+	public Timestamp getCreation_date() {
+		return creation_date;
 	}
 
-	public void setCreationDate(Timestamp creationDate) {
-		this.creationDate = creationDate;
+	public void setCreation_date(Timestamp creation_date) {
+		this.creation_date = creation_date;
 	}
 
-	public byte[] getAdministratorPicture() {
-		return administratorPicture;
+	public byte[] getAdministrator_picture() {
+		return administrator_picture;
 	}
 
-	public void setAdministratorPicture(byte[] administratorPicture) {
-		this.administratorPicture = administratorPicture;
+	public void setAdministrator_picture(byte[] administrator_picture) {
+		this.administrator_picture = administrator_picture;
 	}
 
-	public String getAdministratorStatus() {
-		return administratorStatus;
+	public String getAdministrator_status() {
+		return administrator_status;
 	}
 
-	public void setAdministratorStatus(String administratorStatus) {
-		this.administratorStatus = administratorStatus;
+	public void setAdministrator_status(String administrator_status) {
+		this.administrator_status = administrator_status;
 	}
 
 	@Override
 	public String toString() {
-		return "AdministratorVO [administratorNo=" + administratorNo + ", administratorName=" + administratorName
-				+ ", administratorAccount=" + administratorAccount + ", administratorPassword=" + administratorPassword
-				+ ", creationDate=" + creationDate + ", administratorPicture=" + Arrays.toString(administratorPicture)
-				+ ", administratorStatus=" + administratorStatus + "]";
+		return "AdministratorVO [administrator_no=" + administrator_no + ", administrator_name=" + administrator_name
+				+ ", administrator_account=" + administrator_account + ", administrator_password="
+				+ administrator_password + ", creation_date=" + creation_date + ", administrator_picture="
+				+ Arrays.toString(administrator_picture) + ", administrator_status=" + administrator_status + "]";
 	}
 
 }

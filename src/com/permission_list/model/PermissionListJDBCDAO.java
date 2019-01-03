@@ -12,17 +12,17 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO PERMISSION_LIST (PERMISSION_LIST_NO,PERMISSION) VALUES ('PL'||LPAD(to_char(permission_list_no_seq.NEXTVAL), 2, '0'), ?)";
-	private static final String GET_ALL_STMT = 
-			"SELECT * FROM PERMISSION_LIST ORDER BY PERMISSION_LIST_NO";
+	private static final String UPDATE = 
+			"UPDATE PERMISSION_LIST SET PERMISSION = ? WHERE PERMISSION_LIST_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM PERMISSION_LIST WHERE PERMISSION_LIST_NO = ?";
-	private static final String UPDATE = 
-			"UPDATE PERMISSION_LIST SET permissionListNo = ?, permission = ?";
 	private static final String FIND_BY_PK_SQL = 
 			"SELECT * FROM PERMISSION_LIST WHERE PERMISSION_LIST_NO = ?";
+	private static final String GET_ALL_STMT = 
+			"SELECT * FROM PERMISSION_LIST ORDER BY PERMISSION_LIST_NO";
 	
 	@Override
-	public void insert(PermissionListVO permissionList) {
+	public void insert(PermissionListVO permissionListVO) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -33,7 +33,7 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, permissionList.getPermission());
+			pstmt.setString(1, permissionListVO.getPermission());
 
 			pstmt.executeUpdate();
 			
@@ -60,7 +60,7 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 	}
 
 	@Override
-	public void update(PermissionListVO permissionList) {
+	public void update(PermissionListVO permissionListVO) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -71,8 +71,8 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, permissionList.getPermissionListNo());
-			pstmt.setString(2, permissionList.getPermission());
+			pstmt.setString(1, permissionListVO.getPermission_list_no());
+			pstmt.setString(2, permissionListVO.getPermission());
 
 			pstmt.executeUpdate();
 
@@ -99,7 +99,7 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 	}
 
 	@Override
-	public void delete(String permissionListNo) {
+	public void delete(String permission_list_no) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -110,7 +110,7 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setString(1, permissionListNo);
+			pstmt.setString(1, permission_list_no);
 
 			pstmt.executeUpdate();
 
@@ -137,9 +137,9 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 	}
 
 	@Override
-	public PermissionListVO findByPrimaryKey(String permissionListNo) {
+	public PermissionListVO findByPrimaryKey(String permission_list_no) {
 		
-		PermissionListVO permissionList = null;
+		PermissionListVO permissionListVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -150,18 +150,18 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(FIND_BY_PK_SQL);
 
-			pstmt.setString(1, permissionListNo);
+			pstmt.setString(1, permission_list_no);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				permissionList = new PermissionListVO();
-				permissionList.setPermissionListNo(rs.getString("permissionListNo"));
-				permissionList.setPermission(rs.getString("permission"));
+				permissionListVO = new PermissionListVO();
+				permissionListVO.setPermission_list_no(rs.getString("PERMISSION_LIST_NO"));
+				permissionListVO.setPermission(rs.getString("PERMISSION"));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured. ◢▆▅▄▃崩╰(〒皿〒)╯潰▃▄▅▇◣"
 					+ e.getMessage());
 		} finally {
 			if (rs != null) {
@@ -186,14 +186,14 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 				}
 			}
 		}
-		return permissionList;
+		return permissionListVO;
 	}
 
 	@Override
 	public List<PermissionListVO> getAll() {
 		
 		List<PermissionListVO> list = new ArrayList<PermissionListVO>();
-		PermissionListVO permissionList = null;
+		PermissionListVO permissionListVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -207,14 +207,14 @@ public class PermissionListJDBCDAO implements PermissionListDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				permissionList = new PermissionListVO();
-				permissionList.setPermissionListNo(rs.getString("permissionListNo"));
-				permissionList.setPermission(rs.getString("permission"));
-				list.add(permissionList);
+				permissionListVO = new PermissionListVO();
+				permissionListVO.setPermission_list_no(rs.getString("PERMISSION_LIST_NO"));
+				permissionListVO.setPermission(rs.getString("PERMISSION"));
+				list.add(permissionListVO);
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new RuntimeException("An error occured. HAHAHA guess ClassNotFoundException or SQLException ?"
+			throw new RuntimeException("An error occured. ◢▆▅▄▃崩╰(〒皿〒)╯潰▃▄▅▇◣"
 					+ e.getMessage());
 		} finally {
 			if (rs != null) {
