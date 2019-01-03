@@ -33,14 +33,18 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 			"SELECT AD_NO,EVETIT_NO,AD_STARTDATE,AD_ENDDATE FROM ADVERTISEMENT";
 	
 	@Override
-	public void insert(AdvertisementVO advertisementVO) {
+	public String insert(AdvertisementVO advertisementVO) {
 		Connection con = null;
-		PreparedStatement pstmt = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String ad_no = null;
 		
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			String[] cols = { "ad_no" };
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			
 			pstmt.setString(1,advertisementVO.getEvetit_no());
 			pstmt.setDate(2,advertisementVO.getAd_startdate());
@@ -48,7 +52,12 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 			
 			pstmt.executeUpdate();
 			
-			System.out.println("----------Inserted----------");
+			rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				ad_no = rs.getString(1);
+			}
+			
+			System.out.println("----------Inserted : " + ad_no + "----------");
 
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -70,6 +79,7 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 				}
 			}
 		}
+		return ad_no;
 	}
 
 	@Override
@@ -274,32 +284,32 @@ public class AdvertisementJDBCDAO implements AdvertisementDAO_interface{
 		dao.insert(advertisementVO);
 		
 		// 修改
-		AdvertisementVO advertisementVO2 = new AdvertisementVO();
-		advertisementVO2.setAd_no("AD0001"); 
-		advertisementVO2.setEvetit_no("E0002"); 
-		advertisementVO2.setAd_startdate(java.sql.Date.valueOf("2020-01-31"));
-		advertisementVO2.setAd_enddate(java.sql.Date.valueOf("2020-01-31"));
-		dao.update(advertisementVO2);
+//		AdvertisementVO advertisementVO2 = new AdvertisementVO();
+//		advertisementVO2.setAd_no("AD0001"); 
+//		advertisementVO2.setEvetit_no("E0002"); 
+//		advertisementVO2.setAd_startdate(java.sql.Date.valueOf("2020-01-31"));
+//		advertisementVO2.setAd_enddate(java.sql.Date.valueOf("2020-01-31"));
+//		dao.update(advertisementVO2);
 		
 		// 刪除
-		dao.delete("AD0005");
+//		dao.delete("AD0005");
 		
 		// 查詢一個
-		AdvertisementVO advertisementVO3 = dao.findByPrimaryKey("AD0001");
-		System.out.println(advertisementVO3.getAd_no());
-		System.out.println(advertisementVO3.getEvetit_no());
-		System.out.println(advertisementVO3.getAd_startdate());
-		System.out.println(advertisementVO3.getAd_enddate());
-		System.out.println("------------------------------");
+//		AdvertisementVO advertisementVO3 = dao.findByPrimaryKey("AD0001");
+//		System.out.println(advertisementVO3.getAd_no());
+//		System.out.println(advertisementVO3.getEvetit_no());
+//		System.out.println(advertisementVO3.getAd_startdate());
+//		System.out.println(advertisementVO3.getAd_enddate());
+//		System.out.println("------------------------------");
 		
 		//查詢全部	
-		List<AdvertisementVO> list = dao.getAll();
-		for (AdvertisementVO aAdvertisementVO4 : list) {
-			System.out.println(aAdvertisementVO4.getAd_no());
-			System.out.println(aAdvertisementVO4.getEvetit_no());
-			System.out.println(aAdvertisementVO4.getAd_startdate());
-			System.out.println(aAdvertisementVO4.getAd_enddate());
-			System.out.println("------------------------------");
-		}
+//		List<AdvertisementVO> list = dao.getAll();
+//		for (AdvertisementVO aAdvertisementVO4 : list) {
+//			System.out.println(aAdvertisementVO4.getAd_no());
+//			System.out.println(aAdvertisementVO4.getEvetit_no());
+//			System.out.println(aAdvertisementVO4.getAd_startdate());
+//			System.out.println(aAdvertisementVO4.getAd_enddate());
+//			System.out.println("------------------------------");
+//		}
 	}
 }

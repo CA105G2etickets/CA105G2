@@ -1,6 +1,9 @@
 package com.ticket_type.model;
 
 import java.util.List;
+import java.util.Set;
+
+import com.seating_area.model.SeatingAreaVO;
 
 public class TicketTypeService {
 
@@ -16,6 +19,17 @@ public class TicketTypeService {
 		ticketTypeVO.setTictype_color(tictype_color);
 		ticketTypeVO.setTictype_name(tictype_name);
 		ticketTypeVO.setTictype_price(tictype_price);		
+		String tictype_no = ticketTypeDAO.insert(ticketTypeVO);
+		ticketTypeVO.setTictype_no(tictype_no);	
+		return ticketTypeVO;
+	}
+	
+	public TicketTypeVO addTicketType(String eve_no) {
+		TicketTypeVO ticketTypeVO = new TicketTypeVO();		
+		ticketTypeVO.setEve_no(eve_no);	
+		ticketTypeVO.setTictype_color("#3399ff");
+		ticketTypeVO.setTictype_name("票種名");
+		ticketTypeVO.setTictype_price(new Integer(0));		
 		String tictype_no = ticketTypeDAO.insert(ticketTypeVO);
 		ticketTypeVO.setTictype_no(tictype_no);	
 		return ticketTypeVO;
@@ -43,6 +57,8 @@ public class TicketTypeService {
 		return ticketTypeDAO.getAll();
 	}
 
-	
+	public Set<SeatingAreaVO> getSeatingAreasByTicketType(String tictype_no) {
+		return ticketTypeDAO.getSeatingAreasByTicketType(tictype_no);
+	}
 	
 }

@@ -1,6 +1,7 @@
 package com.advertisement.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,13 +42,17 @@ public class AdvertisementDAO implements AdvertisementDAO_interface{
 			"SELECT AD_NO,EVETIT_NO,AD_STARTDATE,AD_ENDDATE FROM ADVERTISEMENT";
 	
 	@Override
-	public void insert(AdvertisementVO advertisementVO) {
+	public String insert(AdvertisementVO advertisementVO) {
 		Connection con = null;
-		PreparedStatement pstmt = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String ad_no = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			String[] cols = { "ad_no" };
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			
 			pstmt.setString(1,advertisementVO.getEvetit_no());
 			pstmt.setDate(2,advertisementVO.getAd_startdate());
@@ -55,7 +60,12 @@ public class AdvertisementDAO implements AdvertisementDAO_interface{
 			
 			pstmt.executeUpdate();
 			
-			System.out.println("----------Inserted----------");
+			rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				ad_no = rs.getString(1);
+			}
+			
+			System.out.println("----------Inserted : " + ad_no + "----------");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -75,6 +85,7 @@ public class AdvertisementDAO implements AdvertisementDAO_interface{
 				}
 			}
 		}
+		return ad_no;
 	}
 
 	@Override

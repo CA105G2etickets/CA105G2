@@ -16,7 +16,8 @@ public class AdvertisementService {
 		advertisementVO.setEvetit_no(evetit_no); 
 		advertisementVO.setAd_startdate(ad_startdate);
 		advertisementVO.setAd_enddate(ad_enddate);		
-		advertisementDAO.insert(advertisementVO);		
+		String ad_no = advertisementDAO.insert(advertisementVO);
+		advertisementVO.setAd_no(ad_no);
 		return advertisementVO;
 	}
 	
