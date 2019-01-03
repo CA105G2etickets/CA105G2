@@ -375,6 +375,14 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 		
 		
 	}
+
+	@Override
+	public List<SeatingAreaVO> getAllWithEve_No(String eve_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 	
 	

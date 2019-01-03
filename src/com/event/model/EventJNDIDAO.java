@@ -326,6 +326,12 @@ public class EventJNDIDAO implements EventDAO_interface{
 		}
 		return list;
 	}
+
+	@Override
+	public List<EventVO> findByEveTit_no(String evetit_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 	

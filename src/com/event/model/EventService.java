@@ -69,4 +69,8 @@ public class EventService {
 	public List<EventVO> getAll() {
 		return eventDao.getAll();
 	}
+	
+	public List<EventVO> findByEveTit_no(String evetit_no) {
+		return eventDao.findByEveTit_no(evetit_no);
+	}
 }

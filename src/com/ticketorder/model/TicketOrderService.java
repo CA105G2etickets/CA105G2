@@ -2,6 +2,8 @@ package com.ticketorder.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.ticket.model.TicketVO;
+
 public class TicketOrderService {
 	private TicketOrderDAO_interface dao;
 	
@@ -52,5 +54,8 @@ public class TicketOrderService {
 	public List<TicketOrderVO> getAll(){
 		return dao.getAll();
 	}
-
+	
+	public void insertWithTickets(TicketOrderVO ticketorderVO, List<TicketVO> list) {
+		dao.insertWithTickets(ticketorderVO, list);
+	}
 }

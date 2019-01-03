@@ -90,11 +90,26 @@
 
 
 <h3>訂票訂單管理</h3>
+<jsp:useBean id="EveTitSvc" scope="page" class="com.event_title.model.EventTitleService" />
+<ul> 
+  <li>
+     <FORM METHOD="post" ACTION="ticketorder.do" >
+       <b>選擇某一個活動的活動場次名稱來購票:</b>
+       <select size="1" name="evetit_no">
+         <c:forEach var="EventTitleVO" items="${EveTitSvc.all}" > 
+          <option value="${EventTitleVO.evetit_no}">${EventTitleVO.evetit_name}
+         </c:forEach>   
+       </select>
+       <input type="hidden" name="action" value="get_EventTitleVO_InfoToBuyTickets">
+       <input type="submit" value="送出">
+    </FORM>
+  </li>
+</ul>
 
 <ul>
   <li><a href='addTicketOrder.jsp'>Add</a> a new TicketOrder.</li>
-  <li><a href='buyTicketsSim.jsp'>Buy</a> Tickets.</li>
 </ul>
+
 
 </body>
 </html>

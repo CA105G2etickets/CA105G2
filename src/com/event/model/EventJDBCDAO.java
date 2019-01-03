@@ -509,6 +509,12 @@ public class EventJDBCDAO implements EventDAO_interface{
 		
 	}
 
+	@Override
+	public List<EventVO> findByEveTit_no(String evetit_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }

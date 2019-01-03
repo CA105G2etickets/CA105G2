@@ -392,6 +392,5 @@ public class TicketDAOJDBC implements TicketDAO_interface{
 				}
 			}
 		}
-
 	}
 }

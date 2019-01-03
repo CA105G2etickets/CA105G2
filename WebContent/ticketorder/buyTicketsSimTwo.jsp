@@ -7,26 +7,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
-/*
-String strEvetitNo = "E0001"; 
-System.out.println("string="+strEvetitNo);
-EventService eSvc = new EventService();
-List<EventVO> list = eSvc.findByEveTit_no(strEvetitNo);
-*/
-List<EventVO> list = (List<EventVO>)request.getAttribute("elist");
+List<SeatingAreaVO> list = (List<SeatingAreaVO>)request.getAttribute("slist");
  
-pageContext.setAttribute("elist",list);
-System.out.println("elist="+list);
-
-SeatingAreaService saSvc = new SeatingAreaService();
-List<SeatingAreaVO> saList = saSvc.getAll();
-pageContext.setAttribute("saList",saList);
+pageContext.setAttribute("slist",list);
+System.out.println("sysout_slist="+list);
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>模擬訂票訂單資料附帶票券的新增 - buyTicketsSim.jsp</title>
+<title>模擬訂票訂單資料附帶票券的新增2 - buyTicketsSimTwo.jsp</title>
 
 <style>
   table#table-1 {
@@ -65,7 +55,7 @@ pageContext.setAttribute("saList",saList);
 
 <table id="table-1">
 	<tr><td>
-		 <h3>模擬訂票訂單資料附帶票券的新增 - buyTicketsSim.jsp</h3></td><td>
+		 <h3>模擬訂票訂單資料附帶票券的新增2 - buyTicketsSimTwo.jsp</h3></td><td>
 		 <h4><a href="select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -83,30 +73,30 @@ pageContext.setAttribute("saList",saList);
 </c:if>
 <table>
 	<tr>
-		<th>活動場次名稱</th>
-		<th>活動開始日期</th>
-		<th>活動結束日期</th>
-		<th>活動開始販賣票券日期</th>
-		<th>活動停止販賣票券日期</th>
-		<th>活動座位的上限</th>
-		<th>活動狀態</th>
-		<th>買票按鈕</th>
-		
+		<th>活動座位區編號</th>
+		<th>活動座位區名稱</th>
+		<th>總容許銷售張數</th>
+		<th>已訂的票券張數</th>
+		<th>要買的張數</th>
+		<th>送出買票請求</th>
 	</tr>
-	<c:forEach var="EventVO" items="${elist}">
+	<c:forEach var="SeatingAreaVO" items="${slist}">
 		<tr>
-			<td>${EventVO.eve_sessionname}</td>
-			<td>${EventVO.eve_startdate}</td>
-			<td>${EventVO.eve_enddate}</td>
-			<td>${EventVO.eve_onsaledate}</td>
-			<td>${EventVO.eve_offsaledate}</td>
-			<td>${EventVO.ticlimit}</td>
-			<td>${EventVO.eve_status}</td>
+			<td>${SeatingAreaVO.ticarea_no}</td>
+			<td>${SeatingAreaVO.ticarea_name}</td>
+			<td>${SeatingAreaVO.tictotalnumber}</td>
+			<td>${SeatingAreaVO.ticbookednumber}</td>
+			<td><select name = "ticketsCount" id = "ticketsCount">
+					
+					<option value="2">2</option>
+					
+				</select></td>
 			<td>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ticketorder/ticketorder.do">
-				<input type="submit" value="選擇此場次">
-				<input type="hidden" name="eve_no"  value="${EventVO.eve_no}">
-				<input type="hidden" name="action"	value="chooseOne_EventTitle"></FORM>
+				<input type="submit" value="send">
+				<input type="hidden" name="ticarea_no"  value="${SeatingAreaVO.ticarea_no}">
+				<input type="hidden" name="ticketsNum"  value="2">
+				<input type="hidden" name="action"	value="buyTickets"></FORM>
 			</td>
 		</tr>
 	</c:forEach>

@@ -9,4 +9,5 @@ public interface SeatingAreaDAO_interface {
     public SeatingAreaVO findByPrimaryKey(String ticarea_no);
     public List<SeatingAreaVO> getAll();
     
+    public List<SeatingAreaVO> getAllWithEve_No(String eve_no);
 }

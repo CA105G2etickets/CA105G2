@@ -9,5 +9,6 @@ public interface EventDAO_interface {
     public void delete(String eve_no);
     public EventVO findByPrimaryKey(String eve_no);
     public List<EventVO> getAll();
-
+    
+    public List<EventVO> findByEveTit_no(String evetit_no);
 }
