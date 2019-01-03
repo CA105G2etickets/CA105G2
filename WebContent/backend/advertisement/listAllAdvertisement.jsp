@@ -69,14 +69,20 @@
 							${advertisementVO.ad_no}
 						</td>
 						<td>
-							<jsp:useBean id="eventTitleService2" scope="page" class="com.event_title.model.EventTitleService" />	
-							${eventTitleService2.getOneEventTitle(advertisementVO.evetit_no).evetit_name}
+							<jsp:useBean id="eventTitleService2" scope="page" class="com.event_title.model.EventTitleService" />
+							<a href="<%=request.getContextPath()%>/event_title/EventTitleServlet.do?action=getOneEventTitle_For_Display&evetit_no=${advertisementVO.evetit_no}" target="_blank">
+								${eventTitleService2.getOneEventTitle(advertisementVO.evetit_no).evetit_name}
+							</a>
 						</td>
-						<td>${advertisementVO.ad_startdate}</td>
-						<td>${advertisementVO.ad_enddate}</td>
 						<td>
-							<button class="btn btn-warning btn-sm getOneAdvertisement_For_Update" data-toggle="modal" data-target="#updateAdvertisementModal" value="${advertisementVO.ad_no}">修改</button>
-							<button class="btn btn-danger btn-sm deleteAdvertisement" value="${advertisementVO.ad_no}">刪除</button>
+							${advertisementVO.ad_startdate}
+						</td>
+						<td>
+							${advertisementVO.ad_enddate}
+						</td>
+						<td>
+							<button class="btn btn-warning btn-sm getOneAdvertisement_For_Update" data-toggle="modal" data-target="#updateAdvertisementModal">修改</button>
+							<button class="btn btn-danger btn-sm deleteAdvertisement">刪除</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -105,7 +111,7 @@
 		                <select class="form-control evetit_no" name="evetit_no">
 		                    <c:forEach var="eventTitleVO" items="${getNotInTheAdvertisementList}">
 		                        <option value="${eventTitleVO.evetit_no}">
-		                            ${eventTitleVO.evetit_name}
+		                            ${eventTitleVO.evetit_no} : ${eventTitleVO.evetit_name}
 		                        </option>
 		                    </c:forEach>
 		                </select>
@@ -147,18 +153,13 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
 						修改廣告
+						<input type="hidden" name="ad_no" class="form-control ad_no" value="">
 					</h4>
 				</div>
 				<div class="modal-body">
 		            <div class="form-group">
 		                <label>廣告主題名稱</label>
-		                <select class="form-control evetit_no" name="evetit_no">
-		                    <c:forEach var="eventTitleVO" items="${getNotInTheAdvertisementList}">
-		                        <option value="${eventTitleVO.evetit_no}">
-		                            ${eventTitleVO.evetit_name}
-		                        </option>
-		                    </c:forEach>
-		                </select>
+		                <input type="text" name="evetit_name" class="form-control evetit_name" value="" readonly>
 		            </div>
 		            <div class="row">
 	                	<div class="col-xs-12 col-sm-6">
@@ -176,15 +177,13 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-        			<button type="button" class="btn btn-primary" id="updateAdvertisement">儲存新增</button>
+        			<button type="button" class="btn btn-warning" id="updateAdvertisement">儲存修改</button>
         			<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
 	</div>	
 </div>
-	
-	
 	
 	
 	
@@ -209,6 +208,8 @@
 		var advertisementListTable;
 		
 		$(document).ready(function() {
+			
+			
 			
 			// -----datatable---------------------------------------------
 			advertisementListTable = $("#advertisementListTable").DataTable({
@@ -262,27 +263,66 @@
 			
 			// -----advertisement---------------------------------------------
 			$(".getOneAdvertisement_For_Update").click(function (e){
-				console.log(e.target);
-				console.log($(e.target).val());
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-												//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-																//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-																				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-																								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-																												//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-																																//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-																																				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-																																								//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				var get_the_ad_no = $(e.target).closest("tr").find("td").eq(0).html().trim();
+				var get_the_evetit_name = $(e.target).closest("tr").find("td").eq(1).find("a").html().trim();
+				var get_the_ad_startdate = $(e.target).closest("tr").find("td").eq(2).html().trim();
+				var get_the_ad_enddate = $(e.target).closest("tr").find("td").eq(3).html().trim();
+				
+				$("#updateAdvertisementModal").children().find(".ad_no").val(get_the_ad_no);
+				$("#updateAdvertisementModal").children().find(".evetit_name").val(get_the_evetit_name);
+				$("#updateAdvertisementModal").children().find(".ad_startdate").val(get_the_ad_startdate);
+				$("#updateAdvertisementModal").children().find(".ad_enddate").val(get_the_ad_enddate);
+			});			
+			
+			$("#updateAdvertisement").click(function (e){
+				var CurrentDate_forUpdate = new Date();
+				CurrentDate_forUpdate.setDate(CurrentDate_forUpdate.getDate() - 1);
+				
+				var ad_no_forUpdate = $("#updateAdvertisementModal").children().find(".ad_no").val();
+				var ad_startdate_forUpdate = $("#updateAdvertisementModal").children().find("input[name=ad_startdate]").val();
+				var ad_enddate_forUpdate = $("#updateAdvertisementModal").children().find("input[name=ad_enddate]").val();
+			
+				if(Date.parse(ad_enddate_forUpdate) < CurrentDate_forUpdate) {
+					window.alert("結束日期不得早於今天");
+					return;
+				}
+				if(Date.parse(ad_enddate_forUpdate) < Date.parse(ad_startdate_forUpdate)) {
+					window.alert("結束日期不得早於開始日期");
+					return;
+				}
+				var url = $("#projectName").val();
+	            url += '/advertisement/AdvertisementServlet.do';
+	            var data = '';
+	           	data += 'ad_no_forUpdate=';
+	           	data += ad_no_forUpdate;
+	           	data += '&ad_startdate_forUpdate=';
+	           	data += ad_startdate_forUpdate;
+	           	data += '&ad_enddate_forUpdate=';
+	           	data += ad_enddate_forUpdate;           	
+	            data += '&action=updateAdvertisement';
+	            $.ajax({
+	                type: 'post',
+	                url: url,
+	                data: data,
+	                success: function(data) {
+	                	if(data.indexOf("失") != -1){
+	                		window.alert(data);
+	                	} else {
+	                		window.location = $("#projectName").val() + '/backend/advertisement/listAllAdvertisement.jsp?ad_no=' + data;
+	                	}
+	                }
+	            });
+				
 			});
 			
 			$(".deleteAdvertisement").click(function (e){
 				var adWhichPage = advertisementListTable.page.info().page;
 				var url = $("#projectName").val();
 	            url += '/advertisement/AdvertisementServlet.do';
+	            var ad_no_forDelete = $(e.target).closest("tr").find("td").eq(0).html().trim();
 	            var data = '';
-	           	data += 'ad_no=';
-	           	data += $(e.target).val();       	
+	           	data += 'ad_no_forDelete=';
+	           	data += ad_no_forDelete;       	
 	            data += '&action=deleteAdvertisement';
 	            $.ajax({
 	                type: 'post',
@@ -339,7 +379,7 @@
 	                }
 	            });
 			});
-			
+
 		});
 	</script>
 </body>

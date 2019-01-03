@@ -21,10 +21,9 @@ public class AdvertisementService {
 		return advertisementVO;
 	}
 	
-	public AdvertisementVO updateAdvertisement(String ad_no, String evetit_no, Date ad_startdate, Date ad_enddate) {		
+	public AdvertisementVO updateAdvertisement(String ad_no, Date ad_startdate, Date ad_enddate) {		
 		AdvertisementVO advertisementVO = new AdvertisementVO();		
 		advertisementVO.setAd_no(ad_no);
-		advertisementVO.setEvetit_no(evetit_no); 
 		advertisementVO.setAd_startdate(ad_startdate);
 		advertisementVO.setAd_enddate(ad_enddate);		
 		advertisementDAO.update(advertisementVO);
@@ -41,6 +40,21 @@ public class AdvertisementService {
 	
 	public List<AdvertisementVO> getAll() {
 		return advertisementDAO.getAll();
+	}
+	
+	
+	public List<AdvertisementVO> getLaunched() {
+		return advertisementDAO.getLaunched();
+	}
+	
+	
+	
+	public AdvertisementVO getOneAdvertisementRandom() {			
+		List<AdvertisementVO> advertisementList = advertisementDAO.getAll();
+		int howMany = advertisementList.size();
+		int theOne = (int)(Math.random() * howMany);
+		AdvertisementVO advertisementVO = (AdvertisementVO) advertisementList.get(theOne);
+		return advertisementVO;
 	}
 	
 }

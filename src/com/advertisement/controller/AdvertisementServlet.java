@@ -42,30 +42,26 @@ public class AdvertisementServlet extends HttpServlet {
 		
 		
 		
-//		// 請求來源 : backend -> updateEvent.jsp
-//		if ("updateAdvertisement".equals(action)) {
-//			
-//			String tictype_name = null;
-//			try {
-//				/****************************** 1.接收請求參數 - 輸入格式的錯誤處理 **************************************************/				
-//				String tictype_no = request.getParameter("tictype_no");
-//				String tictype_color = request.getParameter("tictype_color");
-//				tictype_name = request.getParameter("tictype_name");
-//				Integer tictype_price = new Integer(request.getParameter("tictype_price"));
-//				 
-//				/****************************** 2.開始修改資料 **************************************************/
-//				TicketTypeService ticketTypeService = new TicketTypeService();
-//				ticketTypeService.updateTicketType(tictype_no, tictype_color, tictype_name, tictype_price);
-//
-//				/****************************** 3.修改完成,準備轉交 ***************************************************/
-//				out.println("  ### " + tictype_name + " 更新成功 !  ");
-//
-//				/****************************** 其他可能的錯誤處理 **************************************************/
-//			} catch (Exception e) {
-//				out.println("  ### " + tictype_name + " 更新失敗 : " +  e.getMessage());
-//			}
-//			
-//		}
+		// 請求來源 : backend -> listAllAdvertisement.jsp
+		if ("updateAdvertisement".equals(action)) {
+			try {
+				/****************************** 1.接收請求參數 - 輸入格式的錯誤處理 **************************************************/				
+				String ad_no = request.getParameter("ad_no_forUpdate");
+				java.sql.Date ad_startdate = java.sql.Date.valueOf(request.getParameter("ad_startdate_forUpdate").trim());
+				java.sql.Date ad_enddate = java.sql.Date.valueOf(request.getParameter("ad_enddate_forUpdate").trim());
+
+				/****************************** 2.開始修改資料 **************************************************/
+				AdvertisementService advertisementService = new AdvertisementService();
+				advertisementService.updateAdvertisement(ad_no, ad_startdate, ad_enddate);
+				
+				/****************************** 3.修改完成,準備轉交 ***************************************************/
+				out.println(ad_no);
+				
+				/****************************** 其他可能的錯誤處理 **************************************************/
+			} catch (Exception e) {
+				out.println("  ###" + " 新增失敗 : " +  e.getMessage());
+			}
+		}
 	
 
 		
@@ -74,7 +70,7 @@ public class AdvertisementServlet extends HttpServlet {
 		if ("deleteAdvertisement".equals(action)) {
 			try {
 				/****************************** 1.接收請求參數 - 輸入格式的錯誤處理 **************************************************/				
-				String ad_no = request.getParameter("ad_no");
+				String ad_no = request.getParameter("ad_no_forDelete");
 
 				/****************************** 2.開始修改資料 **************************************************/
 				AdvertisementService advertisementService = new AdvertisementService();
