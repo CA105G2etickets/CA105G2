@@ -104,11 +104,13 @@ th, td {
 
 </head>
 
+<jsp:include page="/backend/navbar_back-end.html" flush="true"/> 
+
 <%-- import進導覽列 --%>
-<div>                   
-	<c:import url="/navbar_back-end.html" charEncoding="UTF-8">
-	</c:import>
-</div>
+<!-- <div>                    -->
+<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
+<%-- 	</c:import> --%>
+<!-- </div> -->
 <%----%>
 
 <%-- 錯誤表列 --%>
