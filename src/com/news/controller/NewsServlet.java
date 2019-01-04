@@ -40,7 +40,7 @@ public class NewsServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/news/select_page.jsp");
+							.getRequestDispatcher("/backend/news/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -54,7 +54,7 @@ public class NewsServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/news/select_page.jsp");
+							.getRequestDispatcher("/backend/news/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -68,14 +68,14 @@ public class NewsServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/news/select_page.jsp");
+							.getRequestDispatcher("/backend/news/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("newsVO", newsVO); // 資料庫取出的empVO物件,存入req
-				String url = "/news/listOneNews.jsp";
+				String url = "/backend/news/listOneNews.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -83,7 +83,7 @@ public class NewsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/news/select_page.jsp");
+						.getRequestDispatcher("/backend/news/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -106,7 +106,7 @@ public class NewsServlet extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("newsVO", newsVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/news/update_news_input.jsp";
+				String url = "/backend/news/update_news_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
@@ -114,7 +114,7 @@ public class NewsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/news/listAllNews.jsp");
+						.getRequestDispatcher("/backend/news/listAllNews.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -165,7 +165,7 @@ public class NewsServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("newsVO", newsVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/news/update_news_input.jsp");
+							.getRequestDispatcher("/backend/news/update_news_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -176,7 +176,7 @@ public class NewsServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("newsVO", newsVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/news/listOneNews.jsp";
+				String url = "/backend/news/listOneNews.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -184,7 +184,7 @@ public class NewsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/news/update_news_input.jsp");
+						.getRequestDispatcher("/backend/news/update_news_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -229,7 +229,7 @@ public class NewsServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("newsVO", newsVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/news/addNews.jsp");
+							.getRequestDispatcher("/backend/news/addNews.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -239,7 +239,7 @@ public class NewsServlet extends HttpServlet {
 				newsVO = newsService.addNews(news_classification_no, news_title, news_content, administrator_no);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/news/listAllNews.jsp";
+				String url = "/backend/news/listAllNews.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -247,7 +247,7 @@ public class NewsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/news/addNews.jsp");
+						.getRequestDispatcher("/backend/news/addNews.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -269,7 +269,7 @@ public class NewsServlet extends HttpServlet {
 				newsService.deleteNews(news_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/news/listAllNews.jsp";
+				String url = "/backend/news/listAllNews.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -277,7 +277,7 @@ public class NewsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/news/listAllNews.jsp");
+						.getRequestDispatcher("/backend/news/listAllNews.jsp");
 				failureView.forward(req, res);
 			}
 		}
