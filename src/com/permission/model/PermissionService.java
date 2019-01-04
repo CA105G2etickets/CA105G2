@@ -33,8 +33,8 @@ public class PermissionService {
 		return permissionVO;
 	}
 
-	public void deleteNews(String administrator_no) {
-		dao.delete(administrator_no);
+	public void deleteNews(String permission_list_no) {
+		dao.delete(permission_list_no);
 	}
 
 	public PermissionVO getOneByPermissionListNo(String permission_list_no) {

@@ -8,13 +8,6 @@
 
 <jsp:include page="/backend/navbar_back-end.html" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
-
 <div class="container">
 	<div class="col-xs-12 col-sm-12">
 		<font size="6px">ETIckeTse權限管理頁面</font>
@@ -22,7 +15,7 @@
 </div>
 <div class="container">
 	<div class="col-xs-12 col-sm-12">
-		<font size="5px">權限清單查詢</font>
+		<font size="5px">管理員權限清單查詢</font>
 
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
@@ -37,11 +30,16 @@
 
 		<ul>
 			<font size="4px">
-<!-- 				<FORM METHOD="post" ACTION="newsClassification.do"> -->
-<!-- 					輸入公告分類編號 <input type="text" placeholder="例 : S" name="newsClassificationNo"> -->
-<!-- 					<input type="hidden" name="action" value="getOne_For_Display"> -->
-<!-- 					<input type="submit" value="送出"> -->
-<!-- 				</FORM> -->
+				<FORM METHOD="post" ACTION="permission.do">
+					輸入權限編號 <input type="text" placeholder="例 : PL01" name="permission_list_no">
+					<input type="hidden" name="action" value="getOne_For_Display_By_Permission_List_No">
+					<input type="submit" value="送出">
+				</FORM>
+				<FORM METHOD="post" ACTION="permission.do">
+					輸入管理員編號 <input type="text" placeholder="例 : A001" name="administrator_no">
+					<input type="hidden" name="action" value="getOne_For_Display_By_Administrator_No">
+					<input type="submit" value="送出">
+				</FORM>
 				<a href='listAllPermission.jsp'>列出所有權限清單</a>
 			</font>
 
@@ -50,18 +48,18 @@
 			<jsp:useBean id="PermissionListService" scope="page"
 				class="com.permission_list.model.PermissionListService" />
 
-			<font size="4px">
-			     <FORM METHOD="post" ACTION="permission.do" >
-			       選擇功能清單編號${Permissionlist.permission_list_no}
-			       <select size="1" name="permission_list_no">
-			         <c:forEach var="permissionList" items="${PermissionListService.all}" > 
-			          <option value="${permission_list.permission_list_no}">${permission_list.permission_list_no}
-			         </c:forEach>   
-			       </select>
-			       <input type="hidden" name="action" value="getOne_For_Display">
-			       <input type="submit" value="送出">
-			    </FORM>
-			</font>
+<!-- 			<font size="4px"> -->
+<!-- 			     <FORM METHOD="post" ACTION="permission.do" > -->
+<%-- 			       選擇功能清單編號${Permissionlist.permission_list_no} --%>
+<!-- 			       <select size="1" name="permission_list_no"> -->
+<%-- 			         <c:forEach var="permissionList" items="${PermissionListService.all}" >  --%>
+<%-- 			          <option value="${permission_list.permission_list_no}">${permission_list.permission_list_no} --%>
+<%-- 			         </c:forEach>    --%>
+<!-- 			       </select> -->
+<!-- 			       <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!-- 			       <input type="submit" value="送出"> -->
+<!-- 			    </FORM> -->
+<!-- 			</font> -->
 
 			<!--   <li> -->
 			<!--      <FORM METHOD="post" ACTION="newsClassification.do" > -->
@@ -80,9 +78,9 @@
 </div>
 <div class="container">
 	<div class="col-xs-12 col-sm-12">
-		<font size="5px">功能清單管理</font>
+		<font size="5px">權限清單管理</font>
 		<ul>
-			<font size="4px"> <a href='addPermission.jsp'>新增權限</a>
+			<font size="4px"> <a href='addPermission.jsp'>新增管理員權限</a>
 			</font>
 		</ul>
 	</div>

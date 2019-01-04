@@ -23,13 +23,13 @@ public class PermissionDAO implements PermissionDAO_interface {
 	private static final String UPDATE = 
 			"UPDATE PERMISSION SET PERMISSION_LIST_NO = ? WHERE ADMINISTRATOR_NO = ?";
 	private static final String DELETE = 
-			"DELETE FROM PERMISSION WHERE ADMINISTRATOR_NO = ?";
+			"DELETE FROM PERMISSION WHERE PERMISSION_LIST_NO = ?";
 	private static final String FIND_BY_PERMISSION_LIST_NO = 
 			"SELECT * FROM PERMISSION WHERE PERMISSION_LIST_NO = ?";
 	private static final String FIND_BY_ADMINISTRATOR_NO = 
 			"SELECT * FROM PERMISSION WHERE ADMINISTRATOR_NO = ?";
 	private static final String GET_ALL_STMT = 
-			"SELECT * FROM PERMISSION ORDER BY ADMINISTRATOR_NO";
+			"SELECT * FROM PERMISSION ORDER BY ADMINISTRATOR_NO ,PERMISSION_LIST_NO";
 
 	@Override
 	public void insert(PermissionVO permissionVO) {
@@ -108,7 +108,7 @@ public class PermissionDAO implements PermissionDAO_interface {
 	}
 
 	@Override
-	public void delete(String administrator_no) {
+	public void delete(String permission_list_no) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -118,7 +118,7 @@ public class PermissionDAO implements PermissionDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setString(1, administrator_no);
+			pstmt.setString(1, permission_list_no);
 
 			pstmt.executeUpdate();
 
