@@ -41,7 +41,7 @@ public class TicketServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ticket/select_page.jsp");
+							.getRequestDispatcher("/frontend/ticket/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -52,7 +52,7 @@ public class TicketServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ticket/select_page.jsp");
+							.getRequestDispatcher("/frontend/ticket/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -62,7 +62,7 @@ public class TicketServlet extends HttpServlet {
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ticket/select_page.jsp");
+							.getRequestDispatcher("/frontend/ticket/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -76,14 +76,14 @@ public class TicketServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ticket/select_page.jsp");
+							.getRequestDispatcher("/frontend/ticket/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("tVO", tVO); 
-				String url = "/ticket/listOneTicket.jsp";
+				String url = "/frontend/ticket/listOneTicket.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -91,7 +91,7 @@ public class TicketServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ticket/select_page.jsp");
+						.getRequestDispatcher("/frontend/ticket/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -112,7 +112,7 @@ public class TicketServlet extends HttpServlet {
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("tVO", tVO);
-				String url = "/ticket/update_ticket_input.jsp";
+				String url = "/frontend/ticket/update_ticket_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -120,7 +120,7 @@ public class TicketServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ticket/listAllTicket.jsp");
+						.getRequestDispatcher("/frontend/ticket/listAllTicket.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -138,8 +138,8 @@ public class TicketServlet extends HttpServlet {
 				String ticarea_no = req.getParameter("ticarea_no");
 				if (ticarea_no == null || ticarea_no.trim().length() == 0) {
 					errorMsgs.add("座位區編號: 請勿空白");
-				} else if(!ticarea_no.trim().equals("E000101A01")) { 
-					errorMsgs.add("座位區編號: 目前只能是E000101A01");
+				} else if(!ticarea_no.trim().equals("ES00000001")) { 
+					errorMsgs.add("座位區編號: 目前只能是ES00000001");
 	            }
 				
 				String ticket_order_no = req.getParameter("ticket_order_no");
@@ -219,7 +219,7 @@ public class TicketServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("tVO", tVO); 
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ticket/update_ticket_input.jsp");
+							.getRequestDispatcher("/frontend/ticket/update_ticket_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -230,7 +230,7 @@ public class TicketServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("tVO", tVO); 
-				String url = "/ticket/listOneTicket.jsp";
+				String url = "/frontend/ticket/listOneTicket.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -238,7 +238,7 @@ public class TicketServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ticket/update_ticket_input.jsp");
+						.getRequestDispatcher("/frontend/ticket/update_ticket_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -254,8 +254,8 @@ public class TicketServlet extends HttpServlet {
 				String ticarea_no = req.getParameter("ticarea_no");
 				if (ticarea_no == null || ticarea_no.trim().length() == 0) {
 					errorMsgs.add("座位區編號: 請勿空白");
-				} else if(!ticarea_no.trim().equals("E000101A01")) { 
-					errorMsgs.add("座位區編號: 目前只能是E000101A01");
+				} else if(!ticarea_no.trim().equals("ES00000001")) { 
+					errorMsgs.add("座位區編號: 目前只能是ES00000001");
 	            }
 				
 				String ticket_order_no = req.getParameter("ticket_order_no");
@@ -334,7 +334,7 @@ public class TicketServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("tVO", tVO); 
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ticket/addTicket.jsp");
+							.getRequestDispatcher("/frontend/ticket/addTicket.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -344,7 +344,7 @@ public class TicketServlet extends HttpServlet {
 				tVO = tSvc.addTicket(ticarea_no, ticket_order_no, member_no, ticket_status, ticket_create_time, ticket_resale_status, ticket_resale_price, is_from_resale);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/ticket/listAllTicket.jsp";
+				String url = "/frontend/ticket/listAllTicket.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
 				
@@ -352,7 +352,7 @@ public class TicketServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ticket/addTicket.jsp");
+						.getRequestDispatcher("/frontend/ticket/addTicket.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -372,7 +372,7 @@ public class TicketServlet extends HttpServlet {
 				tSvc.deleteTicket(ticket_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/ticket/listAllTicket.jsp";
+				String url = "/frontend/ticket/listAllTicket.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -380,7 +380,7 @@ public class TicketServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ticket/listAllTicket.jsp");
+						.getRequestDispatcher("/frontend/ticket/listAllTicket.jsp");
 				failureView.forward(req, res);
 			}
 		}
