@@ -115,7 +115,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>TicketOrderServlet</servlet-name>
-        <url-pattern>/ticketorder/ticketorder.do</url-pattern>
+        <url-pattern>/frontend/ticketorder/ticketorder.do</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -124,7 +124,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>TicketServlet</servlet-name>
-        <url-pattern>/ticket/ticket.do</url-pattern>
+        <url-pattern>/frontend/ticket/ticket.do</url-pattern>
     </servlet-mapping>
     
 </web-app>

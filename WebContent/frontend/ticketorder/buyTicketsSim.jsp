@@ -103,7 +103,7 @@ pageContext.setAttribute("saList",saList);
 			<td>${EventVO.ticlimit}</td>
 			<td>${EventVO.eve_status}</td>
 			<td>
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ticketorder/ticketorder.do">
+				<FORM METHOD="post" ACTION="ticketorder.do">
 				<input type="submit" value="選擇此場次">
 				<input type="hidden" name="eve_no"  value="${EventVO.eve_no}">
 				<input type="hidden" name="action"	value="chooseOne_EventTitle"></FORM>

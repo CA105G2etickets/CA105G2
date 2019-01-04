@@ -1,22 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.ticketorder.model.*"%>
-<%@ page import="com.seating_area.model.*"%>
-<%@ page import="com.event.model.*"%>
-<%@ page import="java.util.*"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <%
-List<SeatingAreaVO> list = (List<SeatingAreaVO>)request.getAttribute("slist");
- 
-pageContext.setAttribute("slist",list);
-System.out.println("sysout_slist="+list);
+TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>模擬訂票訂單資料附帶票券的新增2 - buyTicketsSimTwo.jsp</title>
+<title>訂票訂單資料新增 - addTicketOrder.jsp</title>
 
 <style>
   table#table-1 {
@@ -35,7 +29,7 @@ System.out.println("sysout_slist="+list);
   }
 </style>
 
-<style>
+<style>ˇ
   table {
 	width: 450px;
 	background-color: white;
@@ -55,7 +49,7 @@ System.out.println("sysout_slist="+list);
 
 <table id="table-1">
 	<tr><td>
-		 <h3>模擬訂票訂單資料附帶票券的新增2 - buyTicketsSimTwo.jsp</h3></td><td>
+		 <h3>訂票訂單資料新增 - addTicketOrder.jsp</h3></td><td>
 		 <h4><a href="select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -71,36 +65,48 @@ System.out.println("sysout_slist="+list);
 		</c:forEach>
 	</ul>
 </c:if>
+
+<FORM METHOD="post" ACTION="ticketorder.do" name="form1">
 <table>
 	<tr>
-		<th>活動座位區編號</th>
-		<th>活動座位區名稱</th>
-		<th>總容許銷售張數</th>
-		<th>已訂的票券張數</th>
-		<th>要買的張數</th>
-		<th>送出買票請求</th>
+		<td>會員編號:</td>
+		<td><input type="TEXT" name="member_no" size="45"
+			 value="<%= (toVO==null)? "M000001" : toVO.getMember_no()%>" /></td>
 	</tr>
-	<c:forEach var="SeatingAreaVO" items="${slist}">
-		<tr>
-			<td>${SeatingAreaVO.ticarea_no}</td>
-			<td>${SeatingAreaVO.ticarea_name}</td>
-			<td>${SeatingAreaVO.tictotalnumber}</td>
-			<td>${SeatingAreaVO.ticbookednumber}</td>
-			<td><select name = "ticketsCount" id = "ticketsCount">
-					
-					<option value="2">2</option>
-					
-				</select></td>
-			<td>
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ticketorder/ticketorder.do">
-				<input type="submit" value="send">
-				<input type="hidden" name="ticarea_no"  value="${SeatingAreaVO.ticarea_no}">
-				<input type="hidden" name="ticketsNum"  value="2">
-				<input type="hidden" name="action"	value="buyTickets"></FORM>
-			</td>
-		</tr>
-	</c:forEach>
+	<tr>
+		<td>座位區編號:</td>
+		<td><input type="TEXT" name="ticarea_no" size="45"
+			 value="<%= (toVO==null)? "ES00000001" : toVO.getTicarea_no()%>" /></td>
+	</tr>
+	<tr>
+		<td>總價:</td>
+		<td><input type="TEXT" name="total_price" size="45"
+			 value="<%= (toVO==null)? "900" : toVO.getTotal_price()%>" /></td>
+	</tr>
+	<tr>
+		<td>總張數:</td>
+		<td><input type="TEXT" name="total_amount" size="45"
+			 value="<%= (toVO==null)? "2" : toVO.getTotal_amount()%>" /></td>
+	</tr>
+	<tr>
+		<td>訂票訂單成立時間:</td>
+		<td><input name="ticket_order_time" id="f_date1" type="text"></td>
+	</tr>
+	<tr>
+		<td>付款方式:</td>
+		<td><input type="TEXT" name="payment_method" size="45"
+			 value="<%= (toVO==null)? "creditcard" : toVO.getPayment_method()%>" /></td>
+	</tr>
+	<tr>
+		<td>訂票訂單狀態:</td>
+		<td><input type="TEXT" name="ticket_order_status" size="45"
+			 value="<%= (toVO==null)? "waitForPay1" : toVO.getTicket_order_status()%>" /></td>
+	</tr>
+
 </table>
+<br>
+<input type="hidden" name="action" value="insert">
+<input type="submit" value="送出新增"></FORM>
 </body>
 
 
@@ -110,7 +116,11 @@ System.out.println("sysout_slist="+list);
 <% 
 java.sql.Timestamp ticket_order_time = null;
 java.util.Date pickStartDate = new java.sql.Date(System.currentTimeMillis());
-ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
+  try {
+	  ticket_order_time = toVO.getTicket_order_time();
+   } catch (Exception e) {
+	   ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
+   }
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>

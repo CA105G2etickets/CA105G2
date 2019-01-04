@@ -41,7 +41,7 @@
     <div class="container">
 		<form method="post" action="<%=request.getContextPath()%>/event_title/EventTitleServlet.do">
             <div class="form-group">
-                <label for="evetit_name">活動主題名稱</label>
+                <label for="evetit_name">活動主題名稱=<%=request.getContextPath()%></label>
                 <input type="text" name="evetit_name" id="evetit_name" placeholder="請輸入活動主題名稱" class="form-control" value="">
             </div>
             <div class="row">
