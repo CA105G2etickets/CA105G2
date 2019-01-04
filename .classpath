@@ -13,9 +13,5 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/MyLib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="C:/MyLib/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/MyLib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/MyLib/javax.mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

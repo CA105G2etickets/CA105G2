@@ -35,7 +35,7 @@ public class TicketDAO implements TicketDAO_interface{
 			"order by evetit_no) e right join " + 
 			"(select e.evetit_no,e.venue_no,e.eve_startdate,e.ticlimit,t.* " + 
 			"from event e right join  " + 
-			"(select t.member_no,t.ticket_status,s.eve_no,s.ticarea_name,(tictotalnumber-ticbookednumber) remaining " + 
+			"(select t.ticket_no,t.member_no,t.ticket_status,s.eve_no,s.ticarea_name,(tictotalnumber-ticbookednumber) remaining " + 
 			"from ticket t left join seating_area s " + 
 			"on t.ticarea_no = s.ticarea_no) t " + 
 			"on e.eve_no = t.eve_no) t " + 
@@ -60,7 +60,7 @@ public class TicketDAO implements TicketDAO_interface{
 				"order by evetit_no) e right join " + 
 				"(select e.evetit_no,e.venue_no,e.eve_startdate,e.ticlimit,t.* " + 
 				"from event e right join  " + 
-				"(select t.member_no,t.ticket_status,s.eve_no,s.ticarea_name,(tictotalnumber-ticbookednumber) remaining " + 
+				"(select t.member_no,t.ticket_status,s.eve_no,s.ticarea_name,(tictotalnumber-ticbookednumber) remaining ,t.ticket_no " + 
 				"from ticket t left join seating_area s " + 
 				"on t.ticarea_no = s.ticarea_no) t " + 
 				"on e.eve_no = t.eve_no) t " + 
@@ -86,6 +86,7 @@ public class TicketDAO implements TicketDAO_interface{
 				ticketVO.setEveNo(rs.getString(10));
 				ticketVO.setTicareaName(rs.getString(11));
 				ticketVO.setRemaining(rs.getInt(12));
+				ticketVO.setTicketNo(rs.getString(13));
 				list.add(ticketVO);
 			}
 			

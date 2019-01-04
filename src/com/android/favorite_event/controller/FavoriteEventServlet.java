@@ -47,8 +47,8 @@ public class FavoriteEventServlet extends HttpServlet{
 		if("isFavr".equals(action)) {
 			String memberNo = jsin.get("memberNo").getAsString();
 			String evetitNo = jsin.get("evetitNo").getAsString();
-			writeText(res, String.valueOf(dao.isFavr(memberNo, evetitNo)));
-			System.out.println(String.valueOf(dao.isFavr(memberNo, evetitNo)));
+			writeText(res, String.valueOf(dao.getOneFavoriteEvent(memberNo, evetitNo)));
+			System.out.println(String.valueOf(dao.getOneFavoriteEvent(memberNo, evetitNo)));
 		}
 	}
 	

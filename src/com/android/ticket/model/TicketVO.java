@@ -11,11 +11,17 @@ public class TicketVO {
 	private String ticketStatus;
 	private String eveNo;
 	private String ticareaName;
+	private String ticketNo;
 	private Integer ticlimit;
 	private Integer remaining;
 	private Timestamp eveStartDate;
-	
-	
+		
+	public String getTicketNo() {
+		return ticketNo;
+	}
+	public void setTicketNo(String ticketNo) {
+		this.ticketNo = ticketNo;
+	}
 	public String getEvetitName() {
 		return evetitName;
 	}
