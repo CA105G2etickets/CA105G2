@@ -96,13 +96,13 @@
 		<td>${TicketOrderVO.payment_method}</td>
 		<td>${TicketOrderVO.ticket_order_status}</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ticketorder/ticketorder.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="ticketorder.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="ticket_order_no"  value="${TicketOrderVO.ticket_order_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ticketorder/ticketorder.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="ticketorder.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="ticket_order_no"  value="${TicketOrderVO.ticket_order_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>

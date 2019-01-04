@@ -76,7 +76,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 	<tr>
 		<td>座位區編號:</td>
 		<td><input type="TEXT" name="ticarea_no" size="45"
-			 value="<%= (toVO==null)? "E000101A01" : toVO.getTicarea_no()%>" /></td>
+			 value="<%= (toVO==null)? "ES00000001" : toVO.getTicarea_no()%>" /></td>
 	</tr>
 	<tr>
 		<td>總價:</td>

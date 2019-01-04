@@ -96,13 +96,13 @@
 		<td>${TicketVO.ticket_resale_price}</td>
 		<td>${TicketVO.is_from_resale}</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ticket/ticket.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="ticket.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="ticket_no"  value="${TicketVO.ticket_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ticket/ticket.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="ticket.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="ticket_no"  value="${TicketVO.ticket_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>
