@@ -94,6 +94,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>PermissionServlet</servlet-name>
+		<servlet-class>com.permission.controller.PermissionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PermissionServlet</servlet-name>
+		<url-pattern>/permission/permission.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>GoodsServlet</servlet-name>
 		<servlet-class>com.goods.controller.GoodsServlet</servlet-class>
 	</servlet>
