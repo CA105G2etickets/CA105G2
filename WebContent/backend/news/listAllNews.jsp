@@ -80,7 +80,7 @@ th, td {
 			<td>${news.administrator_no}</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/news/news.do"
+					ACTION="news.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="news_no" value="${news.news_no}"> <input
@@ -89,7 +89,7 @@ th, td {
 			</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/news/news.do"
+					ACTION="news.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="刪除"> <input type="hidden"
 						name="news_no" value="${news.news_no}"> 
