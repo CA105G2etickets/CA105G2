@@ -27,7 +27,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MemberServlet</servlet-name>
-		<url-pattern>/member/member.do</url-pattern>
+		<url-pattern>/backend/member/member.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -36,7 +36,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MemberImageServlet</servlet-name>
-		<url-pattern>/member/memberImg.do</url-pattern>
+		<url-pattern>/backend/member/memberImg.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

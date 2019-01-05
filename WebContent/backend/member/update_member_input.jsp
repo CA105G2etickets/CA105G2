@@ -164,7 +164,7 @@ function readURL(input){
 		<td>會員大頭貼:</td>
 		<td>
 		<input type="file" accept="image/jpeg, image/png" name="picture" onchange="readURL(this)" targetID="previewImg">
-		<img id="previewImg" src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="100" width="100">
+		<img id="previewImg" src="<%=request.getContextPath()%>/backend/member/memberImg.do?memberno=${member.memberNo}" height="100" width="100">
 		</td>
 	</tr>
 	<tr>

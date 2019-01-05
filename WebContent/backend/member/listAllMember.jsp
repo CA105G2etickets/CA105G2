@@ -153,12 +153,12 @@ th, td {
 			<td>${member.ewalletBalance}</td>
 			<td><fmt:formatDate value="${member.creationDate}"
 					pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			<td><img class="img-circle" src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
+			<td><img class="img-circle" src="<%=request.getContextPath()%>/backend/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
 			<td>${member.memberStatus}</td> 
 			<td>${member.thirduid}</td> 
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/member/member.do"
+					ACTION="member.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="memberno" value="${member.memberNo}"> <input
@@ -167,7 +167,7 @@ th, td {
 			</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/member/member.do"
+					ACTION="member.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="刪除"> <input type="hidden"
 						name="memberno" value="${member.memberNo}"> <input

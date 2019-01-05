@@ -125,7 +125,7 @@
 		<td><%=member.getMemberPassword()%></td>
 		<td><%=member.getEwalletBalance()%></td>
 		<td><%=member.getCreationDate()%></td>
-		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
+		<td><img src="<%=request.getContextPath()%>/backend/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
 		<td><%=member.getMemberStatus()%></td>
 		<td><%=member.getThirduid()%></td>
 	</tr>
