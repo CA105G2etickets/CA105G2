@@ -29,7 +29,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 					errorMsgs.add("請輸入會員編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -41,7 +41,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -54,19 +54,19 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				req.setAttribute("favoriteGoodsVO", favoriteGoodsVO);
-				String url = "/FavoriteGoods/AllGoodsOfAMember.jsp";
+				String url = "/backend/favorite_goods/AllGoodsOfAMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
 				errorMsgs.add("無法取得資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -81,7 +81,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 					errorMsgs.add("請輸入商品編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -93,7 +93,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -106,19 +106,19 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				req.setAttribute("favoriteGoodsVO", favoriteGoodsVO);
-				String url = "/FavoriteGoods/AllMemberOfAGoods.jsp";
+				String url = "/backend/favorite_goods/AllMemberOfAGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
 				errorMsgs.add("無法取得資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -133,7 +133,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 					errorMsgs.add("請輸入會員編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -145,7 +145,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -157,19 +157,19 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				req.setAttribute("favoriteGoodsVO", favoriteGoodsVO);
-				String url = "/FavoriteGoods/listOneFavoriteGoods.jsp";
+				String url = "/backend/favorite_goods/listOneFavoriteGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
 				errorMsgs.add("無法取得資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -185,13 +185,13 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				FavoriteGoodsVO favoriteGoodsVO = favoriteGoodsSvc.getOneFavoriteGoods(member_no);
 				
 				req.setAttribute("favoriteGoodsVO", favoriteGoodsVO);
-				String url = "/FavoriteGoods/update_FavoriteGoods_input.jsp";
+				String url = "/backend/favorite_goods/update_FavoriteGoods_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/listAllFavoriteGoods.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/listAllFavoriteGoods.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -211,7 +211,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("favoriteGoodsVO", favoriteGoodsVO); 
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/update_FavoriteGoods_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/update_FavoriteGoods_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -220,13 +220,13 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				favoriteGoodsVO = favoriteGoodsSvc.updateFavoriteGoods(member_no, goods_no);
 			
 				req.setAttribute("favoriteGoodsVO", favoriteGoodsVO); 
-				String url = "/FavoriteGoods/listOneFavoriteGoods.jsp";
+				String url = "/backend/favorite_goods/listOneFavoriteGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗："+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/update_FavoriteGoods_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/update_FavoriteGoods_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -245,7 +245,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 			
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("favoriteGoodsVO", favoriteGoodsVO); 
-					RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/addFavoriteGoods.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/addFavoriteGoods.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -253,13 +253,13 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				FavoriteGoodsService favoriteGoodsSvc = new FavoriteGoodsService();
 				favoriteGoodsVO = favoriteGoodsSvc.addFavoriteGoods(member_no, goods_no);
 				
-				String url = "/FavoriteGoods/listAllFavoriteGoods.jsp";
+				String url = "/backend/favorite_goods/listAllFavoriteGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/addFavoriteGoods.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/addFavoriteGoods.jsp");
 				failureView.forward(req, res);
 			}		
 		}
@@ -274,13 +274,13 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				FavoriteGoodsService favoriteGoodsSvc = new FavoriteGoodsService();
 				favoriteGoodsSvc.deleteFavoriteGoods(member_no, goods_no);
 				
-				String url = "/FavoriteGoods/listAllFavoriteGoods.jsp";
+				String url = "/backend/favorite_goods/listAllFavoriteGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FavoriteGoods/listAllFavoriteGoods.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/listAllFavoriteGoods.jsp");
 				failureView.forward(req, res);
 			}
 		}
