@@ -258,10 +258,7 @@ public class AdministratorServlet extends HttpServlet {
 ////////////////////////////////////////////////////////////////
 				}
 				
-				String administrator_status = req.getParameter("administrator_status").trim();
-				if (administrator_status == null || administrator_status.trim().length() == 0) {
-					errorMsgs.add("狀態請勿空白");
-				}
+				String administrator_status = "normal";
 				
 				AdministratorVO administratorVO = new AdministratorVO();
 				administratorVO.setAdministrator_name(administrator_name);
