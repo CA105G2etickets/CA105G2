@@ -17,9 +17,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
-		<div>                   
-			<c:import url="/navbar_back-end.html" charEncoding="UTF-8"/>
-		</div>
+	<div><c:import url="/backend/navbar_back-end.html" charEncoding="UTF-8"/></div>
 	<style type="text/css">
 		tr{
 			height : 30px;

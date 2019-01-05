@@ -30,9 +30,7 @@ pageContext.setAttribute("list",list);
 			}
 
 		</style>	
-		<div>                   
-			<c:import url="/navbar_back-end.html" charEncoding="UTF-8"/>
-		</div>
+	<div><c:import url="/backend/navbar_back-end.html" charEncoding="UTF-8"/></div>
 	</head>
 	<body>
 	
