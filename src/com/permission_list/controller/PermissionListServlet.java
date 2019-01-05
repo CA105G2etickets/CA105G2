@@ -39,7 +39,7 @@ public class PermissionListServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/permissionList/select_page.jsp");
+							.getRequestDispatcher("/backend/permissionList/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -53,7 +53,7 @@ public class PermissionListServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/permissionList/select_page.jsp");
+							.getRequestDispatcher("/backend/permissionList/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -67,14 +67,14 @@ public class PermissionListServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/permissionList/select_page.jsp");
+							.getRequestDispatcher("/backend/permissionList/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("permissionListVO", permissionListVO); // 資料庫取出的empVO物件,存入req
-				String url = "/permissionList/listOnePermissionList.jsp";
+				String url = "/backend/permissionList/listOnePermissionList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -82,7 +82,7 @@ public class PermissionListServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/permissionList/select_page.jsp");
+						.getRequestDispatcher("/backend/permissionList/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -105,7 +105,7 @@ public class PermissionListServlet extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("permissionListVO", permissionListVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/permissionList/update_permissionList_input.jsp";
+				String url = "/backend/permissionList/update_permissionList_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
@@ -113,7 +113,7 @@ public class PermissionListServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/permissionList/listAllPermissionList.jsp");
+						.getRequestDispatcher("/backend/permissionList/listAllPermissionList.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -143,7 +143,7 @@ public class PermissionListServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("permissionListVO", permissionListVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/permissionList/update_permissionList_input.jsp");
+							.getRequestDispatcher("/backend/permissionList/update_permissionList_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -154,7 +154,7 @@ public class PermissionListServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("permissionListVO", permissionListVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/permissionList/listOnePermissionList.jsp";
+				String url = "/backend/permissionList/listOnePermissionList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -162,7 +162,7 @@ public class PermissionListServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/permissionList/update_permissionList_input.jsp");
+						.getRequestDispatcher("/backend/permissionList/update_permissionList_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -188,7 +188,7 @@ public class PermissionListServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("permissionListVO", permissionListVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/permissionList/addPermissionList.jsp");
+							.getRequestDispatcher("/backend/permissionList/addPermissionList.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -198,7 +198,7 @@ public class PermissionListServlet extends HttpServlet {
 				permissionListVO = permissionListService.addPermissionList(permission);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/permissionList/listAllPermissionList.jsp";
+				String url = "/backend/permissionList/listAllPermissionList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -206,7 +206,7 @@ public class PermissionListServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/permissionList/addPermissionList.jsp");
+						.getRequestDispatcher("/backend/permissionList/addPermissionList.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -228,7 +228,7 @@ public class PermissionListServlet extends HttpServlet {
 				permissionListService.deletePermissionList(permission_list_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/permissionList/listAllPermissionList.jsp";
+				String url = "/backend/permissionList/listAllPermissionList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -236,7 +236,7 @@ public class PermissionListServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/permissionList/listAllPermissionList.jsp");
+						.getRequestDispatcher("/backend/permissionList/listAllPermissionList.jsp");
 				failureView.forward(req, res);
 			}
 		}

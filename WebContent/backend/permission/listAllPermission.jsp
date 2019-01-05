@@ -46,7 +46,7 @@
 			<td>${permission.permission_list_no}</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/permission/permission.do"
+					ACTION="permission.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="administrator_no" value="${permission.administrator_no}"> <input
@@ -55,7 +55,7 @@
 			</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/permission/permission.do"
+					ACTION="permission.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="刪除"> <input type="hidden"
 						name="permission_list_no" value="${permission.permission_list_no}"> <input

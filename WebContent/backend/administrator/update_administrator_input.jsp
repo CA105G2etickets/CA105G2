@@ -149,7 +149,7 @@ function readURL(input){
 		<td>管理員大頭貼</td>
 		<td>
 		<input type="file" accept="image/jpeg, image/png" name="administrator_picture" onchange="readURL(this)" targetID="previewImg">
-		<img id="previewImg" src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="100" width="100">
+		<img id="previewImg" src="<%=request.getContextPath()%>/backend/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="100" width="100">
 		</td>
 	</tr>
 	<tr>

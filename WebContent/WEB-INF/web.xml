@@ -45,7 +45,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>NewsClassificationServlet</servlet-name>
-		<url-pattern>/newsClassification/newsClassification.do</url-pattern>
+		<url-pattern>/backend/newsClassification/newsClassification.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -63,7 +63,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FaqServlet</servlet-name>
-		<url-pattern>/faq/faq.do</url-pattern>
+		<url-pattern>/backend/faq/faq.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -72,7 +72,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdministratorServlet</servlet-name>
-		<url-pattern>/administrator/administrator.do</url-pattern>
+		<url-pattern>/backend/administrator/administrator.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -81,7 +81,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdministratorImageServlet</servlet-name>
-		<url-pattern>/administrator/administratorImg.do</url-pattern>
+		<url-pattern>/backend/administrator/administratorImg.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -90,7 +90,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PermissionListServlet</servlet-name>
-		<url-pattern>/permissionList/permissionList.do</url-pattern>
+		<url-pattern>/backend/permissionList/permissionList.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -99,7 +99,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PermissionServlet</servlet-name>
-		<url-pattern>/permission/permission.do</url-pattern>
+		<url-pattern>/backend/permission/permission.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

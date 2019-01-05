@@ -72,7 +72,7 @@ th, td {
 			<td>${permissionList.permission}</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/permissionList/permissionList.do"
+					ACTION="permissionList.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="permission_list_no" value="${permissionList.permission_list_no}"> <input
@@ -81,7 +81,7 @@ th, td {
 			</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/permissionList/permissionList.do"
+					ACTION="permissionList.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="刪除"> <input type="hidden"
 						name="permission_list_no" value="${permissionList.permission_list_no}"> 

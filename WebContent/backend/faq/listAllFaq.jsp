@@ -76,7 +76,7 @@ th, td {
 			<td>${faq.faq_classification}</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/faq/faq.do"
+					ACTION="faq.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="faq_no" value="${faq.faq_no}"> <input
@@ -85,7 +85,7 @@ th, td {
 			</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/faq/faq.do"
+					ACTION="faq.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="刪除"> <input type="hidden"
 						name="faq_no" value="${faq.faq_no}"> 

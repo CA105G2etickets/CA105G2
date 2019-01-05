@@ -144,11 +144,11 @@ th, td {
 			<td>${administrator.administrator_password}</td>
 			<td><fmt:formatDate value="${administrator.creation_date}"
 					pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			<td><img class="img-circle" src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administrator.administrator_no}" height="50" width="50"></td>
+			<td><img class="img-circle" src="<%=request.getContextPath()%>/backend/administrator/administratorImg.do?administrator_no=${administrator.administrator_no}" height="50" width="50"></td>
 			<td>${administrator.administrator_status}</td> 
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/administrator/administrator.do"
+					ACTION="administrator.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="administrator_no" value="${administrator.administrator_no}"> <input
@@ -157,7 +157,7 @@ th, td {
 			</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/administrator/administrator.do"
+					ACTION="administrator.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="刪除"> <input type="hidden"
 						name="administrator_no" value="${administrator.administrator_no}"> <input

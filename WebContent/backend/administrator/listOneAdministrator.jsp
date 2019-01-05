@@ -116,7 +116,7 @@
 		<td><%=administratorVO.getAdministrator_account()%></td>
 		<td><%=administratorVO.getAdministrator_password()%></td>
 		<td><%=administratorVO.getCreation_date()%></td>
-		<td><img src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="50" width="50"></td>
+		<td><img src="<%=request.getContextPath()%>/backend/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="50" width="50"></td>
 		<td><%=administratorVO.getAdministrator_status()%></td>
 	</tr>
 </table>

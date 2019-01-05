@@ -30,7 +30,7 @@ public class NewsClassificationServlet extends HttpServlet {
 //				}
 //				if (!errorMsgs.isEmpty()) {
 //					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/newsClassification/select_page.jsp");
+//							.getRequestDispatcher("/backend/newsClassification/select_page.jsp");
 //					failureView.forward(req, res);
 //					return;
 //				}
@@ -43,7 +43,7 @@ public class NewsClassificationServlet extends HttpServlet {
 //				}
 //				if (!errorMsgs.isEmpty()) {
 //					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/newsClassification/select_page.jsp");
+//							.getRequestDispatcher("/backend/newsClassification/select_page.jsp");
 //					failureView.forward(req, res);
 //					return;
 //				}
@@ -55,20 +55,20 @@ public class NewsClassificationServlet extends HttpServlet {
 //				}
 //				if (!errorMsgs.isEmpty()) {
 //					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/newsClassification/select_page.jsp");
+//							.getRequestDispatcher("/backend/newsClassification/select_page.jsp");
 //					failureView.forward(req, res);
 //					return;
 //				}
 //				
 //				req.setAttribute("newsClass", newsClass);
-//				String url = "/newsClassification/listOneNewsClassification.jsp";
+//				String url = "/backend/newsClassification/listOneNewsClassification.jsp";
 //				RequestDispatcher successView = req.getRequestDispatcher(url);
 //				successView.forward(req, res);
 //
 //			} catch (Exception e) {
 //				errorMsgs.add("無法取得資料:" + e.getMessage());
 //				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/newsClassification/select_page.jsp");
+//						.getRequestDispatcher("/backend/newsClassification/select_page.jsp");
 //				failureView.forward(req, res);
 //			}
 //		}
@@ -86,14 +86,14 @@ public class NewsClassificationServlet extends HttpServlet {
 				NewsClassificationVO newsClass = newsClassificationService.getOneNewsClassification(newsClassificationNo);
 				
 				req.setAttribute("newsClass", newsClass);
-				String url = "/newsClassification/update_newsClassification_input.jsp";
+				String url = "/backend/newsClassification/update_newsClassification_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/newsClassification/listAllNewsClassification.jsp");
+						.getRequestDispatcher("/backend/newsClassification/listAllNewsClassification.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -122,7 +122,7 @@ public class NewsClassificationServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("newsClass", newsClass);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/newsClassification/update_newsClassification_input.jsp");
+							.getRequestDispatcher("/backend/newsClassification/update_newsClassification_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -131,14 +131,14 @@ public class NewsClassificationServlet extends HttpServlet {
 				newsClassificationService.updateNewsClassification(newsClassificationNo, newsClassification);
 				
 				req.setAttribute("newsClass", newsClass);
-				String url = "/newsClassification/listOneNewsClassification.jsp";
+				String url = "/backend/newsClassification/listOneNewsClassification.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/newsClassification/update_newsClassification_input.jsp");
+						.getRequestDispatcher("/backend/newsClassification/update_newsClassification_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -166,7 +166,7 @@ public class NewsClassificationServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("newsClass", newsClass);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/newsClassification/update_newsClassification_input.jsp");
+							.getRequestDispatcher("/backend/newsClassification/update_newsClassification_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -174,14 +174,14 @@ public class NewsClassificationServlet extends HttpServlet {
 				NewsClassificationService newsClassificationService = new NewsClassificationService();
 				newsClass = newsClassificationService.addNewsClassification(newsClassificationNo, newsClassification);
 				
-				String url = "/newsClassification/listAllNewsClassification.jsp";
+				String url = "/backend/newsClassification/listAllNewsClassification.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
 				
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/newsClassification/addNewsClassification.jsp");
+						.getRequestDispatcher("/backend/newsClassification/addNewsClassification.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -198,14 +198,14 @@ public class NewsClassificationServlet extends HttpServlet {
 //				NewsClassificationService newsClassificationService = new NewsClassificationService();
 //				newsClassificationService.deleteNewsClassification(newsClassificationNo);
 //				
-//				String url = "/newsClassification/listAllNewsClassification.jsp";
+//				String url = "/backend/newsClassification/listAllNewsClassification.jsp";
 //				RequestDispatcher successView = req.getRequestDispatcher(url);
 //				successView.forward(req, res);
 //				
 //			} catch (Exception e) {
 //				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 //				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/newsClassification/listAllNewsClassification.jsp");
+//						.getRequestDispatcher("/backend/newsClassification/listAllNewsClassification.jsp");
 //				failureView.forward(req, res);
 //			}
 //		}

@@ -72,7 +72,7 @@ th, td {
 			<td>${newsClassification.newsClassification}</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/newsClassification/newsClassification.do"
+					ACTION="newsClassification.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="newsClassificationNo" value="${newsClassification.newsClassificationNo}"> <input
