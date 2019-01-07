@@ -88,11 +88,16 @@
   </li>
 </ul>
 
-
+<!-- 
 <h3>票券管理</h3>
-
 <ul>
   <li><a href='addTicket.jsp'>Add</a> a new Ticket.</li>
+</ul>
+ -->
+
+<h3>go to My ticketOrder</h3>
+<ul>
+  <li><a href='<%=request.getContextPath()%>/frontend/ticketorder/select_page.jsp'>ticketOrder</a></li>
 </ul>
 
 </body>

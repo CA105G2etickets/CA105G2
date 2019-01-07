@@ -1,6 +1,7 @@
 package com.ticketorder.model;
 import java.util.*;
 
+import com.seating_area.model.SeatingAreaVO;
 import com.ticket.model.TicketDAOJDBC;
 import com.ticket.model.TicketVO;
 
@@ -518,4 +519,23 @@ public class TicketOrderDAOJDBC implements TicketOrderDAO_interface{
 //		TicketOrderVO toVO = new TicketOrderVO(); add one to and 2 t here manually
 		
 	}
+
+	@Override
+	public String insertTicketOrderAndUpdateTicArea(TicketOrderVO ticketorderVO, SeatingAreaVO seatingareaVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateTicketOrderAndInsertTickets(TicketOrderVO ticketorderVO, List<TicketVO> list) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String cancelTicketOrderByServlet(String ticket_order_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -8,6 +8,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.seating_area.model.SeatingAreaDAO;
+import com.seating_area.model.SeatingAreaService;
+import com.seating_area.model.SeatingAreaVO;
 import com.ticket.model.TicketDAO;
 import com.ticket.model.TicketDAOJDBC;
 import com.ticket.model.TicketVO;
@@ -433,5 +436,278 @@ public class TicketOrderDAO implements TicketOrderDAO_interface{
 				}
 			}
 		}
+	}
+
+	@Override
+	public String insertTicketOrderAndUpdateTicArea(TicketOrderVO ticketorderVO, SeatingAreaVO seatingareaVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String strReturn = null;
+		try {
+			con = ds.getConnection();
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先新增ticket_order
+			String cols[] = {"TICKET_ORDER_NO"};
+			pstmt = con.prepareStatement(INSERT_STMT , cols);			
+			pstmt.setString(1, ticketorderVO.getMember_no());
+			pstmt.setString(2, ticketorderVO.getTicarea_no());
+			pstmt.setInt(3, ticketorderVO.getTotal_price());
+			pstmt.setInt(4, ticketorderVO.getTotal_amount());
+			pstmt.setTimestamp(5, ticketorderVO.getTicket_order_time());
+			pstmt.setString(6, ticketorderVO.getPayment_method());
+			pstmt.setString(7, ticketorderVO.getTicket_order_status());
+			pstmt.executeUpdate();
+			
+			//get nextSeq value
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				strReturn = rs.getString(1);
+				System.out.println("自增主鍵值= " + strReturn +"(剛新增成功的訂票訂單編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			
+			// 再同時update tic_area's ticbookednumber
+			SeatingAreaDAO seatingareaDAO = new SeatingAreaDAO();
+			seatingareaDAO.updateSeatingAreaVOBecauseTicketOrderCreated(seatingareaVO, con);
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-TicketOrderDAO");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return strReturn;
+	}
+
+	@Override
+	public void updateTicketOrderAndInsertTickets(TicketOrderVO ticketorderVO, List<TicketVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先update ticket_order
+			pstmt = con.prepareStatement(UPDATE);			
+			pstmt.setString(1, ticketorderVO.getMember_no());
+			pstmt.setString(2, ticketorderVO.getTicarea_no());
+			pstmt.setInt(3, ticketorderVO.getTotal_price());
+			pstmt.setInt(4, ticketorderVO.getTotal_amount());
+			pstmt.setTimestamp(5, ticketorderVO.getTicket_order_time());
+			pstmt.setString(6, ticketorderVO.getPayment_method());
+			pstmt.setString(7, ticketorderVO.getTicket_order_status());
+			pstmt.setString(8, ticketorderVO.getTicket_order_no());
+			pstmt.executeUpdate();
+			
+			// 再同時新增票券
+			TicketDAO dao = new TicketDAO();
+			System.out.println("list.size()-A="+list.size());
+			for (TicketVO aTicketVO : list) {
+				aTicketVO.setTicket_order_no(ticketorderVO.getTicket_order_no());
+				dao.insertTickets(aTicketVO, con);
+			}
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("list.size()-B="+list.size());
+			System.out.println("UPDATE訂票訂單時,共有幾張票券:" + list.size());
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-TicketOrderDAO updateTicketOrderAndInsertTickets");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public String cancelTicketOrderByServlet(String ticket_order_no) {
+		TicketOrderVO ticketorderVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先get TicketOrderVO
+    		pstmt = con.prepareStatement(GET_ONE_STMT);
+    		pstmt.setString(1, ticket_order_no);
+    		
+    		rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo �]�٬� Domain objects
+				ticketorderVO = new TicketOrderVO();
+				ticketorderVO.setTicket_order_no(rs.getString("ticket_order_no"));
+				ticketorderVO.setMember_no(rs.getString("member_no"));
+				ticketorderVO.setTicarea_no(rs.getString("ticarea_no"));
+				ticketorderVO.setTotal_price(rs.getInt("total_price"));
+				ticketorderVO.setTotal_amount(rs.getInt("total_amount"));
+				ticketorderVO.setTicket_order_time(rs.getTimestamp("ticket_order_time"));
+				ticketorderVO.setPayment_method(rs.getString("payment_method"));
+				ticketorderVO.setTicket_order_status("OUTDATE4"); //set status to outdate
+			}
+    		this.cancelOneTicketOrderByServlet(ticketorderVO, con);
+    		String ticarea_no = ticketorderVO.getTicarea_no();
+    		Integer total_amount_thisTicketOrder = ticketorderVO.getTotal_amount();
+    		
+			//同時delete tic_area's bookednumber
+			SeatingAreaDAO seatingareaDAO = new SeatingAreaDAO();
+			SeatingAreaVO sVO = seatingareaDAO.findByPrimaryKeyWithCon(ticarea_no, con);
+			Integer currentBookedNum = sVO.getTicbookednumber();
+			sVO.setTicbookednumber(currentBookedNum-total_amount_thisTicketOrder);
+			seatingareaDAO.updateSeatingAreaVOBecauseTicketOrderCancelledByServlet(sVO, con);
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-TicketOrderDAO");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return ticket_order_no;
+	}
+	public void cancelOneTicketOrderByServlet(TicketOrderVO ticketorderVO, Connection con) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(UPDATE);
+			pstmt.setString(1, ticketorderVO.getMember_no());
+			pstmt.setString(2, ticketorderVO.getTicarea_no());
+			pstmt.setInt(3, ticketorderVO.getTotal_price());
+			pstmt.setInt(4, ticketorderVO.getTotal_amount());
+			pstmt.setTimestamp(5, ticketorderVO.getTicket_order_time());
+			pstmt.setString(6, ticketorderVO.getPayment_method());
+			pstmt.setString(7, ticketorderVO.getTicket_order_status());
+			pstmt.setString(8, ticketorderVO.getTicket_order_no());
+
+			pstmt.executeUpdate();
+			
+			System.out.println("----------Updated----------");
+
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-cancelOneTicketOrderByServlet at TicketOrderDAO.java");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 }

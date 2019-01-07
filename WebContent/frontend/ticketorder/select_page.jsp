@@ -89,12 +89,12 @@
 </ul>
 
 
-<h3>訂票訂單管理</h3>
+<h3>購票</h3>
 <jsp:useBean id="EveTitSvc" scope="page" class="com.event_title.model.EventTitleService" />
 <ul> 
   <li>
      <FORM METHOD="post" ACTION="ticketorder.do" >
-       <b>選擇某一個活動的活動場次名稱來購票:</b>
+       <b>選擇某一個活動的活動場次名稱，來進行購票:</b>
        <select size="1" name="evetit_no">
          <c:forEach var="EventTitleVO" items="${EveTitSvc.all}" > 
           <option value="${EventTitleVO.evetit_no}">${EventTitleVO.evetit_name}
@@ -105,11 +105,17 @@
     </FORM>
   </li>
 </ul>
-
+<!-- 
+<h3>訂票訂單管理</h3>
 <ul>
   <li><a href='addTicketOrder.jsp'>Add</a> a new TicketOrder.</li>
 </ul>
+ -->
 
+<h3>go to My ticket</h3>
+<ul>
+  <li><a href='<%=request.getContextPath()%>/frontend/ticket/select_page.jsp'>ticket</a></li>
+</ul>
 
 </body>
 </html>
