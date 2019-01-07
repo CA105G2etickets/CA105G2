@@ -27,24 +27,34 @@
 				</c:forEach>
 			</ul>
 		</c:if>
+		
+		<jsp:useBean id="PermissionService" scope="page" class="com.permission.model.PermissionService"></jsp:useBean>
 
 		<ul>
 			<font size="4px">
 				<FORM METHOD="post" ACTION="permission.do">
-					輸入權限編號 <input type="text" placeholder="例 : PL01" name="permission_list_no">
-					<input type="hidden" name="action" value="getOne_For_Display_By_Permission_List_No">
-					<input type="submit" value="送出">
+					選擇權限編號 
+					<select size="1" name="permission_list_no">
+			         <c:forEach var="permissionVO" items="${PermissionService.all}" > 
+			          <option value="${permissionVO.permission_list_no}">${permissionVO.permission_list_no}
+			         </c:forEach>   
+			       </select>
+			       <input type="hidden" name="action" value="getOne_For_Display_By_Permission_List_No">
+			       <input type="submit" value="送出">
 				</FORM>
 				<FORM METHOD="post" ACTION="permission.do">
-					輸入管理員編號 <input type="text" placeholder="例 : A001" name="administrator_no">
-					<input type="hidden" name="action" value="getOne_For_Display_By_Administrator_No">
-					<input type="submit" value="送出">
+					選擇管理員編號
+					<select size="1" name="administrator_no">
+			         <c:forEach var="permissionVO" items="${PermissionService.all}" > 
+			          <option value="${permissionVO.administrator_no}">${permissionVO.administrator_no}
+			         </c:forEach>   
+			       </select>
+			       <input type="hidden" name="action" value="getOne_For_Display_By_Administrator_No">
+			       <input type="submit" value="送出">
 				</FORM>
 				<a href='listAllPermission.jsp'>列出所有權限清單</a>
 			</font>
 
-			<jsp:useBean id="PermissionService" scope="page"
-				class="com.permission.model.PermissionService" />
 			<jsp:useBean id="PermissionListService" scope="page"
 				class="com.permission_list.model.PermissionListService" />
 

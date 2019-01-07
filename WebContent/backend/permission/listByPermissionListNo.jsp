@@ -26,6 +26,12 @@
 		<td><%=permissionVO.getPermission_list_no()%></td>
 		<td><%=permissionVO.getAdministrator_no()%></td>
 	</tr>
+	<c:forEach var="permission" items="${list}">
+	<tr>
+		<td>${permission.administrator_no}</td>
+		<td>${permission.permission_list_no}</td>
+	</tr>
+	</c:forEach>
 </table>
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
