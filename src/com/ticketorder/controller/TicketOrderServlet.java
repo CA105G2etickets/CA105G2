@@ -610,7 +610,6 @@ public class TicketOrderServlet extends HttpServlet {
 //				session.setAttribute("sVO", sVO);
 				
 				String CreatedTicketOrderNo = toSvc.insertTicketOrderAndUpdateTicArea(toVO, sVO);
-				System.out.println("CreatedTicketOrderNo="+CreatedTicketOrderNo);
 				
 				//set sessionAttribute for Listener Bound to use.
 				session.setAttribute("CreatedTicketOrderNo", CreatedTicketOrderNo);

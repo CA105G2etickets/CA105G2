@@ -610,9 +610,17 @@ public class TicketOrderDAO implements TicketOrderDAO_interface{
 				ticketorderVO.setTotal_amount(rs.getInt("total_amount"));
 				ticketorderVO.setTicket_order_time(rs.getTimestamp("ticket_order_time"));
 				ticketorderVO.setPayment_method(rs.getString("payment_method"));
-				ticketorderVO.setTicket_order_status("OUTDATE4"); //set status to outdate
+				ticketorderVO.setTicket_order_status(rs.getString("ticket_order_status"));
 			}
+			//check out the status , only cancel the 'WAITTOPAY'
+			String toStatus = ticketorderVO.getTicket_order_status();
+			if(!toStatus.contains("WAIT")) {
+				throw new SQLException("status don't contain WAIT,cant cancel");
+			}
+			
     		this.cancelOneTicketOrderByServlet(ticketorderVO, con);
+    		
+    		//after update TicketOrderStatus to outdate4, then update the seatingarea's bookednumber
     		String ticarea_no = ticketorderVO.getTicarea_no();
     		Integer total_amount_thisTicketOrder = ticketorderVO.getTotal_amount();
     		
@@ -632,7 +640,7 @@ public class TicketOrderDAO implements TicketOrderDAO_interface{
 				try {
 					// 3●設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-TicketOrderDAO");
+					System.err.println("rolled back-由-TicketOrderDAO cancelTicketOrderByServlet");
 					con.rollback();
 				} catch (SQLException excep) {
 					throw new RuntimeException("rollback error occured. "

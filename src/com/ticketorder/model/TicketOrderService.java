@@ -67,4 +67,8 @@ public class TicketOrderService {
 	public void updateTicketOrderAndInsertTickets(TicketOrderVO ticketorderVO, List<TicketVO> ticketList) {
 		dao.updateTicketOrderAndInsertTickets(ticketorderVO, ticketList);
 	}
+	
+	public String cancelTicketOrderByServlet(String ticket_order_no) {
+		return dao.cancelTicketOrderByServlet(ticket_order_no);
+	}
 }
