@@ -203,6 +203,24 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>AndroidAdminServlet</servlet-name>
+		<servlet-class>com.android.administrator.controller.AdministratorServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidAdminServlet</servlet-name>
+		<url-pattern>/admin/AndroidAdminServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AndroidSeatServlet</servlet-name>
+		<servlet-class>com.android.seating_area.controller.SeatingAreaServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidSeatServlet</servlet-name>
+		<url-pattern>/seat/AndroidSeatServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>AndroidNewsclassificationServlet</servlet-name>
 		<servlet-class>com.android.news_classification.controller.NewsClassificationServlet</servlet-class>
 	</servlet>

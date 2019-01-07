@@ -25,4 +25,8 @@ public class Event_titleService {
 	public List<Event_titleVO> getAllByClass(String str) {
 		return dao.getAllByClass(str);
 	}
+	
+	public List<Event_titleVO> getNow(){
+		return dao.getNow();
+	}
 }

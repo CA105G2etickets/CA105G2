@@ -252,4 +252,54 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 		
 		return eventList;
 	}
+	
+	@Override
+	public List<Event_titleVO> getNow() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Event_titleVO> eventList = new ArrayList<Event_titleVO>();
+		
+		String getNow = "select * " + 
+				"from event_title a right join " + 
+				"(SELECT * " + 
+				"FROM EVENT " + 
+				"where CURRENT_DATE >= trunc(eve_startdate) and CURRENT_DATE < trunc(eve_enddate) ) b " + 
+				"on a.evetit_no = b.evetit_no";
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(getNow);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Event_titleVO evetitVO = new Event_titleVO();
+				evetitVO.setEvetitNo(rs.getString("EVETIT_NO"));
+				evetitVO.setEvetitName(rs.getString("EVETIT_NAME"));
+				evetitVO.setEventNo(rs.getString("EVE_NO"));
+				eventList.add(evetitVO);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return eventList;
+	}
 }

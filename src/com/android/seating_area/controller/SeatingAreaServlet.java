@@ -1,7 +1,8 @@
-package com.android.ticket.controller;
+package com.android.seating_area.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -9,12 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.android.ticket.model.TicketService;
+import com.android.main.ImageUtil;
+import com.android.seating_area.model.SeatingAreaService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-public class TicketServlet extends HttpServlet {
-
+public class SeatingAreaServlet extends HttpServlet {
+	
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req, res);
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -26,35 +34,25 @@ public class TicketServlet extends HttpServlet {
 			jsonin.append(line);
 		}
 		System.out.println(jsonin);
-		TicketService dao = new TicketService();
+		SeatingAreaService dao = new SeatingAreaService();
 		JsonObject jsonObject = gson.fromJson(jsonin.toString(),JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
-		
-		if("getAll".equals(action)) {
-			String memberNo = jsonObject.get("memberNo").getAsString();
-			String status = jsonObject.get("status").getAsString();
-			String className = jsonObject.get("className").getAsString();
-			String list = gson.toJson(dao.getAll(memberNo,status,className));
-			writeText(res,list);
-		}
-		if("isTicket".equals(action)) {
-			String ticketNo = jsonObject.get("ticketNo").getAsString();
+		System.out.println(action);
+		if("getSeat".equals(action)) {
 			String eventNo = jsonObject.get("eventNo").getAsString();
-			writeText(res, String.valueOf(dao.isTicket(ticketNo,eventNo)));
+			String list = gson.toJson(dao.findByPrimaryKey(eventNo));
+			writeText(res, list);
 		}
-		
+		if("getEvent".equals(action)) {
+			String eventNo = jsonObject.get("eventNo").getAsString();
+			writeText(res, dao.getEvent(eventNo));
+		}
 	}
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
-	}
-	
+
 	private void writeText(HttpServletResponse res, String outText) throws IOException {
 		res.setContentType(com.utility.Util.CONTENT_TYPE);
 		PrintWriter out = res.getWriter();
 		out.print(outText);
-		System.out.println(outText);
 		out.close();
 	}
 }

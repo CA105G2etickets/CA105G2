@@ -79,6 +79,9 @@ public class Event_titleServlet extends HttpServlet {
 		if("getClass".equals(action)){
 			writeText(res, gson.toJson(dao.getclass()));
 		}
+		if("getNow".equals(action)){
+			writeText(res, gson.toJson(dao.getNow()));
+		}
 	}
 
 	private void writeText(HttpServletResponse res, String outText) throws IOException {

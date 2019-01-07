@@ -5,8 +5,17 @@ public class Event_titleVO {
 	private String evetitNo;
     private String eveClass;
     private String evetitName;
+    private String eventNo;
 
-    public String getEvetitNo() {
+    public String getEventNo() {
+		return eventNo;
+	}
+
+	public void setEventNo(String eventNo) {
+		this.eventNo = eventNo;
+	}
+
+	public String getEvetitNo() {
         return evetitNo;
     }
 

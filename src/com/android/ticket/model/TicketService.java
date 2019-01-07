@@ -13,4 +13,8 @@ public class TicketService {
 	public List<TicketVO> getAll(String memberNo,String status,String className) {
 		return dao.getAll(memberNo,status,className);
 	}
+	
+	public boolean isTicket(String ticketNo,String eventNo) {
+		return dao.isTicket(ticketNo,eventNo);
+	}
 }
