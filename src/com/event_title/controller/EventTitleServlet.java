@@ -26,6 +26,7 @@ import javax.servlet.http.Part;
 import com.event.model.EventVO;
 import com.event_title.model.EventTitleService;
 import com.event_title.model.EventTitleVO;
+import com.google.gson.Gson;
 
 
 
@@ -47,6 +48,7 @@ public class EventTitleServlet extends HttpServlet {
 		// 基本款
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
 
 		String action = request.getParameter("action");
 
@@ -562,33 +564,63 @@ public class EventTitleServlet extends HttpServlet {
 		
 
 		// 請求來源 : backend -> listAllEventTitleRelatives.jsp
-		if ("listEvents_ByEventTitle".equals(action)) {
-			
-			String requestURL = request.getParameter("requestURL");
-			
-			Map<String, String> eventTitleErrorMsgs = new LinkedHashMap<String, String>();
-			request.setAttribute("eventTitleErrorMsgs", eventTitleErrorMsgs);
+//		if ("listEvents_ByEventTitle".equals(action)) {
+//			
+//			String requestURL = request.getParameter("requestURL");
+//			
+//			Map<String, String> eventTitleErrorMsgs = new LinkedHashMap<String, String>();
+//			request.setAttribute("eventTitleErrorMsgs", eventTitleErrorMsgs);
+//
+//			try {
+//				/****************************** 1.接收請求參數 **************************************************/
+//				String evetit_no = request.getParameter("evetit_no");
+//
+//				/****************************** 2.開始查詢資料 **************************************************/
+//
+//
+//				/****************************** 3.查詢完成,準備轉交 **************************************************/
+//
+//				RequestDispatcher successView = request.getRequestDispatcher(requestURL);
+//				successView.forward(request, response);
+//
+//				/****************************** 其他可能的錯誤處理 **************************************************/
+//			} catch (Exception e) {
+//				eventTitleErrorMsgs.put("Exception", "無法取得資料 : " + e.getMessage());
+//				RequestDispatcher failureView = request.getRequestDispatcher(requestURL);
+//				failureView.forward(request, response);
+//			}
+//		}
 
-			try {
-				/****************************** 1.接收請求參數 **************************************************/
+		
+		
+		
+		
+		
+		
+		
+
+		
+		// 請求來源 : backend -> updateEvent.jsp
+		if ("listEvents_ByEventTitle_forCopyChoose".equals(action)) {
+			
+			try {				
+				/****************************** 1.將輸入資料轉為Map **************************************************/ 
 				String evetit_no = request.getParameter("evetit_no");
-
-				/****************************** 2.開始查詢資料 **************************************************/
-//				EventTitleService eventTitleService = new EventTitleService();
-//				Set<EventVO> set = eventTitleService.getEventsByEventTitle(evetit_no);
-
+				 
+				/****************************** 2.開始複合查詢 **************************************************/
+				EventTitleService eventTitleService = new EventTitleService();
+				Set<EventVO> list  = eventTitleService.getEventsByEventTitle(evetit_no);
+				
 				/****************************** 3.查詢完成,準備轉交 **************************************************/
-//				request.setAttribute("listEvents_ByEventTitle", set);
-
-				RequestDispatcher successView = request.getRequestDispatcher(requestURL);
-				successView.forward(request, response);
-
-				/****************************** 其他可能的錯誤處理 **************************************************/
+				Gson gson = new Gson();				
+				String eventVOListStr = gson.toJson(list);
+				out.println(eventVOListStr);
+				
+				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
-				eventTitleErrorMsgs.put("Exception", "無法取得資料 : " + e.getMessage());
-				RequestDispatcher failureView = request.getRequestDispatcher(requestURL);
-				failureView.forward(request, response);
+				out.println("  ### " + " 查詢失敗 : " +  e.getMessage());
 			}
+			
 		}
 		
 	}

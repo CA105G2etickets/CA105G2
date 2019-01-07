@@ -25,10 +25,18 @@
 	        margin-top: 15px;
 	        border-radius: 25px;
       	}
+      	body{
+			font-family:微軟正黑體!important;
+		}
     </style>
 </head>
 
 <body>
+
+
+
+	<jsp:include page="/backend/navbar_back-end.html" flush="true" />
+
 
 
 
@@ -39,7 +47,7 @@
 
 
 
-	<div class="container">
+	<div class="container" style="margin-bottom:30px;">
 		<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/venue/VenueServlet.do">
             <div class="col-xs-12 col-sm-12">    
 				<div class="tabbable">
@@ -117,7 +125,7 @@
 	  			<span class="form-group">
 	  				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 					<button type="submit" class="btn btn-success" name="action" value="updateVenue">儲存</button>
-					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/venue/listAllVenue.jsp?venue_no=${venueVO.venue_no}">回場地總攬</a>
+					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/venue/listAllVenue.jsp?venue_no=${venueVO.venue_no}">回場地總覽</a>
 				</span>	
 			</div>
 		</form>               
@@ -154,10 +162,13 @@
     	
     	var latitude = $("#latitude").val();
     	var longitude = $("#longitude").val();
-    	var contentString = $("#venue_name").val() + "<br>" + $("#address").val();
+    	var address = $("#address").val();
+    	var encodeURIaddress = encodeURIComponent(address);
+    	
+    	var contentString = $("#venue_name").val() + "<br>" + address;
 		var latlngObj = new latlng(latitude, longitude);
         
-        var toGoogleMapWebsiteLink = "<a href='https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude + "' target='_blank'>" + contentString + "</a>";
+        var toGoogleMapWebsiteLink = "<a href='https://www.google.com/maps/search/?api=1&query=" + encodeURIaddress + "' target='_blank'>" + contentString + "</a>";
         var infowindow = new google.maps.InfoWindow({
             content: toGoogleMapWebsiteLink
         });
@@ -193,6 +204,7 @@
                 var lat = results[0].geometry.location.lat();
                 var lng = results[0].geometry.location.lng();
                 var formatted_address = results[0].formatted_address;
+                var encodeURIaddress = encodeURIComponent(formatted_address);
                 
             	$("#latitude").val(lat);
             	$("#longitude").val(lng);
@@ -204,7 +216,7 @@
                 });
 
                 var contentString = $("#venue_name").val() + "<br>" + formatted_address;
-                var toGoogleMapWebsiteLink = "<a href='https://www.google.com/maps/search/?api=1&query=" + lat + "," + lng + "' target='_blank'>" + contentString + "</a>";
+                var toGoogleMapWebsiteLink = "<a href='https://www.google.com/maps/search/?api=1&query=" + encodeURIaddress + "' target='_blank'>" + contentString + "</a>";
                 var infowindow = new google.maps.InfoWindow({
                     content: toGoogleMapWebsiteLink
                 });

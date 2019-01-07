@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
@@ -38,6 +39,7 @@ public class EventServlet extends HttpServlet {
 		// 基本款
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
 
 		String action = request.getParameter("action");
 
@@ -153,13 +155,13 @@ public class EventServlet extends HttpServlet {
 				java.sql.Timestamp today = new java.sql.Timestamp(System.currentTimeMillis());
 				java.sql.Timestamp eve_startdate = null;
 				try {
-					eve_startdate = java.sql.Timestamp.valueOf(request.getParameter("eve_startdate"));					
+					eve_startdate = java.sql.Timestamp.valueOf(request.getParameter("eve_startdate")+":00");					
 				} catch (IllegalArgumentException e) {
 					eventErrorMsgs.put("eve_startdate", "請輸入活動開始日期時間");
 				}
 				java.sql.Timestamp eve_enddate = null;
 				try {
-					eve_enddate = java.sql.Timestamp.valueOf(request.getParameter("eve_enddate"));
+					eve_enddate = java.sql.Timestamp.valueOf(request.getParameter("eve_enddate")+":00");
 					if (today.compareTo(eve_enddate) > 0) {
 						eventErrorMsgs.put("eve_enddate_BiggerThanToday", "不得早於現在");
 					} 				
@@ -174,13 +176,13 @@ public class EventServlet extends HttpServlet {
 						
 				java.sql.Timestamp eve_onsaledate = null;
 				try {
-					eve_onsaledate = java.sql.Timestamp.valueOf(request.getParameter("eve_onsaledate"));
+					eve_onsaledate = java.sql.Timestamp.valueOf(request.getParameter("eve_onsaledate")+":00");
 				} catch (IllegalArgumentException e) {
 					eventErrorMsgs.put("eve_onsaledate", "請輸入開始售票日期時間");
 				}
 				java.sql.Timestamp eve_offsaledate = null;
 				try {
-					eve_offsaledate = java.sql.Timestamp.valueOf(request.getParameter("eve_offsaledate"));
+					eve_offsaledate = java.sql.Timestamp.valueOf(request.getParameter("eve_offsaledate")+":00");
 					if (today.compareTo(eve_offsaledate) > 0) {
 						eventErrorMsgs.put("eve_offsaledate_BiggerThanToday", "不得早於現在");
 					} 				
@@ -198,7 +200,7 @@ public class EventServlet extends HttpServlet {
 				
 				java.sql.Timestamp fullrefundenddate = null;
 				try {
-					fullrefundenddate = java.sql.Timestamp.valueOf(request.getParameter("fullrefundenddate"));
+					fullrefundenddate = java.sql.Timestamp.valueOf(request.getParameter("fullrefundenddate")+":00");
 					if (today.compareTo(fullrefundenddate) > 0) {
 						eventErrorMsgs.put("fullrefundenddate_BiggerThanToday", "不得早於現在");
 					} 				
@@ -314,7 +316,7 @@ public class EventServlet extends HttpServlet {
 		
 		
 		
-		// 請求來源 : backend -> listAllEventTitleRelatives.jsp
+		// 請求來源 : backend -> listAllEventTitleRelatives.jsp / listOneEvent.jsp
 		else if ("addEvent".equals(action)) {
 
 			String requestURL = request.getParameter("requestURL");
@@ -380,7 +382,61 @@ public class EventServlet extends HttpServlet {
 				RequestDispatcher failureView = request.getRequestDispatcher(requestURL);
 				failureView.forward(request, response);
 			}
+		} 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		// 請求來源 : back-end -> updateEvent.jsp
+		else if ("copyEvent".equals(action)) {
+
+			String requestURL = request.getParameter("requestURL");
+
+			Map<String, String> eventErrorMsgs = new LinkedHashMap<String, String>();
+			request.setAttribute("eventErrorMsgs", eventErrorMsgs);
+
+			try {
+				/****************************** 1.接收請求參數 **************************************************/
+				String eve_no = request.getParameter("eve_no"); //本人
+				String eve_no_forCopy = request.getParameter("eve_no_forCopy"); //要套用的複製
+				System.out.println(eve_no);
+				System.out.println(eve_no_forCopy);
+			
+				/****************************** 2.開始複製資料 **************************************************/
+				EventService eventService = new EventService();
+				EventVO eventVO = eventService.copyEvent_withTicketTypeAndSeatingArea(eve_no, eve_no_forCopy);
+				System.out.println(eventVO.getEve_no());
+				System.out.println(eventVO.getEvetit_no());
+				System.out.println(eventVO.getVenue_no());
+				System.out.println(eventVO.getEve_sessionname());
+//				System.out.println(eventVO);
+//				System.out.println(eventVO);
+//				System.out.println(eventVO);
+//				System.out.println(eventVO);
+//				System.out.println(eventVO);
+//				System.out.println(eventVO);
+
+				/****************************** 3.複製完成,準備轉交 **************************************************/
+				request.setAttribute("eventVO", eventVO);
+				RequestDispatcher successView = request.getRequestDispatcher(requestURL);
+				successView.forward(request, response);
+
+				/****************************** 其他可能的錯誤處理 **************************************************/
+			} catch (Exception e) {
+				eventErrorMsgs.put("Exception", "無法複製資料 : " + e.getMessage());
+				RequestDispatcher failureView = request.getRequestDispatcher(requestURL);
+				failureView.forward(request, response);
+			}
 		}
+
+
 
 		
 		

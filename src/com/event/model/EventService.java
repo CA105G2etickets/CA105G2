@@ -94,4 +94,10 @@ public class EventService {
 	public Set<TicketTypeVO> getTicketTypesByEvent(String eve_no) {
 		return eventDao.getTicketTypesByEvent(eve_no);
 	}
+	
+	
+	public EventVO copyEvent_withTicketTypeAndSeatingArea(String eve_no, String eve_no_forCopy) {		
+		return eventDao.copyEvent_withTicketTypeAndSeatingArea(eve_no, eve_no_forCopy);
+	}
+	
 }
