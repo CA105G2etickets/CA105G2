@@ -213,10 +213,10 @@
     <script type="text/javascript">
     $(function() {
         initInfoEditor();
-        initNoticesEditor();
-        initEticpurchaserulesEditor();
-        initEticrulesEditor();
-        initRefundrulesEditor();
+//         initNoticesEditor();
+//         initEticpurchaserulesEditor();
+//         initEticrulesEditor();
+//         initRefundrulesEditor();
 
         $("#evetit_poster").change(function() {
             imagesPreview(this);
