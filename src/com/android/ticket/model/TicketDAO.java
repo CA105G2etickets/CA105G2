@@ -28,7 +28,7 @@ public class TicketDAO implements TicketDAO_interface{
 	
 	private static final String ISTICKET = "select * from ticket left join seating_area on ticket.ticarea_no = seating_area.ticarea_no where ticket_no = ? and eve_no = ?";
 	private static final String UPDATE = "update ticket set ticket_status= ? where ticket_no= ?";
-	
+	private static final String FINDID = "select * from ticket where ticket_no= ?";
 	@Override
 	public List<TicketVO> getAll(String memberNo,String status,String className) {
 		Connection con = null;
@@ -139,6 +139,45 @@ public class TicketDAO implements TicketDAO_interface{
 			}
 		}
 		return isTicket;
+	}
+	
+	@Override
+	public String findIDbyTicket(String ticketNo) {
+		String memberNo = "";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FINDID);
+			pstmt.setString(1, ticketNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				memberNo = rs.getString("member_no");
+			}
+			
+		}catch (SQLException e) {
+				e.getStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberNo;
 	}
 	
 	private void upDate(String ticketNo) {

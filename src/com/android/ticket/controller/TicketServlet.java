@@ -42,6 +42,10 @@ public class TicketServlet extends HttpServlet {
 			String eventNo = jsonObject.get("eventNo").getAsString();
 			writeText(res, String.valueOf(dao.isTicket(ticketNo,eventNo)));
 		}
+		if("findID".equals(action)) {
+			String ticketNo = jsonObject.get("ticketNo").getAsString();
+			writeText(res, dao.findIDbyTicket(ticketNo));
+		}
 		
 	}
 	

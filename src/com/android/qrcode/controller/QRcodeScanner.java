@@ -33,6 +33,7 @@ public class QRcodeScanner {
 				userSession.setMaxBinaryMessageBufferSize(maxBufferSize);
 				/* save the new user in the map */
 				sessionsMap.put(userName, userSession);
+				System.out.println(userName);
 	}
 	
 	@OnMessage

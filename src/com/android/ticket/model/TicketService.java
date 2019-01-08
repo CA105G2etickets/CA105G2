@@ -17,4 +17,8 @@ public class TicketService {
 	public boolean isTicket(String ticketNo,String eventNo) {
 		return dao.isTicket(ticketNo,eventNo);
 	}
+	
+	public String findIDbyTicket(String ticketNo) {
+		return dao.findIDbyTicket(ticketNo);
+	}
 }
