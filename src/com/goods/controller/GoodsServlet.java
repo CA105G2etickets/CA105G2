@@ -442,7 +442,6 @@ public class GoodsServlet extends HttpServlet {
 				}
 				String goods_introduction = req.getParameter("goods_introduction");
 				Integer forsales_a = new Integer (req.getParameter("forsales_a"));
-				Integer favorite_count = new Integer (req.getParameter("favorite_count"));
 				String goods_status = req.getParameter("goods_status");
 				
 				 java.sql.Timestamp launchdate = null;
@@ -451,6 +450,11 @@ public class GoodsServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					goodsErrorMsgs.put("launchdate", "請輸入上架日期");
 				}
+				
+				//inti number is zero.
+				Integer favorite_count = 0;
+				Integer goods_sales_count = 0;
+				Integer goods_group_count = 0;
 				
 				 java.sql.Timestamp offdate = null;
 				try {
@@ -466,9 +470,7 @@ public class GoodsServlet extends HttpServlet {
 				} catch (NullPointerException e){
 					
 				}
-				Integer goods_group_count = new Integer (req.getParameter("goods_group_count"));
-				Integer goods_want_count = new Integer (req.getParameter("goods_want_count"));
-				Integer goods_sales_count = new Integer (req.getParameter("goods_sales_count"));
+				Integer goods_want_count = 0;
 			
 				if (!goodsErrorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
