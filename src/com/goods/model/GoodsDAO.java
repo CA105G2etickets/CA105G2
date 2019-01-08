@@ -14,12 +14,12 @@ public class GoodsDAO implements GoodsDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-
+  
 	private static final String INSERT_STMT = "INSERT INTO GOODS VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
 
 	private static final String GET_ALL_STMT = "SELECT * FROM GOODS";
@@ -28,7 +28,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 	private static final String DELETE = "DELETE FROM GOODS WHERE GOODS_NO = ?";
 
-	private static final String UPDATE = "UPDATE GOODS SET EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?,GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, ForsalesS_A=?, FAVORITE_COUNT=?,GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?, GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=?,  GOODS_NO=?";
+	private static final String UPDATE = "UPDATE GOODS SET EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?, GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, FORSALES_A=?, GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=? WHERE GOODS_NO=?";
 
 	@Override
 	public void insert(GoodsVO goodsVO) {
@@ -99,14 +99,14 @@ public class GoodsDAO implements GoodsDAO_interface {
 			pstmt.setBytes(6, goodsVO.getGoods_picture3());
 			pstmt.setString(7, goodsVO.getGoods_introduction());
 			pstmt.setInt(8, goodsVO.getForsales_a());
-			pstmt.setInt(9, goodsVO.getFavorite_count());
-			pstmt.setString(10, goodsVO.getGoods_status());
-			pstmt.setTimestamp(11, goodsVO.getLaunchdate());
-			pstmt.setTimestamp(12, goodsVO.getOffdate());
-			pstmt.setInt(13, goodsVO.getGoods_group_count());
-			pstmt.setInt(14, goodsVO.getGoods_want_count());
-			pstmt.setInt(15, goodsVO.getGoods_sales_count());
-			pstmt.setString(16, goodsVO.getGoods_no());
+//			pstmt.setInt(9, goodsVO.getFavorite_count());
+			pstmt.setString(9, goodsVO.getGoods_status());
+			pstmt.setTimestamp(10, goodsVO.getLaunchdate());
+			pstmt.setTimestamp(11, goodsVO.getOffdate());
+//			pstmt.setInt(13, goodsVO.getGoods_group_count());
+//			pstmt.setInt(14, goodsVO.getGoods_want_count());
+//			pstmt.setInt(15, goodsVO.getGoods_sales_count());
+			pstmt.setString(12, goodsVO.getGoods_no());
 			pstmt.executeUpdate();
 
 			System.out.println("----------Updated----------");
@@ -177,7 +177,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+  
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);

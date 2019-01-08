@@ -1,417 +1,577 @@
 package com.goods.controller;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.*;
 
+
 import com.goods.model.*;
-import com.member.model.MemberVO;
 
+
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class GoodsServlet extends HttpServlet {
-
+	private static final long serialVersionUID = 1L;
+	
+	public GoodsServlet() {
+		super();
+	}
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("utf-8");
+		res.setContentType("text/html; charset=utf-8");
+		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
 
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+		if ("getOne_For_Display".equals(action)) { 
 
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
+			
+			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String str = req.getParameter("goods_no");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入商品編號");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/goods/select_page.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
-				String goods_no = null;
-				try {
-					goods_no = new String(str);
-				} catch (Exception e) {
-					errorMsgs.add("商品編號格式不正確");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/goods/select_page.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
+				String goods_no = req.getParameter("goods_no");
+			
 				/*************************** 2.開始查詢資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
 				GoodsVO goodsVO = goodsSvc.getOneGoods(goods_no);
 				if (goodsVO == null) {
-					errorMsgs.add("查無資料");
+					goodsErrorMsgs.put("goods_no", "查無資料");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/goods/select_page.jsp");
+				if (!goodsErrorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("goodsVO", goodsVO); // 資料庫取出的empVO物件,存入req
-				String url = "/goods/listOneGoods.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				req.setAttribute("goodsVO", goodsVO); 
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listOneGoods.jsp");
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/goods/select_page.jsp");
+				goodsErrorMsgs.put("Exception","無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
+			return;
 		}
+		
+		
+		
+		
 
 		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL = req.getParameter("requestURL");
+			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String goods_no = new String(req.getParameter("goods_no"));
-				
+
 				/*************************** 2.開始查詢資料 ****************************************/
 				GoodsService goodsSvc = new GoodsService();
 				GoodsVO goodsVO = goodsSvc.getOneGoods(goods_no);
+				
+				if (goodsVO == null) {
+					goodsErrorMsgs.put("goods_no", "查無資料");
+				}
+				
+				if (!goodsErrorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+					failureView.forward(req, res);
+					return;
+				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("goodsVO", goodsVO); // 資料庫取出的empVO物件,存入req
-				String url = "/goods/update_goods_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/update_goods_input.jsp");// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/goods/listAllGoods.jsp");
+				goodsErrorMsgs.put("Exception","無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
+			return;
 		}
 
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//				String goods_no = new String(req.getParameter("goods_no").trim());
-//				String evetit_no = new String(req.getParameter("evetit_no").trim());
-								String evetit_no = req.getParameter("evetit_no").trim();
-				if (evetit_no == null || evetit_no.trim().length() == 0) {
-					errorMsgs.add("商品介紹請勿空白");
-				}
-				
-				String goods_name = req.getParameter("goods_name");
-				String goods_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,70}$";
-				if (goods_name == null || goods_name.trim().length() == 0) {
-					errorMsgs.add("商品名稱: 請勿空白");
-				} else if (!goods_name.trim().matches(goods_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("商品名稱: 只能是中、英文字母、數字");
-				}
-
-				String goods_introduction = req.getParameter("goods_introduction").trim();
-				if (goods_introduction == null || goods_introduction.trim().length() == 0) {
-					errorMsgs.add("商品介紹請勿空白");
-				}	
-
-				Integer goods_price = null;
-				try {
-					goods_price = new Integer(req.getParameter("goods_price").trim());
-				} catch (NumberFormatException e) {
-					goods_price = 0;
-					errorMsgs.add("請輸入售價");
-				}
-
-//				Integer forsales_a = null;
-//				try {
-//					goods_price = new Integer(req.getParameter("forsales_a").trim());
-//				} catch (NumberFormatException e) {
-//					goods_price = 0;
-//					errorMsgs.add("折扣價填數字.");
-//				}
-//
-//				Integer favorite_count = null;
-//				try {
-//					favorite_count = new Integer(req.getParameter("favorite_count").trim());
-//				} catch (NumberFormatException e) {
-//					favorite_count = 0;
-//					errorMsgs.add("喜愛人數");
-//				}
-//				
-//				String goods_status = req.getParameter("goods_status").trim();
-//				if (goods_status == null || goods_status.trim().length() == 0) {
-//					errorMsgs.add("商品狀態請勿空白");
-//				}	
-
-//				java.sql.Timestamp launchdate = null;
-//				try {
-//					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
-//				} catch (IllegalArgumentException e) {
-//					launchdate = new java.sql.Timestamp(System.currentTimeMillis());
-//					errorMsgs.add("請輸入上架日期!");
-//				}
-//
-//				java.sql.Timestamp offdate = null;
-//				try {
-//					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
-//				} catch (IllegalArgumentException e) {
-//					offdate = new java.sql.Timestamp(System.currentTimeMillis());
-//					errorMsgs.add("請輸入下架日期!");
-//				}
-
-//				Integer goods_group_count = null;
-//				try {
-//					goods_group_count = new Integer(req.getParameter("goods_group_count").trim());
-//				} catch (NumberFormatException e) {
-//					goods_group_count = 0;
-//					errorMsgs.add("開團統計");
-//				}
-//				
-//				Integer goods_want_count = null;
-//				try {
-//					goods_want_count = new Integer(req.getParameter("goods_want_count").trim());
-//				} catch (NumberFormatException e) {
-//					goods_want_count = 0;
-//					errorMsgs.add("許願人數");
-//				}
-//				
-//				Integer goods_sales_count = null;
-//				try {
-//					goods_sales_count = new Integer(req.getParameter("goods_sales_count").trim());
-//				} catch (NumberFormatException e) {
-//					goods_sales_count = 0;
-//					errorMsgs.add("銷售量");
-//				}
-
-				GoodsVO goodsVO = new GoodsVO();
-				goodsVO.setEvetit_no(evetit_no);
-				goodsVO.setGoods_name(goods_name);
-				goodsVO.setGoods_price(goods_price);
-//				goodsVO.setGoods_picture1(goods_picture1);
-//				goodsVO.setGoods_picture2(goods_picture2);
-//				goodsVO.setGoods_picture3(goods_picture3);
-//				goodsVO.setGoods_introduction(goods_introduction);
-//				goodsVO.setForsales_a(forsales_a);
-//				goodsVO.setFavorite_count(favorite_count);
-//				goodsVO.setGoods_status(goods_status);
-//				goodsVO.setLaunchdate(launchdate);
-//				goodsVO.setOffdate(offdate);
-//				goodsVO.setGoods_group_count(goods_group_count);
-//				goodsVO.setGoods_want_count(goods_want_count);
-//				goodsVO.setGoods_sales_count(goods_sales_count);
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("goodsVO", goodsVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/goods/update_goods_input.jsp");
-					failureView.forward(req, res);
-					return; // 程式中斷
-				}
-
-				/*************************** 2.開始修改資料 *****************************************/
-				GoodsService goodsSvc = new GoodsService();
-//				goodsVO = goodsSvc.updateGoods(goods_name, goods_nameReg, goods_nameReg, goods_price, null, null, null,
-//						goods_nameReg, goods_price, goods_price, goods_nameReg, launchdate, offdate, goods_price,
-//						goods_price, goods_price);
-
-				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/goods/listOneGoods.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/goods/update_goods_input.jsp");
-				failureView.forward(req, res);
-			}
-		}
-
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String goods_no = new String(req.getParameter("goods_no").trim());
-				String evetit_no = req.getParameter("evetit_no");
-				if (evetit_no == null || evetit_no.trim().length() == 0) {
-					errorMsgs.add("活動編號 請勿空白");
-				}
-				String goods_name = req.getParameter("goods_name");
-				
-				if (goods_name == null || goods_name.trim().length() == 0)
-					errorMsgs.add("商品名稱: 請勿空白");
-
-				Integer goods_price = null;
-				try {
-					goods_price = new Integer(req.getParameter("goods_price").trim());
-				} catch (NumberFormatException e) {
-					goods_price = 0;
-					errorMsgs.add("請輸入售價.");
-				}
-				String goods_introduction = req.getParameter("goods_introduction").trim();
-				if (goods_introduction == null || goods_introduction.trim().length() == 0) {
-					errorMsgs.add("商品介紹請勿空白");
-				}
-
-//				Integer forsales_a = null;
-//				try {
-//					goods_price = new Integer(req.getParameter("forsales_a").trim());
-//				} catch (NumberFormatException e) {
-//					goods_price = 0;
-//					errorMsgs.add("折扣價填數字.");
-//				}
-//
-//				Integer favorite_count = null;
-//				try {
-//					favorite_count = new Integer(req.getParameter("favorite_count").trim());
-//				} catch (NumberFormatException e) {
-//					favorite_count = 0;
-//					errorMsgs.add("喜愛人數");
-//				}
 		
+		
+		
+		if ("update".equals(action)) { 
 
-//				java.sql.Timestamp launchdate = null;
-//				try {
-//					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
-//				} catch (IllegalArgumentException e) {
-//					launchdate = new java.sql.Timestamp(System.currentTimeMillis());
-//					errorMsgs.add("請輸入開始日期!");
-//				}
-//
-//				java.sql.Timestamp offdate = null;
-//				try {
-//					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
-//				} catch (IllegalArgumentException e) {
-//					offdate = new java.sql.Timestamp(System.currentTimeMillis());
-//					errorMsgs.add("請輸入結束日期!");
-//				}
+			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
 
-//				Integer goods_group_count = null;
-//				try {
-//					goods_group_count = new Integer(req.getParameter("goods_group_count").trim());
-//				} catch (NumberFormatException e) {
-//					goods_group_count = 0;
-//					errorMsgs.add("開團統計");
-//				}
-//				
-//				Integer goods_want_count = null;
-//				try {
-//					goods_want_count = new Integer(req.getParameter("goods_want_count").trim());
-//				} catch (NumberFormatException e) {
-//					goods_want_count = 0;
-//					errorMsgs.add("許願人數");
-//				}
-//				
-//				Integer goods_sales_count = null;
-//				try {
-//					goods_sales_count = new Integer(req.getParameter("goods_sales_count").trim());
-//				} catch (NumberFormatException e) {
-//					goods_sales_count = 0;
-//					errorMsgs.add("銷售量");
-//				}
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String goods_no = req.getParameter("goods_no");
+				String goods_name = req.getParameter("goods_name");
+				if (goods_name == null || goods_name.trim().length() == 0) {
+					goodsErrorMsgs.put("goods_name", "請輸入商品名稱");
+				}
+				String evetit_no = req.getParameter("evetit_no");
+				Integer goods_price = new Integer (req.getParameter("goods_price"));
+				Integer forsales_a = new Integer (req.getParameter("forsales_a"));
+				
+				java.sql.Timestamp today = new java.sql.Timestamp(System.currentTimeMillis());
+				java.sql.Timestamp launchdate = null;
+				try {
+					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
+				} catch (IllegalArgumentException e) {
+					launchdate = new java.sql.Timestamp(System.currentTimeMillis());
+					goodsErrorMsgs.put("launchdate", "請輸入上架日期。");
+				}
+				
+				java.sql.Timestamp offdate = null;
+				try {
+					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
+				} catch (IllegalArgumentException e) {
+					offdate = new java.sql.Timestamp(System.currentTimeMillis());
+					goodsErrorMsgs.put("offdate", "請輸入下架日期。");
+				}
+				String goods_status = req.getParameter("goods_status");
+				String goods_introduction = req.getParameter("goods_introduction");
+				
+				byte[] goods_picture1 = null;
+				String goods_picture1_status = req.getParameter("goods_picture1_status");
+				if("noUpload".equals(goods_picture1_status)) {
+						
+					req.setAttribute("goods_picture1_status", "noUpload");					
+				} else if ("yesUpload".equals(goods_picture1_status)){
+					String saveDirectory1 = "/tempGoods";
+					String realPath1 = getServletContext().getRealPath(saveDirectory1);
+					File fileSaveDirectory1 = new File(realPath1);		
+					if(!fileSaveDirectory1.exists()) {
+						fileSaveDirectory1.mkdirs();
+					}
+					Part part1 = req.getPart("goods_picture1");
+					DateFormat dateFormat1 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+					String strToday1 = dateFormat1.format(today); 
+					String submittedFileName1 = strToday1 + part1.getSubmittedFileName();
+
+					if(submittedFileName1.length() != 0 && part1.getContentType() != null) {
+						File fileHere1 = new File(fileSaveDirectory1, submittedFileName1);
+						part1.write(fileHere1.toString());								
+					}			
+					
+					req.setAttribute("goods_picture1_status", "alreadyUpload");						
+					req.getSession().setAttribute("goods_picture1_path", req.getContextPath() + saveDirectory1 + "/" + submittedFileName1);									
+				} else if ("alreadyUpload".equals(goods_picture1_status)){
+					req.setAttribute("goods_picture1_status", "alreadyUpload");	
+				}
+			
+				
+				byte[] goods_picture2 = null;
+				String goods_picture2_status = req.getParameter("goods_picture2_status");
+				if("noUpload".equals(goods_picture2_status)) {
+						
+					req.setAttribute("goods_picture2_status", "noUpload");					
+				} else if ("yesUpload".equals(goods_picture2_status)){
+					String saveDirectory2 = "/tempGoods";
+					String realPath2 = getServletContext().getRealPath(saveDirectory2);
+					File fileSaveDirectory2 = new File(realPath2);		
+					if(!fileSaveDirectory2.exists()) {
+						fileSaveDirectory2.mkdirs();
+					}
+					Part part2 = req.getPart("goods_picture2");
+					DateFormat dateFormat2 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+					String strToday2 = dateFormat2.format(today); 
+					String submittedFileName2 = strToday2 + part2.getSubmittedFileName();
+
+					if(submittedFileName2.length() != 0 && part2.getContentType() != null) {
+						File fileHere2 = new File(fileSaveDirectory2, submittedFileName2);
+						part2.write(fileHere2.toString());								
+					}			
+					
+					req.setAttribute("goods_picture2_status", "alreadyUpload");						
+					req.getSession().setAttribute("goods_picture2_path", req.getContextPath() + saveDirectory2 + "/" + submittedFileName2);									
+				} else if ("alreadyUpload".equals(goods_picture2_status)){
+					req.setAttribute("goods_picture2_status", "alreadyUpload");	
+				}
+
+				byte[] goods_picture3 = null;
+				String goods_picture3_status = req.getParameter("goods_picture3_status");
+				if("noUpload".equals(goods_picture3_status)) {
+						
+					req.setAttribute("goods_picture3_status", "noUpload");					
+				} else if ("yesUpload".equals(goods_picture3_status)){
+					String saveDirectory3 = "/tempGoods";
+					String realPath3 = getServletContext().getRealPath(saveDirectory3);
+					File fileSaveDirectory3 = new File(realPath3);		
+					if(!fileSaveDirectory3.exists()) {
+						fileSaveDirectory3.mkdirs();
+					}
+					Part part3 = req.getPart("goods_picture3");
+					DateFormat dateFormat3 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+					String strToday3 = dateFormat3.format(today); 
+					String submittedFileName3 = strToday3 + part3.getSubmittedFileName();
+
+					if(submittedFileName3.length() != 0 && part3.getContentType() != null) {
+						File fileHere3 = new File(fileSaveDirectory3, submittedFileName3);
+						part3.write(fileHere3.toString());								
+					}			
+					
+					req.setAttribute("goods_picture3_status", "alreadyUpload");						
+					req.getSession().setAttribute("goods_picture3_path", req.getContextPath() + saveDirectory3 + "/" + submittedFileName3);									
+				} else if ("alreadyUpload".equals(goods_picture3_status)){
+					req.setAttribute("goods_picture3_status", "alreadyUpload");	
+				}
+
+
+//				String goods_group_count = req.getParameter("goods_group_count");
+//				String setGoods_want_count = req.getParameter("setGoods_want_count");
+//				String setGoods_sales_count = req.getParameter("setGoods_sales_count");
 
 				GoodsVO goodsVO = new GoodsVO();
 				goodsVO.setGoods_no(goods_no);
 				goodsVO.setEvetit_no(evetit_no);
 				goodsVO.setGoods_name(goods_name);
 				goodsVO.setGoods_price(goods_price);
-//				goodsVO.setGoods_picture1(goods_picture1);
-//				goodsVO.setGoods_picture2(goods_picture2);
-//				goodsVO.setGoods_picture3(goods_picture3);
+				goodsVO.setGoods_picture1(goods_picture1);
+				goodsVO.setGoods_picture2(goods_picture2);
+				goodsVO.setGoods_picture3(goods_picture3);
 				goodsVO.setGoods_introduction(goods_introduction);
-//				goodsVO.setForsales_a(forsales_a);
+				goodsVO.setForsales_a(forsales_a);
 //				goodsVO.setFavorite_count(favorite_count);
-//				goodsVO.setGoods_status(goods_status);
-//				goodsVO.setLaunchdate(launchdate);
-//				goodsVO.setOffdate(offdate);
+				goodsVO.setGoods_status(goods_status);
+				goodsVO.setLaunchdate(launchdate);
+				goodsVO.setOffdate(offdate);
 //				goodsVO.setGoods_group_count(goods_group_count);
 //				goodsVO.setGoods_want_count(goods_want_count);
 //				goodsVO.setGoods_sales_count(goods_sales_count);
 
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
+				if (!goodsErrorMsgs.isEmpty()) {
 					req.setAttribute("goodsVO", goodsVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/goods/addGoods.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/update_goods_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
 
+//				if(!"noUpload".equals(goods_picture1_status)) {
+//					String goods_picture1_path = (String) req.getSession().getAttribute("goods_picture1_path");				
+//					String goods_picture1_path_forUse = goods_picture1_path.replace(req.getContextPath(), "").replace("/", "\\");
+//					String realPath1 = getServletContext().getRealPath("/") + goods_picture1_path_forUse.substring(1);
+//					InputStream in = new FileInputStream(realPath1);
+//					ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read()) != -1)
+//						baos1.write(i);
+//					goods_picture1 = baos1.toByteArray();
+//					in.close();
+//					baos1.close();
+//					
+//				}
+//				goodsVO.setGoods_picture1(goods_picture1);
+//				
+//				if(!"noUpload".equals(goods_picture2_status)) {
+//					String goods_picture2_path = (String) req.getSession().getAttribute("goods_picture2_path");				
+//					String goods_picture2_path_forUse = goods_picture2_path.replace(req.getContextPath(), "").replace("/", "\\");
+//					String realPath2 = getServletContext().getRealPath("/") + goods_picture2_path_forUse.substring(1);
+//					InputStream in = new FileInputStream(realPath2);
+//					ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read()) != -1)
+//						baos2.write(i);
+//					goods_picture1 = baos2.toByteArray();
+//					in.close();
+//					baos2.close();
+//					
+//				}
+//				goodsVO.setGoods_picture2(goods_picture2);
+//				
+//				if(!"noUpload".equals(goods_picture3_status)) {
+//					String goods_picture3_path = (String) req.getSession().getAttribute("goods_picture3_path");				
+//					String goods_picture3_path_forUse = goods_picture3_path.replace(req.getContextPath(), "").replace("/", "\\");
+//					String realPath3 = getServletContext().getRealPath("/") + goods_picture3_path_forUse.substring(1);
+//					InputStream in = new FileInputStream(realPath3);
+//					ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read()) != -1)
+//						baos3.write(i);
+//					goods_picture3 = baos3.toByteArray();
+//					in.close();
+//					baos3.close();
+//					
+//				}
+//				goodsVO.setGoods_picture3(goods_picture3);
+//				
+//				
+				
+				GoodsService goodsSvc = new GoodsService();
+				goodsVO = goodsSvc.updateGoods(goods_no, evetit_no, goods_name, goods_price, goods_picture1,
+						goods_picture2, goods_picture3, goods_introduction, forsales_a, goods_status, launchdate,
+						offdate);
+
+				req.setAttribute("goodsVO", goodsVO); 
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listOneGoods.jsp"); 
+				successView.forward(req, res);
+
+//				req.getSession().removeAttribute("goods_picture1_path");
+//				req.getSession().removeAttribute("goods_picture2_path");
+//				req.getSession().removeAttribute("goods_picture3_path");
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				goodsErrorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/update_goods_input.jsp");
+				failureView.forward(req, res);
+			}
+		}
+ 
+		if ("insert".equals(action)) { 
+
+			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String evetit_no = req.getParameter("evetit_no");
+				
+				String goods_name = req.getParameter("goods_name");
+				if (goods_name == null || goods_name.trim().length() == 0) {
+					goodsErrorMsgs.put("goods_name", "請輸入商品名稱");
+				}
+				
+				Integer goods_price = new Integer (req.getParameter("goods_price"));
+				
+				 java.sql.Timestamp today = new  java.sql.Timestamp(System.currentTimeMillis());
+				byte[] goods_picture1 = null;
+				String goods_picture1_status = req.getParameter("goods_picture1_status");
+				if("noUpload".equals(goods_picture1_status)) {
+					
+					req.setAttribute("goods_picture1_status", "noUpload");					
+				} else if ("yesUpload".equals(goods_picture1_status)){
+					String saveDirectory1 = "/tempGoods";
+					String realPath1 = getServletContext().getRealPath(saveDirectory1);
+					File fileSaveDirectory1 = new File(realPath1);		
+					if(!fileSaveDirectory1.exists()) {
+						fileSaveDirectory1.mkdirs();
+					}
+					Part part1 = req.getPart("goods_picture1");
+					DateFormat dateFormat1 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+					String strToday1 = dateFormat1.format(today);
+					String submittedFileName1 = strToday1 + part1.getSubmittedFileName();
+					
+					if(submittedFileName1.length() != 0 && part1.getContentType() != null) {
+						File fileHere1 = new File(fileSaveDirectory1, submittedFileName1);
+						part1.write(fileHere1.toString());								
+					}			
+					
+					req.setAttribute("goods_picture1_status", "alreadyUpload");						
+					req.getSession().setAttribute("goods_picture1_path", req.getContextPath() + saveDirectory1 + "/" + submittedFileName1);									
+				} else if ("alreadyUpload".equals(goods_picture1_status)){
+					req.setAttribute("goods_picture1_status", "alreadyUpload");	
+				}
+				
+				
+				byte[] goods_picture2 = null;
+				String goods_picture2_status = req.getParameter("goods_picture2_status");
+				if("noUpload".equals(goods_picture2_status)) {
+					
+					req.setAttribute("goods_picture2_status", "noUpload");					
+				} else if ("yesUpload".equals(goods_picture2_status)){
+					String saveDirectory2 = "/tempGoods";
+					String realPath2 = getServletContext().getRealPath(saveDirectory2);
+					File fileSaveDirectory2 = new File(realPath2);		
+					if(!fileSaveDirectory2.exists()) {
+						fileSaveDirectory2.mkdirs();
+					}
+					Part part2 = req.getPart("goods_picture2");
+					DateFormat dateFormat2 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+					String strToday2 = dateFormat2.format(today); 
+					String submittedFileName2 = strToday2 + part2.getSubmittedFileName();
+					
+					if(submittedFileName2.length() != 0 && part2.getContentType() != null) {
+						File fileHere2 = new File(fileSaveDirectory2, submittedFileName2);
+						part2.write(fileHere2.toString());								
+					}			
+					
+					req.setAttribute("goods_picture2_status", "alreadyUpload");						
+					req.getSession().setAttribute("goods_picture2_path", req.getContextPath() + saveDirectory2 + "/" + submittedFileName2);									
+				} else if ("alreadyUpload".equals(goods_picture2_status)){
+					req.setAttribute("goods_picture2_status", "alreadyUpload");	
+				}
+				
+				byte[] goods_picture3 = null;
+				String goods_picture3_status = req.getParameter("goods_picture3_status");
+				if("noUpload".equals(goods_picture3_status)) {
+					
+					req.setAttribute("goods_picture3_status", "noUpload");					
+				} else if ("yesUpload".equals(goods_picture3_status)){
+					String saveDirectory3 = "/tempGoods";
+					String realPath3 = getServletContext().getRealPath(saveDirectory3);
+					File fileSaveDirectory3 = new File(realPath3);		
+					if(!fileSaveDirectory3.exists()) {
+						fileSaveDirectory3.mkdirs();
+					}
+					Part part3 = req.getPart("goods_picture3");
+					DateFormat dateFormat3 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+					String strToday3 = dateFormat3.format(today); 
+					String submittedFileName3 = strToday3 + part3.getSubmittedFileName();
+					
+					if(submittedFileName3.length() != 0 && part3.getContentType() != null) {
+						File fileHere3 = new File(fileSaveDirectory3, submittedFileName3);
+						part3.write(fileHere3.toString());								
+					}			
+					
+					req.setAttribute("goods_picture3_status", "alreadyUpload");						
+					req.getSession().setAttribute("goods_picture3_path", req.getContextPath() + saveDirectory3 + "/" + submittedFileName3);									
+				} else if ("alreadyUpload".equals(goods_picture3_status)){
+					req.setAttribute("goods_picture3_status", "alreadyUpload");	
+				}
+				String goods_introduction = req.getParameter("goods_introduction");
+				Integer forsales_a = new Integer (req.getParameter("forsales_a"));
+				Integer favorite_count = new Integer (req.getParameter("favorite_count"));
+				String goods_status = req.getParameter("goods_status");
+				
+				 java.sql.Timestamp launchdate = null;
+				try {
+					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());					
+				} catch (IllegalArgumentException e) {
+					goodsErrorMsgs.put("launchdate", "請輸入上架日期");
+				}
+				
+				 java.sql.Timestamp offdate = null;
+				try {
+					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
+					if (today.compareTo(offdate) > 0) {
+						goodsErrorMsgs.put("offdate_BiggerThanToday", "結束日期不得早於今天");
+					} 				
+					if (offdate.compareTo(offdate) > 0) {
+						goodsErrorMsgs.put("offdate_BiggerThanLaunchdate", "結束日期不得早於開始日期");
+					} 
+				} catch (IllegalArgumentException e) {
+					goodsErrorMsgs.put("offdate", "請輸入結束日期");
+				} catch (NullPointerException e){
+					
+				}
+				Integer goods_group_count = new Integer (req.getParameter("goods_group_count"));
+				Integer goods_want_count = new Integer (req.getParameter("goods_want_count"));
+				Integer goods_sales_count = new Integer (req.getParameter("goods_sales_count"));
+			
+				if (!goodsErrorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
+				
+				String goods_picture1_path = (String) req.getSession().getAttribute("goods_picture1_path");				
+				String goods_picture1_path_forUse = goods_picture1_path.replace(req.getContextPath(), "").replace("/", "\\");
+				String realPath1 = getServletContext().getRealPath("/") + goods_picture1_path_forUse.substring(1);
+		
+				InputStream in = new FileInputStream(realPath1);
+				ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+				int i;
+				while ((i = in.read()) != -1)
+					baos1.write(i);
+				goods_picture1 = baos1.toByteArray();
+				in.close();
+				baos1.close();
+				
+				String goods_picture2_path = (String) req.getSession().getAttribute("goods_picture2_path");				
+				String goods_picture2_path_forUse = goods_picture2_path.replace(req.getContextPath(), "").replace("/", "\\");
+				String realPath2 = getServletContext().getRealPath("/") + goods_picture2_path_forUse.substring(1);
+		
+				InputStream in2 = new FileInputStream(realPath2);
+				ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+				int x;
+				while ((x = in.read()) != -1)
+					baos2.write(x);
+				goods_picture2 = baos2.toByteArray();
+				in.close();
+				baos2.close();
+				
+				String goods_picture3_path = (String) req.getSession().getAttribute("goods_picture3_path");				
+				String goods_picture3_path_forUse = goods_picture3_path.replace(req.getContextPath(), "").replace("/", "\\");
+				String realPath3 = getServletContext().getRealPath("/") + goods_picture3_path_forUse.substring(1);
+		
+				InputStream in3 = new FileInputStream(realPath3);
+				ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
+				int z;
+				while ((z = in.read()) != -1)
+					baos3.write(z);
+				goods_picture3 = baos3.toByteArray();
+				in.close();
+				baos3.close();
+
 				/*************************** 2.開始修改資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
-//				goodsVO = goodsSvc.addGoods(goods_name,  goods_introduction, goods_price, null, null, null,
-//						goods_introduction, goods_price, goods_price, goods_introduction, null, null, goods_price, goods_price,
-//						goods_price);
+				
+				GoodsVO goodsVO = new GoodsVO();
+				goodsVO = goodsSvc.addGoods( evetit_no, goods_name, goods_price, goods_picture1,
+						goods_picture2, goods_picture3, goods_introduction, forsales_a, favorite_count,goods_status, launchdate,
+						offdate,goods_group_count,goods_want_count,goods_sales_count);
+				req.getSession().removeAttribute("goods_picture1_path");
+				req.getSession().removeAttribute("goods_picture2_path");
+				req.getSession().removeAttribute("goods_picture3_path");
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-//				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/goods/listAllGoods.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp"); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/goods/addGoods.jsp");
+				goodsErrorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+		if ("delete".equals(action)) { 
+			
+			String requestURL = req.getParameter("requestURL");
+			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
-				String goods_no = new String(req.getParameter("goods_no"));
+				String goods_no = req.getParameter("goods_no");
+				if (goods_no == null || goods_no.trim().length() == 0) {
+					goodsErrorMsgs.put("goods_no", "找不到活動主題編號");
+				}
 
 				/*************************** 2.開始刪除資料 ***************************************/
 				GoodsService goodsSvc = new GoodsService();
 				goodsSvc.deleteGoods(goods_no);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/goods/listAllGoods.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				
+				List<GoodsVO> goodsList = goodsSvc.getAll();
+				req.setAttribute("goodsList", goodsList);
+				RequestDispatcher successView = req.getRequestDispatcher(requestURL);
 				successView.forward(req, res);
-
+				
+				
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/goods/listAllGoods.jsp");
+				goodsErrorMsgs.put("Exception","刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
+			return;
 		}
+	
 	}
 }
