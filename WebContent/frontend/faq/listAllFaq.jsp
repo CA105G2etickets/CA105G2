@@ -64,7 +64,7 @@
 	<div class="faq">
 	<c:forEach var="faq" items="${list}">
 	<table class="table">
-	<div class="container">
+	<div class="container" style="background-color:#F8F8F8">
 				<font size="4" face="DFKai-sb">
 				<ul>
 				<li class="question">${faq.question}</li>
