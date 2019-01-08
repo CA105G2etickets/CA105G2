@@ -741,6 +741,13 @@ public class TicketOrderServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
+				
+				//check status
+				String targetToVoStatus = toVO.getTicket_order_status();
+				if("OUTDATE4".equals(targetToVoStatus)) {
+					throw new Exception("This TicketOrder is been canceled cause payment time limitation.");
+				}
+				
 				//make sure toVO exist then start to update toVO.status
 				toVO.setPayment_method("CREDITCARD");
 				toVO.setTicket_order_status("COMPLETE2");
@@ -775,7 +782,7 @@ public class TicketOrderServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("資料庫出錯:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/ticketorder/userStartPaying.jsp");
+						.getRequestDispatcher("/frontend/ticketorder/listAllTicketOrder.jsp");
 				failureView.forward(req, res);
 			}
         }
