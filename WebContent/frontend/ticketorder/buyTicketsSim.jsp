@@ -1,16 +1,32 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.ticketorder.model.*"%>
-
+<%@ page import="com.seating_area.model.*"%>
+<%@ page import="com.event.model.*"%>
+<%@ page import="java.util.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
-TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
+/*
+String strEvetitNo = "E0001"; 
+System.out.println("string="+strEvetitNo);
+EventService eSvc = new EventService();
+List<EventVO> list = eSvc.findByEveTit_no(strEvetitNo);
+*/
+List<EventVO> list = (List<EventVO>)request.getAttribute("elist");
+ 
+pageContext.setAttribute("elist",list);
+System.out.println("elist="+list);
+
+SeatingAreaService saSvc = new SeatingAreaService();
+List<SeatingAreaVO> saList = saSvc.getAll();
+pageContext.setAttribute("saList",saList);
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>訂票訂單資料新增 - addTicketOrder.jsp</title>
+<title>模擬訂票訂單資料附帶票券的新增 - buyTicketsSim.jsp</title>
 
 <style>
   table#table-1 {
@@ -29,7 +45,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
   }
 </style>
 
-<style>ˇ
+<style>
   table {
 	width: 450px;
 	background-color: white;
@@ -49,7 +65,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 
 <table id="table-1">
 	<tr><td>
-		 <h3>訂票訂單資料新增 - addTicketOrder.jsp</h3></td><td>
+		 <h3>模擬訂票訂單資料附帶票券的新增 - buyTicketsSim.jsp</h3></td><td>
 		 <h4><a href="select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -65,48 +81,36 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 		</c:forEach>
 	</ul>
 </c:if>
-
-<FORM METHOD="post" ACTION="ticketorder.do" name="form1">
 <table>
 	<tr>
-		<td>會員編號:</td>
-		<td><input type="TEXT" name="member_no" size="45"
-			 value="<%= (toVO==null)? "M000001" : toVO.getMember_no()%>" /></td>
+		<th>活動場次名稱</th>
+		<th>活動開始日期</th>
+		<th>活動結束日期</th>
+		<th>活動開始販賣票券日期</th>
+		<th>活動停止販賣票券日期</th>
+		<th>活動座位的上限</th>
+		<th>活動狀態</th>
+		<th>買票按鈕</th>
+		
 	</tr>
-	<tr>
-		<td>座位區編號:</td>
-		<td><input type="TEXT" name="ticarea_no" size="45"
-			 value="<%= (toVO==null)? "ES00000001" : toVO.getTicarea_no()%>" /></td>
-	</tr>
-	<tr>
-		<td>總價:</td>
-		<td><input type="TEXT" name="total_price" size="45"
-			 value="<%= (toVO==null)? "900" : toVO.getTotal_price()%>" /></td>
-	</tr>
-	<tr>
-		<td>總張數:</td>
-		<td><input type="TEXT" name="total_amount" size="45"
-			 value="<%= (toVO==null)? "2" : toVO.getTotal_amount()%>" /></td>
-	</tr>
-	<tr>
-		<td>訂票訂單成立時間:</td>
-		<td><input name="ticket_order_time" id="f_date1" type="text"></td>
-	</tr>
-	<tr>
-		<td>付款方式:</td>
-		<td><input type="TEXT" name="payment_method" size="45"
-			 value="<%= (toVO==null)? "creditcard" : toVO.getPayment_method()%>" /></td>
-	</tr>
-	<tr>
-		<td>訂票訂單狀態:</td>
-		<td><input type="TEXT" name="ticket_order_status" size="45"
-			 value="<%= (toVO==null)? "waitForPay1" : toVO.getTicket_order_status()%>" /></td>
-	</tr>
-
+	<c:forEach var="EventVO" items="${elist}">
+		<tr>
+			<td>${EventVO.eve_sessionname}</td>
+			<td>${EventVO.eve_startdate}</td>
+			<td>${EventVO.eve_enddate}</td>
+			<td>${EventVO.eve_onsaledate}</td>
+			<td>${EventVO.eve_offsaledate}</td>
+			<td>${EventVO.ticlimit}</td>
+			<td>${EventVO.eve_status}</td>
+			<td>
+				<FORM METHOD="post" ACTION="ticketorder.do">
+				<input type="submit" value="選擇此場次">
+				<input type="hidden" name="eve_no"  value="${EventVO.eve_no}">
+				<input type="hidden" name="action"	value="chooseOne_EventTitle"></FORM>
+			</td>
+		</tr>
+	</c:forEach>
 </table>
-<br>
-<input type="hidden" name="action" value="insert">
-<input type="submit" value="送出新增"></FORM>
 </body>
 
 
@@ -116,11 +120,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
 <% 
 java.sql.Timestamp ticket_order_time = null;
 java.util.Date pickStartDate = new java.sql.Date(System.currentTimeMillis());
-  try {
-	  ticket_order_time = toVO.getTicket_order_time();
-   } catch (Exception e) {
-	   ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
-   }
+ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>

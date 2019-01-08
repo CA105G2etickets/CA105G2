@@ -67,6 +67,7 @@ public class EventDAO implements EventDAO_interface{
 			"SELECT tictype_no, eve_no, tictype_color, tictype_name, tictype_price "
 			+ "FROM TICKET_TYPE WHERE eve_no=? ORDER BY tictype_no";
 
+<<<<<<< HEAD
 	private static final String UPDATE_STMT_withoutSeatmap = 
 			"UPDATE EVENT SET venue_no=?, eve_sessionname=?, "
 			+ "eve_startdate=?, eve_enddate=?, eve_onsaledate=?, eve_offsaledate=?, ticlimit=?, fullrefundenddate=?, eve_status=? "
@@ -78,6 +79,12 @@ public class EventDAO implements EventDAO_interface{
 			"INSERT INTO EVENT (eve_no, evetit_no, venue_no) "
 			+ "VALUES ('EV'||LPAD(to_char(EVE_SEQ.NEXTVAL), 5, '0'), ?, ?)";
 
+=======
+	private static final String GET_ONE_STMT_EVETITNO = 
+			"SELECT eve_no, evetit_no, venue_no, eve_sessionname, eve_seatmap, "
+			+ "eve_startdate, eve_enddate, eve_onsaledate, eve_offsaledate, ticlimit, fullrefundenddate, eve_status "
+			+ "FROM EVENT WHERE EVETIT_NO=?";
+>>>>>>> bear
 	
 	
 	private static final String DELETE_TicketTypes_ByEvent_STMT = 
@@ -375,6 +382,70 @@ public class EventDAO implements EventDAO_interface{
 			}
 			
 			System.out.println("----------getAll finished----------");
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<EventVO> findByEveTit_no(String evetit_no) {
+		List<EventVO> list = new ArrayList<EventVO>();
+		EventVO eventVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;	
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT_EVETITNO);
+			
+			pstmt.setString(1, evetit_no); 
+					
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				eventVO = new EventVO();				
+				eventVO.setEve_no(rs.getString("eve_no"));
+				eventVO.setEvetit_no(rs.getString("evetit_no"));
+				eventVO.setVenue_no(rs.getString("venue_no"));
+				eventVO.setEve_sessionname(rs.getString("eve_sessionname"));				
+				eventVO.setEve_seatmap(rs.getBytes("eve_seatmap"));
+				eventVO.setEve_startdate(rs.getTimestamp("eve_startdate"));
+				eventVO.setEve_enddate(rs.getTimestamp("eve_enddate"));				
+				eventVO.setEve_onsaledate(rs.getTimestamp("eve_onsaledate"));
+				eventVO.setEve_offsaledate(rs.getTimestamp("eve_offsaledate"));
+				eventVO.setTiclimit(rs.getInt("ticlimit"));
+				eventVO.setFullrefundenddate(rs.getTimestamp("fullrefundenddate"));
+				eventVO.setEve_status(rs.getString("eve_status"));
+				list.add(eventVO);
+			}
+			
+			System.out.println("----------findByEVETITNOKey finished----------");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

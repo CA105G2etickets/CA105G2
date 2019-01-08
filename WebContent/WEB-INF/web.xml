@@ -255,5 +255,9 @@
         <servlet-name>TicketServlet</servlet-name>
         <url-pattern>/frontend/ticket/ticket.do</url-pattern>
     </servlet-mapping>
-    
+    <session-config>
+        <session-timeout>
+            1 <!-- it's in minute -->
+        </session-timeout>
+    </session-config>
 </web-app>

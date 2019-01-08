@@ -15,6 +15,7 @@ public interface EventDAO_interface {
     public EventVO findByPrimaryKey(String eve_no);
     public List<EventVO> getAll();
     
+<<<<<<< HEAD
     public void update_withoutSeatmap(EventVO eventVO);
     
     public Set<TicketTypeVO> getTicketTypesByEvent(String eve_no);
@@ -24,4 +25,7 @@ public interface EventDAO_interface {
 	
 	public EventVO copyEvent_withTicketTypeAndSeatingArea(String eve_no, String eve_no_forCopy);
 
+=======
+    public List<EventVO> findByEveTit_no(String evetit_no);
+>>>>>>> bear
 }

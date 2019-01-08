@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class SeatingAreaDAO implements SeatingAreaDAO_interface{
+public class SeatingAreaJNDIDAO implements SeatingAreaDAO_interface{
 
 	private static DataSource ds = null;
 	static {
@@ -30,7 +30,7 @@ public class SeatingAreaDAO implements SeatingAreaDAO_interface{
 			+ "VALUES ('ES'||LPAD(to_char(TICAREA_SEQ.NEXTVAL), 8, '0'), ?, ?, ?, ?, ?, ?)";
 	
 	private static final String UPDATE_STMT = 
-			"UPDATE seating_area set ticarea_color=?, ticarea_name=?, tictotalnumber=? "
+			"UPDATE seating_area set ticarea_color=?, ticarea_name=?, tictotalnumber=?, ticbookednumber=? "
 			+ "WHERE ticarea_no=?";
 			
 	private static final String DELETE_STMT = 
@@ -120,7 +120,8 @@ public class SeatingAreaDAO implements SeatingAreaDAO_interface{
 			pstmt.setString(1, seatingareaVO.getTicarea_color());
 			pstmt.setString(2, seatingareaVO.getTicarea_name());
 			pstmt.setInt(3, seatingareaVO.getTictotalnumber());
-			pstmt.setString(4, seatingareaVO.getTicarea_no());
+			pstmt.setInt(4, seatingareaVO.getTicbookednumber());
+			pstmt.setString(5, seatingareaVO.getTicarea_no());
 
 			pstmt.executeUpdate();
 			
@@ -234,65 +235,6 @@ public class SeatingAreaDAO implements SeatingAreaDAO_interface{
 					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return seatingareaVO;
-	}
-	@Override
-	public SeatingAreaVO findByPrimaryKeyWithCon(String ticarea_no, java.sql.Connection con){
-		
-		SeatingAreaVO seatingareaVO = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			pstmt = con.prepareStatement(GET_ONE_STMT);
-
-			pstmt.setString(1, ticarea_no);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				seatingareaVO = new SeatingAreaVO();
-				seatingareaVO.setTicarea_no(rs.getString("ticarea_no"));
-				seatingareaVO.setEve_no(rs.getString("eve_no"));
-				seatingareaVO.setTictype_no(rs.getString("tictype_no"));
-				seatingareaVO.setTicarea_color(rs.getString("ticarea_color"));
-				seatingareaVO.setTicarea_name(rs.getString("ticarea_name"));
-				seatingareaVO.setTictotalnumber(rs.getInt("tictotalnumber"));
-				seatingareaVO.setTicbookednumber(rs.getInt("ticbookednumber"));
-			}
-			
-			System.out.println("----------findByPrimaryKey finished----------");
-
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					// 3●設定於當有exception發生時之catch區塊內
-					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-findByPrimaryKeyWithCon at SeatingAreaDAO.java");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. "
-							+ excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
 				}
 			}
 		}
@@ -430,18 +372,13 @@ public class SeatingAreaDAO implements SeatingAreaDAO_interface{
 			pstmt.executeUpdate();
 			
 			System.out.println("----------Updated----------");
-			
-			//make sure tictotalnumber >= ticbookednumber
-			if(seatingareaVO.getTictotalnumber() < seatingareaVO.getTicbookednumber()) {
-				throw new SQLException("TicketsNotEnough");
-			}
 
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
 					// 3●設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-SeatingArea updateSeatingAreaVOBecauseTicketOrderCreated");
+					System.err.println("rolled back-由-SeatingArea");
 					con.rollback();
 				} catch (SQLException excep) {
 					throw new RuntimeException("rollback error occured. "
@@ -460,105 +397,21 @@ public class SeatingAreaDAO implements SeatingAreaDAO_interface{
 				}
 			}
 		}
+		
+	}
+
+	@Override
+	public SeatingAreaVO findByPrimaryKeyWithCon(String ticarea_no, Connection con) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void updateSeatingAreaVOBecauseTicketOrderCancelledByServlet(SeatingAreaVO seatingareaVO, Connection con) {
-		PreparedStatement pstmt = null;
-		try {
-			pstmt = con.prepareStatement(UPDATE_STMT);
-			
-			pstmt.setString(1, seatingareaVO.getTicarea_color());
-			pstmt.setString(2, seatingareaVO.getTicarea_name());
-			pstmt.setInt(3, seatingareaVO.getTictotalnumber());
-			pstmt.setInt(4, seatingareaVO.getTicbookednumber());
-			pstmt.setString(5, seatingareaVO.getTicarea_no());
-
-			pstmt.executeUpdate();
-			
-			System.out.println("----------Updated----------");
-
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					// 3●設定於當有exception發生時之catch區塊內
-					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-SeatingArea updateSeatingAreaVOBecauseTicketOrderCancelledByServlet");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. "
-							+ excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-		}
-	}
-	
-	
-	
-	@Override
-	public void insertFromTicketType(SeatingAreaVO seatingareaVO , Connection con) {
+		// TODO Auto-generated method stub
 		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String ticarea_no = null;
-
-		try {
-			
-			String[] cols = { "ticarea_no" };
-			pstmt = con.prepareStatement(INSERT_STMT, cols);
-			
-			pstmt.setString(1, seatingareaVO.getEve_no());
-			pstmt.setString(2, seatingareaVO.getTictype_no());
-			pstmt.setString(3, seatingareaVO.getTicarea_color());
-			pstmt.setString(4, seatingareaVO.getTicarea_name());
-			pstmt.setInt(5, seatingareaVO.getTictotalnumber());
-			pstmt.setInt(6, seatingareaVO.getTicbookednumber());
-
-			pstmt.executeUpdate();
-			
-			rs = pstmt.getGeneratedKeys();
-			if(rs.next()) {
-				ticarea_no = rs.getString(1);
-			}
-			
-			System.out.println("----------insertFromTicketType : " + ticarea_no + "----------");
-
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					System.err.print("Transaction is being rolled back from ---SeatingArea---");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. " + excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-		}	
 	}
+	
+	
+	
 }
