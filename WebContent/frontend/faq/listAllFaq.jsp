@@ -11,6 +11,9 @@
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
 	$(document).ready(function() {
+		$(".faqClass").hover(function() {
+			$(this).css("text-decoration","none");
+		});
 		$("center").click(function() {
 			$(".faq").toggle(1000);
 		});
@@ -19,16 +22,22 @@
 		},function() {
 			$(this).css("color","");
 		});
-		$(".answer").hide();
 		$(".question").click(function() {
-			$(".answer").hide("slow");
+			$(".answer").hide("slow"),
 			$(this).next().toggle("slow");
+		});
+		$(".question").hover(function() {
+			$(this).css("color","#3399ff");
+			$(this).css("text-decoration","none");
 		});
 	});
 </script>
 <style>
 .question {
  color: #3399ff;
+ font-weight: bold;
+}
+.faqClass {
  font-weight: bold;
 }
 </style>
@@ -42,14 +51,14 @@
 	<div class="row">
 	<c:forEach var="faqService" items="${faqService.allForNotRepeat}">
 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 nav nav-pills">
-		<center>
+		<center><a href="#" class="faqClass">
 				<font size="5" face="DFKai-sb">
 				<div>${faqService}</div>
 				</font>
 				<font size="4">
 				<i class="glyphicon glyphicon-menu-down"></i>
 				</font>
-		</center>
+		</a></center>
 	</div>
 	</c:forEach>
 	<div class="container"></div>
@@ -67,8 +76,8 @@
 	<div class="container" style="background-color:#F8F8F8">
 				<font size="4" face="DFKai-sb">
 				<ul>
-				<li class="question">${faq.question}</li>
-				<span class="answer">${faq.answer}</span>
+				<a href="#faq" class="question"><li>${faq.question}</li></a>
+				<span class="answer" style="display:none">${faq.answer}</span>
 				</ul>
 				</font>
 	</div>
