@@ -5,7 +5,7 @@
 <head>
 <title>ETIckeTs Member</title>
 </head>
-<jsp:include page="/frontend/navbar_front-end.html" flush="true"/>
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
