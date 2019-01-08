@@ -255,5 +255,45 @@
         <servlet-name>TicketServlet</servlet-name>
         <url-pattern>/frontend/ticket/ticket.do</url-pattern>
     </servlet-mapping>
+        <servlet>
+    <servlet-name>Group_openServlet</servlet-name>
+    <servlet-class>com.group_open.controller.Group_openServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Group_openServlet</servlet-name>
+    <url-pattern>/frontend/group_open/group_open.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Group_memberServlet</servlet-name>
+    <servlet-class>com.group_member.controller.Group_memberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Group_memberServlet</servlet-name>
+    <url-pattern>/frontend/group_member/group_member.do</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>ForumServlet</servlet-name>
+    <servlet-class>com.forum.controller.ForumServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ForumServlet</servlet-name>
+    <url-pattern>/frontend/forum/forum.do</url-pattern>
+  </servlet-mapping> 
+  <servlet>
+    <servlet-name>Group_openImg1Servlet</servlet-name>
+    <servlet-class>com.group_open.controller.Group_openImg1Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Group_openImg1Servlet</servlet-name>
+    <url-pattern>/frontend/group_open/Group_openImg1.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Group_openImg2Servlet</servlet-name>
+    <servlet-class>com.group_open.controller.Group_openImg2Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Group_openImg2Servlet</servlet-name>
+    <url-pattern>/frontend/group_open/Group_openImg2.do</url-pattern>
+  </servlet-mapping>
     
 </web-app>
