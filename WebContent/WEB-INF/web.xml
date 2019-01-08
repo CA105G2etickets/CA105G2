@@ -108,7 +108,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GoodsServlet</servlet-name>
-		<url-pattern>/goods/goods.do</url-pattern>
+		<url-pattern>/goods/GoodsServlet.do</url-pattern>
 	</servlet-mapping>
 
  <servlet>
