@@ -18,14 +18,28 @@ public class GoodsImgServlet2 extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String goods_no = req.getParameter("goods_no");
 		GoodsService goodsSvc = new GoodsService();
+		
 		byte [] pic = goodsSvc.getOneGoods(goods_no).getGoods_picture2();		
+//		System.out.println();
+		System.out.println(pic.length);
 		
-		ServletOutputStream out = res.getOutputStream();
+		if(pic.length==0) {
+			System.out.println("picture2 not exist");
+			//show noImage.jpg
+			
+			
+			
+			
+		}else {
+			ServletOutputStream out = res.getOutputStream();
+			
+			res.setContentType("image/jpg");
+			res.setContentLength(pic.length);
+			out.write(pic);
+			out.close();
+		}
 		
-		res.setContentType("image/jpg");
-		res.setContentLength(pic.length);
-		out.write(pic);
-		out.close();
+		
 
 }
 }

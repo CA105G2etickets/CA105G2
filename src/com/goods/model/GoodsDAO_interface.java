@@ -14,3 +14,4 @@ public interface GoodsDAO_interface {
 
 	public List<GoodsVO> getAll();
 }
+   

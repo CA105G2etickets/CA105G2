@@ -21,11 +21,11 @@ public class GoodsVO implements java.io.Serializable {
 	private Integer goods_group_count;
 	private Integer goods_want_count;
 	private Integer goods_sales_count;
-
+ 
 	public GoodsVO() {
 		super();
 	}
-
+   
 	public GoodsVO(String goods_no, String evetit_no, String goods_name, Integer goods_price, byte[] goods_picture1,
 			byte[] goods_picture2, byte[] goods_picture3, String goods_introduction, Integer forsales_a,
 			Integer favorite_count, String goods_status, Timestamp launchdate, Timestamp offdate,
