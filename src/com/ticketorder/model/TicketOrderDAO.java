@@ -685,7 +685,7 @@ public class TicketOrderDAO implements TicketOrderDAO_interface{
 			pstmt.setInt(4, ticketorderVO.getTotal_amount());
 			pstmt.setTimestamp(5, ticketorderVO.getTicket_order_time());
 			pstmt.setString(6, ticketorderVO.getPayment_method());
-			pstmt.setString(7, ticketorderVO.getTicket_order_status());
+			pstmt.setString(7, "OUTDATE4");
 			pstmt.setString(8, ticketorderVO.getTicket_order_no());
 
 			pstmt.executeUpdate();

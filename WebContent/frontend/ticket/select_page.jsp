@@ -59,9 +59,8 @@
         <input type="submit" value="送出">
     </FORM>
   </li>
-
+  <!--  
   <jsp:useBean id="TicketSvc" scope="page" class="com.ticket.model.TicketService" />
-  
   <li>
      <FORM METHOD="post" ACTION="ticket.do" >
        <b>選擇某一張票券的票券編號:</b>
@@ -86,6 +85,7 @@
        <input type="submit" value="送出">
      </FORM>
   </li>
+  -->
 </ul>
 
 <!-- 

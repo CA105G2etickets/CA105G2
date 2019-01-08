@@ -675,8 +675,14 @@ public class TicketOrderServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
-								
+				
+				//set toVO for userStartPaying.jsp and selectPayment.jsp to use
 				req.setAttribute("toVO", toVO);
+				String targetToVoStatus = toVO.getTicket_order_status();
+				if("OUTDATE4".equals(targetToVoStatus)) {
+					throw new Exception("This TicketOrder is been canceled cause payment time limitation.");
+				}
+								
 				String url = "/frontend/ticketorder/userStartPaying.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

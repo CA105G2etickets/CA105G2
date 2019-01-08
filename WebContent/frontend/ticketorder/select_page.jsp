@@ -50,7 +50,6 @@
 <ul>
   <li><a href='listAllTicketOrder.jsp'>List</a> all TicketOrders.  <br><br></li>
   
-  
   <li>
     <FORM METHOD="post" ACTION="ticketorder.do" >
         <b>輸入訂票訂單編號 (如TO_20181225_000001):</b>
@@ -59,7 +58,7 @@
         <input type="submit" value="送出">
     </FORM>
   </li>
-
+  <!--  
   <jsp:useBean id="TicketOrderSvc" scope="page" class="com.ticketorder.model.TicketOrderService" />
   
   <li>
@@ -86,6 +85,7 @@
        <input type="submit" value="送出">
      </FORM>
   </li>
+  -->
 </ul>
 
 
