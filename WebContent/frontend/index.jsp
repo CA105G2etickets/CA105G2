@@ -241,5 +241,5 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>
-<jsp:include page="/frontend/footer_front-end.html" flush="true"/> 
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>
