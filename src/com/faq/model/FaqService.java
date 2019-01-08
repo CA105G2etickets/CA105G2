@@ -48,4 +48,8 @@ public class FaqService {
 		return dao.getAll();
 	}
 	
+	public List<String> getAllForNotRepeat() {
+		return dao.getAllForNotRepeat();
+	}
+	
 }

@@ -9,5 +9,6 @@ public interface FaqDAO_interface {
     public void delete(String faq_no);
     public FaqVO findByPrimaryKey(String faq_no);
     public List<FaqVO> getAll();
+    public List<String> getAllForNotRepeat();
 
 }

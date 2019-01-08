@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("button").click(function() {
+			$(this).next().toggle("slow");
+			//將parent換成next，即可抓到this(這個button)下一個相鄰的標籤(div標籤)做toggle
+		});
+	});
+</script>
+<style type="text/css">
+	div {
+		background-color: #e5eecc;
+		padding: 7px;
+		border: solid 1px #c3c3c3;
+	}
+</style>
+</head>
+
+<body>
+	<h3>Island Trading</h3>
+	<button>Hide/Show me</button>
+	<div>
+		<p>
+			Contact: Helen Bennett<br>
+			Garden House Crowther Way<br>
+			London
+		</p>
+	</div>
+
+	<h3>Paris speciality</h3>
+	<button>Hide/Show me</button>
+	<div>
+		<p>
+			Contact: Marie Bertrand<br>
+			265, Boulevard Charonne<br>
+			Paris
+		</p>
+	</div>
+</body>
+</html>

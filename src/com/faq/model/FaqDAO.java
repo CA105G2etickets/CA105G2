@@ -28,6 +28,8 @@ public class FaqDAO implements FaqDAO_interface {
 			"SELECT * FROM FAQ WHERE FAQ_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM FAQ ORDER BY FAQ_NO";
+	private static final String GET_ALL_FOR_NOT_REPEAT = 
+			"SELECT DISTINCT FAQ_CLASSIFICATION FROM FAQ ORDER BY FAQ_CLASSIFICATION DESC";
 
 	@Override
 	public void insert(FaqVO faqVO) {
@@ -252,4 +254,52 @@ public class FaqDAO implements FaqDAO_interface {
 		}
 		return list;
 	}
+	
+	public List<String> getAllForNotRepeat() {
+		
+		List<String> list = new ArrayList<String>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_FOR_NOT_REPEAT);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				list.add(rs.getString("FAQ_CLASSIFICATION")); 
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("錯誤!"
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 }

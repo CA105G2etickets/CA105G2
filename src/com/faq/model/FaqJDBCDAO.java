@@ -250,4 +250,10 @@ public class FaqJDBCDAO implements FaqDAO_interface {
 		return list;
 	}
 
+	@Override
+	public List<String> getAllForNotRepeat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
