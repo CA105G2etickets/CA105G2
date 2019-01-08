@@ -34,7 +34,7 @@ public class Test_DataSource extends HttpServlet {
 
 		try {
 			Context ctx = new javax.naming.InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
 			if (ds != null) {
 				Connection conn = ds.getConnection();
 
@@ -42,7 +42,7 @@ public class Test_DataSource extends HttpServlet {
 					out.println("Got Connection: " + conn.toString());
 					Statement stmt = conn.createStatement();
 					
-					ResultSet rs = stmt.executeQuery("select * from ticket_order");
+					ResultSet rs = stmt.executeQuery("select * from ticket");
 					while (rs.next()) {
 						out.println("ticket_no = " + rs.getString(1));
 					}

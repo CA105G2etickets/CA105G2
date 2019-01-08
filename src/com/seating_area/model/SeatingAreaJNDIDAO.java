@@ -411,6 +411,12 @@ public class SeatingAreaJNDIDAO implements SeatingAreaDAO_interface{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void insertFromTicketType(SeatingAreaVO seatingareaVO, Connection con) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

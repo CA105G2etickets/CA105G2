@@ -22,7 +22,7 @@ public class TicketDAO implements TicketDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ETIckeTsDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -332,50 +332,4 @@ public class TicketDAO implements TicketDAO_interface{
 //			System.out.println("---------------------");
 //		}
 //	}
-
-	@Override
-	public void insertTickets(TicketVO ticketVO, Connection con) {
-		System.out.println("ticketVO.toString()="+ticketVO);
-		PreparedStatement pstmt = null;
-		try {
-     		pstmt = con.prepareStatement(INSERT_STMT);
-			
-			pstmt.setString(1, ticketVO.getTicarea_no());
-			pstmt.setString(2, ticketVO.getTicket_order_no());
-			pstmt.setString(3, ticketVO.getMember_no());
-			pstmt.setString(4, ticketVO.getTicket_status());
-			pstmt.setTimestamp(5, ticketVO.getTicket_create_time());
-			pstmt.setString(6, ticketVO.getTicket_resale_status());
-			pstmt.setInt(7, ticketVO.getTicket_resale_price());
-			pstmt.setString(8, ticketVO.getIs_from_resale());
-
-			pstmt.executeUpdate();
-
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					// 3●設定於當有exception發生時之catch區塊內
-					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-ticket");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. "
-							+ excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-		}
-		
-	}
 }

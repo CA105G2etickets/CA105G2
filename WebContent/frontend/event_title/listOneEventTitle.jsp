@@ -54,7 +54,7 @@
 
 
 
-	<jsp:include page="/frontend/navbar_front-end.html" flush="true" />
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 
 
 
@@ -146,7 +146,7 @@
  
     
     
-	<jsp:include page="/frontend/footer_front-end.html" flush="true" />
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 
     
     

@@ -91,7 +91,6 @@ public class EventService {
 		return eventDao.getAll();
 	}
 	
-<<<<<<< HEAD
 	public Set<TicketTypeVO> getTicketTypesByEvent(String eve_no) {
 		return eventDao.getTicketTypesByEvent(eve_no);
 	}
@@ -101,9 +100,4 @@ public class EventService {
 		return eventDao.copyEvent_withTicketTypeAndSeatingArea(eve_no, eve_no_forCopy);
 	}
 	
-=======
-	public List<EventVO> findByEveTit_no(String evetit_no) {
-		return eventDao.findByEveTit_no(evetit_no);
-	}
->>>>>>> bear
 }

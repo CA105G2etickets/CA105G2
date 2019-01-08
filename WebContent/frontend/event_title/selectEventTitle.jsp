@@ -37,7 +37,7 @@
 
 
 
-	<jsp:include page="/frontend/navbar_front-end.html" flush="true" />
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 
 
 
@@ -49,7 +49,7 @@
     <div class="container">
 		<form method="post" action="<%=request.getContextPath()%>/event_title/EventTitleServlet.do">
             <div class="form-group">
-                <label for="evetit_name">活動主題名稱=<%=request.getContextPath()%></label>
+                <label for="evetit_name">活動主題名稱</label>
                 <input type="text" name="evetit_name" id="evetit_name" placeholder="請輸入活動主題名稱" class="form-control" value="">
             </div>
             <div class="row">
@@ -94,7 +94,7 @@
 	
 	
 
-	<jsp:include page="/frontend/footer_front-end.html" flush="true" />
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 
 
     
