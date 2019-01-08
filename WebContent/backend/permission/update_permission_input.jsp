@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
-<jsp:include page="/backend/navbar_back-end.html" flush="true"/> 
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <div class="container table-responsive-md">
 <h3>資料修改:</h3>

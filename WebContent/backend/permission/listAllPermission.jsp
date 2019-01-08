@@ -19,7 +19,7 @@
 
 </head>
 
-<jsp:include page="/backend/navbar_back-end.html" flush="true"/> 
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">

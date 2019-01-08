@@ -91,7 +91,7 @@
 </style>
 </head>
 
-<jsp:include page="/frontend/navbar_front-end.html" flush="true"/> 
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/> 
 
 <table class="table">
 	<tr>

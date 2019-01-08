@@ -6,7 +6,7 @@
 <title>ETIckeTs Permission</title>
 </head>
 
-<jsp:include page="/backend/navbar_back-end.html" flush="true"/> 
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <div class="container">
 	<div class="col-xs-12 col-sm-12">

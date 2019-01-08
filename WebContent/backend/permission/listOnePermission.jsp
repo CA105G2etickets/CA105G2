@@ -14,7 +14,7 @@
 
 </head>
 
-<jsp:include page="/backend/navbar_back-end.html" flush="true"/> 
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <div class="container table-responsive-md">
 <table class="table">

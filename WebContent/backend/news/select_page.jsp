@@ -6,7 +6,7 @@
 <title>ETIckeTs News</title>
 </head>
 
-<jsp:include page="/backend/navbar_back-end.html" flush="true"/> 
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <%-- import進導覽列 --%>
 <!-- <div>                    -->

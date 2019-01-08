@@ -15,7 +15,7 @@
 
 </head>
 
-<jsp:include page="/backend/navbar_back-end.html" flush="true"/>  
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/>  
 
 <div class="container table-responsive-md">
 <h3>新增管理員權限資料:</h3>

@@ -40,6 +40,9 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
+body{
+	font-family:微軟正黑體!important;
+}
 </style>
 <body>
 		<div class="container">

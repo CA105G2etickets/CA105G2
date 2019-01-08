@@ -6,7 +6,7 @@
 <title>ETIckeTs Member</title>
 </head>
 
-<jsp:include page="/frontend/navbar_front-end.html" flush="true"/> 
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/> 
 
 <%-- import進導覽列 --%>
 <!-- <div>                    -->

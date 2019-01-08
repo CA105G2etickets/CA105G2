@@ -23,7 +23,7 @@
 			$(this).css("color","");
 		});
 		$(".question").click(function() {
-			$(".answer").hide("slow"),
+// 			$(".answer").hide("slow"),
 			$(this).next().toggle("slow");
 		});
 		$(".question").hover(function() {
@@ -34,37 +34,40 @@
 </script>
 <style>
 .question {
- color: #3399ff;
- font-weight: bold;
+	color: #3399ff;
+	font-weight: bold;
 }
 .faqClass {
- font-weight: bold;
+	font-weight: bold;
+}
+body{
+	font-family:微軟正黑體!important;
 }
 </style>
 </head>
 
-<jsp:include page="/frontend/navbar_front-end.html" flush="true"/>  
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>  
 
-<jsp:useBean id="faqService" scope="page" class="com.faq.model.FaqService" />
+<%-- <jsp:useBean id="faqService" scope="page" class="com.faq.model.FaqService" /> --%>
 
-	<div class="container">
-	<div class="row">
-	<c:forEach var="faqService" items="${faqService.allForNotRepeat}">
-	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 nav nav-pills">
-		<center><a href="#" class="faqClass">
-				<font size="5" face="DFKai-sb">
-				<div>${faqService}</div>
-				</font>
-				<font size="4">
-				<i class="glyphicon glyphicon-menu-down"></i>
-				</font>
-		</a></center>
-	</div>
-	</c:forEach>
+<!-- 	<div class="container"> -->
+<!-- 	<div class="row"> -->
+<%-- 	<c:forEach var="faqService" items="${faqService.allForNotRepeat}"> --%>
+<!-- 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 nav nav-pills"> -->
+<%-- 		<center><a href="#" class="faqClass"> --%>
+<!-- 				<font size="5"> -->
+<%-- 				<div>${faqService}</div> --%>
+<!-- 				</font> -->
+<!-- 				<font size="4"> -->
+<!-- 				<i class="glyphicon glyphicon-menu-down"></i> -->
+<!-- 				</font> -->
+<%-- 		</a></center> --%>
+<!-- 	</div> -->
+<%-- 	</c:forEach> --%>
 	<div class="container"></div>
-	<br>
-	<br>
-	<br>
+<!-- 	<br> -->
+<!-- 	<br> -->
+<!-- 	<br> -->
 <%
 	FaqService faqService1 = new FaqService();
 	List<FaqVO> list = faqService1.getAll();
@@ -74,7 +77,7 @@
 	<c:forEach var="faq" items="${list}">
 	<table class="table">
 	<div class="container" style="background-color:#F8F8F8">
-				<font size="4" face="DFKai-sb">
+				<font size="4">
 				<ul>
 				<a href="#faq" class="question"><li>${faq.question}</li></a>
 				<span class="answer" style="display:none">${faq.answer}</span>
@@ -87,5 +90,5 @@
 </div>
 </div>
 </body>
-<jsp:include page="/frontend/footer_front-end.html" flush="true"/> 
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>
