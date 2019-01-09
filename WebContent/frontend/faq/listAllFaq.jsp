@@ -23,7 +23,7 @@
 			$(this).css("color","");
 		});
 		$(".question").click(function() {
-// 			$(".answer").hide("slow"),
+// 			$(".answer").not().hide("slow"),
 			$(this).next().toggle("slow");
 		});
 		$(".question").hover(function() {
@@ -87,8 +87,8 @@ body{
 	</table>
 	</c:forEach>
 	</div>
-</div>
-</div>
+<!-- </div> -->
+<!-- </div> -->
 </body>
 <jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>
