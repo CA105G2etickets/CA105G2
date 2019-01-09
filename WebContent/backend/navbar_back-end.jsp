@@ -20,13 +20,14 @@
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	overflow: hidden;
+	overflow: visible;
 	background-color: #333;
 	display: block;
 	color: white;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -67,12 +68,19 @@
 			</div>
 			<!-- 手機隱藏選單區結束 -->
 		</div>
-		<div class="topnav">
+		<div class="topnav row">
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-				<div>
-<!-- 					<a href="#" class="topnav" align="center">活動管理</a> -->
-					<a href="/CA105G2/backend/event_title/eventTitleRelativesManagement.jsp" class="topnav" align="center">活動管理</a>
-				</div>
+				<div class="dropdown">
+					<a class="dropdown-toggle topnav" id="eventManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" align="center">活動管理
+						<span class="caret"></span>
+					</a>
+			        <ul class="dropdown-menu eventManagementMenu" aria-labelledby="eventManagement" style="text-align:center;background-color:rgba(255, 255, 255, 0.9);">
+			            <li><a href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp" target="_blank">活動管理</a></li>
+			            <li><a href="<%=request.getContextPath()%>/backend/venue/listAllVenue.jsp" target="_blank">場地管理</a></li>
+			            <li><a href="<%=request.getContextPath()%>/backend/advertisement/listAllAdvertisement.jsp" target="_blank">廣告管理</a></li>
+			            <li><a href="<%=request.getContextPath()%>/backend/event_title/changeNotices.jsp" target="_blank">異動通知</a></li>
+			        </ul>
+				</div>			
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
@@ -101,5 +109,7 @@
 			</div>
 		</div>
 	</nav>
+	<script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
