@@ -99,5 +99,7 @@ public class EventService {
 	public EventVO copyEvent_withTicketTypeAndSeatingArea(String eve_no, String eve_no_forCopy) {		
 		return eventDao.copyEvent_withTicketTypeAndSeatingArea(eve_no, eve_no_forCopy);
 	}
-	
+	public List<EventVO> findByEveTit_no(String evetit_no) {
+		return eventDao.findByEveTit_no(evetit_no);
+	}
 }

@@ -14,6 +14,7 @@ public interface EventDAO_interface {
     public void delete(String eve_no, String evetit_no, Integer evetit_sessions);
     public EventVO findByPrimaryKey(String eve_no);
     public List<EventVO> getAll();
+    public List<EventVO> findByEveTit_no(String evetit_no);
     
     public void update_withoutSeatmap(EventVO eventVO);
     

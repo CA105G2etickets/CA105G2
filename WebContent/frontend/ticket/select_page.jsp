@@ -33,7 +33,7 @@
    <tr><td><h3>Ticket: Home</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for Ticket: Home</p>
+<p>This is the Home page for Ticket: Home <%=request.getContextPath()%></p>
 
 <h3>資料查詢:</h3>
 	
@@ -52,16 +52,15 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="ticket.do" >
+    <FORM METHOD="post" ACTION="ticket.do">
         <b>輸入票券編號 (如T_20181225_000001):</b>
         <input type="text" name="ticket_no">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
   </li>
-
+  <!--  
   <jsp:useBean id="TicketSvc" scope="page" class="com.ticket.model.TicketService" />
-  
   <li>
      <FORM METHOD="post" ACTION="ticket.do" >
        <b>選擇某一張票券的票券編號:</b>
@@ -86,13 +85,19 @@
        <input type="submit" value="送出">
      </FORM>
   </li>
+  -->
 </ul>
 
-
+<!-- 
 <h3>票券管理</h3>
-
 <ul>
   <li><a href='addTicket.jsp'>Add</a> a new Ticket.</li>
+</ul>
+ -->
+
+<h3>go to My ticketOrder</h3>
+<ul>
+  <li><a href='<%=request.getContextPath()%>/frontend/ticketorder/select_page.jsp'>ticketOrder</a></li>
 </ul>
 
 </body>

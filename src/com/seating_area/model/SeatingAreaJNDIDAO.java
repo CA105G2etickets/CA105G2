@@ -299,63 +299,7 @@ public class SeatingAreaJNDIDAO implements SeatingAreaDAO_interface{
 		return list;
 	}
 
-	@Override
-	public List<SeatingAreaVO> getAllWithEve_No(String eve_no) {
-		List<SeatingAreaVO> list = new ArrayList<SeatingAreaVO>();
-		SeatingAreaVO seatingareaVO = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_STMT_BYEVENO);
-			pstmt.setString(1, eve_no);
-			
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				seatingareaVO = new SeatingAreaVO();
-				seatingareaVO.setTicarea_no(rs.getString("ticarea_no"));
-				seatingareaVO.setEve_no(rs.getString("eve_no"));
-				seatingareaVO.setTictype_no(rs.getString("tictype_no"));
-				seatingareaVO.setTicarea_color(rs.getString("ticarea_color"));
-				seatingareaVO.setTicarea_name(rs.getString("ticarea_name"));
-				seatingareaVO.setTictotalnumber(rs.getInt("tictotalnumber"));
-				seatingareaVO.setTicbookednumber(rs.getInt("ticbookednumber"));
-				list.add(seatingareaVO);
-			}
-
-			System.out.println("----------getAll finished----------");
-
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
+	
 
 	@Override
 	public void updateSeatingAreaVOBecauseTicketOrderCreated(SeatingAreaVO seatingareaVO, Connection con) {
@@ -416,6 +360,12 @@ public class SeatingAreaJNDIDAO implements SeatingAreaDAO_interface{
 	public void insertFromTicketType(SeatingAreaVO seatingareaVO, Connection con) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<SeatingAreaVO> getAllWithEve_No(String eve_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

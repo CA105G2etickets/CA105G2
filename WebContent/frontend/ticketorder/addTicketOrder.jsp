@@ -29,7 +29,7 @@ TicketOrderVO toVO = (TicketOrderVO) request.getAttribute("toVO");
   }
 </style>
 
-<style>
+<style>ˇ
   table {
 	width: 450px;
 	background-color: white;

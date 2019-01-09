@@ -60,6 +60,8 @@ public class SeatingAreaService {
 		return seatingAreaDAO.getAll();
 	}
 
-	
+	public List<SeatingAreaVO> getAllSeatingAreaByEveNo(String eve_no) {
+		return seatingAreaDAO.getAllWithEve_No(eve_no);
+	}
 	
 }
