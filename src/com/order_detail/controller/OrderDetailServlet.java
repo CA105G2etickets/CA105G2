@@ -33,7 +33,7 @@ public class OrderDetailServlet extends HttpServlet {
 					errorMsgs.add("請輸入訂單編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -45,7 +45,7 @@ public class OrderDetailServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -58,19 +58,19 @@ public class OrderDetailServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				req.setAttribute("orderDetailVO", orderDetailVO);
-				String url = "/OrderDetail/AllOrderDetailOfAOrderNo.jsp";
+				String url = "/backend/order_detail/AllOrderDetailOfAOrderNo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
 				errorMsgs.add("無法取得資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -85,7 +85,7 @@ public class OrderDetailServlet extends HttpServlet {
 					errorMsgs.add("請輸入訂單編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -97,31 +97,43 @@ public class OrderDetailServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
+				String goods_no = null;
+				try {
+					goods_no = new String(str);				
+				} catch (Exception e) {
+					errorMsgs.add("商品編號格式不正確");
+				}
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				OrderDetailService orderDetailSvc = new OrderDetailService();
-				OrderDetailVO orderDetailVO = orderDetailSvc.getOneOrderDetail(order_no);
+				OrderDetailVO orderDetailVO = orderDetailSvc.getOneOrderDetail(order_no, goods_no);
 				if (orderDetailVO == null) {
 					errorMsgs.add("查無資料");
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				req.setAttribute("orderDetailVO", orderDetailVO);
-				String url = "/OrderDetail/listOneOrderDetail.jsp";
+				String url = "/backend/order_detail/listOneOrderDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
 				errorMsgs.add("無法取得資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -132,18 +144,19 @@ public class OrderDetailServlet extends HttpServlet {
 			
 			try {
 				String order_no = new  String(req.getParameter("order_no"));
+				String goods_no = new  String(req.getParameter("goods_no"));
 				
 				OrderDetailService orderDetailSvc = new OrderDetailService();
-				OrderDetailVO orderDetailVO = orderDetailSvc.getOneOrderDetail(order_no);
+				OrderDetailVO orderDetailVO = orderDetailSvc.getOneOrderDetail(order_no, goods_no);
 				
 				req.setAttribute("orderDetailVO", orderDetailVO);
-				String url = "/OrderDetail/update_OrderDetail_input.jsp";
+				String url = "/backend/order_detail/update_OrderDetail_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/listAllOrderDetail.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -175,27 +188,27 @@ public class OrderDetailServlet extends HttpServlet {
 				orderDetailVO.setOrder_no(order_no);
 				orderDetailVO.setGoods_no(goods_no);
 				orderDetailVO.setGoods_bonus(goods_bonus);
-				orderDetailVO.setGoods_pc(goods_pc);;
+				orderDetailVO.setGoods_pc(goods_pc);
 	
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderDetailVO", orderDetailVO); 
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/update_OrderDetail_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/update_OrderDetail_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				OrderDetailService orderDetailSvc = new OrderDetailService();
-				orderDetailVO = orderDetailSvc.updateOrderDetail(goods_no, goods_bonus, goods_pc);
+				orderDetailVO = orderDetailSvc.updateOrderDetail(goods_bonus, goods_pc, order_no, goods_no);
 			
 				req.setAttribute("orderDetailVO", orderDetailVO); 
-				String url = "/OrderDetail/listOrderDetail.jsp";
+				String url = "/backend/order_detail/listAllOrderDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗："+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/update_OrderDetail_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/update_OrderDetail_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -226,11 +239,11 @@ public class OrderDetailServlet extends HttpServlet {
 				OrderDetailVO orderDetailVO = new OrderDetailVO();
 				orderDetailVO.setGoods_no(goods_no);
 				orderDetailVO.setGoods_bonus(goods_bonus);
-				orderDetailVO.setGoods_pc(goods_pc);;
+				orderDetailVO.setGoods_pc(goods_pc);
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderDetailVO", orderDetailVO); 
-					RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/addOrderDetail.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/addOrderDetail.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -239,13 +252,13 @@ public class OrderDetailServlet extends HttpServlet {
 				orderDetailVO = orderDetailSvc.addOrderDetail(order_no, goods_no, goods_bonus, goods_pc);
 				
 				
-				String url = "/OrderDetail/listAllOrderDetail.jsp";
+				String url = "/backend/order_detail/listAllOrderDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/addOrderDetail.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/addOrderDetail.jsp");
 				failureView.forward(req, res);
 			}		
 		}
@@ -260,13 +273,13 @@ public class OrderDetailServlet extends HttpServlet {
 				OrderDetailService orderDetailSvc = new OrderDetailService();
 				orderDetailSvc.deleteOrderDetail(order_no, goods_no);
 				
-				String url = "/OrderDetail/listAllOrderDetail.jsp";
+				String url = "/backend/order_detail/listAllOrderDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/OrderDetail/listAllOrderDetail.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_detail/listAllOrderDetail.jsp");
 				failureView.forward(req, res);
 			}
 		}
