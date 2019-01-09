@@ -57,10 +57,11 @@
 				
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<!-- 右選單 -->
-					<img src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7" class="memberphoto" href="#"  alt="LOGO" style="float:right" width="80px" height="80px">
-				
+					<a href="#">
+					<img src="https://pbs.twimg.com/profile_images/675056029101633536/1OOmF2jU_400x400.jpg" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px">
+					</a>
 					<ul class="nav navbar-nav navbar-right membermenu">
-						<li><a href="#">登出</a></li>
+						<li><a href="/CA105G2/frontend/login_front-end.jsp">登入</a></li>
 						<li><a href="#">個人設定</a></li>
 <!-- 						<li class="dropdown"> -->
 <!-- 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->

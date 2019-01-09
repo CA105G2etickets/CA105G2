@@ -68,4 +68,7 @@ public class MemberService {
 		return dao.getAll();
 	}
 	
+	public MemberVO memberCheck(String member_account, String member_password,String thirdUID) {
+		return dao.memberCheck(member_account,member_password,thirdUID);
+	}
 }

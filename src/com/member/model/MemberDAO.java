@@ -31,6 +31,8 @@ public class MemberDAO implements MemberDAO_interface {
 			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, PROFILE_PICTURE = ?, MEMBER_STATUS = ? WHERE MEMBER_NO = ?";
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM MEMBER WHERE MEMBER_NO = ?";
+	private static final String MEMBER_CHECK = 
+			"SELECT * FROM MEMBER WHERE (MEMBER_ACCOUNT=? AND MEMBER_PASSWORD = ?) OR THIRDUID = ?";
 
 	@Override
 	public void insert(MemberVO member) {
@@ -228,6 +230,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 	@Override
 	public List<MemberVO> getAll() {
+
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		MemberVO member = null;
 
@@ -286,4 +289,69 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 		return list;
 	}
+
+	public MemberVO memberCheck(String member_account, String member_password,String thirdUID) {
+		
+		MemberVO member = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(MEMBER_CHECK);
+
+			pstmt.setString(1, member_account);
+			pstmt.setString(1, member_password);
+			pstmt.setString(3, thirdUID);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				member = new MemberVO();
+				member.setMemberNo(rs.getString("MEMBER_NO"));
+				member.setMemberFullname(rs.getString("MEMBER_FULLNAME"));
+				member.setEmail(rs.getString("EMAIL"));
+				member.setPhone(rs.getString("PHONE"));
+				member.setIdcard(rs.getString("IDCARD"));
+				member.setMemberAccount(rs.getString("MEMBER_ACCOUNT"));
+				member.setMemberPassword(rs.getString("MEMBER_PASSWORD"));
+				member.setEwalletBalance(rs.getInt("EWALLET_BALANCE"));
+				member.setCreationDate(rs.getTimestamp("CREATION_DATE"));
+				member.setProfilePicture(rs.getBytes("PROFILE_PICTURE"));
+				member.setMemberStatus(rs.getString("MEMBER_STATUS"));
+				member.setThirduid(rs.getString("THIRDUID"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("BuBu!"
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return member;
+	}
 }
+
+	
