@@ -87,6 +87,7 @@
                     </thead>
                     <tbody>
 						<c:forEach var="eventVO" items="${listEvents_ByEventTitle}">
+						<c:if test="${eventVO.eve_status != 'temp'}">
 							<tr>
 								<td style="vertical-align:middle;">
 									<fmt:formatDate value="${eventVO.eve_startdate}" pattern="yyyy-MM-dd (E) HH:mm"/>
@@ -108,17 +109,34 @@
 									<fmt:timeZone value="Asia/Tokyo">   
 										<fmt:formatDate var="now" value="${today}" pattern="yyyy-MM-dd HH:mm:ss"/>
 									</fmt:timeZone> 
-									<c:if test="${now < eve_onsaledate}">
-										<div class="btn btn-warning">尚未開賣</div>
+									<c:if test="${eventVO.eve_status == 'cancel'}">
+										<div class="btn btn-warning">取消售票</div>
 									</c:if>
-									<c:if test="${now > eve_onsaledate && now < eve_offsaledate}">
-										<a href="#" target="_blank" class="btn btn-danger">售票中</a>${eventVO.eve_no}
-									</c:if>
-									<c:if test="${now > eve_offsaledate}">
-										<div class="btn btn-default">已售完</div>
+									<c:if test="${eventVO.eve_status == 'normal'}">
+										<c:if test="${now < eve_onsaledate}">
+											<div class="btn btn-info">尚未開賣</div>
+										</c:if>
+										<c:if test="${now > eve_onsaledate && now < eve_offsaledate}">
+										
+											<!-- ---------------START:::接去購票controller, 轉成購票面--------------- -->										
+<%-- 											<a href="#" target="_blank" class="btn btn-danger">點我購票</a>${eventVO.eve_no} --%>
+											
+											<form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do" target="_blank">								
+											    <input type="hidden" name="eve_no"         value="${eventVO.eve_no}">
+											    <input type="hidden" name="requestURL"	   value="<%=request.getServletPath()%>">
+											    <input type="hidden" name="action"	       value="select_EVE_NO_toBuyTickets">
+											    <input type="submit" value="點我購票" class="btn btn-danger"> 							
+											</form>
+											<!-- ---------------END:::接去購票controller, 轉成購票面--------------- -->	
+											
+										</c:if>
+										<c:if test="${now > eve_offsaledate}">
+											<div class="btn btn-default">結束售票</div>
+										</c:if>
 									</c:if>
 								</td>
 							</tr>
+						</c:if>
 						</c:forEach>
                     </tbody>
                 </table>
