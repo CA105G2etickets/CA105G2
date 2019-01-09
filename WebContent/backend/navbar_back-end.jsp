@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -12,12 +12,10 @@
 	border-radius: 50px;
 	margin-top: 20px;
 }
-
 .membermenu {
 	margin-top: 100px;
 	margin-left: 200px;
 }
-
 .topnav {
 	list-style-type: none;
 	margin: 0;
