@@ -23,7 +23,7 @@
 			$(this).css("color","");
 		});
 		$(".question").click(function() {
-// 			$(".answer").not().hide("slow"),
+// 			$(".answer:not(this)").hide("slow"),
 			$(this).next().toggle("slow");
 		});
 		$(".question").hover(function() {
