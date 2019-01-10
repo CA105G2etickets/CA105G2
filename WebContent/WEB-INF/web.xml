@@ -295,5 +295,13 @@
     <servlet-name>Group_openImg2Servlet</servlet-name>
     <url-pattern>/frontend/group_open/Group_openImg2.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>GoodsQaServlet</servlet-name>
+    <servlet-class>com.goods_qa.controller.GoodsQaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoodsQaServlet</servlet-name>
+    <url-pattern>/goodsqa/GoodsQaServlet.do</url-pattern>
+  </servlet-mapping>
     
 </web-app>
