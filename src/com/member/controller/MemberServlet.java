@@ -81,15 +81,14 @@ public class MemberServlet extends HttpServlet {
 		}
 		
 		
-		if("member_Logout".equals(action) && req.getSession().getAttribute("member") != null) {
+		if("member_Logout".equals(action)) {
 			try {
 				//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				req.getSession().invalidate();
 				
 				/***************************2.開始查詢資料,並準備轉交(Send the Success view)*****************************************/
-				String url = "/frontend/index.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-				successView.forward(req, res);
+				String url = "/CA105G2/frontend/index.jsp";
+				res.sendRedirect(url);
 				
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {

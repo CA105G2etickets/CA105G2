@@ -68,21 +68,32 @@
 <%-- 					<img src="${member eq null ? "https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" : "<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=request.getContextPath()%>"}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"> --%>
 					</a>
 					<ul class="nav navbar-nav navbar-right membermenu">
-						<li>
-						<%if (session.getAttribute("member") == null) {%>
-						<a href="/CA105G2/frontend/login_front-end.jsp"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;登入</font></a>
-						<% } else {%>
-						<a href=""><input type="hidden" name="action" value="member_Logout">登出&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></a>
-						<%}%>
-<%-- 						<a href="${member eq null ? "/CA105G2/frontend/login_front-end.jsp" : "/CA105G2/frontend/index.jsp"}"><input type="hidden" name="action" value="member_Logout"> ${member eq null ? "登入" : "登出"} </a> --%>
-						</li>
-<!-- 						<li><a href="#">個人設定</a></li> -->
-<%-- 						<li>${member.memberFullname} , 您好</li> --%>
+					
 						<%if (session.getAttribute("member") == null) {%>
 						
 						<% } else {%>
 						<li><a href="#">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li>
 						<%}%>
+						
+						
+						<li>
+						<%if (session.getAttribute("member") == null) {%>
+						<a href="/CA105G2/frontend/login_front-end.jsp"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;登入</font></a>
+						<% } else {%>
+						<a>
+						<form  METHOD="post" ACTION="/CA105G2/member/member.do">
+                                <input type="hidden" name="action" value="member_Logout">
+								<i class="glyphicon glyphicon-log-out"></i>
+								<input type="submit" value="登出" style="border: none ; background: none">
+                        </form>
+						</a>
+						<%}%>
+<%-- 						<a href="${member eq null ? "/CA105G2/frontend/login_front-end.jsp" : "/CA105G2/frontend/index.jsp"}"><input type="hidden" name="action" value="member_Logout"> ${member eq null ? "登入" : "登出"} </a> --%>
+						</li>
+						
+						
+<!-- 						<li><a href="#">個人設定</a></li> -->
+<%-- 						<li>${member.memberFullname} , 您好</li> --%>
 <!-- 						<li class="dropdown"> -->
 <!-- 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
 <!-- 							<ul class="dropdown-menu"> -->
@@ -132,7 +143,5 @@
 		</div>
 		</div>
 		</nav>
-
-
 </body>
 </html>
