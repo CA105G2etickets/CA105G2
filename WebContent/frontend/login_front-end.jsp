@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.member.model.*"%>
 
 <head>
     <meta charset="UTF-8">
@@ -23,29 +24,63 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+						<c:if test="${not empty errorMsgs}">
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<p style="color: red">${message}</p>
+								</c:forEach>
+							</ul>
+						</c:if>
+						<form  METHOD="post" ACTION="/CA105G2/member/member.do" role="form">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" id="account" placeholder="account" name="member_account" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" id="password" placeholder="password" name="member_password" type="text">
                                 </div>
                                 <div class="checkbox">
                                     <label>
                                         <input name="remember" type="checkbox" value="Remember Me">Remember Me
                                     </label>
                                 </div>
-                                <a href="index.html" class="btn btn-info btn-block">Login</a>
+                                <input type="hidden" name="action" value="find_By_Account">
+								<input type="submit" value="Login">
+<!--                                 <a href="index.html" class="btn btn-info btn-block">Login</a> -->
                             </fieldset>
                         </form>
-                    </div>
+<!--                         <select size="1" name="memberNo"> -->
+<%-- 						<c:forEach var="memberNo" items="member" >  --%>
+<%-- 							<option value="${memberNo}">${member.memberNo} --%>
+<%-- 						</c:forEach>    --%>
+<!-- 						</select> -->
+						<jsp:useBean id="memberservice" scope="page"
+				class="com.member.model.MemberService" />
+
+			  <li>
+			       選擇會員帳號
+			       <select size="1" name="memberA" onchange="changeA" id="userlist">
+			         <c:forEach var="member" items="${memberservice.all}" > 
+			          <option value="${member.memberAccount},${member.memberPassword}">${member.memberAccount},${member.memberPassword}
+			         </c:forEach>
+			       </select>
+			  </li>
+					</div>
                 </div>
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+			$(document).ready(function(){
+				$('#userlist').on('change',function(){
+					var str = $(this).val();
+					$('#account').val(str.substring(0,str.indexOf(',',1)));
+					$('#password').val(str.substring(str.indexOf(',',1)+1,str.lastIndexOf('')));
+				});
+			})
+	</script>
 </body>
 
 </html>

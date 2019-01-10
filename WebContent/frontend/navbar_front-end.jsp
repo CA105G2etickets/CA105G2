@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -58,10 +59,10 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<!-- 右選單 -->
 					<a href="#">
-					<img src="https://pbs.twimg.com/profile_images/675056029101633536/1OOmF2jU_400x400.jpg" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px">
+					<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px">
 					</a>
 					<ul class="nav navbar-nav navbar-right membermenu">
-						<li><a href="/CA105G2/frontend/login_front-end.jsp">登入</a></li>
+						<li><a href="/CA105G2/frontend/login_front-end.jsp"> ${member eq null ? "登入" : "登出"} </a></li>
 						<li><a href="#">個人設定</a></li>
 <!-- 						<li class="dropdown"> -->
 <!-- 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->

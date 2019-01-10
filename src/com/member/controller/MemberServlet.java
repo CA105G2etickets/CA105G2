@@ -24,90 +24,50 @@ public class MemberServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		if("member_Check".equals(action)) {
+		if("find_By_Account".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
 			try {
 				//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String memberAccount = req.getParameter("member_account");
-				String memberPassword = req.getParameter("member_password");
-				String thirduid = req.getParameter("thirduid");
-				if (memberAccount == null || (memberAccount.trim()).length() == 0) {
+				String member_account = req.getParameter("member_account");
+				String member_password = req.getParameter("member_password");
+				if (member_account == null || (member_account.trim()).length() == 0) {
 					errorMsgs.add("請輸入會員帳號");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/index.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
-				
-				
-				
-				String member_account = null;
-				try {
-					member_account = new String(memberAccount);
-				} catch (Exception e) {
-					errorMsgs.add("會員帳號錯誤");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/index.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
-				
-				
-				
-				if (memberPassword == null || (memberPassword.trim()).length() == 0) {
+				if (member_password == null || (member_password.trim()).length() == 0) {
 					errorMsgs.add("請輸入會員密碼");
 				}
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/index.jsp");
+							.getRequestDispatcher("/frontend/login_front-end.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
-				
-				
-				
-				String member_password = null;
-				try {
-					member_password = new String(memberPassword);
-				} catch (Exception e) {
-					errorMsgs.add("會員密碼錯誤");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/index.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
-				/***************************2.開始查詢資料*****************************************/
+				/***************************2.開始查詢資料,並準備轉交(Send the Success view)*****************************************/
 				MemberService memberService = new MemberService();
-				MemberVO member = memberService.getOneMember(member_account);
+				MemberVO member = memberService.findByAccount(member_account);
 				if (member == null) {
-					errorMsgs.add("查無資料");
+					errorMsgs.add("無此帳號");
 				}
 				// Send the use back to the form, if there were errors
+				if(member_password.equals(member.getMemberPassword())){
+					session.setAttribute("member", member);
+				}else {
+					errorMsgs.add("輸入的密碼有誤");
+				}
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/member/select_page.jsp");
+							.getRequestDispatcher("/frontend/login_front-end.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
-				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("member", member); // 資料庫取出的empVO物件,存入req
-				String url = "/backend/member/listOneMember.jsp";
+				String url = "/frontend/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -115,7 +75,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/member/select_page.jsp");
+						.getRequestDispatcher("/frontend/login_front-end.jsp");
 				failureView.forward(req, res);
 			}
 		}

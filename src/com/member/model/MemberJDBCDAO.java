@@ -22,6 +22,8 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			"SELECT * FROM MEMBER WHERE MEMBER_NO = ?";
 	private static final String MEMBER_CHECK = 
 			"SELECT * FROM MEMBER WHERE (MEMBER_ACCOUNT=? AND MEMBER_PASSWORD = ?) OR THIRDUID = ?";
+	private static final String GET_ONE_MEMBER_BY_ACCOUNT = 
+			"SELECT * FROM MEMBER WHERE MEMBER_ACCOUNT=?";
 	
 	@Override
 	public void insert(MemberVO member) {
@@ -344,5 +346,68 @@ public MemberVO memberCheck(String member_account, String member_password,String
 		}
 		return member;
 	}
+
+public MemberVO findByAccount(String member_account) {
+	
+	MemberVO member = null;
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	
+	try {
+		
+		Class.forName(DRIVER);
+		con = DriverManager.getConnection(URL, USER, PASSWORD);
+		pstmt = con.prepareStatement(GET_ONE_MEMBER_BY_ACCOUNT);
+		rs = pstmt.executeQuery();
+		
+		pstmt.setString(1, member_account);
+		
+		rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			member = new MemberVO();
+			member.setMemberNo(rs.getString("MEMBER_NO"));
+			member.setMemberFullname(rs.getString("MEMBER_FULLNAME"));
+			member.setEmail(rs.getString("EMAIL"));
+			member.setPhone(rs.getString("PHONE"));
+			member.setIdcard(rs.getString("IDCARD"));
+			member.setMemberAccount(rs.getString("MEMBER_ACCOUNT"));
+			member.setMemberPassword(rs.getString("MEMBER_PASSWORD"));
+			member.setEwalletBalance(rs.getInt("EWALLET_BALANCE"));
+			member.setCreationDate(rs.getTimestamp("CREATION_DATE"));
+			member.setProfilePicture(rs.getBytes("PROFILE_PICTURE"));
+			member.setMemberStatus(rs.getString("MEMBER_STATUS"));
+			member.setThirduid(rs.getString("THIRDUID"));
+		}
+		
+	} catch (ClassNotFoundException | SQLException se) {
+		throw new RuntimeException("BuBu!"
+				+ se.getMessage());
+	} finally {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
+	}
+	return member;
+}
 
 }
