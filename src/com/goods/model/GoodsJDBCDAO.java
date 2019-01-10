@@ -96,7 +96,7 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 			pstmt.setInt(8, goodsVO.getForsales_a());
 //			pstmt.setInt(9, goodsVO.getFavorite_count());
 			pstmt.setString(9, goodsVO.getGoods_status());
-			pstmt.setTimestamp(10, goodsVO.getLaunchdate());
+    		pstmt.setTimestamp(10, goodsVO.getLaunchdate());
 			pstmt.setTimestamp(11, goodsVO.getOffdate());
 //			pstmt.setInt(13, goodsVO.getGoods_group_count());
 //			pstmt.setInt(14, goodsVO.getGoods_want_count());

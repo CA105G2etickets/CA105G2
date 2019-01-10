@@ -43,7 +43,8 @@ public class GoodsService {
 
 	public GoodsVO updateGoods(String goods_no, String evetit_no, String goods_name, Integer goods_price,
 			byte[] goods_picture1, byte[] goods_picture2, byte[] goods_picture3, String goods_introduction,
-			Integer forsales_a, String goods_status, Timestamp launchdate, Timestamp offdate) {
+			Integer forsales_a,Integer favorite_count, String goods_status, Timestamp launchdate, Timestamp offdate,Integer goods_group_count,
+			Integer goods_want_count,Integer goods_sales_count) {
 
 		GoodsVO goodsVO = new GoodsVO();
 
@@ -56,13 +57,13 @@ public class GoodsService {
 		goodsVO.setGoods_picture3(goods_picture3);
 		goodsVO.setGoods_introduction(goods_introduction);
 		goodsVO.setForsales_a(forsales_a);
-//		goodsVO.setFavorite_count(favorite_count);
+		goodsVO.setFavorite_count(favorite_count);
 		goodsVO.setGoods_status(goods_status);
 		goodsVO.setLaunchdate(launchdate);
 		goodsVO.setOffdate(offdate);
-//		goodsVO.setGoods_group_count(goods_group_count);
-//		goodsVO.setGoods_want_count(goods_want_count);
-//		goodsVO.setGoods_sales_count(goods_sales_count);
+		goodsVO.setGoods_group_count(goods_group_count);
+		goodsVO.setGoods_want_count(goods_want_count);
+		goodsVO.setGoods_sales_count(goods_sales_count);
 
 		goodsDao.update(goodsVO);
 

@@ -33,8 +33,7 @@
 
 
 
-		<jsp:include page="/backend/navbar_back-end.html" flush="true" />
-
+		<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
 
 
 
@@ -164,9 +163,8 @@
 	                </div>
 	            </div>
 				<span class="form-group">
-<input type="hidden" name="action" value="update">
+<input type="hidden" name="action" value="updateGoods">
 								<input type="hidden" name="goods_no" value="<%=goodsVO.getGoods_no()%>">
-								<input type="hidden" name="evetit_no" value="<%=goodsVO.getEvetit_no()%>">
 								<input type="submit" value="送出修改" class="btn btn-primary">				</span>
 			</form>
         </div>
