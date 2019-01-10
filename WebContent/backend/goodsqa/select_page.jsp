@@ -1,33 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
 <head>
-<title>IBM Emp: Home</title>
-
-<style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>å•ç­”ç´€éŒ„æŸ¥è©¢</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
-<body bgcolor='white'>
+
+<body >
 
 <table id="table-1">
    <tr><td><h3>IBM Emp: Home</h3><h4>( MVC )</h4></td></tr>
@@ -35,11 +18,11 @@
 
 <p>This is the Home page for IBM Emp: Home</p>
 
-<h3>¸ê®Æ¬d¸ß:</h3>
+<h3>è³‡æ–™æŸ¥è©¢:</h3>
 	
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 	    <c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -47,54 +30,56 @@
 	</ul>
 </c:if>
 
-<ul>
-  <li><a href='listAllGoodsqa.jsp'>List</a> all Emps.  <br><br></li>
+
+<a href='listAllGoodsqa.jsp'>List</a> all Emps.  <br><br>
   
   
-  <li>
+
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" >
-        <b>¿é¤J°İÃD½s¸¹ (¦p7001):</b>
+        <b>è¼¸å…¥å•é¡Œç·¨è™Ÿ (å¦‚7001):</b>
         <input type="text" name="gfaq_no">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="°e¥X">
+        <input type="submit" value="é€å‡º">
     </FORM>
-  </li>
+  
 
   <jsp:useBean id="goodsqaSvc" scope="page" class="com.goods_qa.model.GoodsQaService" />
    
-  <li>
+  
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" >
-       <b>¿ï¾Ü°İÃD½s¸¹:</b>
+       <b>é¸æ“‡å•é¡Œç·¨è™Ÿ:</b>
        <select size="1" name="gfaq_no">
          <c:forEach var="goodsqaVO" items="${goodsqaSvc.all}" > 
           <option value="${goodsqaVO.gfaq_no}">${goodsqaVO.gfaq_no}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
+       <input type="submit" value="é€å‡º" class="btn btn-info">
     </FORM>
-  </li>
   
-  <li>
+  
+
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" >
-       <b>¿ï¾Ü°Ó«~½s¸¹:</b>
+       <b>é¸æ“‡å•†å“ç·¨è™Ÿ:</b>
        <select size="1" name="gfaq_no">
          <c:forEach var="goodsqaVO" items="${goodsqaSvc.all}" > 
-          <option value="${goodsqaVO.gfaq_no}">${goodsqaVO.goods_no}
+          <option value="${goodsqaVO.goods_no}">${goodsqaVO.goods_no}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
+       <input type="submit" value="é€å‡º"class="btn btn-info">
      </FORM>
-  </li>
-</ul>
 
 
-<h3>­û¤uºŞ²z</h3>
+
+<h3>å“¡å·¥ç®¡ç†</h3>
 
 <ul>
   <li><a href='addGoodsqa.jsp'>Add</a> a new Emp.</li>
 </ul>
+<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

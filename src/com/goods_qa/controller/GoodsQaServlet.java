@@ -18,9 +18,6 @@ import com.goods_qa.model.*;
 public class GoodsQaServlet  {
 
 	
-public GoodsQaServlet() {
-		super();
-	}
 
 
 
@@ -39,8 +36,6 @@ public GoodsQaServlet() {
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -49,7 +44,6 @@ public GoodsQaServlet() {
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入問題編號");
 				}
-				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("backend/goodsqa/select_page.jsp");
