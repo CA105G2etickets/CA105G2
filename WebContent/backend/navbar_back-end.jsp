@@ -5,8 +5,7 @@
 
 <title>ETIckeTs娛樂後台管理</title>
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
 .memberphoto {
 	border-radius: 50px;
@@ -78,7 +77,7 @@
 			            <li><a href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp" target="_blank">活動管理</a></li>
 			            <li><a href="<%=request.getContextPath()%>/backend/venue/listAllVenue.jsp" target="_blank">場地管理</a></li>
 			            <li><a href="<%=request.getContextPath()%>/backend/advertisement/listAllAdvertisement.jsp" target="_blank">廣告管理</a></li>
-			            <li><a href="<%=request.getContextPath()%>/backend/event_title/changeNotices.jsp" target="_blank">異動通知</a></li>
+			            <li><a href="<%=request.getContextPath()%>/backend/event/changeNotice.jsp" target="_blank">異動通知</a></li>
 			        </ul>
 				</div>			
 			</div>
@@ -109,7 +108,5 @@
 			</div>
 		</div>
 	</nav>
-	<script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
