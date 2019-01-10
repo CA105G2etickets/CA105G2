@@ -72,7 +72,7 @@
 						<%if (session.getAttribute("member") == null) {%>
 						<a href="/CA105G2/frontend/login_front-end.jsp"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;登入</font></a>
 						<% } else {%>
-						<a href=""><form  METHOD="post" ACTION="/CA105G2/member/member.do" role="form"><input type="hidden" name="action" value="member_Logout">登出&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></form></a>
+						<a href=""><input type="hidden" name="action" value="member_Logout">登出&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></a>
 						<%}%>
 <%-- 						<a href="${member eq null ? "/CA105G2/frontend/login_front-end.jsp" : "/CA105G2/frontend/index.jsp"}"><input type="hidden" name="action" value="member_Logout"> ${member eq null ? "登入" : "登出"} </a> --%>
 						</li>
