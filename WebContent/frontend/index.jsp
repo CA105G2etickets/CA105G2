@@ -23,7 +23,7 @@
 
 <html>
 <head>
-<title>ETIckeTs Member</title>
+<title>ETIckeTs - 首頁</title>
 </head>
 <jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 <meta charset="utf-8">
