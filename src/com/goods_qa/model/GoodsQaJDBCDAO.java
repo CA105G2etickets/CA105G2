@@ -3,8 +3,7 @@ package com.goods_qa.model;
 import java.sql.*;
 import java.util.*;
 
-import com.advertisement.model.AdvertisementVO;
-import com.event_classification.model.EventClassificationJDBCDAO;
+
 
 public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
@@ -13,7 +12,7 @@ public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 	private static final String PASSWORD = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO GOODS_QA VALUES ('GF'||LPAD(TO_CHAR(GOODS_QA_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,?)";
-	private static final String UPDATE_STMT = "UPDATE GOODS_QA SET goods_no=?, member_no=?, administrator_no=?, questions_content=?, answer_content=?,Questions_date=?,answer_date=?, gfaq_no=?";
+	private static final String UPDATE_STMT = "UPDATE GOODS_QA SET goods_no=?, member_no=?, Administrator_no=?, questions_content=?, answer_content=?,Questions_date=?,answer_date=? where gfaq_no=?";
 	private static final String DELETE_STMT = "DELETE FROM GOODS_QA WHERE gfaq_no = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM GOODS_QA WHERE gfaq_no = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM GOODS_QA ORDER BY gfaq_no";
@@ -83,11 +82,12 @@ public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 
 			pstmt.executeUpdate();
 			System.out.println("----------Updated----------");
-
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -104,7 +104,9 @@ public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 				}
 			}
 		}
+
 	}
+
 
 	@Override
 	public void delete(String gfaq_no) {
@@ -285,10 +287,17 @@ public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 //	dao.insert(aGoodsQa);
 //	
 		// 修改
-//	EventClassificationVO EventClassificationVO2 = new EventClassificationVO();
-//	EventClassificationVO2.setEveclass_no("B");
-//	EventClassificationVO2.setEveclass_name("比賽");
-//	dao.update(EventClassificationVO2);
+//	GoodsQaVO aGoodsQa = new GoodsQaVO();	
+//	aGoodsQa.setGfaq_no("GF0000002");
+//	aGoodsQa.setGoods_no("P0000001");
+//	aGoodsQa.setMember_no("M000002");
+//	aGoodsQa.setAdministrator_no("A001");
+//	aGoodsQa.setQuestions_content("TestUpdate");
+//	aGoodsQa.setAnswer_content("TestUpdate");
+//	aGoodsQa.setQuestions_date(Timestamp.valueOf("2018-08-20 12:00:00"));
+//	aGoodsQa.setAnswer_date(Timestamp.valueOf("2018-08-20 12:00:00"));
+//	dao.update(aGoodsQa);
+	
 
 		// 刪除
 //dao.delete("GF0000002");
@@ -305,16 +314,16 @@ public class GoodsQaJDBCDAO implements GoodsQaDAO_interface {
 //	System.out.println(aGoodsQa3.getAnswer_date());
 //
 		// 查詢全部
-		List<GoodsQaVO> list = dao.getAll();
-		for (GoodsQaVO aGoodsQaVO : list) {
-			System.out.println(aGoodsQaVO.getGfaq_no());
-			System.out.println(aGoodsQaVO.getGoods_no());
-			System.out.println(aGoodsQaVO.getMember_no());
-			System.out.println(aGoodsQaVO.getAdministrator_no());
-			System.out.println(aGoodsQaVO.getQuestions_content());
-			System.out.println(aGoodsQaVO.getAnswer_content());
-			System.out.println(aGoodsQaVO.getQuestions_date());
-			System.out.println(aGoodsQaVO.getAnswer_date());
-		}
+//		List<GoodsQaVO> list = dao.getAll();
+//		for (GoodsQaVO aGoodsQaVO : list) {
+//			System.out.println(aGoodsQaVO.getGfaq_no());
+//			System.out.println(aGoodsQaVO.getGoods_no());
+//			System.out.println(aGoodsQaVO.getMember_no());
+//			System.out.println(aGoodsQaVO.getAdministrator_no());
+//			System.out.println(aGoodsQaVO.getQuestions_content());
+//			System.out.println(aGoodsQaVO.getAnswer_content());
+//			System.out.println(aGoodsQaVO.getQuestions_date());
+//			System.out.println(aGoodsQaVO.getAnswer_date());
+//		}
 	}
 }

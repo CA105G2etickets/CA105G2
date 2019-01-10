@@ -20,8 +20,8 @@ public class GoodsQaService {
 		goodsQaVO.setGoods_no(goods_no);
 		goodsQaVO.setMember_no(member_no);
 		goodsQaVO.setAdministrator_no(administrator_no);
-		goodsQaVO.setQuestions_content(administrator_no);
-		goodsQaVO.setAnswer_content(questions_content);
+		goodsQaVO.setQuestions_content(questions_content);
+		goodsQaVO.setAnswer_content(answer_content);
 		goodsQaVO.setQuestions_date(questions_date);
 		goodsQaVO.setAnswer_date(answer_date);
 
@@ -39,8 +39,8 @@ public class GoodsQaService {
 		goodsQaVO.setGoods_no(goods_no);
 		goodsQaVO.setMember_no(member_no);
 		goodsQaVO.setAdministrator_no(administrator_no);
-		goodsQaVO.setQuestions_content(administrator_no);
-		goodsQaVO.setAnswer_content(questions_content);
+		goodsQaVO.setQuestions_content(questions_content);
+		goodsQaVO.setAnswer_content(answer_content);
 		goodsQaVO.setQuestions_date(questions_date);
 		goodsQaVO.setAnswer_date(answer_date);
 
