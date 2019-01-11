@@ -334,6 +334,36 @@ public class Group_memberJDBCDAO implements Group_memberDAO_interface {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public void allgroup_member_quit(String group_no) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public List<Group_memberVO> getall_member_dimiss(String group_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public String getgroup_member_product(String group_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_memberVO> getgroupsucesslist(String group_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

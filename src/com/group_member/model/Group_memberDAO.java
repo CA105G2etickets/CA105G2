@@ -49,13 +49,17 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 	private static final String DELETE = "DELETE FROM GROUP_MEMBER where MEMBER_NO = ?";
 	private static final String DELETE_STMTGROUP_MEMBER = "DELETE FROM GROUP_MEMBER WHERE GROUP_NO = ?";
 	private static final String UPDATE_GROUP_MEMBER = "UPDATE GROUP_MEMBER set JOIN_TIME=?, PRODUCT_QUANTITY=?, PAY_STATUS=?, GROUP_MEMBER_STATUS=?, LOG_OUT_REASON=?,ORDER_PHONE=?,PAY_METHODS=? where  GROUP_NO = ? AND  MEMBER_NO = ? ";
-	private static final String GET_ALL_PRODUCT_QUANTITY = "SELECT SUM (product_quantity) FROM GROUP_MEMBER where group_no = ?";
+	private static final String GET_ALL_PRODUCT_QUANTITY = "SELECT SUM (product_quantity) FROM group_member where (group_member_status = 'withgroup' or group_member_status = 'grouplead') and group_no = ? ";
 	private static final String GET_ALL_MEMBER_BY_GROUP_MEMBER = "SELECT DISTINCT member_no FROM group_member ORDER BY member_no";
 	private static final String GET_ALL_GROUP_OPEN_BY_GROUP_MEMBER = "SELECT * FROM group_member where member_no = ? ";
 	private static final String GET_GROUP_BY_QUANTITY = "select group_no, SUM (product_quantity) product from group_member where group_member_status = 'withgroup' or group_member_status = 'grouplead' group by  group_no  order by group_no";
 	private static final String CHANGE_QUIT = "UPDATE GROUP_MEMBER set GROUP_MEMBER_STATUS= ? , LOG_OUT_REASON= ? , PAY_STATUS= ?  where MEMBER_NO = ? and GROUP_NO = ? ";
 	private static final String GETEMAIL = "select DISTINCT member.email from group_member left join member on group_member.member_no = member.member_no where group_member.member_no = ?";
-
+	private static final String ALLGROUP_MEMBER_QUIT = "UPDATE GROUP_MEMBER set GROUP_MEMBER_STATUS = 'quit' where group_no = ? ";
+	private static final String ALLGROUP_MEMBER_DIMISS = "select member_no from group_member where group_no = ? and group_member_status = 'withgroup' ";
+	private static final String GET_GROUP_PRODUCT_QUANTITY = "select  SUM (product_quantity) product from group_member where (group_member_status = 'withgroup' or group_member_status = 'grouplead') and group_no= ? group by  group_no  order by group_no";
+	private static final String GETGROUPSUCESSLIST = "select * from group_member where (group_member_status = 'withgroup' or group_member_status = 'grouplead') and group_no = ? order by group_member_status";
+	
 	@Override
 	public void add(Group_memberVO group_memberVO) {
 
@@ -374,6 +378,7 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 
 			if (rs.next()) {
 				product_quantity = rs.getString(1);
+				System.out.println("Group_memberDAO"+product_quantity);
 
 			} else {
 				System.out.println("找不到商品數量");
@@ -430,7 +435,7 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 				list.add(group_memberVO);
 
 			}
-			System.out.println("Group_memberDAO"+list.get(0).getGroup_no());
+			
 
 		} catch (SQLException e) {
 
@@ -670,11 +675,11 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GETEMAIL);
 			pstmt.setString(1, member_no);
-			System.out.println("getmailServlet"+member_no);
+			System.out.println("getmailServlet" + member_no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				email = rs.getString(1);
-				System.out.println("getmailServlet"+email);
+				System.out.println("getmailServlet" + email);
 			} else {
 				System.out.println("取不到值");
 			}
@@ -682,7 +687,7 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -740,5 +745,209 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 		}
 
 	}
+
+	public void allgroup_member_quit(String group_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(ALLGROUP_MEMBER_QUIT);
+
+			pstmt.setString(1, group_no);
+
+			rs = pstmt.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	public List<Group_memberVO> getall_member_dimiss(String group_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Group_memberVO group_memberVO = null;
+		List<Group_memberVO> list = new ArrayList<Group_memberVO>();
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(ALLGROUP_MEMBER_DIMISS);
+
+			pstmt.setString(1, group_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				group_memberVO = new Group_memberVO();
+				group_memberVO.setMember_no(rs.getString("MEMBER_NO"));
+				list.add(group_memberVO);
+				System.out.println(list.size());
+
+			}
+			System.out.println(list.isEmpty());
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	public String getgroup_member_product(String group_no) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String product = null;
+		
+		try {
+			con = ds.getConnection();
+			
+			pstmt = con.prepareStatement(GET_GROUP_PRODUCT_QUANTITY);
+			
+			pstmt.setString(1, group_no);
+
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				product = rs.getString("product");
+			}else{
+				System.out.println("取不到值");
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	
+		return product;
+
+	}
+	public List<Group_memberVO> getgroupsucesslist(String group_no) {
+		List<Group_memberVO> list = new ArrayList<>();
+		Group_memberVO group_memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GETGROUPSUCESSLIST);
+			pstmt.setString(1, group_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				group_memberVO = new Group_memberVO();
+				group_memberVO.setMember_no(rs.getString("MEMBER_NO"));
+				group_memberVO.setGroup_no(rs.getString("GROUP_NO"));
+				group_memberVO.setJoin_time(rs.getTimestamp("JOIN_TIME"));
+				group_memberVO.setProduct_quantity(rs.getInt("PRODUCT_QUANTITY"));
+				group_memberVO.setPay_status(rs.getString("PAY_STATUS"));
+				group_memberVO.setGroup_member_status(rs.getString("GROUP_MEMBER_STATUS"));
+				group_memberVO.setLog_out_reason(rs.getString("LOG_OUT_REASON"));
+				group_memberVO.setOrder_phone(rs.getString("ORDER_PHONE"));
+				group_memberVO.setPay_method(rs.getString("PAY_METHODS"));
+				list.add(group_memberVO);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}  ///加 sql指令  interface service
+	
 
 }

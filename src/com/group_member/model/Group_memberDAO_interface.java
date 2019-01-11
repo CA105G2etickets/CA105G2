@@ -14,7 +14,7 @@ public interface Group_memberDAO_interface {
      public List<Group_memberVO> getAll();
      //查詢該團所購買的數量
      public String getproductquantity(String group_no);
-     //查詢所有跟團者
+     //查詢所有跟團者(distinct首頁用)
      public List<Group_memberVO> getmember_BY_group_member();
      //查詢該會員所跟的團
      public List<Group_memberVO> getgroup_BY_member_no(String member_no);
@@ -30,5 +30,13 @@ public interface Group_memberDAO_interface {
      public String getemail(String member_no);
      //寄出email
      public void sendMail(String to, String messageText);
+     //解散該團所有跟團人
+     public void allgroup_member_quit(String group_no);
+   //取得所有該解散團的會員
+     public List<Group_memberVO> getall_member_dimiss(String group_no);
+     //取得開團人所有跟團人購買數量
+     public String getgroup_member_product(String group_no);
+    //取得成功開團後的跟團人明細
+     public List<Group_memberVO> getgroupsucesslist(String group_no);
 
 }

@@ -31,6 +31,11 @@ public interface Group_openDAO_interface {
 	  public void delete2(String group_no);
 	  //尋找開團人
 	  public String getgroup_open_member_no(String group_no);
+	  //解散開團
+	  public void group_open_quit(String group_no);
+	  //開團成功
+	  public void group_open_sucess(String group_no);
+		
 }
 
 

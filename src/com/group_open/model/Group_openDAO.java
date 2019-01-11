@@ -53,6 +53,8 @@ public class Group_openDAO implements Group_openDAO_interface {
 	private static final String GET_ALL_Member_BYGroup_open_STMT = "SELECT DISTINCT member_no FROM group_open ORDER BY member_no";
 	private static final String GET_ALL_MEMBER_BY_GROUP = "select GROUP_NO , count(*) as  GROUP_MEMBER_COUNT  from GROUP_MEMBER  group by GROUP_NO order by GROUP_NO";
 	private static final String GET_GROUP_OPEN_MEMBER_NO = "select DISTINCT  member_no from group_open where group_no = ?";
+	private static final String GROUP_OPEN_QUIT = "UPDATE GROUP_OPEN set GROUP_STATUS = 'fail2' where GROUP_NO = ? ";
+	private static final String GROUP_OPEN_SUCESS = "UPDATE GROUP_OPEN set GROUP_STATUS = 'sucess3' where GROUP_NO = ? ";
 //	@Override
 	// 新增
 	public void add(Group_openVO group_openVO) {
@@ -723,6 +725,92 @@ public class Group_openDAO implements Group_openDAO_interface {
 			}
 
 			return group_memberno;
+		}
+	  //開團失敗
+	  public void group_open_quit(String group_no) {
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				
+				pstmt = con.prepareStatement(GROUP_OPEN_QUIT);
+				
+				pstmt.setString(1, group_no);
+				
+				rs = pstmt.executeQuery();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				if(rs!=null) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+		}
+	  //開團成功
+	  public void group_open_sucess(String group_no) {
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				
+				pstmt = con.prepareStatement(GROUP_OPEN_SUCESS);
+				
+				pstmt.setString(1, group_no);
+				
+				rs = pstmt.executeQuery();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				if(rs!=null) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
 		}
 
 

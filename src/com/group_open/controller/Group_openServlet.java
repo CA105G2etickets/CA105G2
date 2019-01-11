@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -300,145 +302,145 @@ public class Group_openServlet extends HttpServlet {
 
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
-			String member_no = req.getParameter("member_no");
-			if (member_no == null || member_no.trim().length() == 0) {
-				errorMsgs.add("會員編號不可為空");
-			}
-			String goods_no = req.getParameter("goods_no");
-			if (goods_no == null || goods_no.trim().length() == 0) {
-				errorMsgs.add("商品編號不可為空");
-			}
-			String group_name = req.getParameter("group_name");
-			String group_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
-			if (group_name == null || group_name.trim().length() == 0) {
-				errorMsgs.add("開團名稱不可為空");
-			} else if (!group_name.trim().matches(group_nameReg)) {
-				errorMsgs.add("開團名稱不可有空白");
-			}
-
-			Integer group_limit = null;
 			try {
-				group_limit = new Integer(req.getParameter("group_limit"));
-			} catch (NumberFormatException e) {
-				group_limit = 0;
-				errorMsgs.add("開團下限");
-			}
+				String member_no = req.getParameter("member_no");
+				if (member_no == null || member_no.trim().length() == 0) {
+					errorMsgs.add("會員編號不可為空");
+				}
+				String goods_no = req.getParameter("goods_no");
+				if (goods_no == null || goods_no.trim().length() == 0) {
+					errorMsgs.add("商品編號不可為空");
+				}
+				String group_name = req.getParameter("group_name");
+				String group_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
+				if (group_name == null || group_name.trim().length() == 0) {
+					errorMsgs.add("開團名稱不可為空");
+				} else if (!group_name.trim().matches(group_nameReg)) {
+					errorMsgs.add("開團名稱不可有空白");
+				}
 
-			String group_introduction = req.getParameter("group_introduction");
+				Integer group_limit = null;
+				try {
+					group_limit = new Integer(req.getParameter("group_limit"));
+				} catch (NumberFormatException e) {
+					group_limit = 0;
+					errorMsgs.add("開團下限");
+				}
 
-			String group_mind = req.getParameter("group_mind");
+				String group_introduction = req.getParameter("group_introduction");
 
-			java.sql.Timestamp group_start_date = null;
-			try {
-				group_start_date = java.sql.Timestamp.valueOf(req.getParameter("group_start_date").trim());
+				String group_mind = req.getParameter("group_mind");
+
+				java.sql.Timestamp group_start_date = null;
+				try {
+					group_start_date = java.sql.Timestamp.valueOf(req.getParameter("group_start_date").trim());
 //					
-			} catch (IllegalArgumentException e) {
-				group_start_date = new java.sql.Timestamp(System.currentTimeMillis());
-				errorMsgs.add("時間格式錯誤!");
-			}
-			java.sql.Timestamp group_close_date = null;
-			try {
-				group_close_date = java.sql.Timestamp.valueOf(req.getParameter("group_close_date").trim());
+				} catch (IllegalArgumentException e) {
+					group_start_date = new java.sql.Timestamp(System.currentTimeMillis());
+					errorMsgs.add("時間格式錯誤!");
+				}
+				java.sql.Timestamp group_close_date = null;
+				try {
+					group_close_date = java.sql.Timestamp.valueOf(req.getParameter("group_close_date").trim());
 
-			} catch (IllegalArgumentException e) {
-				group_close_date = new java.sql.Timestamp(System.currentTimeMillis());
-				errorMsgs.add("時間格式錯誤");
-			}
-			Part filePart = req.getPart("group_banner_1");
-			byte[] group_banner_1 = null;
+				} catch (IllegalArgumentException e) {
+					group_close_date = new java.sql.Timestamp(System.currentTimeMillis());
+					errorMsgs.add("時間格式錯誤");
+				}
+				Part filePart = req.getPart("group_banner_1");
+				byte[] group_banner_1 = null;
 
-			InputStream fileContent = filePart.getInputStream();
-			group_banner_1 = getPictureByteArray(fileContent);
+				InputStream fileContent = filePart.getInputStream();
+				group_banner_1 = getPictureByteArray(fileContent);
 
-			Part filePart2 = req.getPart("group_banner_2");
-			byte[] group_banner_2 = null;
+				Part filePart2 = req.getPart("group_banner_2");
+				byte[] group_banner_2 = null;
 
-			InputStream fileContent2 = filePart2.getInputStream();
-			group_banner_2 = getPictureByteArray(fileContent2);
+				InputStream fileContent2 = filePart2.getInputStream();
+				group_banner_2 = getPictureByteArray(fileContent2);
 
-			String group_status = req.getParameter("group_status");
+				String group_status = req.getParameter("group_status");
 
-			String group_address = req.getParameter("group_address");
+				String group_address = req.getParameter("group_address");
 
-			Double latitude = null;
-			try {
-				latitude = new Double(req.getParameter("latitude").trim());
-			} catch (NumberFormatException e) {
-				latitude = 0.0;
-				errorMsgs.add("格式錯誤");
-			}
-			Double longitude = null;
-			try {
-				longitude = new Double(req.getParameter("longitude").trim());
-			} catch (NumberFormatException e) {
-				longitude = 0.0;
-				errorMsgs.add("格式錯誤");
-			}
-			java.sql.Timestamp group_time = null;
-			try {
-				group_time = java.sql.Timestamp.valueOf(req.getParameter("group_time").trim());
-			} catch (IllegalArgumentException e) {
-				group_time = new java.sql.Timestamp(System.currentTimeMillis());
-				errorMsgs.add("格式錯誤");
-			}
+				Double latitude = null;
+				try {
+					latitude = new Double(req.getParameter("latitude").trim());
+				} catch (NumberFormatException e) {
+					latitude = 0.0;
+					errorMsgs.add("格式錯誤");
+				}
+				Double longitude = null;
+				try {
+					longitude = new Double(req.getParameter("longitude").trim());
+				} catch (NumberFormatException e) {
+					longitude = 0.0;
+					errorMsgs.add("格式錯誤");
+				}
+				java.sql.Timestamp group_time = null;
+				try {
+					group_time = java.sql.Timestamp.valueOf(req.getParameter("group_time").trim());
+				} catch (IllegalArgumentException e) {
+					group_time = new java.sql.Timestamp(System.currentTimeMillis());
+					errorMsgs.add("格式錯誤");
+				}
 
-			Integer group_price = null;
-			try {
-				group_price = new Integer(req.getParameter("group_price"));
-			} catch (NumberFormatException e) {
-				group_price = 0;
-				errorMsgs.add("價格錯誤");
-			}
-			Group_openVO group_openVO = new Group_openVO();
-			group_openVO.setMember_no(member_no);
-			group_openVO.setGoods_no(goods_no);
-			group_openVO.setGroup_name(group_name);
-			group_openVO.setGroup_limit(group_limit);
-			group_openVO.setGroup_introduction(group_introduction);
-			group_openVO.setGroup_mind(group_mind);
-			group_openVO.setGroup_start_date(group_start_date);
-			group_openVO.setGroup_close_date(group_close_date);
-			group_openVO.setGroup_banner_1(group_banner_1);
-			group_openVO.setGroup_banner_2(group_banner_2);
-			group_openVO.setGroup_status(group_status);
-			group_openVO.setGroup_address(group_address);
-			group_openVO.setLatitude(latitude);
-			group_openVO.setLongitude(longitude);
-			group_openVO.setGroup_time(group_time);
-			group_openVO.setGroup_price(group_price);
-			System.out.println("加入成功");
+				Integer group_price = null;
+				try {
+					group_price = new Integer(req.getParameter("group_price"));
+				} catch (NumberFormatException e) {
+					group_price = 0;
+					errorMsgs.add("價格錯誤");
+				}
+				Group_openVO group_openVO = new Group_openVO();
+				group_openVO.setMember_no(member_no);
+				group_openVO.setGoods_no(goods_no);
+				group_openVO.setGroup_name(group_name);
+				group_openVO.setGroup_limit(group_limit);
+				group_openVO.setGroup_introduction(group_introduction);
+				group_openVO.setGroup_mind(group_mind);
+				group_openVO.setGroup_start_date(group_start_date);
+				group_openVO.setGroup_close_date(group_close_date);
+				group_openVO.setGroup_banner_1(group_banner_1);
+				group_openVO.setGroup_banner_2(group_banner_2);
+				group_openVO.setGroup_status(group_status);
+				group_openVO.setGroup_address(group_address);
+				group_openVO.setLatitude(latitude);
+				group_openVO.setLongitude(longitude);
+				group_openVO.setGroup_time(group_time);
+				group_openVO.setGroup_price(group_price);
+				System.out.println("加入成功");
 
-			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("group_openVO", group_openVO); //
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("group_openVO", group_openVO); //
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_open/addgroup_open.jsp");
+					failureView.forward(req, res);
+					System.out.println("加入失敗");
+					return;
+				}
+
+				Group_openService grpSvc = new Group_openService();
+
+				Group_memberService group_memberSvc = new Group_memberService();
+
+				group_openVO = grpSvc.addGroup_open(member_no, goods_no, group_name, group_limit, group_introduction,
+						group_mind, group_start_date, group_close_date, group_banner_1, group_banner_2, group_status,
+						group_address, latitude, longitude, group_time, group_price);
+
+				String url = "/frontend/group_open/listAllgroup_open.jsp";
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_open/addgroup_open.jsp");
 				failureView.forward(req, res);
-				System.out.println("加入失敗");
-				return;
+				System.out.println("新增不成功");
+				System.out.println(e);
+
 			}
-
-			Group_openService grpSvc = new Group_openService();
-
-			Group_memberService group_memberSvc = new Group_memberService();
-
-			group_openVO = grpSvc.addGroup_open(member_no, goods_no, group_name, group_limit, group_introduction,
-					group_mind, group_start_date, group_close_date, group_banner_1, group_banner_2, group_status,
-					group_address, latitude, longitude, group_time, group_price);
-
-			String url = "/frontend/group_open/listAllgroup_open.jsp";
-
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-
-			successView.forward(req, res);
-
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/group_open/addgroup_open.jsp");
-//				failureView.forward(req, res);
-//				System.out.println("新增不成功");
-//				System.out.println(e);
-//
-//			}
 
 		}
 
@@ -493,8 +495,6 @@ public class Group_openServlet extends HttpServlet {
 				Group_memberService group_memberSvc = new Group_memberService();
 
 				List<Group_openVO> list = group_openSvc.getgroup_openBymember_no(member_no);
-
-				
 
 				// 如何取的裡面所有的member_no物件 才可以去查
 
@@ -666,9 +666,9 @@ public class Group_openServlet extends HttpServlet {
 				group_memberVO.setGroup_member_status(group_member_status);
 
 				group_openSvc.add2(group_openVO, group_memberVO);
-				
+
 				List<Group_openVO> group_openBymember_no = group_openSvc.getgroup_openBymember_no(member_no);
-				
+
 				/*************************** 2.轉交顯示資料 **********************/
 				req.setAttribute("group_openBymember_no", group_openBymember_no);
 				String url = "/frontend/group_open/listGroup_memberBygroup_no.jsp";
@@ -686,9 +686,7 @@ public class Group_openServlet extends HttpServlet {
 			}
 
 		}
-		
-		
-		
+
 		// 顯示跟團資訊 已更改檔案名稱及路徑
 		if ("getgroup_for_display".equals(action)) {
 
@@ -753,32 +751,164 @@ public class Group_openServlet extends HttpServlet {
 				Group_openService group_openSvc = new Group_openService();
 				String group_no = req.getParameter("group_no");
 				String member_no = req.getParameter("member_no");
-				List<Group_openVO> group_openBymember_no = group_openSvc.getgroup_openBymember_no(member_no);	
+				List<Group_openVO> group_openBymember_no = group_openSvc.getgroup_openBymember_no(member_no);
 				System.out.println(group_openBymember_no.get(0).getGroup_name());
 				System.out.println(group_openBymember_no.get(0).getGoods_no());
-				System.out.println("list的長度"+group_openBymember_no.size());
+				System.out.println("list的長度" + group_openBymember_no.size());
 				System.out.println(group_no);
 				System.out.println(member_no);
 //			*****************刪除開始**********************
-			
-				System.out.println("刪除之前的"+member_no);
+
+				System.out.println("刪除之前的" + member_no);
 				group_openSvc.delete2(group_no);
-				System.out.println("刪除之後的"+member_no);
-				System.out.println("list的長度"+group_openBymember_no.size());
-				
+				System.out.println("刪除之後的" + member_no);
+				System.out.println("list的長度" + group_openBymember_no.size());
+
 //			*****************刪除完成準備轉移頁面**********************
 				req.setAttribute("group_openBymember_no", group_openBymember_no);
 				String url = "/frontend/group_open/listGroup_memberBygroup_no.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-								
-			
+
 			} catch (Exception e) {
 				errorMsgs.add("刪除失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_no.jsp");
 				failureView.forward(req, res);
 
+			}
+
+		}
+		if ("quitall".equals(action)) {
+			System.out.println("Group_openServlet" + action);
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+//		*************************取得請求參數*****************************
+			try {
+				String group_no = req.getParameter("group_no");
+				if (group_no == null || (group_no.trim().length() == 0)) {
+					errorMsgs.add("開團編號不可為空");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_open/group_open.jsp");
+
+					failureView.forward(req, res);
+					return;
+				}
+				String member_no = req.getParameter("member_no");
+				if (group_no == null || (group_no.trim().length() == 0)) {
+					errorMsgs.add("會員編號不可為空");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_no.jsp");
+
+					failureView.forward(req, res);
+					return;
+				}
+				String dimiss_reason = req.getParameter("dimiss_reason");
+				System.out.println("Group_openServlet" + dimiss_reason);
+//			*************************退團開始動作*****************************
+
+				Group_openService group_openSvc = new Group_openService();
+
+				Group_memberService group_memberSvc = new Group_memberService();
+
+				List<Group_memberVO> list = group_memberSvc.getall_member_dimiss(group_no);
+
+				for (Group_memberVO group_memberVO : list) {
+					String member_noemail = group_memberVO.getMember_no();
+					String eamil = group_memberSvc.getemail(member_noemail);
+					group_memberSvc.sendMail(eamil, dimiss_reason);
+					System.out.println("Group_openServlet" + member_noemail);
+
+				}
+
+				group_openSvc.group_open_quit(group_no);
+
+				group_memberSvc.allgroup_member_quit(group_no);
+
+				List<Group_openVO> lists = group_openSvc.getgroup_openBymember_no(member_no);
+//			*************************開始轉交動作*****************************
+
+				req.setAttribute("group_openBymember_no", lists);
+
+				String url = "/frontend/group_open/listGroup_memberBygroup_no.jsp";
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_no.jsp");
+				failureView.forward(req, res);
+				System.out.println("新增不成功");
+				System.out.println(e);
+
+			}
+		}
+		if ("makeorder".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+				String group_no = req.getParameter("group_no");
+				if (group_no == null || (group_no.trim().length() == 0)) {
+					errorMsgs.add("請輸入開團編號");
+				}
+				String member_no = req.getParameter("member_no");
+				if (member_no == null || (member_no.trim().length() == 0)) {
+					errorMsgs.add("請輸入會員編號");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/group_open/group_open_index.jsp");
+
+					failureView.forward(req, res);
+					return;// 程式中斷 這裡沒有寫輸入格式錯誤
+				}
+				/************************ 開始取得資料 *****************************/
+
+				Group_memberService group_memberSvc = new Group_memberService();
+
+				Group_openService group_openSvc = new Group_openService();
+
+				List<Group_memberVO> list = group_memberSvc.getgroupsucesslist(group_no);
+
+				Map<String, Integer> map = group_memberSvc.getgroup_quantity();
+
+				List<Group_openVO> list2 = group_openSvc.getAll();
+
+				String producttotal = group_memberSvc.getgroup_member_product(group_no);
+				
+				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
+				
+				
+				
+				
+
+				// 寫到這裡 每個跟團人的明細 包括開團人
+				// 要去取得開團總數量 折扣價格
+				// 要確定豐森的表格 我都有 然後在jsp呈現
+				/************************ 開始轉交資料 *****************************/
+				req.setAttribute("groupsucesslist", list);
+				req.setAttribute("group_quantity", map);
+				req.setAttribute("group_opengetall", list2);
+				req.setAttribute("producttotal", producttotal);
+				req.setAttribute("group_openVO", group_openVO);
+
+				String url = "/frontend/group_open/order.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_no.jsp");
+				failureView.forward(req, res);
 			}
 
 		}

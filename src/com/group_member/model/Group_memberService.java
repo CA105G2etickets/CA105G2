@@ -93,7 +93,7 @@ public class Group_memberService {
 		   public void add2(Group_memberVO group_memberVO , java.sql.Connection con) {
 			   dao.add2(group_memberVO, con);
 		   }
-		   //退團修改
+		   //退團修改(要給退團理由，這裡面可能要改因為付款狀態跟會員狀態退團都是有指定的不是放在程式裡面的)
 		   public void change_quit(String member_no,String group_no, String pay_status,String group_member_status,String log_out_reason) {
 			   Group_memberVO group_memberVO = new Group_memberVO();	
 			   	group_memberVO.setMember_no(member_no);
@@ -111,5 +111,20 @@ public class Group_memberService {
 		   public void sendMail(String to, String messageText){
 			   dao.sendMail(to, messageText);
 		   }
-		   
+		   //開團人解散該團
+		   public void allgroup_member_quit(String group_no) {
+			   dao.allgroup_member_quit(group_no);
+		   }
+		   //取得開團的跟團人
+		   public List<Group_memberVO> getall_member_dimiss(String group_no){
+			   return dao.getall_member_dimiss(group_no);
+		   }
+		   //取得開團人所有跟團人購買數量
+		   public String getgroup_member_product(String group_no) {
+			   return dao.getgroup_member_product(group_no);
+		   }
+		   //取得成功開團後的跟團人明細
+		   public List<Group_memberVO> getgroupsucesslist(String group_no){
+			   return dao.getgroupsucesslist(group_no);
+		   }
 }

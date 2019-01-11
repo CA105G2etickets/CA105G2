@@ -22,6 +22,7 @@ public class Group_openVO implements java.io.Serializable {
 	private Double longitude;
 	private Timestamp group_time;
 	private Integer group_price;
+	
 
 	public Group_openVO() {
 	}

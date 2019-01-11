@@ -3,6 +3,7 @@ package com.group_member.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,9 @@ public class Group_memberServlet extends HttpServlet {
 				Group_openVO group_openVO = new Group_openVO();
 				group_memberVO = group_memberSvc.findByPrimaryKey(member_no, group_no);
 				group_openVO = group_openSvc.getOneGroup_open(group_no);
+				
+				String product = group_memberSvc.getproductquantity("G0001");	
+							System.out.println("Group_memberServlet113"+product);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("group_memberVO", group_memberVO);
 				req.setAttribute("group_openVO", group_openVO);
@@ -512,6 +516,23 @@ public class Group_memberServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+	
+		
+		
+		
 
 	}
 

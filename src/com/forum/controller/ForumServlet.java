@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import com.forum.model.ForumService;
 import com.forum.model.ForumVO;
+import com.google.gson.JsonObject;
 
 public class ForumServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -301,7 +302,8 @@ public class ForumServlet extends HttpServlet {
 				ForumVO forumVO = forumSvc.addForum(group_no, member_no, forum_content, forum_time);
 				
 		/*************************** 3.開始轉交資料 ***************************************/		
-				
+//				JsonObject objs = new JsonObject(); 
+//				objs.addProperty(group_no, member_no);
 				obj.put("answer", forum_content);
 				res.setCharacterEncoding("UTF-8");
 				System.out.println(forum_content);

@@ -115,7 +115,6 @@ public class Group_openService {
 
 	// 同時新增開團者與跟團者
 	public void add2(Group_openVO group_openVO, Group_memberVO group_memberVO) {
-		System.out.println("ttttttttt");
 		dao.add2(group_openVO, group_memberVO);
 	}
 
@@ -126,5 +125,12 @@ public class Group_openService {
 	// 尋找開團人
 	 public String getgroup_open_member_no(String group_no) {
 		return dao.getgroup_open_member_no(group_no);
+	 }
+	 //開團失敗
+	 public void group_open_quit(String group_no) {
+		 dao.group_open_quit(group_no);
+	 }
+	 public void group_open_sucess(String group_no) {
+		 dao.group_open_sucess(group_no);
 	 }
 }

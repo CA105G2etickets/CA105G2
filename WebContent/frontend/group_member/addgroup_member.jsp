@@ -5,6 +5,7 @@
 <%@ page import="com.group_member.model.*"%>  
 <%@ page import="com.group_open.model.*"%>  
 <%@ page import="com.forum.model.*"%>
+<%@ page import="com.member.model.*"%>
 <%
 
 	Group_memberVO group_memberVO = (Group_memberVO) request.getAttribute("group_memberVO");
@@ -12,6 +13,10 @@
 	ForumService forumSvc = new ForumService();
 	 List <ForumVO> list = forumSvc.getall_forum_by_group(group_openVO.getGroup_no());
 	 pageContext.setAttribute("list", list);
+	 
+		MemberService memberSvc = new MemberService();
+		List<MemberVO> list2 =  memberSvc.getAll();
+		pageContext.setAttribute("list2", list2);
 	
 
 %>
@@ -342,15 +347,29 @@
 				 <c:forEach var="forumVO" items= "${list}" > 
 					<div class="panel-body"><!-- foreach開始 -->
 					     <div id="responsearea">
-							<img src="<%=request.getContextPath()%>/images/peoplephoto.jpg" class="img-circle res">
-								<span>人物名稱</span>
+					     <c:forEach var="memberVO" items="${list2}">
+					        <c:if test="${forumVO.member_no==memberVO.memberNo}">
+							<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${memberVO.memberNo}" class="img-circle res">
+							</c:if>	
+						 </c:forEach>	
+							<span>
+							  <c:forEach var="memberVO" items="${list2}">
+					        <c:if test="${forumVO.member_no==memberVO.memberNo}">
+								${memberVO.memberFullname}
+							</c:if>	
+						 	   </c:forEach>
+							</span>
 								<span>${forumVO.forum_content}</span>
 						 </div><!-- <div id="responsearea"> -->
 					  </div><!-- <div class="panel-body"> --><!-- foreach結束 -->
 					  </c:forEach> 
 				</div><!-- <div class="panel panel-success"> -->
 					<div id="messageform">
+					
+					
 							<img src="<%=request.getContextPath()%>/images/peoplephoto.jpg" class="img-circle"> wilson
+							
+							
 							<br>
 						<input type="text" class="form-control" placeholder="回覆" id="message">
 						<input type="hidden" class="form-control" id="group_noms" value="${group_openVO.group_no}">

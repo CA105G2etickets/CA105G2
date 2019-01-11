@@ -899,4 +899,16 @@ public class Group_openJDBCDAO implements Group_openDAO_interface {
 		return baos.toByteArray();
 	}
 
+	@Override
+	public void group_open_quit(String group_no) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void group_open_sucess(String group_no) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
