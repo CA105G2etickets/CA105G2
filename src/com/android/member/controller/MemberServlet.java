@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.android.main.ImageUtil;
 import com.android.member.model.MemberJDBCDAO;
-import com.android.member.model.MemberJNDIDAO;
+import com.android.member.model.MemberDAO;
 import com.android.member.model.MemberService;
 import com.android.member.model.MemberVO;
 import com.google.gson.Gson;

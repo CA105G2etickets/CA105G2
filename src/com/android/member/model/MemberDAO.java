@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 
-public class MemberJNDIDAO implements MemberDAO_interface {
+public class MemberDAO implements MemberDAO_interface {
 	
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
 		private static DataSource ds = null;
