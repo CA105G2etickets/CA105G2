@@ -126,7 +126,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
-					<a href="#" class="topnav" align="center">所有團購</a>
+					<a href="/CA105G2/frontend/group_open/group_open_index.jsp" class="topnav" align="center">所有團購</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
