@@ -40,7 +40,7 @@
                                     <input class="form-control" id="password" placeholder="password" name="administrator_password" type="text">
                                 </div>
                                 <input type="hidden" name="action" value="find_By_Account">
-								<input type="submit" value="link start">
+								<input type="submit" value="登入">
 <!--                                 <a href="index.html" class="btn btn-info btn-block">Login</a> -->
                             </fieldset>
                         </form>

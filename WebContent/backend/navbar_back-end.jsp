@@ -64,17 +64,17 @@ body{
 					<%if (session.getAttribute("administratorVO") == null) {%>
 						<img src="https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" class="administratorphoto" alt="administratorphoto" style="float:right" width="80px" height="80px">
 					<% } else {%>
-						<img src="<%=request.getContextPath()%>/administrator/administratorImg.do?administratorno=${administrator.administratorNo}" class="administratorphoto" alt="administratorphoto" style="float:right" width="80px" height="80px">
+						<img src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" class="administratorphoto" alt="administratorphoto" style="float:right" width="80px" height="80px">
 					<%}%>
 <%-- 					<img src="${member eq null ? "https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" : "<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=request.getContextPath()%>"}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"> --%>
 				</a>
 				
 				<ul class="nav navbar-nav navbar-right administratormenu">
-					<%if (session.getAttribute("member") == null) {%>
+<%-- 					<%if (session.getAttribute("member") == null) {%> --%>
 						
-					<% } else {%>
-						<li><a href="#">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li>
-					<%}%>
+<%-- 					<% } else {%> --%>
+<%-- 						<li><a href="#">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li> --%>
+<%-- 					<%}%> --%>
 						
 						
 						<li>
@@ -149,5 +149,7 @@ body{
 		</div>
 		</div>
 	</nav>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 </body>
 </html>

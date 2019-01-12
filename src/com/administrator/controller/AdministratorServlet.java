@@ -87,7 +87,7 @@ public class AdministratorServlet extends HttpServlet {
 				req.getSession().invalidate();
 				
 				/***************************2.開始查詢資料,並準備轉交(Send the Success view)*****************************************/
-				String url = "CA105G2/backend/index.jsp";
+				String url = "/CA105G2/backend/index.jsp";
 				res.sendRedirect(url);
 				
 				/***************************其他可能的錯誤處理*************************************/
