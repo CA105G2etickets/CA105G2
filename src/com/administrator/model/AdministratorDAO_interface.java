@@ -9,5 +9,6 @@ public interface AdministratorDAO_interface {
     public void delete(String administrator_no);
     public AdministratorVO findByPrimaryKey(String administrator_no);
     public List<AdministratorVO> getAll();
+    public AdministratorVO findByAccount(String administrator_account);
     
 }

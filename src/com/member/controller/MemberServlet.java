@@ -56,7 +56,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if(member_password.equals(member.getMemberPassword())){
 					session.setAttribute("member", member);
-				}else {
+				} else {
 					errorMsgs.add("輸入的密碼有誤");
 				}
 				
@@ -95,7 +95,6 @@ public class MemberServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-	
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 

@@ -58,4 +58,8 @@ public class AdministratorService {
 		return dao.getAll();
 	}
 	
+	public AdministratorVO findByAccount(String administrator_account) {
+		return dao.findByAccount(administrator_account);
+	}
+	
 }

@@ -20,6 +20,8 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			"SELECT * FROM ADMINISTRATOR WHERE ADMINISTRATOR_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM ADMINISTRATOR ORDER BY ADMINISTRATOR_NO";
+	private static final String GET_ONE_ADMINISTRATOR_BY_ACCOUNT = 
+			"SELECT * FROM ADMINISTRATOR WHERE ADMINISTRATOR_ACCOUNT=?";
 
 	@Override
 	public void insert(AdministratorVO administratorVO) {
@@ -229,7 +231,64 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			}
 		}
 		return list;
+	}
+	
+public AdministratorVO findByAccount(String administrator_account) {
 		
+		AdministratorVO administratorVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_ADMINISTRATOR_BY_ACCOUNT);
+			rs = pstmt.executeQuery();
+			
+			pstmt.setString(1, administrator_account);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				administratorVO = new AdministratorVO();
+				administratorVO.setAdministrator_no(rs.getString("ADMINISTRATOR_NO"));
+				administratorVO.setAdministrator_name(rs.getString("ADMINISTRATOR_NAME"));
+				administratorVO.setAdministrator_account(rs.getString("ADMINISTRATOR_ACCOUNT"));
+				administratorVO.setAdministrator_password(rs.getString("ADMINISTRATOR_PASSWORD"));
+				administratorVO.setCreation_date(rs.getTimestamp("CREATION_DATE"));
+				administratorVO.setAdministrator_picture(rs.getBytes("ADMINISTRATOR_PICTURE"));
+				administratorVO.setAdministrator_status(rs.getString("ADMINISTRATOR_STATUS"));
+			}
+			
+		} catch (ClassNotFoundException | SQLException se) {
+			throw new RuntimeException("BuBu!"
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return administratorVO;
 	}
 
 }

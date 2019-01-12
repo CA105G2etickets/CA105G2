@@ -10,14 +10,13 @@ import javax.servlet.http.*;
 
 import com.administrator.model.*;
 
-
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AdministratorServlet extends HttpServlet {
 
-//	public void doGet(HttpServletRequest req, HttpServletResponse res)
-//			throws ServletException, IOException {
-//		doPost(req, res);
-//	}
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		doPost(req, res);
+	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -25,6 +24,77 @@ public class AdministratorServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+		if("find_By_Account".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
+			try {
+				//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String administrator_account = req.getParameter("administrator_account");
+				String administrator_password = req.getParameter("administrator_password");
+				if (administrator_account == null || (administrator_account.trim()).length() == 0) {
+					errorMsgs.add("請輸入管理員帳號");
+				}
+				if (administrator_password == null || (administrator_password.trim()).length() == 0) {
+					errorMsgs.add("請輸入管理員密碼");
+				}
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/backend/login_back-end.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************2.開始查詢資料,並準備轉交(Send the Success view)*****************************************/
+				AdministratorService administratorService = new AdministratorService();
+				AdministratorVO administratorVO = administratorService.findByAccount(administrator_account);
+				if (administratorVO == null) {
+					errorMsgs.add("無此帳號");
+				}
+				// Send the use back to the form, if there were errors
+				if(administrator_password.equals(administratorVO.getAdministrator_password())){
+					session.setAttribute("administratorVO", administratorVO);
+				} else {
+					errorMsgs.add("輸入的密碼有誤");
+				}
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/backend/login_back-end.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				String url = "/backend/index.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/backend/login_back-end.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		if("administrator_Logout".equals(action)) {
+			try {
+				//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				req.getSession().invalidate();
+				
+				/***************************2.開始查詢資料,並準備轉交(Send the Success view)*****************************************/
+				String url = "CA105G2/backend/index.jsp";
+				res.sendRedirect(url);
+				
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
