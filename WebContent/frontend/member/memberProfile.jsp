@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.member.model.*"%>
 
 <%
@@ -34,29 +35,55 @@
 <div class="container">
 <table class="table">
 	<tr>
-		<th>會員姓名</th>
-		<th>會員Email</th>
-		<th>會員電話</th>
-		<th>會員身分證字號</th>
-		<th>會員帳號</th>
-		<th>會員密碼</th>
-		<th>會員帳號建立日期</th>
-		<th>會員大頭貼</th>
-<!-- 		<th>會員第三方登入UID</th> -->
+		<td>會員大頭貼</td>
+		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
 	</tr>
 	<tr>
+		<td>會員姓名</td>
 		<td><%=member.getMemberFullname()%></td>
-		<td><%=member.getEmail()%></td>
-		<td><%=member.getPhone()%></td>
-		<td><%=member.getIdcard()%></td>
-		<td><%=member.getMemberAccount()%></td>
-		<td><%=member.getMemberPassword()%></td>
-		<td><%=member.getCreationDate()%></td>
-		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
-<%-- 		<td><%=member.getThirduid()%></td> --%>
 	</tr>
+	<tr>
+		<td>Email</td>
+		<td><%=member.getEmail()%></td>
+	</tr>
+	<tr>
+		<td>電話</td>
+		<td><%=member.getPhone()%></td>
+	</tr>
+	<tr>
+		<td>身分證字號</td>
+		<td><%=member.getIdcard()%></td>
+	</tr>
+	<tr>
+		<td>帳號</td>
+		<td><%=member.getMemberAccount()%></td>
+	</tr>
+	<tr>
+		<td>密碼</td>
+		<td><%=member.getMemberPassword()%></td>
+	</tr>
+	<tr>
+		<td>帳號建立日期</td>
+		<td>
+		<fmt:formatDate value="${member.creationDate}" pattern="YYYY-MM-DD"/>
+		</td>
+	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>會員第三方登入UID</td> -->
+<%-- 		<td><%=member.getThirduid()%></td> --%>
+<!-- 	</tr> -->
 </table>
 </div>
 </body>
-<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/>
+<script>
+        $.datetimepicker.setLocale('zh');
+        $('td').datetimepicker({
+           theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+ 		   value: '<%=member.getCreationDate()%>'
+        });
+</script>
 </html>
