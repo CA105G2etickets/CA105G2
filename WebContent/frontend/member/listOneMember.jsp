@@ -4,12 +4,12 @@
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-  MemberVO member = (MemberVO) request.getAttribute("member"); //EmpServlet.java(Concroller), 存入req的empVO物件
+  MemberVO member = (MemberVO) session.getAttribute("member"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
 
 <html>
 <head>
-<title>會員資料 - listOneMember.jsp</title>
+<title>ETIckeTs - 會員資料</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
   table#table-1 {
@@ -36,14 +36,6 @@
 .membermenu {
 	margin-top: 100px;
 	margin-left: 200px;
-}
-
-.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
 }
 
 .topnav {
@@ -118,14 +110,10 @@
 		<td><%=member.getMemberPassword()%></td>
 		<td><%=member.getEwalletBalance()%></td>
 		<td><%=member.getCreationDate()%></td>
-		<td><img src="<%=request.getContextPath()%>/backend/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
+		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
 		<td><%=member.getMemberStatus()%></td>
 		<td><%=member.getThirduid()%></td>
 	</tr>
 </table>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
-</div>
 </body>
 </html>
