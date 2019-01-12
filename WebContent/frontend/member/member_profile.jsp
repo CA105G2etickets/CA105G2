@@ -65,7 +65,7 @@
 	<tr>
 		<td>帳號建立日期</td>
 		<td>
-		<fmt:formatDate value="${member.creationDate}" pattern="YYYY-MM-DD"/>
+		<fmt:formatDate value="${member.creationDate}" pattern="yyyy-MM-dd"/>
 		</td>
 	</tr>
 <!-- 	<tr> -->
@@ -73,17 +73,11 @@
 <%-- 		<td><%=member.getThirduid()%></td> --%>
 <!-- 	</tr> -->
 </table>
+<div class="col-xs-12 col-sm-12">
+<a href="update_member_information.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">編輯</button></a>
+<br>
+</div>
 </div>
 </body>
 <jsp:include page="/frontend/footer_front-end.jsp" flush="true"/>
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('td').datetimepicker({
-           theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=member.getCreationDate()%>'
-        });
-</script>
 </html>

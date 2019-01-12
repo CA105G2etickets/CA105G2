@@ -62,7 +62,7 @@
 					<%if (session.getAttribute("member") == null) {%>
 					<a href="/CA105G2/frontend/login_front-end.jsp"><img src="https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"></a>
 					<% } else {%>
-					<a href="<%=request.getContextPath()%>/frontend/member/memberProfile.jsp"><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"></a>
+					<a href="<%=request.getContextPath()%>/frontend/member/member_profile.jsp"><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"></a>
 					<%}%>
 <%-- 					<img src="${member eq null ? "https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" : "<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=request.getContextPath()%>"}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"> --%>
 					<ul class="nav navbar-nav navbar-right membermenu">
