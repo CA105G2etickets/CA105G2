@@ -284,5 +284,41 @@ public class OrderDetailServlet extends HttpServlet {
 			}
 		}
 		
+		
+		
+		if ("getAll_OrderDetail_For_A_OrderNo_Frontend".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				String str = req.getParameter("order_no");
+			
+				
+				String order_no = null;
+				
+					order_no = new String(str);				
+				
+				
+				
+				
+				OrderDetailService orderDetailSvc = new OrderDetailService();
+				List<OrderDetailVO> orderDetailVO = (List<OrderDetailVO>) orderDetailSvc.findByOrderNo(order_no);
+
+				
+				
+				
+				
+				req.setAttribute("orderDetailVO", orderDetailVO);
+				String url = "/frontend/order_history/AllOrderDetailOfAOrderNo.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			}  catch (Exception e) {
+				errorMsgs.add("無法取得資料：" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/order_history/selectOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
 	}
 }

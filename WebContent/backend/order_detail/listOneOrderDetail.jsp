@@ -27,7 +27,7 @@ OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailV
 			}
 
 		</style>
-	<div><c:import url="/backend/navbar_back-end.html" charEncoding="UTF-8"/></div>
+	<div><c:import url="/backend/navbar_back-end.jsp" charEncoding="UTF-8"/></div>
 	</head>
 	<body>
 

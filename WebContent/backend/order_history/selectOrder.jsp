@@ -6,18 +6,15 @@
 <%@ page import="com.order_detail.model.*"%>
 <%@ page import="com.goods.model.*"%>
 <%
-	OrderHistoryVO orderHistoryVO = (OrderHistoryVO) request.getAttribute("orderHistoryVO");
     OrderHistoryService orderHistorySvc = new OrderHistoryService();
     List<OrderHistoryVO> listHistory = orderHistorySvc.getAll();
     pageContext.setAttribute("listHistory",listHistory);
     
-	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");
     OrderDetailService orderDetailSvc = new OrderDetailService();
     List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
     pageContext.setAttribute("listDetail",listDetail);
 %>
 <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
-
 <html>
 <head>
 	<meta charset="utf-8">
@@ -31,7 +28,7 @@
 
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-bottom: 400px">
 	<div class="row">
 		<div class="col-xs-12 col-sm-2"></div>
 		<div class="col-xs-12 col-sm-8">
@@ -48,10 +45,10 @@
 			<div role="tabpanel">
 			    <!-- 標籤面板：標籤區 -->
 			    <ul class="nav nav-tabs" role="tablist">
-			        <li role="presentation">
+			        <li role="presentation" class="active">
 			            <a href="#history" aria-controls="history" role="tab" data-toggle="tab">訂單紀錄</a>
 			        </li>
-			        <li role="presentation" class="active">
+			        <li role="presentation">
 			            <a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">訂單明細</a>
 			        </li>
 
@@ -59,8 +56,8 @@
 			
 			    <!-- 標籤面板：內容區 -->
 			    <div class="tab-content">
-				<!-- 標籤面板：訂單紀錄 -->
-			        <div role="tabpanel" class="tab-pane" id="history">
+					<!-- 標籤面板：訂單紀錄 -->
+			        <div role="tabpanel" class="tab-pane active" id="history">
 					
 <!-- 						<br><input type="button" class="btn btn-primary" value="查詢全部" onclick="location.href='listAllOrderHistory.jsp'"> -->
 						<hr><input type="button" class="btn btn-primary" value="新增一筆訂單" onclick="location.href='<%=request.getContextPath()%>/backend/order_history/addOrderHistoryAndOrderDetail.jsp'">
@@ -128,46 +125,84 @@
 				                </c:forEach>
 				            </tbody>
 				        </table>
+						
+	
+<%-- 						<jsp:useBean id="OrderHistorySvc" scope="page" class="com.order_history.model.OrderHistoryService" /> --%>
+						
+<%-- 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" > --%>
+<!-- 						  <b>選擇訂單編號:</b> -->
+<!-- 							<select size="1" name="order_no"> -->
+<%-- 								<c:forEach var="OrderHistoryVO" items="${OrderHistorySvc.all}" >  --%>
+<%-- 									<option value="${OrderHistoryVO.order_no}">${OrderHistoryVO.order_no} --%>
+<%-- 								</c:forEach>    --%>
+<!-- 							</select> -->
+<!-- 							<input type="hidden" name="action" value="getOne_For_Display"> -->
+<!-- 							<input type="submit" value="查詢" class="btn btn-info"> -->
+<!-- 						</FORM> -->
+	
+<%-- 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" > --%>
+<!-- 							<b>選擇會員編號:</b> -->
+<!-- 							<select size="1" name="member_no"> -->
+<%-- 								<c:forEach var="OrderHistoryVO" items="${OrderHistorySvc.allMemberNo}" >  --%>
+<%-- 									<option value="${OrderHistoryVO}">${OrderHistoryVO} --%>
+<%-- 								</c:forEach>    --%>
+<!-- 							</select> -->
+<!-- 							<input type="hidden" name="action" value="getOne_For_MemAllOrd"> -->
+<!-- 							<input type="submit" value="查詢" class="btn btn-info"> -->
+<!-- 						</FORM> -->
 
 			        </div>
 					
-				<!-- 標籤面板：訂單明細 -->
-			        <div role="tabpanel" class="tab-pane active" id="detail">
-	
-						<c:if test="${not empty errorMsgs}">
-							<font style="color:red">請修正以下錯誤：</font>
-							<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color:red">${message}</li>
-							</c:forEach>
-							</ul>
-						</c:if>
-
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" name="form1">
-								<hr>
-								<div class="form-group">
-									<label>訂單編號：<%=orderDetailVO.getOrder_no()%></label>
-								</div>
-								<div class="form-group">
-									<label>商品編號：<%=orderDetailVO.getGoods_no()%></label>
-								</div>
-								<div class="form-group">
-										<label>實際交易單價：</label>
-										<input type="TEXT" name="goods_bonus" id="goods_bonus" placeholder="請輸入實際交易單價" class="form-control" value="<%=orderDetailVO.getGoods_bonus()%>" style="width:15%" >
-								</div>
-								<div class="form-group">
-										<label>商品數量：</label>
-										<input type="TEXT" name="goods_pc" id="goods_pc" placeholder="請輸入商品數量" class="form-control" value="<%=orderDetailVO.getGoods_pc()%>" style="width:15%" >
-								</div>
-							<br>
-							<input type="hidden" name="action" value="update">
-								<input type="hidden" name="order_no" value="<%=orderDetailVO.getOrder_no()%>">
-								<input type="hidden" name="goods_no" value="<%=orderDetailVO.getGoods_no()%>">
-							<input type="button" value="返回 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/backend/order_detail/listAllOrderDetail.jsp'" >
-							<input type="submit" value="送出修改" class="btn btn-primary">
-						</FORM>      
-			        
-
+					<!-- 標籤面板：訂單明細 -->
+			        <div role="tabpanel" class="tab-pane" id="detail">
+											
+<%-- 						<br><input type="button" class="btn btn-primary" value="查詢全部" onclick="location.href='<%=request.getContextPath()%>/backend/order_detail/listAllOrderDetail.jsp'"> --%>
+						<hr>
+						
+				        <table id="example2" class="display" style="width:100%; font-size:8px">
+							<thead>
+								<tr>
+									<th>訂單編號</th>
+									<th>商品編號</th>
+									<th>商品名稱</th>
+									<th>實際交易金額</th>
+									<th>商品數量</th>
+									<th>修改</th>
+									<th>刪除</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="orderDetailVO" items="${listDetail}">							
+									<tr>
+										<td>${orderDetailVO.order_no}</td>
+										<td>${orderDetailVO.goods_no}</td>
+										<td>	
+											<c:forEach var="goodsVO" items="${goodsSvc.all}">
+												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">${goodsVO.goods_name}</c:if>
+											</c:forEach>
+										</td>
+										
+										<td>${orderDetailVO.goods_bonus}</td>
+										<td>${orderDetailVO.goods_pc}</td>
+										
+										<td>
+										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" style="margin-bottom: 0px;">
+										     <input type="submit" value="修改" class="btn btn-warning">
+										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}">
+										     <input type="hidden" name="goods_no"  value="${orderDetailVO.goods_no}">
+										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+										</td>
+										<td>
+										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" style="margin-bottom: 0px;">
+										     <input type="submit" value="刪除" class="btn btn-danger">
+										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}">
+										     <input type="hidden" name="goods_no"  value="${orderDetailVO.goods_no}">
+										     <input type="hidden" name="action" value="delete"></FORM>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 					</div>
 			    </div>
 			</div>
