@@ -56,9 +56,6 @@
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
-
 </div>
-
 </body>
-
 </html>

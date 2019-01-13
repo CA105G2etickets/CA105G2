@@ -12,7 +12,7 @@
 
 <html>
 <head>
-<title>ETIckeTs後台 - 所有公告資料</title>
+<title>ETIckeTs後台 - 所有公告</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -90,11 +90,11 @@ th, td {
 		</tr>
 	</c:forEach>
 </table>
+<%@ include file="page2.file"%>
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
 </div>
-<%@ include file="page2.file"%>
 </body>
 </html>

@@ -5,11 +5,13 @@
 <%
 	FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
 %>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>常見問題分類資料修改</title>
+<title>ETIckeTs後台 - 常見問題資料修改</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   table {
 	width: 450px;
@@ -24,19 +26,13 @@
     padding: 1px;
   }
 </style>
+
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
-
 <div class="container table-responsive-md">
-<h3>資料修改:</h3>
+<h3 align="center">修改常見問題</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">

@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="com.faq.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
 	FaqVO faqVO = (FaqVO) request.getAttribute("faqVO");
@@ -9,9 +8,10 @@
 
 <html>
 <head>
-<title>常見問題資料</title>
+<title>ETIckeTs後台 - 常見問題資料</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   table {
 	width: 450px;
@@ -30,13 +30,6 @@
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
-
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
 
 <table class="table">
 	<tr>

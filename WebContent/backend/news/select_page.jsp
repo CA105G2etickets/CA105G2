@@ -27,7 +27,7 @@
 		<jsp:useBean id="newsservice" scope="page" class="com.news.model.NewsService" />
 			<font size="4px">
 				<FORM METHOD="post" ACTION="news.do">選擇公告編號
-					<select name="news_no" onchange="changeA" id="newslist">
+					<select name="news_no" id="newslist">
 			        	<c:forEach var="news" items="${newsservice.all}" > 
 			          		<option value="${news.news_no}">${news.news_no}
 			         	</c:forEach>
