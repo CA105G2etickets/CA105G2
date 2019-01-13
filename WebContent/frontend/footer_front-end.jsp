@@ -2,7 +2,6 @@
 <html>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$(".footer").hover(function() {
