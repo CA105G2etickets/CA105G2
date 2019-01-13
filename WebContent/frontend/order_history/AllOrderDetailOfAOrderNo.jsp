@@ -23,7 +23,6 @@ pageContext.setAttribute("historylist",historylist);
 	</head>
 	<div><c:import url="/frontend/navbar_front-end.jsp" charEncoding="UTF-8"/></div>
 	<body>
-	
 		<c:if test="${not empty errorMsgs}">
 		<font style="color:red">請修正以下錯誤:</font>
 			<ul>
@@ -32,12 +31,10 @@ pageContext.setAttribute("historylist",historylist);
 				</c:forEach>
 			</ul>
 		</c:if>
-
 		<div class="container-fluid" style="margin-bottom: 400px">
 			<div class="row">
 				<div class="col-xs-12 col-sm-3"></div>
 				<div class="col-xs-12 col-sm-6">
-
 					  	<h2>訂單紀錄查詢</h2>
 					  	<hr>
 						<table id="example" class="display" style="width:100%; font-size:14px">
@@ -69,7 +66,6 @@ pageContext.setAttribute("historylist",historylist);
 												</c:if>
 											</c:forEach>
 										</td>
-										
 										<td>${orderDetailVO.goods_bonus}</td>
 										<td>${orderDetailVO.goods_pc}</td>
 									</tr>
