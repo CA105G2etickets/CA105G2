@@ -1,7 +1,7 @@
 ﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ page import="com.news.model.*"%>
 
 
 <!-- --------------------------------------------------DAI ::: advertisement relative ::: begin-------------------------------------------------- -->
@@ -137,9 +137,29 @@ body{
 <!-- 		</div> -->
 <!-- 		</div> -->
 		<br>
-
+		
 		<div class="container">
-
+		
+<%
+	NewsService newsService = new NewsService();
+	List<NewsVO> list = newsService.getAll();
+	pageContext.setAttribute("list", list);
+%>
+<%-- <jsp:useBean id="newsClassification" scope="page" class="com.news_classification.model.NewsClassificationService" /> --%>
+<!-- <div class="news"> -->
+<%-- 	<c:forEach var="news" items="${list}"> --%>
+<!-- 		<table class="table"> -->
+<!-- 			<div class="container"> -->
+<!-- 				<font size="3"> -->
+<!-- 					<ul> -->
+<%-- 						${newsClassification.newsClassification}<a href="#" class="newsTitle">${news.news_title}</a> --%>
+<!-- 					</ul> -->
+<!-- 				</font> -->
+<!-- 			</div> -->
+<!-- 		</table> -->
+<%-- 	</c:forEach> --%>
+<!-- </div> -->
+		
 		<div>
 				<div>
 					<div class="row">
