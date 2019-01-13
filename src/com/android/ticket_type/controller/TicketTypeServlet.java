@@ -1,8 +1,7 @@
-package com.android.seating_area.controller;
+package com.android.ticket_type.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -10,14 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.android.main.ImageUtil;
-import com.android.seating_area.model.SeatingAreaService;
+import com.android.ticket_type.model.TicketTypeService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-public class SeatingAreaServlet extends HttpServlet {
-	
-	
+public class TicketTypeServlet extends HttpServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -34,28 +31,21 @@ public class SeatingAreaServlet extends HttpServlet {
 			jsonin.append(line);
 		}
 		System.out.println(jsonin);
-		SeatingAreaService dao = new SeatingAreaService();
+		TicketTypeService dao = new TicketTypeService();
 		JsonObject jsonObject = gson.fromJson(jsonin.toString(),JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
-		if("getAllByNo".equals(action)) {
-			String eventNo = jsonObject.get("eventNo").getAsString();
-			String list = gson.toJson(dao.findByPrimaryKey(eventNo));
-			writeText(res, list);
-		}
-		if("getEvent".equals(action)) {
-			String eventNo = jsonObject.get("eventNo").getAsString();
-			writeText(res, dao.getEvent(eventNo));
-		}
-		if("getSeat".equals(action)) {
-			String ticarea_no = jsonObject.get("ticarea_no").getAsString();
-			writeText(res, String.valueOf(dao.getSeat(ticarea_no)));
+		if("getPrice".equals(action)) {
+			String tictype_no = jsonObject.get("tictype_no").getAsString();
+			String price = dao.getPrice(tictype_no);
+			writeText(res,price);
 		}
 	}
-
+	
 	private void writeText(HttpServletResponse res, String outText) throws IOException {
 		res.setContentType(com.utility.Util.CONTENT_TYPE);
 		PrintWriter out = res.getWriter();
 		out.print(outText);
 		out.close();
 	}
+	
 }

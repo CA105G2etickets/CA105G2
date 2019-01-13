@@ -1,4 +1,4 @@
-package com.android.event_title.controller;
+package com.android.event.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.android.event_title.model.Event_titleService;
+import com.android.event.model.EventService;
 import com.android.main.ImageUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-public class Event_titleServlet extends HttpServlet {
-	
+public class EventServlet extends HttpServlet{
+
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -34,33 +34,18 @@ public class Event_titleServlet extends HttpServlet {
 			jsonin.append(line);
 		}
 		System.out.println(jsonin);
-		Event_titleService dao = new Event_titleService();
+		EventService dao = new EventService();
 		JsonObject jsonObject = gson.fromJson(jsonin.toString(),JsonObject.class);
 		String action = jsonObject.get("action").getAsString();
-		
-		if("getAll".equals(action)) {
-			String search = jsonObject.get("search").getAsString();
-			String className = jsonObject.get("className").getAsString();
-			String list = gson.toJson(dao.getAll(search,className));
-			writeText(res, list);
-		}
-		if ("getAllByClass".equals(action)) {
-			String className = jsonObject.get("className").getAsString();
-			System.out.println(className);
-			String list = gson.toJson(dao.getAllByClass(className));
-			writeText(res, list);
-		}
-		if("getFavrEvent".equals(action)) {
-				String memberNo = jsonObject.get("memberNo").getAsString();
-				String list = gson.toJson(dao.getFavr(memberNo));
-				writeText(res, list);
+		if("getEvents".equals(action)) {
+			String evetit_no = jsonObject.get("evetit_no").getAsString();
+			writeText(res, gson.toJson(dao.getEvents(evetit_no)));
 		}
 		if("getImage".equals(action)) {
-			OutputStream os = res.getOutputStream();
-			String evetit_no = jsonObject.get("No").getAsString();
-			System.out.println(evetit_no);
+			String eve_no = jsonObject.get("No").getAsString();
 			int imageSize = jsonObject.get("imageSize").getAsInt();
-			byte[] image = dao.getImage(evetit_no);
+			OutputStream os = res.getOutputStream();
+			byte[] image = dao.getEventImage(eve_no);
 			if(image != null) {
 				image = ImageUtil.shrink(image, imageSize);
 				res.setContentType("image/jpeg");
@@ -76,18 +61,8 @@ public class Event_titleServlet extends HttpServlet {
 				}
 			}
 		}
-		if("getClass".equals(action)){
-			writeText(res, gson.toJson(dao.getclass()));
-		}
-		if("getNow".equals(action)){
-			writeText(res, gson.toJson(dao.getNow()));
-		}
-		if("getTitle".equals(action)) {
-			String evetit_no = jsonObject.get("evetit_no").getAsString();
-			writeText(res, dao.getTitle(evetit_no));
-		}
 	}
-
+	
 	private void writeText(HttpServletResponse res, String outText) throws IOException {
 		res.setContentType(com.utility.Util.CONTENT_TYPE);
 		PrintWriter out = res.getWriter();

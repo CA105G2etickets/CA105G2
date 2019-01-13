@@ -17,4 +17,8 @@ public class SeatingAreaService {
 	public String getEvent(String eventNo) {
 		return seatingAreaDAO.getEvent(eventNo);
 	}
+	
+	public int getSeat(String ticarea_no) {
+		return seatingAreaDAO.getSeat(ticarea_no);
+	}
 }

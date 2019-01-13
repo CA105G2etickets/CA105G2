@@ -29,4 +29,8 @@ public class Event_titleService {
 	public List<Event_titleVO> getNow(){
 		return dao.getNow();
 	}
+	
+	public String getTitle(String evetit_no) {
+		return dao.getTitle(evetit_no);
+	}
 }

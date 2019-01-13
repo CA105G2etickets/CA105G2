@@ -9,4 +9,5 @@ public interface Event_titleDAO_interface {
 	public List<Event_titleVO> getFavr(String memberNo);
 	public List<Event_titleVO> getAllByClass(String str);
 	public List<Event_titleVO> getNow();
+	public String getTitle(String evetit_no);
 }

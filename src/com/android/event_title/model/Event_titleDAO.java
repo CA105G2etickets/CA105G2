@@ -302,4 +302,45 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 		
 		return eventList;
 	}
+
+	@Override
+	public String getTitle(String evetit_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String title = "";
+		
+		String getTitle = "select evetit_name from event_title where evetit_no = ?";
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(getTitle);
+			pstmt.setString(1, evetit_no);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				title = rs.getString("evetit_name");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return title;
+	}
 }
