@@ -137,12 +137,12 @@ body{
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
-					<a href="<%=request.getContextPath()%>/backend/news/listAllNews.jsp" class="topnav" align="center">常見問題管理</a>
+					<a href="<%=request.getContextPath()%>/backend/faq/select_page.jsp" class="topnav" align="center">常見問題管理</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
-					<a href="<%=request.getContextPath()%>/backend/faq/listAllFaq.jsp" class="topnav" align="center">公告管理</a>
+					<a href="<%=request.getContextPath()%>/backend/news/select_page.jsp" class="topnav" align="center">公告管理</a>
 				</div>
 			</div>
 			</font>

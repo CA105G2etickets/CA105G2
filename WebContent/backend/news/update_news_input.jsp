@@ -5,11 +5,13 @@
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 %>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>公告分類資料修改</title>
+<title>ETIckeTs後台 - 公告資料修改</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   table {
 	width: 450px;
@@ -24,19 +26,13 @@
     padding: 1px;
   }
 </style>
+
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
-
 <div class="container table-responsive-md">
-<h3>資料修改:</h3>
+<h3 align="center">修改公告</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -77,7 +73,8 @@
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="newsClassificationNo" value="<%=newsVO.getNews_no()%>">
+<input type="hidden" name="announce_date" value="<%=newsVO.getAnnounce_date()%>">
+<input type="hidden" name="news_no" value="<%=newsVO.getNews_no()%>">
 <input type="submit" value="送出修改"></FORM>
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>

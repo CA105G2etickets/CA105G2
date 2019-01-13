@@ -3,26 +3,14 @@
 
 <html>
 <head>
-<title>ETIckeTs News</title>
+<title>ETIckeTs後台 - 公告管理</title>
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
-
 <div class="container">
 	<div class="col-xs-12 col-sm-12">
-		<font size="6px">ETIckeTse公告管理頁面</font>
-	</div>
-</div>
-<div class="container">
-	<div class="col-xs-12 col-sm-12">
-		<font size="5px">公告分類查詢</font>
+		<font size="5px">公告查詢</font>
 
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
@@ -35,52 +23,28 @@
 			</ul>
 		</c:if>
 
-		<ul>
+	<ul>
+		<jsp:useBean id="newsservice" scope="page" class="com.news.model.NewsService" />
 			<font size="4px">
-				<FORM METHOD="post" ACTION="news.do">
-					輸入公告分類編號 <input type="text" placeholder="例 : N01" name="news_no">
-					<input type="hidden" name="action" value="getOne_For_Display">
+				<FORM METHOD="post" ACTION="news.do">選擇公告編號
+					<select name="news_no" onchange="changeA" id="newslist">
+			        	<c:forEach var="news" items="${newsservice.all}" > 
+			          		<option value="${news.news_no}">${news.news_no}
+			         	</c:forEach>
+			       	</select>
+			       	<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="submit" value="送出">
-				</FORM>
-				<a href='listAllNews.jsp'>列出所有公告分類</a>
+			    </FORM>
+				<a href='listAllNews.jsp'>列出所有公告</a>
 			</font>
-
-			<jsp:useBean id="NewsService" scope="page"
-				class="com.news.model.NewsService" />
-
-			<!--   <li> -->
-			<!--      <FORM METHOD="post" ACTION="newsClassification.do" > -->
-			<!--        選擇公告分類編號 -->
-			<!--        <select size="1" name="newsClassificationNo"> -->
-			<%--          <c:forEach var="member" items="${MemberService.all}" >  --%>
-			<%--           <option value="${member.memberno}">${member.memberno} --%>
-			<%--          </c:forEach>    --%>
-			<!--        </select> -->
-			<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
-			<!--        <input type="submit" value="送出"> -->
-			<!--     </FORM> -->
-			<!--   </li> -->
-
-			<!--   <li> -->
-			<!--      <FORM METHOD="post" ACTION="newsClassification.do" > -->
-			<!--        <b>選擇員工姓名:</b> -->
-			<!--        <select size="1" name="newsClassificationNo"> -->
-			<%--          <c:forEach var="member" items="${MemberService.all}" >  --%>
-			<%--           <option value="${member.memberno}">${member.memberno} --%>
-			<%--          </c:forEach>    --%>
-			<!--        </select> -->
-			<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
-			<!--        <input type="submit" value="送出"> -->
-			<!--      </FORM> -->
-			<!--   </li> -->
-		</ul>
+	</ul>
 	</div>
 </div>
 <div class="container">
 	<div class="col-xs-12 col-sm-12">
-		<font size="5px">公告分類管理</font>
+		<font size="5px">公告管理</font>
 		<ul>
-			<font size="4px"> <a href='addNews.jsp'>新增公告分類</a>
+			<font size="4px"> <a href='addNews.jsp'>新增公告</a>
 			</font>
 		</ul>
 	</div>

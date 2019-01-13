@@ -1,17 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="com.news.model.*"%>
+<%@page import="com.administrator.model.AdministratorVO"%>
  
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
+	AdministratorVO administratorVO = (AdministratorVO) session.getAttribute("administratorVO");
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>新增公告</title>
+<title>ETIckeTs後台 - 新增公告</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   table {
 	width: 450px;
@@ -34,14 +37,8 @@
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
 <div class="container table-responsive-md">
-<h3>新增公告資料:</h3>
+<h3 align="center">新增公告</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -65,15 +62,16 @@
 	</tr>
 	<tr>
 		<td>內容</td>
-		<td><input type="TEXT" placeholder="會員加入辦法如下......"name="news_content" size="45"></td>
+		<td><input type="TEXT" placeholder="會員加入辦法如下......" name="news_content" size="45"></td>
 	</tr>
 	<tr>
 		<td>發布管理員編號</td>
-		<td><input type="TEXT" placeholder="A001"name="administrator_no" size="45" maxlength="4"></td>
+		<td><%=administratorVO.getAdministrator_no()%></td>
 	</tr>
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
+<input type="hidden" name="administrator_no" value="<%=administratorVO.getAdministrator_no()%>">
 <input type="submit" value="送出新增" >
 </FORM>
 <div class="col-xs-12 col-sm-12">

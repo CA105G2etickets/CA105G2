@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="com.news.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
@@ -9,9 +8,10 @@
 
 <html>
 <head>
-<title>公告資料</title>
+<title>ETIckeTs後台 - 公告資料</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   table {
 	width: 450px;
@@ -31,12 +31,7 @@
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
+<div class="container table-responsive-md">
 
 <table class="table">
 	<tr>
@@ -56,9 +51,14 @@
 		<td><%=newsVO.getAdministrator_no()%></td>
 	</tr>
 </table>
+
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
+
+</div>
+
 </body>
+
 </html>
