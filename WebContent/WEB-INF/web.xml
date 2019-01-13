@@ -72,7 +72,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdministratorServlet</servlet-name>
-		<url-pattern>/backend/administrator/administrator.do</url-pattern>
+		<url-pattern>/administrator/administrator.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -81,7 +81,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdministratorImageServlet</servlet-name>
-		<url-pattern>/backend/administrator/administratorImg.do</url-pattern>
+		<url-pattern>/administrator/administratorImg.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

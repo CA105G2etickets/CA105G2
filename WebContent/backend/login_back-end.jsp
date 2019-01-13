@@ -34,7 +34,7 @@
 						<form  METHOD="post" ACTION="/CA105G2/administrator/administrator.do" role="form">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" id="account" placeholder="account" name="administrator_account" type="text" autofocus>
+                                    <input class="form-control" id="account" placeholder="account" name="administrator_account" type="text">
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" id="password" placeholder="password" name="administrator_password" type="text">
@@ -54,7 +54,7 @@
 
 			  <li>
 			       選擇管理員帳號
-			       <select size="1" name="administratorA" onchange="changeA" id="userlist">
+			       <select size="1" name="administratorA" onchange="changeA" id="administratorlist" autofocus>
 			         <c:forEach var="administrator" items="${administratorservice.all}" > 
 			          <option value="${administrator.administrator_account},${administrator.administrator_password}">${administrator.administrator_account},${administrator.administrator_password}
 			         </c:forEach>
@@ -69,7 +69,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
 			$(document).ready(function(){
-				$('#userlist').on('change',function(){
+				$('#administratorlist').prepend(new Option('','', true));
+				$('#administratorlist')[0].selectedIndex = 0;
+				$('#administratorlist').on('change',function(){
 					var str = $(this).val();
 					$('#account').val(str.substring(0,str.indexOf(',',1)));
 					$('#password').val(str.substring(str.indexOf(',',1)+1,str.lastIndexOf('')));
