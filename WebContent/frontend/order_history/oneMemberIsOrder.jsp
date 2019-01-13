@@ -21,7 +21,6 @@
 	</head>
 	<div><c:import url="/frontend/navbar_front-end.jsp" charEncoding="UTF-8"/></div>
 	<body>
-	
 		<c:if test="${not empty errorMsgs}">
 		<font style="color:red">請修正以下錯誤:</font>
 			<ul>
