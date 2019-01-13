@@ -64,7 +64,7 @@
     background-color: #3399ff;
     color: #fff;
     padding: 3px 10px;
-    font-size: 5px;
+    font-size: 12px;
     border-radius: 5px;
     vertical-align: middle;
     display: inline-block;

@@ -34,7 +34,7 @@
 						<form  METHOD="post" ACTION="/CA105G2/member/member.do" role="form">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" id="account" placeholder="account" name="member_account" type="text" autofocus>
+                                    <input class="form-control" id="account" placeholder="account" name="member_account" type="text">
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" id="password" placeholder="password" name="member_password" type="text">
@@ -59,7 +59,7 @@
 
 			  <li>
 			       選擇會員帳號
-			       <select size="1" name="memberA" onchange="changeA" id="userlist">
+			       <select size="1" name="memberA" onchange="changeA" id="userlist" autofocus>
 			         <c:forEach var="member" items="${memberservice.all}" > 
 			          <option value="${member.memberAccount},${member.memberPassword}">${member.memberAccount},${member.memberPassword}
 			         </c:forEach>
@@ -74,6 +74,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
 			$(document).ready(function(){
+				$('#userlist').prepend(new Option('','', true));
+				$('#userlist')[0].selectedIndex = 0;
 				$('#userlist').on('change',function(){
 					var str = $(this).val();
 					$('#account').val(str.substring(0,str.indexOf(',',1)));
