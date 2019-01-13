@@ -74,7 +74,7 @@ hr {
 	background-color: #9d9d9d;
  	width: 100%;
  	border: none;
- 	margin: 5;
+ 	margin: 3;
 }
 .paragraph {
 	margin: 5px 0;
@@ -183,6 +183,12 @@ body{
 						<a href="#" class="newsTitle">${news.news_title}</a>
 					</ul>
 	</c:forEach>
+<ul>
+<div class="paragraph">
+下面待補
+</div>
+<hr>
+</ul>
 </font>
 		<div>
 				<div>
