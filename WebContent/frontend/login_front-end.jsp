@@ -49,14 +49,7 @@
 <!--                                 <a href="index.html" class="btn btn-info btn-block">Login</a> -->
                             </fieldset>
                         </form>
-<!--                         <select size="1" name="memberNo"> -->
-<%-- 						<c:forEach var="memberNo" items="member" >  --%>
-<%-- 							<option value="${memberNo}">${member.memberNo} --%>
-<%-- 						</c:forEach>    --%>
-<!-- 						</select> -->
-						<jsp:useBean id="memberservice" scope="page"
-				class="com.member.model.MemberService" />
-
+<jsp:useBean id="memberservice" scope="page" class="com.member.model.MemberService" />
 			  <li>
 			       選擇會員帳號
 			       <select size="1" name="memberA" onchange="changeA" id="userlist" autofocus>

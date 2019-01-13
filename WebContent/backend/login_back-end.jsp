@@ -44,14 +44,7 @@
 <!--                                 <a href="index.html" class="btn btn-info btn-block">Login</a> -->
                             </fieldset>
                         </form>
-<!--                         <select size="1" name="memberNo"> -->
-<%-- 						<c:forEach var="memberNo" items="member" >  --%>
-<%-- 							<option value="${memberNo}">${member.memberNo} --%>
-<%-- 						</c:forEach>    --%>
-<!-- 						</select> -->
-						<jsp:useBean id="administratorservice" scope="page"
-				class="com.administrator.model.AdministratorService" />
-
+<jsp:useBean id="administratorservice" scope="page" class="com.administrator.model.AdministratorService" />
 			  <li>
 			       選擇管理員帳號
 			       <select size="1" name="administratorA" onchange="changeA" id="administratorlist" autofocus>
