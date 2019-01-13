@@ -29,7 +29,7 @@ pageContext.setAttribute("list",list);
 			}
 
 		</style>	
-	<div><c:import url="/backend/navbar_back-end.html" charEncoding="UTF-8"/></div>
+	<div><c:import url="/backend/navbar_back-end.jsp" charEncoding="UTF-8"/></div>
 	</head>
 	<body>
 	
@@ -79,8 +79,8 @@ pageContext.setAttribute("list",list);
 										<td>${orderHistoryVO.member_no}</td>
 										<td>${orderHistoryVO.order_price}</td>
 										<td>
-											${(orderHistoryVO.pay_methods == "CREDITCARD") ? '電子錢包' : '' }
-											${(orderHistoryVO.pay_methods == "EWALLET") ? '信用卡' : '' }
+											${(orderHistoryVO.pay_methods == "CREDITCARD") ? '信用卡' : '' }
+											${(orderHistoryVO.pay_methods == "EWALLET") ? '電子錢包' : '' }
 										</td>
 										<td>
 											${(orderHistoryVO.shipping_methods == "STOREPICKUP") ? '超商取貨' : '' }

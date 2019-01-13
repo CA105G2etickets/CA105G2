@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
-<div><c:import url="/backend/navbar_back-end.html" charEncoding="UTF-8"/></div>
+<div><c:import url="/backend/navbar_back-end.jsp" charEncoding="UTF-8"/></div>
 
 <body>
 
@@ -136,9 +136,9 @@
 						</ul>
 				</c:if>
 	
-				<a href='<%=request.getContextPath()%>/order_detail/listAllOrderDetail.jsp'>查詢全部訂單明細</a><br><br>  						
+				<a href='<%=request.getContextPath()%>/backend/order_detail/listAllOrderDetail.jsp'>查詢全部訂單明細</a><br><br>  						
 	
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderDetail/OrderDetail.do" >
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" >
 				    <b>輸入訂單編號 (如O2018121710001):</b>
 				    <input type="text" name="order_no">
 				    <input type="hidden" name="action" value="getOne_For_Display">
@@ -147,7 +147,7 @@
 	
 				<jsp:useBean id="OrderDetailSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
 				
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderDetail/OrderDetail.do" >
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" >
 				  <b>選擇訂單編號:</b>
 					<select size="1" name="order_no">
 						<c:forEach var="OrderDetailVO" items="${OrderDetailSvc.allOrderNo}" > 
@@ -171,7 +171,7 @@
 						<h3 class="panel-title">訂單明細管理</h3>
 					</div>
 					<div class="panel-body">
-						<a href='<%=request.getContextPath()%>/order_detail/addOrderDetail.jsp'>新增一筆訂單明細</a>
+						<a href='<%=request.getContextPath()%>/backend/order_detail/addOrderDetail.jsp'>新增一筆訂單明細</a>
 					</div>
 				</div>
 			</div>

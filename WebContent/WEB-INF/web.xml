@@ -111,32 +111,41 @@
 		<url-pattern>/goods/GoodsServlet.do</url-pattern>
 	</servlet-mapping>
 
- <servlet>
-    <servlet-name>OrderHistoryServlet</servlet-name>
-    <servlet-class>com.order_history.controller.OrderHistoryServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>OrderHistoryServlet</servlet-name>
-    <url-pattern>/order_history/OrderHistory.do</url-pattern>
-  </servlet-mapping>
+	<servlet>
+	    <servlet-name>OrderHistoryServlet</servlet-name>
+	    <servlet-class>com.order_history.controller.OrderHistoryServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderHistoryServlet</servlet-name>
+		<url-pattern>/order_history/OrderHistory.do</url-pattern>
+	</servlet-mapping>
   
-  <servlet>
-    <servlet-name>OrderDetailServlet</servlet-name>
-    <servlet-class>com.order_detail.controller.OrderDetailServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>OrderDetailServlet</servlet-name>
-    <url-pattern>/order_detail/OrderDetail.do</url-pattern>
-  </servlet-mapping>
+	<servlet>
+	    <servlet-name>OrderDetailServlet</servlet-name>
+	    <servlet-class>com.order_detail.controller.OrderDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderDetailServlet</servlet-name>
+		<url-pattern>/order_detail/OrderDetail.do</url-pattern>
+	</servlet-mapping>
   
-  <servlet>
-    <servlet-name>FavoriteGoodsServlet</servlet-name>
-    <servlet-class>com.favorite_goods.controller.FavoriteGoodsServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FavoriteGoodsServlet</servlet-name>
-    <url-pattern>/favorite_goods/FavoriteGoods.do</url-pattern>
-  </servlet-mapping>
+	<servlet>
+		<servlet-name>FavoriteGoodsServlet</servlet-name>
+		<servlet-class>com.favorite_goods.controller.FavoriteGoodsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FavoriteGoodsServlet</servlet-name>
+		<url-pattern>/favorite_goods/FavoriteGoods.do</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+		<servlet-name>ShoppingCartServlet</servlet-name>
+		<servlet-class>com.shopping_cart.controller.ShoppingCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShoppingCartServlet</servlet-name>
+		<url-pattern>/shopping_cart/ShoppingCart.do</url-pattern>
+	</servlet-mapping>
   
 
 	<servlet>

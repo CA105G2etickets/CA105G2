@@ -1,7 +1,7 @@
 ﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ page import="com.news.model.*"%>
 
 
 <!-- --------------------------------------------------DAI ::: advertisement relative ::: begin-------------------------------------------------- -->
@@ -59,6 +59,27 @@
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
+}
+.newstag {
+    background-color: #3399ff;
+    color: #fff;
+    padding: 3px 10px;
+    font-size: 5px;
+    border-radius: 5px;
+    vertical-align: middle;
+    display: inline-block;
+}
+hr {
+ 	height: 2px;
+	background-color: #9d9d9d;
+ 	width: 100%;
+ 	border: none;
+ 	margin: 5;
+}
+.paragraph {
+	margin: 5px 0;
+    padding: 0;
+    display: inline-block;
 }
 body{
 	font-family:微軟正黑體!important;
@@ -137,9 +158,32 @@ body{
 <!-- 		</div> -->
 <!-- 		</div> -->
 		<br>
-
+		
 		<div class="container">
+		
+<%
+	NewsService newsService = new NewsService();
+	List<NewsVO> list = newsService.getAll();
+	pageContext.setAttribute("list", list);
+%>
 
+<jsp:useBean id="newsClassification" scope="page" class="com.news_classification.model.NewsClassificationService" />
+<font size="3" style="font-weight:bold">
+<ul>
+<div class="paragraph">
+網站公告
+</div>
+<hr>
+</ul>
+	<c:forEach var="news" items="${list}" end="4">
+					<ul>
+						<font class="newstag">
+						${newsClassification.getOneNewsClassification(news.news_classification_no).newsClassification}
+						</font>
+						<a href="#" class="newsTitle">${news.news_title}</a>
+					</ul>
+	</c:forEach>
+</font>
 		<div>
 				<div>
 					<div class="row">
@@ -386,8 +430,13 @@ body{
 			}
 		})
 		<!-- --------------------------------------------------advertisement relative ::: end-------------------------------------------------- -->
-
 		
+		
+		<!-- --------------------------------------------------------------公告部分------------------------------------------------------------ -->
+			$(".newsTitle").hover(function() {
+				$(this).css("text-decoration","none");
+			});
+		<!-- --------------------------------------------------------------公告結束------------------------------------------------------------ -->
 		
 	});
 	</script>

@@ -3,23 +3,11 @@
 
 <html>
 <head>
-<title>ETIckeTs Faq</title>
+<title>ETIckeTs後台 - 常見問題管理</title>
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
-
-<div class="container">
-	<div class="col-xs-12 col-sm-12">
-		<font size="6px">ETIckeTse常見問題管理頁面</font>
-	</div>
-</div>
 <div class="container">
 	<div class="col-xs-12 col-sm-12">
 		<font size="5px">常見問題查詢</font>
@@ -35,45 +23,25 @@
 			</ul>
 		</c:if>
 
-		<ul>
+	<ul>
+		<jsp:useBean id="faqservice" scope="page" class="com.faq.model.FaqService" />	
 			<font size="4px">
-				<FORM METHOD="post" ACTION="faq.do">
-					輸入常見問題編號 <input type="text" placeholder="例 : FAQ001" name="faq_no">
-					<input type="hidden" name="action" value="getOne_For_Display">
+				<FORM METHOD="post" ACTION="faq.do">選擇常見問題編號
+					<select name="faq_no" id="faqlist">
+			        	<c:forEach var="faq" items="${faqservice.all}" > 
+			          		<option value="${faq.faq_no}">${faq.faq_no}
+			         	</c:forEach>
+			       	</select>
+			       	<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="submit" value="送出">
-				</FORM>
+			   	 </FORM>
 				<a href='listAllFaq.jsp'>列出所有常見問題</a>
 			</font>
 
 			<jsp:useBean id="FaqService" scope="page"
 				class="com.faq.model.FaqService" />
 
-			<!--   <li> -->
-			<!--      <FORM METHOD="post" ACTION="faqClassification.do" > -->
-			<!--        選擇常見問題編號 -->
-			<!--        <select size="1" name="faqClassificationNo"> -->
-			<%--          <c:forEach var="member" items="${MemberService.all}" >  --%>
-			<%--           <option value="${member.memberno}">${member.memberno} --%>
-			<%--          </c:forEach>    --%>
-			<!--        </select> -->
-			<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
-			<!--        <input type="submit" value="送出"> -->
-			<!--     </FORM> -->
-			<!--   </li> -->
-
-			<!--   <li> -->
-			<!--      <FORM METHOD="post" ACTION="faqClassification.do" > -->
-			<!--        <b>選擇員工姓名:</b> -->
-			<!--        <select size="1" name="faqClassificationNo"> -->
-			<%--          <c:forEach var="member" items="${MemberService.all}" >  --%>
-			<%--           <option value="${member.memberno}">${member.memberno} --%>
-			<%--          </c:forEach>    --%>
-			<!--        </select> -->
-			<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
-			<!--        <input type="submit" value="送出"> -->
-			<!--      </FORM> -->
-			<!--   </li> -->
-		</ul>
+	</ul>
 	</div>
 </div>
 <div class="container">

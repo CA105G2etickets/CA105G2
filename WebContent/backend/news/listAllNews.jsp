@@ -1,9 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
 <%@page import="com.news.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
 	NewsService newsService = new NewsService();
@@ -11,13 +10,12 @@
 	pageContext.setAttribute("list", list);
 %>
 
-
 <html>
 <head>
-<title>所有公告資料</title>
+<title>ETIckeTs後台 - 所有公告</title>
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
 table {
 	width: 800px;
@@ -39,13 +37,6 @@ th, td {
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
-
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -99,11 +90,11 @@ th, td {
 		</tr>
 	</c:forEach>
 </table>
+<%@ include file="page2.file"%>
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
 </div>
-<%@ include file="page2.file"%>
 </body>
 </html>

@@ -9,7 +9,7 @@
 	<title>最愛商品查詢</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
-	<div><c:import url="/backend/navbar_back-end.html" charEncoding="UTF-8"/></div>
+	<div><c:import url="/backend/navbar_back-end.jsp" charEncoding="UTF-8"/></div>
 
 <body>
 

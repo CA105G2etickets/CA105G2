@@ -14,7 +14,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO NEWS (NEWS_NO,NEWS_CLASSIFICATION_NO,NEWS_TITLE,NEWS_CONTENT,ANNOUNCE_DATE,ADMINISTRATOR_NO) VALUES ('N'||LPAD(to_char(news_N_seq.NEXTVAL), 2, '0'), ?, ?, ?,CURRENT_DATE, ?)";
 	private static final String UPDATE = 
-			"UPDATE NEWS SET NEWS_CLASSIFICATION_NO = ?, NEWS_TITLE = ?, NEWS_CONTENT = ?, ADMINISTRATOR_NO = ? WHERE NEWS_NO = ?";
+			"UPDATE NEWS SET NEWS_CLASSIFICATION_NO = ?, NEWS_TITLE = ?, NEWS_CONTENT = ?, ANNOUNCE_DATE = ?, ADMINISTRATOR_NO = ? WHERE NEWS_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM NEWS WHERE NEWS_NO = ?";
 	private static final String FIND_BY_PK_SQL = 
@@ -34,12 +34,10 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setString(1, newsVO.getNews_no());
-			pstmt.setString(2, newsVO.getNews_classification_no());
-			pstmt.setString(3, newsVO.getNews_title());
-			pstmt.setString(4, newsVO.getNews_content());
-			pstmt.setDate(5, newsVO.getAnnounce_date());
-			pstmt.setString(6, newsVO.getAdministrator_no());
+			pstmt.setString(1, newsVO.getNews_classification_no());
+			pstmt.setString(2, newsVO.getNews_title());
+			pstmt.setString(3, newsVO.getNews_content());
+			pstmt.setString(4, newsVO.getAdministrator_no());
 
 			pstmt.executeUpdate();
 			
@@ -80,6 +78,7 @@ public class NewsJDBCDAO implements NewsDAO_interface {
 			pstmt.setString(1, newsVO.getNews_classification_no());
 			pstmt.setString(2, newsVO.getNews_title());
 			pstmt.setString(3, newsVO.getNews_content());
+			pstmt.setDate(4, newsVO.getAnnounce_date());
 			pstmt.setString(5, newsVO.getAdministrator_no());
 			pstmt.setString(6, newsVO.getNews_no());
 

@@ -52,6 +52,10 @@ public class OrderHistoryDAO implements OrderHistoryDAO_interface {
 	private static final String GET_ONE_MEMBERNO = 
 		"SELECT * FROM ORDER_HISTORY WHERE MEMBER_NO = ?";
 	
+	private static final String FRONT_GET_ONE_MEMBERNO = 
+		"SELECT * FROM ORDER_HISTORY WHERE MEMBER_NO = ?";
+		
+	
 	@Override
 	public void insert(OrderHistoryVO orderHistoryVO) {
 

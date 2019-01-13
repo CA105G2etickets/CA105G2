@@ -9,9 +9,10 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>新增常見問題</title>
+<title>ETIckeTs後台 - 新增常見問題</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   table {
 	width: 450px;
@@ -34,14 +35,8 @@
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/>  
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
 <div class="container table-responsive-md">
-<h3>新增常見問題資料:</h3>
+<h3 align="center">新增常見問題</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">

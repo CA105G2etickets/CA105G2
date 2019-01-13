@@ -2,6 +2,7 @@ package com.news.controller;
 
 import java.io.*;
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 import javax.servlet.*;
@@ -146,18 +147,16 @@ public class NewsServlet extends HttpServlet {
 					errorMsgs.add("公告內容請勿空白");
 				}	
 				
+				Date announce_date = Date.valueOf(req.getParameter("announce_date"));
+
 				String administrator_no = req.getParameter("administrator_no").trim();
-				if (administrator_no == null || administrator_no.trim().length() == 0) {
-					errorMsgs.add("管理員編號請勿空白");
-				}	
-				
 				
 				NewsVO newsVO = new NewsVO();
 				newsVO.setNews_no(news_no);
 				newsVO.setNews_classification_no(news_classification_no);
 				newsVO.setNews_title(news_title);
 				newsVO.setNews_content(news_content);
-//				newsVO.setAnnounce_date(ANNOUNCE_DATE);
+				newsVO.setAnnounce_date(announce_date);
 				newsVO.setAdministrator_no(administrator_no);
 				
 
@@ -172,7 +171,7 @@ public class NewsServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				NewsService newsService = new NewsService();
-				newsService.updateNews(news_no, news_classification_no, news_title, news_content, administrator_no);
+				newsService.updateNews(news_no, news_classification_no, news_title, news_content, announce_date, administrator_no);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("newsVO", newsVO); // 資料庫update成功後,正確的的empVO物件,存入req
