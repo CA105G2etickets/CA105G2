@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
 
+import javax.mail.Session;
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
@@ -341,6 +342,106 @@ public class MemberServlet extends HttpServlet {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/backend/member/update_member_input.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("update_front".equals(action)) {
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
+			
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String memberNo = new String(req.getParameter("memberno").trim());
+				
+				String memberFullname = req.getParameter("name");
+				if (memberFullname == null || memberFullname.trim().length() == 0) {
+					errorMsgs.add("姓名請勿空白");
+				}
+				
+				String email = req.getParameter("email").trim();
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("電子郵件請勿空白");
+				}	
+				
+				String phone = req.getParameter("phone").trim();
+				if (phone == null || phone.trim().length() == 0) {
+					errorMsgs.add("電話號碼請勿空白");
+				}	
+				
+				String memberAccount = req.getParameter("memberAccount").trim();
+				if (memberAccount == null || memberAccount.trim().length() == 0) {
+					errorMsgs.add("帳號請勿空白");
+				}	
+				
+				String memberPassword = req.getParameter("memberPassword").trim();
+				if (memberPassword == null || memberPassword.trim().length() == 0) {
+					errorMsgs.add("密碼請勿空白");
+				}	
+				
+				byte[] profilePicture = null;
+				Part part = req.getPart("picture");
+				try {
+					String uploadFileName = part.getSubmittedFileName();
+					if (uploadFileName != null && part.getContentType() != null) {
+						InputStream in = part.getInputStream();
+						profilePicture = new byte[in.available()];
+						in.read(profilePicture);
+						in.close();
+					}
+				} catch (FileNotFoundException e) {
+					errorMsgs.add("找不到檔案");
+				}
+				if (part.getSize() == 0) {
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+				}
+				
+				MemberVO memberN = new MemberVO();
+				memberN.setMemberNo(memberNo);
+				memberN.setMemberFullname(memberFullname);
+				memberN.setEmail(email);
+				memberN.setPhone(phone);
+				memberN.setMemberAccount(memberAccount);
+				memberN.setMemberPassword(memberPassword);
+				memberN.setProfilePicture(profilePicture);
+				
+				if (!errorMsgs.isEmpty()) {
+					session.removeAttribute("member");
+					session.setAttribute("member", memberN);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/member/update_member_information.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				MemberService memberService = new MemberService();
+				memberService.updateMemberFront(memberNo, memberFullname, email, phone, memberAccount, memberPassword, profilePicture);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				
+				session.removeAttribute("member");
+				
+				if(session.getAttribute("member") == null){
+					session.setAttribute("member", memberN);
+				} else {
+					errorMsgs.add("個人資料修改失敗");
+				}
+				
+				String url = "/frontend/member/member_profile.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/member/update_member_information.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -18,6 +18,8 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			"DELETE FROM MEMBER WHERE MEMBER_NO = ?";
 	private static final String UPDATE = 
 			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, IDCARD = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, EWALLET_BALANCE = ?, CREATION_DATE = ?, PROFILE_PICTURE = ?, MEMBER_STATUS = ? WHERE MEMBER_NO = ?";
+	private static final String UPDATE_FOR_FRONT = 
+			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, PROFILE_PICTURE = ? WHERE MEMBER_NO = ?";
 	private static final String FIND_BY_PK_SQL = 
 			"SELECT * FROM MEMBER WHERE MEMBER_NO = ?";
 	private static final String MEMBER_CHECK = 
@@ -118,6 +120,50 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			}
 		}
 
+	}
+	
+	@Override
+	public void update_front(MemberVO member) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_FOR_FRONT);
+			
+			pstmt.setString(1, member.getMemberFullname());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getPhone());
+			pstmt.setString(4, member.getMemberAccount());
+			pstmt.setString(5, member.getMemberPassword());
+			pstmt.setBytes(6, member.getProfilePicture());
+			pstmt.setString(7, member.getMemberNo());
+			
+			pstmt.executeUpdate();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new RuntimeException("BuBu!"
+					+ e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 
 	@Override

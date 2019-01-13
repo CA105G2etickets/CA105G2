@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.member.model.*"%>
 
 <%
@@ -52,7 +53,7 @@ function readURL(input){
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="member.do" name="form1" enctype="multipart/form-data">
+<FORM METHOD="post" ACTION="/CA105G2/member/member.do" name="form1" enctype="multipart/form-data">
 <table class="table">
 	<tr>
 		<td>會員編號:<font color=red></font></td>
@@ -83,56 +84,36 @@ function readURL(input){
 	</tr>
 	<tr>
 		<td>會員帳號:</td>
-		<td><input type="TEXT" name="account" size="45"	value="<%=member.getMemberAccount()%>" /></td>
+		<td><input type="TEXT" name="memberAccount" size="45"	value="<%=member.getMemberAccount()%>" /></td>
 	</tr>
 	<tr>
 		<td>會員密碼:</td>
-		<td><input type="TEXT" name="password" size="45" value="<%=member.getMemberPassword()%>" /></td>
-	</tr>
-	<tr>
-		<td>會員電子錢包餘額:</td>
-		<td><%=member.getEwalletBalance()%></td>
+		<td><input type="TEXT" name="memberPassword" size="45" value="<%=member.getMemberPassword()%>" /></td>
 	</tr>
 	<tr>
 		<td>帳號建立日期:</td>
-		<td><%=member.getCreationDate()%></td>
+		<td><fmt:formatDate value="${member.creationDate}" pattern="yyyy-MM-dd"/></td>
 	</tr>
 	<tr>
 		<td>會員狀態:</td>
-		<td>
-			<select name="states">
-				<option value="normal" ${(member.memberStatus eq "normal")? 'selected':'' }>正常</option>
-				<option value="abnormal" ${(member.memberStatus eq "abnormal")? 'selected':'' }>異常</option>
-			</select>
-		</td>
+		<td><%=member.getMemberStatus()%></td>
 	</tr>
-	<tr>
-		<td>會員第三方登入UID:</td>
-		<td><%=member.getThirduid()%></td>
-<%-- 		<td><%=(member.getThirduid().isEmpty() ? "" : member.getThirduid())%></td> --%>
-	</tr>
-
-<%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
-<!-- 	<tr> -->
-<!-- 		<td>部門:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="deptno"> -->
-<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%-- 				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)?'selected':'' } >${deptVO.dname} --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
 </table>
 <br>
-<input type="hidden" name="action" value="update">
+<input type="hidden" name="action" value="update_front">
 <input type="hidden" name="memberno" value="<%=member.getMemberNo()%>">
 <input type="submit" value="送出修改"></FORM>
+
 <div class="col-xs-12 col-sm-12">
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
+
 </div>
+
 </body>
+
 <jsp:include page="/frontend/footer_front-end.jsp" flush="true"/>
+
 </html>

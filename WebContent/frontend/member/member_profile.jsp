@@ -74,7 +74,7 @@
 <!-- 	</tr> -->
 </table>
 <div class="col-xs-12 col-sm-12">
-<a href="update_member_information.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">編輯</button></a>
+<a href="<%=request.getContextPath()%>/frontend/member/update_member_information.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">編輯</button></a>
 <br>
 </div>
 </div>

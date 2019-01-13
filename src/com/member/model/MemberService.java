@@ -55,6 +55,23 @@ public class MemberService {
 
 		return member;
 	}
+	
+	public MemberVO updateMemberFront(String memberNo, String memberFullname, String email, String phone,
+			String memberAccount, String memberPassword, byte[] profilePicture) {
+		
+		MemberVO member = new MemberVO();
+		
+		member.setMemberNo(memberNo);
+		member.setMemberFullname(memberFullname);
+		member.setEmail(email);
+		member.setPhone(phone);
+		member.setMemberAccount(memberAccount);
+		member.setMemberPassword(memberPassword);
+		member.setProfilePicture(profilePicture);
+		dao.update_front(member);
+		
+		return member;
+	}
 
 	public void deleteMember(String memberNo) {
 		dao.delete(memberNo);
