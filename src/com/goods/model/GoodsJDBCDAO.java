@@ -542,4 +542,16 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 //		}
 //
 	}
+
+	@Override
+	public List<GoodsVO> getAllLaunched(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<GoodsVO> getAllLaunched() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

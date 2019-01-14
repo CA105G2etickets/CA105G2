@@ -1,6 +1,8 @@
 package com.goods.model;
 
 import java.util.List;
+import java.util.Map;
+
 
 public interface GoodsDAO_interface {
 
@@ -13,5 +15,9 @@ public interface GoodsDAO_interface {
 	public GoodsVO findByPrimarykey(String goods_no);
 
 	public List<GoodsVO> getAll();
+
+	public List<GoodsVO> getAllLaunched(Map<String, String[]> map);
+
+	public List<GoodsVO> getAllLaunched();
+
 }
-   

@@ -21,13 +21,31 @@ $.datetimepicker.setLocale('zh');
 		this.setOptions({minDate:$("#launchdate").val() ? $("#launchdate").val() : false})},
  });
 
-
+ function imagesPreview(input) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function(e) {
+	            $("#goods_picture1").attr("src", e.target.result);           
+	        }        
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+ 
+ function imagesPreview(input) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function(e) {
+	            $("#goods_picture2").attr("src", e.target.result);           
+	        }        
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
 
 function imagesPreview(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            $("#evetit_poster_preview").attr("src", e.target.result);           
+            $("#goods_picture3").attr("src", e.target.result);           
         }        
         reader.readAsDataURL(input.files[0]);
     }
