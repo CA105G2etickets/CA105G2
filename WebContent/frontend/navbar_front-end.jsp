@@ -108,7 +108,7 @@
 			<font size="4">
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
-					<a href="/CA105G2/frontend/event_title/selectEventTitle.jsp" class="topnav" align="center">所有活動</a>
+					<a href="<%=request.getContextPath()%>/frontend/event_title/selectEventTitle.jsp" class="topnav" align="center">所有活動</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
