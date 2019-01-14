@@ -155,13 +155,13 @@
 
         $("#loadMore").click(function(e) {
             e.preventDefault();
-            $(".loadMoreDivs:hidden").slice(0, 6).slideDown();
-            if ($(".loadMoreDivs:hidden").length == 0) {
-            
-            }
+            $(".loadMoreDivs:hidden").slice(0, 3).slideDown();
             $('html,body').animate({
                 scrollTop: $(this).offset().top
             }, 1500);
+            if ($(".loadMoreDivs:hidden").length == 0) {
+            	$("#loadMore").hide();
+            }
         });
         
         
