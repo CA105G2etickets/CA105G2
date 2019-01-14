@@ -10,7 +10,7 @@ $.datetimepicker.setLocale('zh');
 	onShow:function(){
 		this.setOptions({maxDate:$("#offdate").val() ? $("#offdate").val() : false})},
  });
- 
+  
  $("#offdate").datetimepicker({
 	format:'Y-m-d',
 	minDate: 0,

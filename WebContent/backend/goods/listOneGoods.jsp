@@ -5,7 +5,7 @@
 <%
 	GoodsVO goodsVO = (GoodsVO) request.getAttribute("goodsVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
-
+ 
 <html>
 <head>
 <title>商品資料 - listOneGoods.jsp</title>

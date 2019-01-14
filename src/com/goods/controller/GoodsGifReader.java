@@ -26,7 +26,7 @@ public class GoodsGifReader extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	Connection con;
-
+ 
 	public void init() throws ServletException {
 		try {
 			Context ctx = new javax.naming.InitialContext();

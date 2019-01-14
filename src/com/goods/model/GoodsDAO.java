@@ -12,7 +12,7 @@ import com.event_title.model.CompositeQuery_EventTitle_Launched;
 import com.event_title.model.EventTitleVO;
 
 public class GoodsDAO implements GoodsDAO_interface {
-
+ 
 	private static DataSource ds = null;
 	static {
 		try {

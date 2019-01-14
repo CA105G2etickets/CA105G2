@@ -35,7 +35,7 @@
 </head>
 <body>
 
-
+ 
 
 	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 

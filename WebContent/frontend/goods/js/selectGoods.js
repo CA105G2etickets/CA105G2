@@ -11,4 +11,4 @@ $("#offdate").datetimepicker({
 	timepicker: false,
 	onShow:function(){
 		this.setOptions({minDate:$("#launchdate").val() ? $("#launchdate").val() : false})}
-});
+}); 

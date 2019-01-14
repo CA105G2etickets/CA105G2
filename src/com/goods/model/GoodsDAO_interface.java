@@ -3,7 +3,7 @@ package com.goods.model;
 import java.util.List;
 import java.util.Map;
 
-
+ 
 public interface GoodsDAO_interface {
 
 	public void insert(GoodsVO goodsVO);

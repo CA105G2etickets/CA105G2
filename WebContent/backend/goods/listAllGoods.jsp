@@ -4,7 +4,7 @@
 <%@ page import="com.goods.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
-
+ 
 <%
 	GoodsService goodsSvc = new GoodsService();
 	List<GoodsVO> list = goodsSvc.getAll();

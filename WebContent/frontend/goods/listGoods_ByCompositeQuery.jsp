@@ -13,7 +13,7 @@
 		pageContext.setAttribute("listGoods_ByCompositeQuery", list); 
 	}
 %>
-
+ 
 <!DOCTYPE html>
 <html>
 

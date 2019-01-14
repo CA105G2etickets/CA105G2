@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-
+ 
 public class CompositeQuery_Goods_Launched {
 	
 public static String get_WhereCondition(Map<String, String[]> map) {
@@ -41,17 +41,6 @@ public static String get_WhereCondition(Map<String, String[]> map) {
 
 	
 	
-	
-	public static void main(String argv[]) {
 
-		Map<String, String[]> map = new TreeMap<String, String[]>();
-		map.put("goods_name", new String[] { "5" });
-		map.put("launchdate", new String[] { "2018-12-31" });
-		map.put("offdate", new String[] { "2019-12-31" });
-
-		String finalSQL = "SELECT * FROM GOODS WHERE (goods_status = 'confirmed') AND (CURRENT_DATE BETWEEN launchdate AND offdate) "
-		          + CompositeQuery_Goods_Launched.get_WhereCondition(map);
-		System.out.println(finalSQL);
-	}
 	
 }

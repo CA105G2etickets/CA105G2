@@ -78,7 +78,7 @@ public class GoodsService {
 	public void deleteGoods(String goods_no) {
 		goodsDao.delete(goods_no);
 	}
-
+ 
 	public GoodsVO getOneGoods(String goods_no) {
 		return goodsDao.findByPrimarykey(goods_no);
 	}
