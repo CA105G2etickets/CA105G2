@@ -121,6 +121,7 @@
                      <div class="form-group">
                          <label>狀態</label>                             
                          <select class="form-control" name="eve_status" readonly>
+                         	<option value="temp" ${(eventVO.eve_status == 'temp') ? 'selected' : '' }>暫存</option>
                          	<option value="normal" ${(eventVO.eve_status == 'normal') ? 'selected' : '' }>正常</option>
                          	<option value="cancel" ${(eventVO.eve_status == 'cancel') ? 'selected' : '' }>取消</option>
                          </select>     
@@ -183,7 +184,7 @@
 			    <input type="submit" value="修改" class="btn btn-warning"> 							
 			</form>	
 			<span class="form-group">
-				<a class="btn btn-primary" href="<%=request.getContextPath()%>/event/EventServlet.do?action=addEvent&evetit_no=${eventVO.evetit_no}">繼續新增</a>
+				<a class="btn btn-primary" href="<%=request.getContextPath()%>/event/EventServlet.do?action=addEvent&evetit_no=${eventVO.evetit_no}">新增</a>
 			</span>
 			<span class="form-group">
 				<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventVO.evetit_no}&eve_no=${eventVO.eve_no}">回活動總覽</a>

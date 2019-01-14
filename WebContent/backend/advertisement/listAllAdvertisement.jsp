@@ -73,14 +73,29 @@
 			</thead>
 			<tbody>
 				<c:forEach var="advertisementVO" items="${advertisementList}">
-					<tr class="${(advertisementVO.ad_no==param.ad_no) ? 'selected':''}">	
+					<tr>	
 						<td>
 							${advertisementVO.ad_no}
 						</td>
 						<td>
+							<jsp:useBean id="today" class="java.util.Date"/> 
+							<fmt:timeZone value="Asia/Taipei">   
+								<fmt:formatDate var="now" value="${today}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							</fmt:timeZone> 
+							<fmt:formatDate var="ad_startdate" value="${advertisementVO.ad_startdate}" pattern="yyyy-MM-dd HH:mm"/>
+							<fmt:formatDate var="ad_enddate" value="${advertisementVO.ad_enddate}" pattern="yyyy-MM-dd HH:mm"/>
+							<c:if test="${now < ad_startdate}">
+								<span class="label label-primary">未開始</span>
+							</c:if>
+							<c:if test="${ad_startdate < now && now < ad_enddate }">
+								<span class="label label-danger">廣告中</span>
+							</c:if>
+							<c:if test="${ad_enddate < now}">
+								<span class="label label-info">已結束</span>
+							</c:if>
 							<jsp:useBean id="eventTitleService2" scope="page" class="com.event_title.model.EventTitleService" />
 							<a href="<%=request.getContextPath()%>/event_title/EventTitleServlet.do?action=getOneEventTitle_For_Display&evetit_no=${advertisementVO.evetit_no}" target="_blank">
-								${eventTitleService2.getOneEventTitle(advertisementVO.evetit_no).evetit_name}
+								${eventTitleService2.getOneEventTitle(advertisementVO.evetit_no).evetit_no} : ${eventTitleService2.getOneEventTitle(advertisementVO.evetit_no).evetit_name}
 							</a>
 						</td>
 						<td>
@@ -249,7 +264,8 @@
 	        	minDate: 0,
 	        	value: new Date(),
 	            changeMonth: true,
-	            changeYear: true,	
+	            changeYear: true,
+	            scrollInput: false,
 	        	onShow: function(){
 	        		this.setOptions({maxDate: $("#ad_enddate").val() ? $("#ad_enddate").val() : false})}
 	        });
@@ -258,7 +274,8 @@
 	        	timepicker: false,
 	        	value: endDateInit,
 	            changeMonth: true,
-	            changeYear: true,	
+	            changeYear: true,
+	            scrollInput: false,
 	        	onShow: function(){
 	        		this.setOptions({minDate: $("#ad_startdate").val() ? $("#ad_startdate").val() : false})}
 	        });
@@ -348,6 +365,11 @@
 				var evetit_no = $("#addAdvertisementModal").children().find(".evetit_no").val();
 				var ad_startdate = $("#addAdvertisementModal").children().find("input[name=ad_startdate]").val();
 				var ad_enddate = $("#addAdvertisementModal").children().find("input[name=ad_enddate]").val();
+				
+				if(evetit_no == null) {
+					window.alert("已無上架中的活動主題可新增廣告");
+					return;					
+				}
 				if(Date.parse(ad_startdate) < CurrentDate) {
 					window.alert("開始日期不得早於今天");
 					return;					

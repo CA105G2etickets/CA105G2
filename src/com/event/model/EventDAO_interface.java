@@ -6,6 +6,7 @@ import java.util.Set;
 import com.event_title.model.EventTitleVO;
 import com.seating_area.model.SeatingAreaVO;
 import com.ticket_type.model.TicketTypeVO;
+import com.ticketorder.model.TicketOrderVO;
 
 public interface EventDAO_interface {
 	
@@ -14,7 +15,6 @@ public interface EventDAO_interface {
     public void delete(String eve_no, String evetit_no, Integer evetit_sessions);
     public EventVO findByPrimaryKey(String eve_no);
     public List<EventVO> getAll();
-    public List<EventVO> findByEveTit_no(String evetit_no);
     
     public void update_withoutSeatmap(EventVO eventVO);
     
@@ -24,5 +24,5 @@ public interface EventDAO_interface {
 	public Set<SeatingAreaVO> getSeatingAreasByEvent(String eve_no);
 	
 	public EventVO copyEvent_withTicketTypeAndSeatingArea(String eve_no, String eve_no_forCopy);
-
+	
 }

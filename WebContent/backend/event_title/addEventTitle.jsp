@@ -187,12 +187,10 @@
 	                    </div>
 	                </div>
 	            </div>
-	            
 				<span class="form-group">
 					<button type="submit" class="btn btn-success" name="action" value="insertEventTitle" style="margin-top:15px;">新增</button>
 					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp" style="margin-top:15px;">回活動總覽</a>
-				</span>	
-						
+				</span>			
 			</form>
         </div>
 
@@ -202,7 +200,7 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- ckEditor JS -->
-    <script src="<%=request.getContextPath()%>/vendor/ckeditor_full/ckeditor.js"></script>
+    <script src="<%=request.getContextPath()%>/vendor/ckeditor_easyImage_final/ckeditor.js"></script>
     <!-- datetimepicker -->
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -213,10 +211,10 @@
     <script type="text/javascript">
     $(function() {
         initInfoEditor();
-//         initNoticesEditor();
-//         initEticpurchaserulesEditor();
-//         initEticrulesEditor();
-//         initRefundrulesEditor();
+        initNoticesEditor();
+        initEticpurchaserulesEditor();
+        initEticrulesEditor();
+        initRefundrulesEditor();
 
         $("#evetit_poster").change(function() {
             imagesPreview(this);

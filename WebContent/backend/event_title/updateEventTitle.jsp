@@ -135,11 +135,11 @@
 	                </div>             
 	                <div class="col-xs-12 col-sm-3">
 	                    <div class="form-group">
-	                         <label>儲存狀態</label>	                                                 
-	                         <select class="form-control" name="evetit_status">
-	                         	<option value="temporary" ${(eventTitleVO.evetit_status == 'temporary') ? 'selected' : '' }>暫存</option>
-	                         	<option value="confirmed" ${(eventTitleVO.evetit_status == 'confirmed') ? 'selected' : '' }>確定</option>
-	                         	<option value="cancel" ${(eventTitleVO.evetit_status == 'cancel') ? 'selected' : '' }>取消</option>
+	                         <label>儲存狀態<i class="glyphicon glyphicon-question-sign text-info" title="確定狀態的活動主題才會顯示在前台" id="whyCantChangeState"></i></label>	                                                 
+	                         <select class="form-control" name="evetit_status" id="evetit_status">
+	                         	<option value="temporary" ${(eventTitleVO.evetit_status == 'temporary') ? 'selected' : '' } id="evetit_status_temporary">暫存</option>
+	                         	<option value="confirmed" ${(eventTitleVO.evetit_status == 'confirmed') ? 'selected' : '' } id="evetit_status_confirmed">確定</option>
+<%-- 	                         	<option value="cancel" ${(eventTitleVO.evetit_status == 'cancel') ? 'selected' : '' }>取消</option> --%>
 	                         </select>                					
 	                    </div>
 	                </div>
@@ -205,7 +205,7 @@
 	            </div>
 				<span class="form-group">
 					<button type="submit" class="btn btn-success" name="action" value="updateEventTitle" style="margin-top:15px;">儲存</button>
-					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp" style="margin-top:15px;">回活動總覽</a>
+					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventTitleVO.evetit_no}" style="margin-top:15px;">回活動總覽</a>
 				</span>
 			</form>
         </div>
@@ -216,7 +216,7 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- ckEditor JS -->
-    <script src="<%=request.getContextPath()%>/vendor/ckeditor_full/ckeditor.js"></script>
+    <script src="<%=request.getContextPath()%>/vendor/ckeditor_easyImage_final/ckeditor.js"></script>
     <script src="<%=request.getContextPath()%>/backend/event_title/js/eventTitleCKEditor.js"></script>
     <!-- datetimepicker -->
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
@@ -227,10 +227,10 @@
     <script type="text/javascript">
     $(function() {
         initInfoEditor();
-//         initNoticesEditor();
-//         initEticpurchaserulesEditor();
-//         initEticrulesEditor();
-//         initRefundrulesEditor();
+        initNoticesEditor();
+        initEticpurchaserulesEditor();
+        initEticrulesEditor();
+        initRefundrulesEditor();
 
         $("#evetit_poster").change(function() {
             imagesPreview(this);
@@ -244,7 +244,22 @@
         		$(this).prepend("<i class='glyphicon glyphicon-triangle-left'></i>");
         	}        	
         });
-               
+        
+
+        
+       	var today = new Date();
+       	var launchdate = new Date($("#launchdate").val()); 
+       	var offdate = new Date($("#offdate").val()); 
+       	var evetit_status = $("#evetit_status").val();
+       	
+       	//非暫存且已上架過
+        if(evetit_status != 'temporary' && launchdate.getTime() < today.getTime()) {
+       		$("#whyCantChangeState").attr("title", "已經上架過的活動主題，不能更改回暫存");
+			$("#evetit_status_temporary").remove();  
+			$("#evetit_status").attr("readonly", true);
+			$("#launchdate").attr("readonly", true);
+		}
+      
     });
     </script>
 </body>

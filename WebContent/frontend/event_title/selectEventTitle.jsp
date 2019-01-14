@@ -149,6 +149,22 @@
             localStorage.setItem("searchStatus", searchStatusJSON);
         });
         
+           
+        //-------------------------LoadMore-------------------------
+        $(".loadMoreDivs").slice(0, 6).show();
+
+        $("#loadMore").click(function(e) {
+            e.preventDefault();
+            $(".loadMoreDivs:hidden").slice(0, 6).slideDown();
+            if ($(".loadMoreDivs:hidden").length == 0) {
+            
+            }
+            $('html,body').animate({
+                scrollTop: $(this).offset().top
+            }, 1500);
+        });
+        
+        
     });    
 	</script>
     

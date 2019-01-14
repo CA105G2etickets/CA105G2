@@ -14,6 +14,8 @@
     <title>${eventTitleVO.evetit_name}</title>
     <!-- Basic -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
     <style>
         .evetit_poster_area {
      	   width: 100%;
@@ -126,7 +128,7 @@
                          <select class="form-control" name="evetit_status" readonly>
                          	<option value="temporary" ${(eventTitleVO.evetit_status == 'temporary') ? 'selected' : '' }>暫存</option>
                          	<option value="comfirmed" ${(eventTitleVO.evetit_status == 'confirmed') ? 'selected' : '' }>確定</option>
-                         	<option value="cancel" ${(eventTitleVO.evetit_status == 'cancel') ? 'selected' : '' }>取消</option>
+<%--                          	<option value="cancel" ${(eventTitleVO.evetit_status == 'cancel') ? 'selected' : '' }>取消</option> --%>
                          </select>                	
                     </div>
                 </div>
@@ -163,16 +165,14 @@
                 </div>
             </div>
             
-
-
 			<form method="post" action="<%=request.getContextPath()%>/event_title/EventTitleServlet.do" class="actionForm">								
 			    <input type="hidden" name="evetit_no"   value="${eventTitleVO.evetit_no}">
 			    <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
 			    <input type="hidden" name="action"	    value="getOneEventTitle_For_Update">
-			    <input type="submit" value="修改" class="btn btn-warning"> 							
+			    <input type="submit" value="修改" class="btn btn-warning" style="margin-top:15px;"> 							
 			</form>
 			<span class="form-group">
-				<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventTitleVO.evetit_no}">回活動總覽</a>
+				<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventTitleVO.evetit_no}" style="margin-top:15px;">回活動總覽</a>
 			</span>	
             
         </div>
