@@ -445,6 +445,204 @@ public class MemberServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("update_withdrawal".equals(action)) {
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
+			MemberVO memberVO = (MemberVO) session.getAttribute("member");
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String memberNo = req.getParameter("memberno").trim();
+				
+				String memberFullname = req.getParameter("memberFullname");
+				
+				String email = req.getParameter("email").trim();
+				
+				String phone = req.getParameter("phone").trim();
+				
+				String idcard = req.getParameter("idcard").trim();
+
+				String memberAccount = req.getParameter("memberAccount").trim();
+				
+				String memberPassword = req.getParameter("memberPassword").trim();
+
+				Integer ewalletBalance = null;
+				Integer newEwalletBalance = null;
+				try {
+					ewalletBalance = new Integer(req.getParameter("ewalletBalance").trim());
+					newEwalletBalance = memberVO.getEwalletBalance() - ewalletBalance;
+					if (ewalletBalance == 0) {
+						throw new Exception();
+					}
+				} catch (NumberFormatException e) {
+					newEwalletBalance = memberVO.getEwalletBalance();
+					errorMsgs.add("請填入數字");
+				} catch (Exception e) {
+					newEwalletBalance = memberVO.getEwalletBalance();
+					errorMsgs.add("數字不得為零");
+				}
+
+				String bankAccount = req.getParameter("bankAccount").trim();
+				if (bankAccount == null || bankAccount.trim().length() == 0 || bankAccount.trim().length() < 10) {
+					errorMsgs.add("銀行帳號錯誤");
+					newEwalletBalance = memberVO.getEwalletBalance();
+				}
+				
+				Timestamp creationDate = Timestamp.valueOf(req.getParameter("creationDate").trim());
+
+				byte[] profilePicture = memberVO.getProfilePicture();
+				
+				String memberStatus = req.getParameter("memberStatus").trim();
+
+				String thirduid = req.getParameter("thirduid").trim();
+
+				MemberVO member = new MemberVO();
+				member.setMemberNo(memberNo);
+				member.setMemberFullname(memberFullname);
+				member.setEmail(email);
+				member.setPhone(phone);
+				member.setIdcard(idcard);
+				member.setMemberAccount(memberAccount);
+				member.setMemberPassword(memberPassword);
+				member.setEwalletBalance(newEwalletBalance);
+				member.setCreationDate(creationDate);
+				member.setProfilePicture(profilePicture);
+				member.setMemberStatus(memberStatus);
+				member.setThirduid(thirduid);
+				
+				if (!errorMsgs.isEmpty()) {
+					session.setAttribute("member", member);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ewallet/withdrawal.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				MemberService memberService = new MemberService();
+				memberService.memberWithdrawal(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, newEwalletBalance, creationDate, profilePicture, memberStatus, thirduid);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				
+				session.removeAttribute("member");
+				
+				if(session.getAttribute("member") == null){
+					session.setAttribute("member", member);
+				} else {
+					errorMsgs.add("提領失敗");
+				}
+				
+				String url = "/frontend/member/member_profile.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/ewallet/withdrawal.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("update_deposit".equals(action)) {
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
+			MemberVO memberVO = (MemberVO) session.getAttribute("member");
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String memberNo = req.getParameter("memberno").trim();
+				
+				String memberFullname = req.getParameter("memberFullname");
+				
+				String email = req.getParameter("email").trim();
+				
+				String phone = req.getParameter("phone").trim();
+				
+				String idcard = req.getParameter("idcard").trim();
+				
+				String memberAccount = req.getParameter("memberAccount").trim();
+				
+				String memberPassword = req.getParameter("memberPassword").trim();
+				
+				Integer ewalletBalance = null;
+				Integer newEwalletBalance = null;
+				try {
+					ewalletBalance = new Integer(req.getParameter("ewalletBalance").trim());
+					newEwalletBalance = memberVO.getEwalletBalance() + ewalletBalance;
+					if (ewalletBalance == 0) {
+						throw new Exception();
+					}
+				} catch (NumberFormatException e) {
+					newEwalletBalance = memberVO.getEwalletBalance();
+					errorMsgs.add("請填入數字");
+				} catch (Exception e) {
+					newEwalletBalance = memberVO.getEwalletBalance();
+					errorMsgs.add("數字不得為零");
+				}
+				
+				String bankAccount = req.getParameter("bankAccount").trim();
+				if (bankAccount == null || bankAccount.trim().length() == 0 || bankAccount.trim().length() < 10) {
+					errorMsgs.add("銀行帳號錯誤");
+					newEwalletBalance = memberVO.getEwalletBalance();
+				}
+				
+				Timestamp creationDate = Timestamp.valueOf(req.getParameter("creationDate").trim());
+				
+				byte[] profilePicture = memberVO.getProfilePicture();
+				
+				String memberStatus = req.getParameter("memberStatus").trim();
+				
+				String thirduid = req.getParameter("thirduid").trim();
+				
+				MemberVO member = new MemberVO();
+				member.setMemberNo(memberNo);
+				member.setMemberFullname(memberFullname);
+				member.setEmail(email);
+				member.setPhone(phone);
+				member.setIdcard(idcard);
+				member.setMemberAccount(memberAccount);
+				member.setMemberPassword(memberPassword);
+				member.setEwalletBalance(newEwalletBalance);
+				member.setCreationDate(creationDate);
+				member.setProfilePicture(profilePicture);
+				member.setMemberStatus(memberStatus);
+				member.setThirduid(thirduid);
+				
+				if (!errorMsgs.isEmpty()) {
+					session.setAttribute("member", member);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ewallet/deposit.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				MemberService memberService = new MemberService();
+				memberService.memberWithdrawal(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, newEwalletBalance, creationDate, profilePicture, memberStatus, thirduid);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				
+				session.removeAttribute("member");
+				
+				if(session.getAttribute("member") == null){
+					session.setAttribute("member", member);
+				} else {
+					errorMsgs.add("提領失敗");
+				}
+				
+				String url = "/frontend/member/member_profile.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/ewallet/deposit.jsp");
+				failureView.forward(req, res);
+			}
+		}
 
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			

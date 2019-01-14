@@ -69,7 +69,7 @@
 						<%if (session.getAttribute("member") == null) {%>
 						
 						<% } else {%>
-						<li><a href="#">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li>
+						<li><a href="<%=request.getContextPath()%>/frontend/ewallet/memberEwallet.jsp">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li>
 						<%}%>
 						
 						
@@ -108,7 +108,7 @@
 			<font size="4">
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
-					<a href="<%=request.getContextPath()%>/frontend/event_title/selectEventTitle.jsp" class="topnav" align="center">所有活動</a>
+					<a href="/CA105G2/frontend/event_title/selectEventTitle.jsp" class="topnav" align="center">所有活動</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
@@ -133,7 +133,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
-					<a href="<%=request.getContextPath()%>/frontend/selectOrder.jsp" class="topnav" align="center">訂單查詢</a>
+					<a href="#" class="topnav" align="center">訂單查詢</a>
 				</div>
 			</div>
 			</font>
