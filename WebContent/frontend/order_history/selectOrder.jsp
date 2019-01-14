@@ -6,18 +6,15 @@
 <%@ page import="com.order_detail.model.*"%>
 <%@ page import="com.goods.model.*"%>
 <%
-	OrderHistoryVO orderHistoryVO = (OrderHistoryVO) request.getAttribute("orderHistoryVO");
     OrderHistoryService orderHistorySvc = new OrderHistoryService();
     List<OrderHistoryVO> listHistory = orderHistorySvc.getAll();
     pageContext.setAttribute("listHistory",listHistory);
     
-	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");
     OrderDetailService orderDetailSvc = new OrderDetailService();
     List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
     pageContext.setAttribute("listDetail",listDetail);
 %>
 <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
-
 <html>
 <head>
 	<meta charset="utf-8">
@@ -31,7 +28,7 @@
 
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-bottom: 400px">
 	<div class="row">
 		<div class="col-xs-12 col-sm-2"></div>
 		<div class="col-xs-12 col-sm-8">
@@ -59,11 +56,11 @@
 			
 			    <!-- 標籤面板：內容區 -->
 			    <div class="tab-content">
-				<!-- 標籤面板：訂單紀錄 -->
+					<!-- 標籤面板：訂單紀錄 -->
 			        <div role="tabpanel" class="tab-pane active" id="history">
 					
 <!-- 						<br><input type="button" class="btn btn-primary" value="查詢全部" onclick="location.href='listAllOrderHistory.jsp'"> -->
-						<hr><input type="button" class="btn btn-primary" value="新增一筆訂單" onclick="location.href='<%=request.getContextPath()%>/backend/order_history/addOrderHistoryAndOrderDetail.jsp'">
+<%-- 						<hr><input type="button" class="btn btn-primary" value="新增一筆訂單" onclick="location.href='<%=request.getContextPath()%>/backend/order_history/addOrderHistoryAndOrderDetail.jsp'"> --%>
 						<hr>
 				        <table id="example1" class="display" style="width:100%; font-size:8px">
 				            <thead>
@@ -158,41 +155,54 @@
 					
 					<!-- 標籤面板：訂單明細 -->
 			        <div role="tabpanel" class="tab-pane" id="detail">
-	
-						<c:if test="${not empty errorMsgs}">
-							<font style="color:red">請修正以下錯誤：</font>
-							<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color:red">${message}</li>
-							</c:forEach>
-							</ul>
-						</c:if>
-
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" name="form1">
-								<hr>
-								<div class="form-group">
-									<label>訂單編號：<%=orderDetailVO.getOrder_no()%></label>
-								</div>
-								<div class="form-group">
-									<label>商品編號：<%=orderDetailVO.getGoods_no()%></label>
-								</div>
-								<div class="form-group">
-										<label>實際交易單價：</label>
-										<input type="TEXT" name="goods_bonus" id="goods_bonus" placeholder="請輸入實際交易單價" class="form-control" value="<%=orderDetailVO.getGoods_bonus()%>" style="width:15%" >
-								</div>
-								<div class="form-group">
-										<label>商品數量：</label>
-										<input type="TEXT" name="goods_pc" id="goods_pc" placeholder="請輸入商品數量" class="form-control" value="<%=orderDetailVO.getGoods_pc()%>" style="width:15%" >
-								</div>
-							<br>
-							<input type="hidden" name="action" value="update">
-								<input type="hidden" name="order_no" value="<%=orderDetailVO.getOrder_no()%>">
-								<input type="hidden" name="goods_no" value="<%=orderDetailVO.getGoods_no()%>">
-							<input type="button" value="返回 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/backend/order_detail/listAllOrderDetail.jsp'" >
-							<input type="submit" value="送出修改" class="btn btn-primary">
-						</FORM>      
-			        
-
+											
+<%-- 						<br><input type="button" class="btn btn-primary" value="查詢全部" onclick="location.href='<%=request.getContextPath()%>/backend/order_detail/listAllOrderDetail.jsp'"> --%>
+						<hr>
+						
+				        <table id="example2" class="display" style="width:100%; font-size:8px">
+							<thead>
+								<tr>
+									<th>訂單編號</th>
+									<th>商品編號</th>
+									<th>商品名稱</th>
+									<th>實際交易金額</th>
+									<th>商品數量</th>
+									<th>修改</th>
+									<th>刪除</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="orderDetailVO" items="${listDetail}">							
+									<tr>
+										<td>${orderDetailVO.order_no}</td>
+										<td>${orderDetailVO.goods_no}</td>
+										<td>	
+											<c:forEach var="goodsVO" items="${goodsSvc.all}">
+												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">${goodsVO.goods_name}</c:if>
+											</c:forEach>
+										</td>
+										
+										<td>${orderDetailVO.goods_bonus}</td>
+										<td>${orderDetailVO.goods_pc}</td>
+										
+										<td>
+										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" style="margin-bottom: 0px;">
+										     <input type="submit" value="修改" class="btn btn-warning">
+										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}">
+										     <input type="hidden" name="goods_no"  value="${orderDetailVO.goods_no}">
+										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+										</td>
+										<td>
+										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" style="margin-bottom: 0px;">
+										     <input type="submit" value="刪除" class="btn btn-danger">
+										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}">
+										     <input type="hidden" name="goods_no"  value="${orderDetailVO.goods_no}">
+										     <input type="hidden" name="action" value="delete"></FORM>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 					</div>
 			    </div>
 			</div>
@@ -212,59 +222,4 @@
         });
     </script>
 </body>
-
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
-
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-           theme: '',              //theme: 'dark',
-           timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderHistoryVO.getOrder_date()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
-
-        $('#f_date2').datetimepicker({
-           theme: '',              //theme: 'dark',
-           timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderHistoryVO.getOrder_etd()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
-        
-        $('#f_date3').datetimepicker({
-           theme: '',              //theme: 'dark',
-           timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderHistoryVO.getPickup_date()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
-    
-        
-        
-</script>
 </html>

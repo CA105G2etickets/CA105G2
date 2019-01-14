@@ -57,6 +57,7 @@ pageContext.setAttribute("list",list);
 					<input type="hidden" name="goods_price" value="${goodsVO.goods_price}">
 					<input type="hidden" name="forsales_a" value="${goodsVO.forsales_a}">
 					<input type="hidden" name="goods_status" value="${goodsVO.goods_status}">
+					<input type="hidden" name="old_price" value="${goodsVO.goods_price}">
 					<input type="hidden" name="action" value="ADD">	
 				</form>
 			</c:forEach>  

@@ -73,9 +73,11 @@ public class ShoppingCartServlet extends HttpServlet {
 			for (int i = 0; i < buylist.size(); i++) {
 				ShoppingCart goods = buylist.get(i);
 				goods.setGoods_quantity(Integer.parseInt(quantity[i]));
-				
+//				oldprice = goods.getGoods_price();
 				if ((Integer.parseInt(quantity[i])) >= 10 ) {
 					goods.setGoods_price(goods.getForsales_a());
+				}else {
+					goods.setGoods_price(goods.getOld_price());
 				}
 			} 
 			session.setAttribute("shoppingcart", buylist);
@@ -104,6 +106,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		String goods_quantity = req.getParameter("goods_quantity");	
 		String forsales_a = req.getParameter("forsales_a");
 		String goods_status = req.getParameter("goods_status");
+		String old_price = req.getParameter("old_price");
 		
 		ShoppingCart shoppingCart = new ShoppingCart();
 		
@@ -114,6 +117,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		shoppingCart.setGoods_quantity(Integer.parseInt(goods_quantity));
 		shoppingCart.setForsales_a(Integer.parseInt(forsales_a));
 		shoppingCart.setGoods_status(goods_status);
+		shoppingCart.setOld_price(Integer.parseInt(old_price));
 		return shoppingCart;
 	}
 

@@ -54,7 +54,7 @@
 										<td><%=order.getEvetit_no()%></td>
 										<td><%=order.getGoods_name()%></td>
 										<td><img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=<%=order.getGoods_no()%>" width=50px height= auto /></td>
-										<td class="price"><%=order.getGoods_price()%></td>
+										<td class="price"><%=order.getOld_price()%></td>
 										<td><%=order.getForsales_a()%></td>
 										<td>
 											<div class="input-group">
@@ -72,11 +72,8 @@
 								<input type="hidden" name="goods_no" value=<%=order.getGoods_no()%>>
 								<input type="hidden" name="evetit_no" value=<%=order.getGoods_name()%>>
 								<input type="hidden" name="goods_name" value=<%=order.getGoods_no()%>>
-<%-- 								<%if (order.getGoods_price() < 10){%> --%>
-									<input type="hidden" name="goods_price" value=<%=order.getGoods_price()%>>
-<%-- 								<%} else {%> --%>
-<%-- 									<input type="hidden" name="goods_price" value=<%=order.getForsales_a()%>> --%>
-<%-- 								<%}%> --%>
+								<input type="hidden" name="goods_price" value=<%=order.getGoods_price()%>>
+								<input type="hidden" name="old_price" value=<%=order.getGoods_price()%>>
 								<input type="hidden" name="forsales_a" value=<%=order.getForsales_a()%>>
 							<%}%>
 						</table>

@@ -10,6 +10,7 @@ public class ShoppingCart implements java.io.Serializable {
 		goods_quantity = 0;
 		forsales_a = 0;
 		goods_status = "";
+		old_price = 0;
 	}
 	
 	private String goods_no;
@@ -19,6 +20,7 @@ public class ShoppingCart implements java.io.Serializable {
 	private Integer goods_quantity;	
 	private Integer forsales_a;
 	private String goods_status;
+	private Integer old_price;
 	
 	
 	public String getGoods_no() {
@@ -62,6 +64,12 @@ public class ShoppingCart implements java.io.Serializable {
 	}
 	public void setGoods_status(String goods_status) {
 		this.goods_status = goods_status;
+	}
+	public Integer getOld_price() {
+		return old_price;
+	}
+	public void setOld_price(Integer old_price) {
+		this.old_price = old_price;
 	}
 	
 }
