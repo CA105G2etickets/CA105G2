@@ -152,6 +152,9 @@
            
         //-------------------------LoadMore-------------------------
         $(".loadMoreDivs").slice(0, 6).show();
+        if ($(".loadMoreDivs:hidden").length == 0) {
+        	$("#loadMore").hide();
+        }
 
         $("#loadMore").click(function(e) {
             e.preventDefault();
