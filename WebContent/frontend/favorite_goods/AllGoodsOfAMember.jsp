@@ -18,17 +18,20 @@ pageContext.setAttribute("list",list);
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 	</head>
-	<div><c:import url="/frontend/navbar_front-end.jsp" charEncoding="UTF-8"/></div>
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
+	<style>
+	body{
+		font-family:微軟正黑體!important;
+	}
+	</style>
 	<body>
 
 		<div class="container-fluid" style="margin-bottom: 400px">
 			<div class="row">
 			<div class="col-xs-12 col-sm-2"></div>
 				<div class="col-xs-12 col-sm-8">
-				  		
-					  		<h2>最愛商品查詢</h2><hr>
-					
-						<table id="example" class="display" style="width:100%">
+					<h2>最愛商品查詢</h2><hr>
+					<table id="example" class="display" style="width:100%">
 							<thead>
 								<tr>
 <!-- 									<th>會員編號</th> -->
@@ -39,7 +42,6 @@ pageContext.setAttribute("list",list);
 									<th>移除最愛</th>
 								</tr>
 							</thead>
-											
 							<tbody>
 								<c:forEach var="favoriteGoodsVO" items="${list}">
 									<tr>
@@ -78,7 +80,6 @@ pageContext.setAttribute("list",list);
 					</div>
 				</div>
 			</div>
-		</div>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -89,5 +90,5 @@ pageContext.setAttribute("list",list);
 	        });
         </script>
 	</body>
-	<div><c:import url="/frontend/footer_front-end.jsp" charEncoding="UTF-8"/></div>
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>

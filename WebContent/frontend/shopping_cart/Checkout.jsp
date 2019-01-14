@@ -26,9 +26,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>購物車結帳頁面</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-	<div><c:import url="/frontend/navbar_front-end.jsp" charEncoding="UTF-8"/></div>
+	
 </head>
-
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
+	<style>
+	body{
+		font-family:微軟正黑體!important;
+	}
+	</style>
 <style>
 	/*隱藏區塊用*/
 	.pay_methods{display: none;}
@@ -224,7 +229,7 @@
 
 </center>
 </body>
-	<div><c:import url="/frontend/footer_front-end.jsp" charEncoding="UTF-8"/></div>
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>	

@@ -16,8 +16,13 @@ pageContext.setAttribute("list",list);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>商品頁面</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-	<div><c:import url="/frontend/navbar_front-end.jsp" charEncoding="UTF-8"/></div>
 </head>
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
+	<style>
+	body{
+		font-family:微軟正黑體!important;
+	}
+	</style>
 	<body>
 	<hr>
 	<table class="table table-bordered table-striped table-hover"> 
@@ -87,5 +92,5 @@ pageContext.setAttribute("list",list);
 		    })  
 		</script>  
 	</body>
-	<div><c:import url="/frontend/footer_front-end.jsp" charEncoding="UTF-8"/></div>
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>
