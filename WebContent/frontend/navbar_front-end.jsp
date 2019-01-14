@@ -88,10 +88,12 @@
 					<%Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");%>
 					
 						  <li>
-						  	<a href="">
+						  	<a href=""<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp"">
 						  		<i class="glyphicon glyphicon-shopping-cart"></i>
-						    	<span class="badge badge-primary badge-pill">7
-<%-- 						    	<%=(buylist.size() > 0) ? buylist.size() : 0%> --%>
+						    	<span class="badge badge-primary badge-pill">
+							    	<%if (buylist != null) {%>
+							    		<%=buylist.size()%>
+							    	<%}%>
 						    	</span>
 						    </a>
 						  </li>
