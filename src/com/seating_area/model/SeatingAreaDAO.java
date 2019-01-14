@@ -237,7 +237,7 @@ public class SeatingAreaDAO implements SeatingAreaDAO_interface{
 			System.out.println("----------findByPrimaryKey finished----------");
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			se.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -574,15 +574,7 @@ public class SeatingAreaDAO implements SeatingAreaDAO_interface{
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = con.prepareStatement(UPDATE_FOR_TICKETORDER_STMT);
-			
-			System.out.println("seatingareaVO. = "+seatingareaVO.getTicarea_color());
-			System.out.println("seatingareaVO. = "+seatingareaVO.getEve_no());
-			System.out.println("seatingareaVO. = "+seatingareaVO.getTicarea_color());
-			System.out.println("seatingareaVO. = "+seatingareaVO.getTicarea_color());
-			System.out.println("seatingareaVO. = "+seatingareaVO.getTicarea_color());
-			System.out.println("seatingareaVO. = "+seatingareaVO.getTicarea_color());
-			
-			
+					
 			pstmt.setString(1, seatingareaVO.getTicarea_color());
 			pstmt.setString(2, seatingareaVO.getTicarea_name());
 			pstmt.setInt(3, seatingareaVO.getTictotalnumber());

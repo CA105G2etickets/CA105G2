@@ -3,6 +3,7 @@ package com.android.ticket.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.Timer;
@@ -15,23 +16,28 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
+import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONObject;
 
 import com.android.ticket.model.TicketService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.member.model.MemberDAO;
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 import com.seating_area.model.SeatingAreaService;
 import com.seating_area.model.SeatingAreaVO;
 import com.ticket.model.TicketVO;
 import com.ticketorder.model.TicketOrderService;
 import com.ticketorder.model.TicketOrderVO;
 
+@ServerEndpoint("/TicketWebSocket/{userName}")
 public class TicketWebSocket {
 	private static java.util.Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
-	private static java.util.Map<Session, Timer> timersessions = new ConcurrentHashMap<>();
-	private static java.util.Map<Session, TicketOrderVO> ordersessions = new ConcurrentHashMap<>();
+	private static java.util.Map<String, Timer> timersessions = new ConcurrentHashMap<>();
+	private static java.util.Map<String, TicketOrderVO> ordersessions = new ConcurrentHashMap<>();
 	
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
@@ -49,11 +55,12 @@ public class TicketWebSocket {
 		Gson gson = new Gson();
 		JsonObject jsin = gson.fromJson(message,JsonObject.class);
 		String action = jsin.get("action").getAsString();
+		System.out.println(jsin.toString());
 		if("insert".equals(action)) {
-			String member_no = jsin.get("member_no").getAsString();
+			String member_no = jsin.get("memberNo").getAsString();
 			String ticarea_no = jsin.get("ticarea_no").getAsString();
-			Integer total_price = jsin.get("total_price").getAsInt();
-			Integer total_amount = jsin.get("total_amount").getAsInt();	
+			Integer total_price = Integer.valueOf(jsin.get("total_price").getAsString());
+			Integer total_amount = Integer.valueOf(jsin.get("total_amount").getAsString());	
 			java.sql.Timestamp ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
 			TicketOrderVO ticketOrderVO = new TicketOrderVO();
 			ticketOrderVO.setMember_no(member_no);
@@ -65,6 +72,7 @@ public class TicketWebSocket {
 			
 			SeatingAreaService sAreaService = new SeatingAreaService();
 			SeatingAreaVO sVo = sAreaService.getOneSeatingArea(ticarea_no);
+
 			Integer booked = sVo.getTicbookednumber();
 			sVo.setTicbookednumber(booked+total_amount);
 			
@@ -72,13 +80,26 @@ public class TicketWebSocket {
 			String orderNo = ticketOrderService.insertTicketOrderAndUpdateTicArea(ticketOrderVO, sVo);
 			ticketOrderVO.setTicket_order_no(orderNo);
 			Timer timer = new Timer();
-			timer.schedule(new TicketTask(ticketOrderVO), ticket_order_time.getTime()+15*60*1000);
-			timersessions.put(userSession, timer);
-			ordersessions.put(userSession, ticketOrderVO);
+			timer.schedule(new TicketTask(ticketOrderVO), ticket_order_time.getTime()+30*1000);
+			timersessions.put(member_no, timer);
+			ordersessions.put(member_no, ticketOrderVO);
+			Collection<Session> list = sessionsMap.values();
+			for(Session session : list) {
+				session.getAsyncRemote().sendText("update");
 			}
+		}
 		if("pay".equals(action)) {
-			TicketOrderVO toVO = ordersessions.get(userSession);
 			List<TicketVO> tlist = new ArrayList<TicketVO>();
+			String payType = jsin.get("payType").getAsString();
+			String memberNo = jsin.get("memberNo").getAsString();
+			String totalPrice = jsin.get("totalPrice").getAsString();
+			TicketOrderVO toVO = ordersessions.get(memberNo);
+			if("wallet".equals(payType)) {
+				MemberDAO memberDAO = new MemberDAO();
+				MemberVO memberVO = memberDAO.findByPrimaryKey(memberNo);
+				memberVO.setEwalletBalance(memberVO.getEwalletBalance()-Integer.valueOf(totalPrice));
+				memberDAO.withdrawal(memberVO);
+			}
 			for(int i = 1; i<=toVO.getTotal_amount();i++) {
 				
 				String ticket_status = "ACTIVE1";
@@ -97,20 +118,27 @@ public class TicketWebSocket {
 				tVO.setIs_from_resale(is_from_resale);
 				tlist.add(tVO);
 			}
-			timersessions.get(userSession).cancel();
-			timersessions.remove(userSession);
-			ordersessions.remove(userSession);
+			
+			TicketOrderService ticketOrderService = new TicketOrderService();
+			toVO.setTicket_order_status("COMPLETE2");
+			ticketOrderService.updateTicketOrderAndInsertTickets(toVO, tlist);
+			timersessions.get(memberNo).cancel();
+			timersessions.remove(memberNo);
+			ordersessions.remove(memberNo);
+		}
+		if("cancel".equals(action)) {
+			String memberNo = jsin.get("memberNo").getAsString();
+			timersessions.get(memberNo).cancel();
+			TicketOrderVO ticketOrderVO = ordersessions.get(memberNo);
+			TicketOrderService ticketOrderService = new TicketOrderService();
+			ticketOrderService.cancelTicketOrderByServlet(ticketOrderVO.getTicket_order_no());
 		}
 		
-		List<Session> list = (List<Session>)sessionsMap.values();
-		for(Session session : list) {
-			session.getAsyncRemote().sendText("update");
-		}
 	}
 	
 	@OnError
 	public void onError(Session userSession, Throwable e) {
-		System.out.println("Error: " + e.toString());
+		e.printStackTrace();
 	}
 	
 	@OnClose

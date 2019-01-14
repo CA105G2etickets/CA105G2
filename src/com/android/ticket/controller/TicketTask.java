@@ -11,11 +11,12 @@ public class TicketTask extends TimerTask{
 	
 	public TicketTask(TicketOrderVO ticketOrderVO) {
 		this.ticketOrderVO = ticketOrderVO;
+		System.out.println(ticketOrderVO.getTicket_order_no()+"15分鐘開始");
 	}
 
 	@Override
 	public void run() {
 		ticketOrderService.cancelTicketOrderByServlet(ticketOrderVO.getTicket_order_no());
-		this.cancel();
+		System.out.println(ticketOrderVO.getTicket_order_no()+"15分鐘結束");
 	}
 }
