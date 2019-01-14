@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*" %>
 <%@page import="com.member.model.MemberVO"%>
+<%@ page import="com.shopping_cart.model.ShoppingCart" %>
 
 <html>
 <head>
@@ -35,6 +37,23 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
+/****************************************** 通知部分 ******************************************/
+.badge-pill {
+    padding: 0.2em;
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+.badge-primary {
+    color: white;
+    background-color: #3399ff;
+}
+/****************************************** 通知結束 ******************************************/
 </style>
 
 </head>
@@ -65,6 +84,17 @@
 					<%}%>
 <%-- 					<img src="${member eq null ? "https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" : "<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=request.getContextPath()%>"}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"> --%>
 					<ul class="nav navbar-nav navbar-right membermenu">
+					
+					<%Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");%>
+					
+						  <li>
+						  	<a href="">
+						  		<i class="glyphicon glyphicon-shopping-cart"></i>
+						    	<span class="badge badge-primary badge-pill">7
+<%-- 						    	<%=(buylist.size() > 0) ? buylist.size() : 0%> --%>
+						    	</span>
+						    </a>
+						  </li>
 					
 						<%if (session.getAttribute("member") == null) {%>
 						
