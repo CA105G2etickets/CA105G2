@@ -52,6 +52,7 @@ pageContext.setAttribute("historylist",historylist);
 							<tbody>
 								<c:forEach var="orderDetailVO" items="${detaillist}">
 									<tr>
+<%-- 										<td><a href="<%=request.getContextPath()%>/order_detail/OrderDetail.do?action=getAll_OrderDetail_For_A_OrderNo_Frontend&order_no=${orderDetailVO.order_no}">${orderDetailVO.order_no}</a></td> --%>
 										<td>${orderDetailVO.order_no}</td>
 										<td>${orderDetailVO.goods_no}</td>
 										<td>	

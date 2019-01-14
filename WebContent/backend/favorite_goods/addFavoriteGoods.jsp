@@ -11,19 +11,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<title>新增最愛商品</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<!--[if lt IE 9]>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-	<div><c:import url="/backend/navbar_back-end.html" charEncoding="UTF-8"/></div>
+	<div><c:import url="/backend/navbar_back-end.jsp" charEncoding="UTF-8"/></div>
 	</head>
 	<body>
 		<div class="container-fluid">
-		<div class="col-xs-12 col-sm-1"></div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-10">
-	<!-- 					<h4><a href="select_page.jsp"><img src="images/LOGO1.png" width="70" height="50" border="0"><b>首頁</b></a></h4> -->
-					<div class="panel panel-info">
+				<div class="col-xs-12 col-sm-3"></div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">新增最愛商品</h3>
 						</div>
@@ -37,13 +32,19 @@
 						</c:if>
 							<div class="panel-body">
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/favorite_goods/FavoriteGoods.do" name="form1">
-											<b>會員編號：</b>
-											<input type="TEXT" name="member_no" size="10" value="<%=(favoriteGoodsVO==null)? "M000001" : favoriteGoodsVO.getMember_no()%>" /><br><br>
-											<b>商品編號：</b>
-											<input type="TEXT" name="goods_no" size="10" value="<%=(favoriteGoodsVO==null)? "P0000001" : favoriteGoodsVO.getGoods_no()%>" /><br><br>
+								
+									<div class="form-group">
+										<label>會員編號：</label>
+										<input type="TEXT" name="member_no" placeholder="請輸入會員編號" class="form-control" value="<%=(favoriteGoodsVO==null)? "" : favoriteGoodsVO.getMember_no()%>" style="width:30%" >
+									</div>
+									<div class="form-group">
+										<label>商品編號：</label>
+										<input type="TEXT" name="goods_no" placeholder="請輸入商品編號" class="form-control" value="<%=(favoriteGoodsVO==null)? "" : favoriteGoodsVO.getGoods_no()%>" style="width:30%" >
+									</div>
 								<br>
 								<input type="hidden" name="action" value="insert">
-								<input type="submit" value="送出新增" class="btn btn-primary">
+								<input type="submit" value="送出新增" class="btn btn-default">
+								<input type="button" value="返回 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/backend/favorite_goods/selectFavoriteGoods.jsp'" >
 								</FORM>
 							</div>
 					</div>

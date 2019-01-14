@@ -29,8 +29,8 @@
 		</c:if>
 		<div class="container-fluid" style="margin-bottom: 400px">
 			<div class="row">
-				<div class="col-xs-12 col-sm-1"></div>
-				<div class="col-xs-12 col-sm-10">
+				<div class="col-xs-12 col-sm-2"></div>
+				<div class="col-xs-12 col-sm-8">
 					<h2>訂單紀錄查詢</h2><hr>
 			        <table id="example" class="display" style="width:100%; font-size:8px">
 						<thead>

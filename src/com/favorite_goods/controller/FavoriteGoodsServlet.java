@@ -253,7 +253,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				FavoriteGoodsService favoriteGoodsSvc = new FavoriteGoodsService();
 				favoriteGoodsVO = favoriteGoodsSvc.addFavoriteGoods(member_no, goods_no);
 				
-				String url = "/backend/favorite_goods/listAllFavoriteGoods.jsp";
+				String url = "/backend/favorite_goods/selectFavoriteGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
@@ -274,13 +274,13 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				FavoriteGoodsService favoriteGoodsSvc = new FavoriteGoodsService();
 				favoriteGoodsSvc.deleteFavoriteGoods(member_no, goods_no);
 				
-				String url = "/backend/favorite_goods/listAllFavoriteGoods.jsp";
+				String url = "/backend/favorite_goods/selectFavoriteGoods.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/listAllFavoriteGoods.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/favorite_goods/selectFavoriteGoods.jsp");
 				failureView.forward(req, res);
 			}
 		}

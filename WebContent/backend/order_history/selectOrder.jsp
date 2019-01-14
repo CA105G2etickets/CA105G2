@@ -60,7 +60,7 @@
 			        <div role="tabpanel" class="tab-pane active" id="history">
 					
 <!-- 						<br><input type="button" class="btn btn-primary" value="查詢全部" onclick="location.href='listAllOrderHistory.jsp'"> -->
-						<hr><input type="button" class="btn btn-primary" value="新增一筆訂單" onclick="location.href='<%=request.getContextPath()%>/backend/order_history/addOrderHistoryAndOrderDetail.jsp'">
+<%-- 						<hr><input type="button" class="btn btn-primary" value="新增一筆訂單" onclick="location.href='<%=request.getContextPath()%>/backend/order_history/addOrderHistoryAndOrderDetail.jsp'"> --%>
 						<hr>
 				        <table id="example1" class="display" style="width:100%; font-size:8px">
 				            <thead>

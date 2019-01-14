@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.member.model.MemberVO;
 import com.order_detail.model.*;
 import com.order_history.model.OrderHistoryService;
 import com.order_history.model.OrderHistoryVO;
@@ -289,25 +290,14 @@ public class OrderDetailServlet extends HttpServlet {
 		if ("getAll_OrderDetail_For_A_OrderNo_Frontend".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+			HttpSession session = req.getSession();
+			MemberVO memberVO = (MemberVO) session.getAttribute("member");
 			try {
 				String str = req.getParameter("order_no");
-			
-				
 				String order_no = null;
-				
-					order_no = new String(str);				
-				
-				
-				
-				
+				order_no = new String(str);				
 				OrderDetailService orderDetailSvc = new OrderDetailService();
 				List<OrderDetailVO> orderDetailVO = (List<OrderDetailVO>) orderDetailSvc.findByOrderNo(order_no);
-
-				
-				
-				
-				
 				req.setAttribute("orderDetailVO", orderDetailVO);
 				String url = "/frontend/order_history/AllOrderDetailOfAOrderNo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

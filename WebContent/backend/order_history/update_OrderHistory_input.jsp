@@ -139,7 +139,7 @@
 								<input type="hidden" name="order_no" value="<%=orderHistoryVO.getOrder_no()%>">
 								<input type="hidden" name="member_no" value="<%=orderHistoryVO.getMember_no()%>">
 								<input type="button" value="返回 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/backend/order_history/selectOrder.jsp'" >
-								<input type="submit" value="送出修改" class="btn btn-primary">
+								<input type="submit" value="送出修改" class="btn btn-default">
 							</FORM>
 						
 	
