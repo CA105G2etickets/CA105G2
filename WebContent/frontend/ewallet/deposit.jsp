@@ -62,7 +62,7 @@ body{
 	<div class="walletcolumn walletcolumn-2">
 		<div class="wallettabs">
 			<div class="walletblock walletblock-m">
-				<img src="images/儲值.png" class="walletimage">
+				<img src="<%=request.getContextPath()%>/frontend/ewallet/images/儲值.png" class="walletimage">
 				<h3 class="heading" align="center">儲值</h3>
 			</div>
 		</div>

@@ -3,7 +3,7 @@ package com.goods.model;
 import java.sql.*;
 import java.io.*;
 public class GoodsVO implements java.io.Serializable {
-
+ 
 	private static final long serialVersionUID = 3095677796845677385L;
 	private String goods_no;
 	private String evetit_no;

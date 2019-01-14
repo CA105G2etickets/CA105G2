@@ -10,7 +10,7 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "CA105G2";
 	private static final String PASSWORD = "123456";
-  
+   
 	private static final String INSERT_STMT = "INSERT INTO GOODS VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
 
 	private static final String GET_ALL_STMT = "SELECT * FROM GOODS";
@@ -541,5 +541,17 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 //			return baos.toByteArray();
 //		}
 //
+	}
+
+	@Override
+	public List<GoodsVO> getAllLaunched(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<GoodsVO> getAllLaunched() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -4,7 +4,7 @@
 <%@ page import="com.goods.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
-
+ 
 <%
 	GoodsService goodsSvc = new GoodsService();
 	List<GoodsVO> list = goodsSvc.getAll();
@@ -254,7 +254,6 @@ th, td {
 								    <input type="hidden" name="goods_no"         value="${goodsVO.goods_no}">
 								    <input type="hidden" name="action" value="deleteGoods">
 								      <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
-											
 								    <input type="submit" value="刪除" class="btn btn-danger btn-sm">	
 								</form>
 <!-- 				<FORM METHOD="post" -->

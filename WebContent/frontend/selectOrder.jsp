@@ -1,43 +1,89 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 
 <html>
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<title>訂單查詢</title>
+	<title>ETIckeTs - 訂單查詢</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$(".wallethref").hover(function() {
+			$(this).css("text-decoration","none");
+		});
+	});
+</script>
+<style>
+.wallethref {
+	color: black;
+	font-weight: bold;
+}
+.walletcolumn {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 5px;
+    vertical-align: top;
+}
+.walletcolumn-2 {
+    width: calc((100% - 19px * 3) / 2);
+}
+.wallettabs {
+    position: relative;
+    cursor: pointer;
+}
+.walletblock {
+    position: relative;
+    background-color: #f6f6f6;
+    margin-bottom: 24px;
+    padding: 50px;
+}
+.walletblock.walletblock-m {
+    min-height: 50px;
+    padding: 10px 10px;
+}
+.walletimage {
+    display:block;
+    margin:auto;
+    width: 80px;
+    height: 80px;
+}
+body{
+	font-family:微軟正黑體!important;
+}
+</style>
 </head>
-
-<div><c:import url="/frontend/navbar_front-end.jsp" charEncoding="UTF-8"/></div>
 
 <body>
 
-	<div class="container-fluid" style="margin-bottom: 400px">
-		<div class="row">
-		<div class="col-xs-12 col-sm-3"></div>		
-			<div class="col-xs-12 col-sm-6">
-				<div clsss="container" style="margin-bottom: 400px">
-					<div class="col-xs-12 col-sm-6">
-						<form METHOD="post" ACTION="" >
-							<input type="hidden" name="action" value="">
-							<input type="submit" class="btn btn-default" href="" value="票卷訂單查詢"></a>
-						</form>
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						<form METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" >
-							<input type="hidden" name="action" value="getOne_For_MemAllOrd_Front">
-							<input type="submit" class="btn btn-default" href="<%=request.getContextPath()%>/frontend/order_history/oneMemberIsOrder.jsp" value="商品訂單查詢"></a>
-						</form>
-					</div>	
-				</div>
-			</div>
-		
-	</div>
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="container">
+	<div class="walletcolumn walletcolumn-2">
+		<div class="wallettabs">
+		<a href="#" class="wallethref">
+			<div class="walletblock walletblock-m">
+				<img src="<%=request.getContextPath()%>/frontend/orderImages/訂票訂單.png" class="walletimage">
+				<h3 class="heading" align="center">訂票訂單查詢</h3>
+			</div>
+		</a>
+		</div>
+	</div>
+	<div class="walletcolumn walletcolumn-2">
+		<div class="wallettabs">
+		<a href="<%=request.getContextPath()%>/order_history/OrderHistory.do?action=getOne_For_MemAllOrd_Front" class="wallethref">
+			<div class="walletblock walletblock-m">
+				<img src="<%=request.getContextPath()%>/frontend/orderImages/商品訂單.png" class="walletimage">
+				<h3 class="heading" align="center">商品訂單查詢</h3>
+			</div>
+		</a>
+		</div>
+	</div>
+</div>
+
 </body>
-<div><c:import url="/frontend/footer_front-end.jsp" charEncoding="UTF-8"/></div>
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>

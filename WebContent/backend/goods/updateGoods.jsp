@@ -8,7 +8,7 @@
 %>
 <!DOCTYPE html>
 <html>
-
+ 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -97,8 +97,8 @@
 	                    <div class="form-group">
 	                         <label>商品狀態</label>	                                                 
 	                         <select class="form-control" name=goods_status>
-	                         	<option value="temporary" ${(goodsVO.goods_status == 'temporary') ? 'selected' : '' }>已上架</option>
-	                         	<option value="confirmed" ${(goodsVO.goods_status == 'confirmed') ? 'selected' : '' }>未上架</option>
+	                         	<option value="temporary" ${(goodsVO.goods_status == 'temporary') ? 'selected' : '' }>未上架</option>
+	                         	<option value="confirmed" ${(goodsVO.goods_status == 'confirmed') ? 'selected' : '' }>已上架</option>
 	                         	<option value="cancel" ${(goodsVO.goods_status == 'cancel') ? 'selected' : '' }>已下架</option>
 	                         </select>                					
 	                    </div>

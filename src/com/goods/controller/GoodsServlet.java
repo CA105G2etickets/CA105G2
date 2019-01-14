@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.*;
 
-
+import com.event_title.model.EventTitleService;
+import com.event_title.model.EventTitleVO;
 import com.goods.model.*;
 
 
@@ -21,7 +22,7 @@ import com.goods.model.*;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class GoodsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	 
 	public GoodsServlet() {
 		super();
 	}
@@ -344,9 +345,9 @@ public class GoodsServlet extends HttpServlet {
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
 
-			try {
+			
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String evetit_no = req.getParameter("evetit_no");
+				String goods_no = req.getParameter("goods_no");
 				
 				String goods_name = req.getParameter("goods_name");
 				if (goods_name == null || goods_name.trim().length() == 0) {
@@ -444,7 +445,8 @@ public class GoodsServlet extends HttpServlet {
 				Integer forsales_a = new Integer (req.getParameter("forsales_a"));
 				String goods_status = req.getParameter("goods_status");
 				
-				 java.sql.Timestamp launchdate = null;
+
+				java.sql.Timestamp launchdate = null;
 				try {
 					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());					
 				} catch (IllegalArgumentException e) {
@@ -457,7 +459,7 @@ public class GoodsServlet extends HttpServlet {
 						offdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());					
 					} catch (IllegalArgumentException e) {
 						offdate = new java.sql.Timestamp(System.currentTimeMillis());
-						goodsErrorMsgs.put("offdate", "請輸入上架日期");
+						goodsErrorMsgs.put("offdate", "請輸入下架日期");
 					}
 				
 				//inti number is zero.
@@ -516,7 +518,7 @@ public class GoodsServlet extends HttpServlet {
 				GoodsService goodsSvc = new GoodsService();
 				
 				GoodsVO goodsVO = new GoodsVO();
-				goodsVO = goodsSvc.addGoods( evetit_no, goods_name, goods_price, goods_picture1,
+				goodsVO = goodsSvc.addGoods( goods_no, goods_name, goods_price, goods_picture1,
 						goods_picture2, goods_picture3, goods_introduction, forsales_a, favorite_count,goods_status, launchdate,
 						offdate,goods_group_count,goods_want_count,goods_sales_count);
 				req.getSession().removeAttribute("goods_picture1_path");
@@ -529,11 +531,11 @@ public class GoodsServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				goodsErrorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
+		
+				goodsErrorMsgs.put("Exception","修改資料失敗:" );
 				RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
 				failureView.forward(req, res);
-			}
+
 		}
 
 		if ("deleteGoods".equals(action)) { 
@@ -568,6 +570,34 @@ public class GoodsServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 			return;
+		}
+		
+		if ("listGoods_ByCompositeQuery".equals(action)) {
+			
+			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
+			
+			try {				
+				/****************************** 1.將輸入資料轉為Map **************************************************/ 
+				Map<String, String[]> map = req.getParameterMap();
+				
+				/****************************** 2.開始複合查詢 **************************************************/
+				GoodsService goodsService = new GoodsService();
+				List<GoodsVO> list  = goodsService.getAllLaunched(map);
+				
+				/****************************** 3.查詢完成,準備轉交 **************************************************/
+				req.setAttribute("listGoods_ByCompositeQuery", list);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/frontend/goods/selectGoods.jsp");
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				goodsErrorMsgs.put("Exception", "無法取得資料 : " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/goods/selectGoods.jsp");
+				failureView.forward(req, res);
+			}
+			
 		}
 	
 	}

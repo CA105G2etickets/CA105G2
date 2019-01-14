@@ -64,7 +64,7 @@ body{
 		<div class="wallettabs">
 		<a href="deposit.jsp" class="wallethref">
 			<div class="walletblock walletblock-m">
-				<img src="images/儲值.png" class="walletimage">
+				<img src="<%=request.getContextPath()%>/frontend/ewallet/images/儲值.png" class="walletimage">
 				<h3 class="heading" align="center">儲值</h3>
 			</div>
 		</a>
@@ -74,7 +74,7 @@ body{
 		<div class="wallettabs">
 		<a href="withdrawal.jsp" class="wallethref">
 			<div class="walletblock walletblock-m">
-				<img src="images/提領.png" class="walletimage">
+				<img src="<%=request.getContextPath()%>/frontend/ewallet/images/提領.png" class="walletimage">
 				<h3 class="heading" align="center">提領</h3>
 			</div>
 		</a>

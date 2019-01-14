@@ -2,6 +2,10 @@ package com.goods.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+
 import java.io.*;
 
 public class GoodsService {
@@ -74,12 +78,20 @@ public class GoodsService {
 	public void deleteGoods(String goods_no) {
 		goodsDao.delete(goods_no);
 	}
-
+ 
 	public GoodsVO getOneGoods(String goods_no) {
 		return goodsDao.findByPrimarykey(goods_no);
 	}
-
 	public List<GoodsVO> getAll() {
 		return goodsDao.getAll();
 	}
-}
+	
+	public List<GoodsVO> getAllLaunched() {
+		return goodsDao.getAllLaunched();
+	}
+	
+	public List<GoodsVO> getAllLaunched(Map<String, String[]> map) {
+		return goodsDao.getAllLaunched(map);
+	}
+	
+	}
