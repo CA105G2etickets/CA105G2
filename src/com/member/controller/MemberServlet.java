@@ -475,10 +475,12 @@ public class MemberServlet extends HttpServlet {
 					newEwalletBalance = memberVO.getEwalletBalance() - ewalletBalance;
 					if (ewalletBalance == 0) {
 						throw new Exception();
+					} else if (ewalletBalance > memberVO.getEwalletBalance()) {
+						throw new NumberFormatException();
 					}
 				} catch (NumberFormatException e) {
 					newEwalletBalance = memberVO.getEwalletBalance();
-					errorMsgs.add("請填入數字");
+					errorMsgs.add("請填入正確數字");
 				} catch (Exception e) {
 					newEwalletBalance = memberVO.getEwalletBalance();
 					errorMsgs.add("數字不得為零");
@@ -629,7 +631,7 @@ public class MemberServlet extends HttpServlet {
 				if(session.getAttribute("member") == null){
 					session.setAttribute("member", member);
 				} else {
-					errorMsgs.add("提領失敗");
+					errorMsgs.add("儲值失敗");
 				}
 				
 				String url = "/frontend/member/member_profile.jsp";
