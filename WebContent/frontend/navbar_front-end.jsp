@@ -133,7 +133,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
-					<a href="#" class="topnav" align="center">訂單查詢</a>
+					<a href="<%=request.getContextPath()%>/frontend/selectOrder.jsp" class="topnav" align="center">訂單查詢</a>
 				</div>
 			</div>
 			</font>
