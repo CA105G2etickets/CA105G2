@@ -37,69 +37,83 @@
 				<div class="col-xs-12 col-sm-2"></div>
 				<div class="col-xs-12 col-sm-8">
 					<h2>訂單紀錄查詢</h2><hr>
-			        <table id="example" class="display" style="width:100%; font-size:8px">
-						<thead>
-							<tr>
-								<th>訂單編號</th>
-<!-- 								<th>會員編號</th> -->
-								<th>訂單總金額</th>
-								<th>付款方式</th>
-								<th>出貨方式</th>
-								<th>訂購日期</th>
-								<th>出貨日期</th>
-								<th>取貨日期</th>
-								<th>送貨地址</th>
-								<th>收件人名稱</th>
-								<th>收件人電話</th>
-								<th>訂單狀態</th>
-<!-- 								<th>修改</th> -->
-<!-- 								<th>刪除</th> -->
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="orderHistoryVO" items="${list}">
+					<% if (list != null && (list.size() > 0)) {%>
+				        <table id="example" class="display" style="width:100%; font-size:8px">
+							<thead>
 								<tr>
-									<td><a href="<%=request.getContextPath()%>/order_detail/OrderDetail.do?action=getAll_OrderDetail_For_A_OrderNo_Frontend&order_no=${orderHistoryVO.order_no}">${orderHistoryVO.order_no}</a></td>
-<%-- 									<td>${orderHistoryVO.member_no}</td> --%>
-									<td>${orderHistoryVO.order_price}</td>
-									<td>
-										${(orderHistoryVO.pay_methods == "CREDITCARD") ? '信用卡' : '' }
-										${(orderHistoryVO.pay_methods == "EWALLET") ? '電子錢包' : '' }
-									</td>
-									<td>
-										${(orderHistoryVO.shipping_methods == "STOREPICKUP") ? '超商取貨' : '' }
-										${(orderHistoryVO.shipping_methods == "HOMEDELIVERY") ? '宅配' : '' }
-									</td>
-									<td><fmt:formatDate value="${orderHistoryVO.order_date}" pattern="yyyy-MM-dd"/></td>
-									<td><fmt:formatDate value="${orderHistoryVO.order_etd}" pattern="yyyy-MM-dd"/></td>
-									<td><fmt:formatDate value="${orderHistoryVO.pickup_date}" pattern="yyyy-MM-dd"/></td>
-									<td>${orderHistoryVO.receiver_add}</td>
-									<td>${orderHistoryVO.receiver_name}</td> 
-									<td>${orderHistoryVO.receiver_tel}</td>
-									<td>
-										${(orderHistoryVO.order_status == "PAYMENT1") ? '已付款' : '' }
-										${(orderHistoryVO.order_status == "SHIPPING2") ? '出貨中' : '' }
-										${(orderHistoryVO.order_status == "SHIPMENT3") ? '已出貨' : '' }
-										${(orderHistoryVO.order_status == "COMPLETE4") ? '已完成' : '' }
-										${(orderHistoryVO.order_status == "CANCEL5") ? '已取消' : '' }
-									</td>
-<!-- 										<td> -->
-<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" style="margin-bottom: 0px;"> --%>
-<!-- 										     <input type="submit" value="修改" class="btn btn-warning"> -->
-<%-- 										     <input type="hidden" name="order_no" value="${orderHistoryVO.order_no}"> --%>
-<!-- 										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
-<!-- 										</td> -->
-<!-- 										<td> -->
-<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" style="margin-bottom: 0px;"> --%>
-<!-- 										     <input type="submit" value="刪除" class="btn btn-danger"> -->
-<%-- 										     <input type="hidden" name="order_no" value="${orderHistoryVO.order_no}"> --%>
-<!-- 										     <input type="hidden" name="action" value="delete_OrderHistory"></FORM> -->
-<!-- 										</td> -->
+									<th>訂單編號</th>
+	<!-- 								<th>會員編號</th> -->
+									<th>訂單總金額</th>
+									<th>付款方式</th>
+									<th>出貨方式</th>
+									<th>訂購日期</th>
+									<th>出貨日期</th>
+									<th>取貨日期</th>
+									<th>送貨地址</th>
+									<th>收件人名稱</th>
+									<th>收件人電話</th>
+									<th>訂單狀態</th>
+	<!-- 								<th>修改</th> -->
+	<!-- 								<th>刪除</th> -->
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach var="orderHistoryVO" items="${list}">
+									<tr>
+										<td><a href="<%=request.getContextPath()%>/order_detail/OrderDetail.do?action=getAll_OrderDetail_For_A_OrderNo_Frontend&order_no=${orderHistoryVO.order_no}">${orderHistoryVO.order_no}</a></td>
+	<%-- 									<td>${orderHistoryVO.member_no}</td> --%>
+										<td>${orderHistoryVO.order_price}</td>
+										<td>
+											${(orderHistoryVO.pay_methods == "CREDITCARD") ? '信用卡' : '' }
+											${(orderHistoryVO.pay_methods == "EWALLET") ? '電子錢包' : '' }
+										</td>
+										<td>
+											${(orderHistoryVO.shipping_methods == "STOREPICKUP") ? '超商取貨' : '' }
+											${(orderHistoryVO.shipping_methods == "HOMEDELIVERY") ? '宅配' : '' }
+										</td>
+										<td><fmt:formatDate value="${orderHistoryVO.order_date}" pattern="yyyy-MM-dd"/></td>
+										<td><fmt:formatDate value="${orderHistoryVO.order_etd}" pattern="yyyy-MM-dd"/></td>
+										<td><fmt:formatDate value="${orderHistoryVO.pickup_date}" pattern="yyyy-MM-dd"/></td>
+										<td>${orderHistoryVO.receiver_add}</td>
+										<td>${orderHistoryVO.receiver_name}</td> 
+										<td>${orderHistoryVO.receiver_tel}</td>
+										<td>
+											${(orderHistoryVO.order_status == "PAYMENT1") ? '已付款' : '' }
+											${(orderHistoryVO.order_status == "SHIPPING2") ? '出貨中' : '' }
+											${(orderHistoryVO.order_status == "SHIPMENT3") ? '已出貨' : '' }
+											${(orderHistoryVO.order_status == "COMPLETE4") ? '已完成' : '' }
+											${(orderHistoryVO.order_status == "CANCEL5") ? '已取消' : '' }
+										</td>
+	<!-- 										<td> -->
+	<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" style="margin-bottom: 0px;"> --%>
+	<!-- 										     <input type="submit" value="修改" class="btn btn-warning"> -->
+	<%-- 										     <input type="hidden" name="order_no" value="${orderHistoryVO.order_no}"> --%>
+	<!-- 										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
+	<!-- 										</td> -->
+	<!-- 										<td> -->
+	<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" style="margin-bottom: 0px;"> --%>
+	<!-- 										     <input type="submit" value="刪除" class="btn btn-danger"> -->
+	<%-- 										     <input type="hidden" name="order_no" value="${orderHistoryVO.order_no}"> --%>
+	<!-- 										     <input type="hidden" name="action" value="delete_OrderHistory"></FORM> -->
+	<!-- 										</td> -->
+									</tr>
+								</c:forEach>
+							</tbody>
+							
+						</table>
 					<hr>
+					
+					<%} else {%>
+					<div class="container-fluid" style="margin-bottom: 400px">
+						<div class="row">
+							<div class="col-xs-12 col-sm-3"></div>
+							<div class="col-xs-12 col-sm-6">
+								<p><font color="red" size="7"><b>　　訂單尚無紀錄</b></font><p>
+								<input type="button" value="返回首頁" style="display:block; margin:auto;" class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/index.jsp'" >
+							</div>
+						</div>
+					</div>
+					<%}%>
 <%-- 						<div><jsp:include page="<%=request.getContextPath()%>/order_history/AllOrderDetailOfAOrderNo.jsp" flush="true"></div> --%>
 				</div>
 			</div>

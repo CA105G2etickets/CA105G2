@@ -463,7 +463,9 @@ public class OrderHistoryServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = req.getSession();
-			Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");
+			System.out.println(session.isNew());
+//			System.out.println(session.removeAttribute(name););
+//			Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");
 			
 			try {
 				String member_no = new String(req.getParameter("member_no").trim());
@@ -575,8 +577,13 @@ public class OrderHistoryServlet extends HttpServlet {
 				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
 				
 				req.setAttribute("orderHistoryVO", orderHistoryVO);
-//				session.removeAttribute("shoppingcart");
-				buylist.removeAllElements();
+				
+				session.removeAttribute("shoppingcart");
+//				res.setHeader("Cache-Control", "no-store");
+//				res.setHeader("Pragma", "no-cache");
+//				res.setDateHeader("Expires", 0);
+				
+//				buylist.removeAllElements();
 				String url = "/frontend/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
