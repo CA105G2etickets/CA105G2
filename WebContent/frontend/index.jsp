@@ -176,12 +176,12 @@ body{
 <hr>
 </ul>
 	<c:forEach var="news" items="${list}" end="4">
-					<ul>
-						<font class="newstag">
-						${newsClassification.getOneNewsClassification(news.news_classification_no).newsClassification}
-						</font>
-						<a href="#" class="newsTitle">${news.news_title}</a>
-					</ul>
+		<ul>
+			<font class="newstag">
+				${newsClassification.getOneNewsClassification(news.news_classification_no).newsClassification}
+			</font>
+				<a href="#" class="newsTitle">${news.news_title}</a>
+		</ul>
 	</c:forEach>
 <ul>
 <div class="paragraph">
