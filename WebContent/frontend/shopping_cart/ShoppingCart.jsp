@@ -91,7 +91,7 @@
 							<a href="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do?action=CLEAN" class="btn btn-default">清空購物車</a>
 						</div>
 						<div class="col-xs-12 col-sm-1">
-							<input type="button" value="返回商品 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/shopping_cart/EShop.jsp'" >
+							<input type="button" value="返回商品 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/goods/selectGoods.jsp'" >
 						</div>
 						<div class="col-xs-12 col-sm-1">
 							<input type="submit" class="btn btn-default" value="付款結帳">
