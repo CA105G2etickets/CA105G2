@@ -65,7 +65,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="goodsqa.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do"  name="form1">
 <table>
 	<tr>
 		<td>商品編號:</td>
@@ -92,14 +92,13 @@
 		<td><input type="TEXT" name="answer_content" size="45"
 			 value="<%= (goodsqaVO==null)? "今天" : goodsqaVO.getAnswer_content()%>" /></td>
 	</tr>
+	
 	<tr>
 		<td>發問日期:</td>
-		<td><input name="questions_date" id="f_date1" type="text"></td>
-	</tr>
+<td>當下時間</td>	</tr>
 	<tr>
 		<td>回答日期:</td>
-		<td><input name="answer_date" id="f_date2" type="text"></td>
-	</tr>
+<td>當下時間</td>	</tr>
 	
 
 

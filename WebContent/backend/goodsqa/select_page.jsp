@@ -3,22 +3,21 @@
 
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<title>問答紀錄查詢</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<title>ETIckeTs QA</title>
 </head>
 
-<body >
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<table id="table-1">
-   <tr><td><h3>IBM Emp: Home</h3><h4>( MVC )</h4></td></tr>
-</table>
 
-<p>This is the Home page for IBM Emp: Home</p>
+<div class="container">
+	<div class="col-xs-12 col-sm-12">
+		<font size="6px">ETIckeTs問答管理頁面</font>
+	</div>
+</div>
+<div class="container">
+	<div class="col-xs-12 col-sm-12">
+		<font size="5px">問題查詢</font>
 
-<h3>資料查詢:</h3>
 	
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -31,7 +30,7 @@
 </c:if>
 
 
-<a href='listAllGoodsqa.jsp'>List</a> all Emps.  <br><br>
+<a href='listAllGoodsqa.jsp'>List</a> 所有問題  <br><br>
   
   
 
@@ -58,17 +57,6 @@
     </FORM>
   
   
-
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" >
-       <b>選擇商品編號:</b>
-       <select size="1" name="gfaq_no">
-         <c:forEach var="goodsqaVO" items="${goodsqaSvc.all}" > 
-          <option value="${goodsqaVO.goods_no}">${goodsqaVO.goods_no}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出"class="btn btn-info">
-     </FORM>
 
 
 
