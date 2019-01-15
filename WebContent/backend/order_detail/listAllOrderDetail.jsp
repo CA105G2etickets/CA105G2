@@ -157,7 +157,6 @@
 										</td>					
 										<td>${orderDetailVO.goods_bonus}</td>
 										<td>${orderDetailVO.goods_pc}</td>
-										
 										<td>
 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" style="margin-bottom: 0px;">
 										     <input type="submit" value="修改" class="btn btn-warning">
