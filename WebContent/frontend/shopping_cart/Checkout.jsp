@@ -30,6 +30,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>購物車結帳頁面</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/TWzipcode/jquery.twzipcode.min.js"></script>
 	
 </head>
 	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
@@ -49,7 +51,6 @@
 </style>
 
 <body>
-
 
 <div class="container-fluid" style="margin-bottom: 400px">
     <div class="row">
@@ -119,7 +120,7 @@
 					</c:forEach>
 					</ul>
 				</c:if>
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" name="form1">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" name="form1" id="orderForm">
 					<hr>									
 
 
@@ -172,9 +173,20 @@
 								<!--取貨日期 -->
 								<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
 			
-								<div class="form-group">
+								<div class="form-group" id="zipcode2">
 									<label>收件人地址：</label>
-									<input type="TEXT" name="receiver_add" id="receiver_add" placeholder="請輸入收件人地址" class="form-control" value="<%= (orderHistoryVO==null)? "320桃園市中壢區福德一路177巷60弄2號" : orderHistoryVO.getReceiver_add()%>" style="width:60%" >
+									<script>
+										$("#zipcode2").twzipcode({
+											countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+											districtSel: "大安區", // 地區預設值
+											zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+											css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+											countyName: "city", // 自訂城市 select 標籤的 name 值
+											districtName: "town" // 自訂地區 select 標籤的 name 值
+										});
+									</script>	
+									<input type="TEXT" name="street" id="street" placeholder="請輸入收件人地址" class="form-control" value="" style="width:50%" >
+									<input type="hidden" name="receiver_add" id="receiver_add" value="" >
 								</div>
 								<div class="form-group">
 									<label>收件人名稱：</label>
@@ -218,7 +230,7 @@
 
 						<hr>
 						<input type="hidden" name="action" value="insert_Front">
-						<input type="submit" value="完成訂單" class="btn btn-primary" style="">
+						<input type="button" value="完成訂單" class="btn btn-primary" style="" id="completeOrderBtn">
 						
 				</FORM>
 			
@@ -240,7 +252,11 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>	
-	
+
+<script>
+// address
+</script>	
+
 </script>
 <% 
   java.sql.Timestamp order_date = null;
@@ -315,6 +331,14 @@ $(document).ready(function(){
                 $(".ewallet").show();
             }
 
+        });
+        
+        $("#completeOrderBtn").click(function(){
+        	var city = $(".city").val();
+        	var town = $(".town option:selected").text();
+        	var street = $("#street").val();
+        	$("#receiver_add").val(town.substring(0,3) + city + town.substring(4) + street);
+        	$("#orderForm").submit();
         });
     });
 </script>	
