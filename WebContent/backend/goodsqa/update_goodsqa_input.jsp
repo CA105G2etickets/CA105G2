@@ -106,7 +106,7 @@
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="empno" value="<%=goodsqaVO.getGfaq_no()%>">
+<input type="hidden" name="gfaq_no" value="<%=goodsqaVO.getGfaq_no()%>">
 <input type="submit" value="°e¥X­×§ï"></FORM>
 </body>
 

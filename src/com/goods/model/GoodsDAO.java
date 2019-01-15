@@ -24,7 +24,10 @@ public class GoodsDAO implements GoodsDAO_interface {
 		}
 	}
   
-	private static final String INSERT_STMT = "INSERT INTO GOODS VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
+	private static final String INSERT_STMT = "INSERT INTO GOODS (goods_no, evetit_no, goods_name, goods_price, goods_picture1,"+ 
+			"goods_picture2, goods_picture3, goods_introduction,forsales_a," + 
+			"favorite_count, goods_status, launchdate, offdate," + 
+			"goods_group_count, goods_want_count, goods_sales_count) VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
 
 	private static final String GET_ALL_STMT = "SELECT * FROM GOODS";
 

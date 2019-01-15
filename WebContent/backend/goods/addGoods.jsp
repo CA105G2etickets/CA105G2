@@ -181,13 +181,8 @@ body {
 
 				</div>
 			</div>
-			<span class="form-group">
-				<button type="submit" class="btn btn-success" name="action"
-					value="insertGoods" style="margin-top: 15px;">儲存</button> <a
-				class="btn btn-info"
-				href="<%=request.getContextPath()%>/backend/goods/listAllGoods.jsp"
-				style="margin-top: 15px;">回所有商品</a>
-			</span>
+			<input type="hidden" name="action" value="insertGoods">
+<input type="submit" value="送出新增" >
 		</form>
 	</div>
 

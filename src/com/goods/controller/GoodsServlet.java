@@ -344,7 +344,7 @@ public class GoodsServlet extends HttpServlet {
 
 			
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String goods_no = req.getParameter("goods_no");
+				String evetit_no = req.getParameter("evetit_no");
 				
 				String goods_name = req.getParameter("goods_name");
 				if (goods_name == null || goods_name.trim().length() == 0) {
@@ -368,7 +368,7 @@ public class GoodsServlet extends HttpServlet {
 						goodsErrorMsgs.put("goods_picture1","找不到檔案");
 					}
 					if (part.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture1","請上傳大頭貼");
+						goodsErrorMsgs.put("goods_picture1","請上傳圖片");
 					}
 				
 				
@@ -504,7 +504,7 @@ public class GoodsServlet extends HttpServlet {
 				GoodsService goodsSvc = new GoodsService();
 				
 				GoodsVO goodsVO = new GoodsVO();
-				goodsVO = goodsSvc.addGoods( goods_no, goods_name, goods_price, goods_picture1,
+				goodsVO = goodsSvc.addGoods( evetit_no, goods_name, goods_price, goods_picture1,
 						goods_picture2, goods_picture3, goods_introduction, forsales_a, favorite_count,goods_status, launchdate,
 						offdate,goods_group_count,goods_want_count,goods_sales_count);
 				req.getSession().removeAttribute("goods_picture1_path");
