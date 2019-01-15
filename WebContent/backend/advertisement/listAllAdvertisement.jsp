@@ -63,7 +63,7 @@
 	<div class="container" style="margin-bottom:30px;">		
 		<table id="advertisementListTable" class="display" style="width:100%;">
 			<thead>
-				<tr>
+				<tr class="${(advertisementVO.ad_no == param.ad_no) ? 'selected':''}">	
 					<th>編號</th>
 					<th>廣告主題名稱</th>
 					<th>開始日期</th>
