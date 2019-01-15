@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ticketorder.model.TicketOrderVO" table="ticket_order" >
+        
+        <id name="ticket_order_no" column="ticket_order_no">
+            <generator class="generator.TicketOrderGenerator"/>
+            <!-- <generator class="sequence">
+			  <param name="sequence_name">ticket_order_seq</param>
+			</generator> -->
+        </id>
+        
+        <property name="member_no" column="member_no" />
+        <many-to-one name="seatingarea_h5VO" class="com.seating_area.model.SeatingArea_H5_VO" lazy="false" cascade="save-update" >
+            <column name="ticarea_no" />
+        </many-to-one>
+        <property name="total_price" column="total_price" />
+        <property name="total_amount" column="total_amount" />
+        <property name="ticket_order_time" column="ticket_order_time" />
+        <property name="payment_method" column="payment_method" />
+        <property name="ticket_order_status" column="ticket_order_status" />
+        
+        <set name="tickets" table="ticket" lazy="true" cascade="all" order-by="ticket_no asc">			
+			<key>
+				<column name="ticket_order_no" />
+			</key>
+			<one-to-many class="com.ticket.model.TicketVO" />
+		</set>
+        
+    </class>
+</hibernate-mapping>

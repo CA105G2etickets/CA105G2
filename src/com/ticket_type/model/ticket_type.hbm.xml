@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ticket_type.model.TicketType_H5_VO" table="ticket_type" >
+        
+        <id name="tictype_no" column="tictype_no">
+            <generator class="generator.TicketTypeGenerator"/>
+            <!--  
+            <generator class="sequence" >
+              <param name="sequence_name">TICTYPE_SEQ</param>  
+            </generator> 
+            -->
+        </id>
+        
+        <property name="eve_no" column="eve_no" />
+        <property name="tictype_color" column="tictype_color" />
+        <property name="tictype_name" column="tictype_name" />
+        <property name="tictype_price" column="tictype_price" />
+        
+        <set name="seatingarea_h5s" table="seating_area" lazy="true" cascade="save-update" order-by="ticarea_no asc">			
+			<key>
+				<column name="tictype_no" />
+			</key>
+			<one-to-many class="com.seating_area.model.SeatingArea_H5_VO" />
+		</set>
+        
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ticket.model.TicketVO" table="ticket" >
+        
+        <id name="ticket_no" column="ticket_no">
+            <generator class="generator.TicketGenerator"/>
+        </id>
+        
+        <many-to-one name="seatingarea_h5VO" class="com.seating_area.model.SeatingArea_H5_VO" lazy="false" cascade="none">
+            <column name="ticarea_no" />
+        </many-to-one>
+        
+        <many-to-one name="ticketorderVO" class="com.ticketorder.model.TicketOrderVO" lazy="false" cascade="save-update">
+            <column name="ticket_order_no" />
+        </many-to-one>
+        <property name="member_no" column="member_no" />
+        <property name="ticket_status" column="ticket_status" />
+        <property name="ticket_create_time" column="ticket_create_time" />
+        <property name="ticket_resale_status" column="ticket_resale_status" />
+        <property name="ticket_resale_price" column="ticket_resale_price" />
+        <property name="is_from_resale" column="is_from_resale" />
+        
+        <set name="resaleords" table="resale_ord" lazy="true" cascade="save-update" order-by="resale_ordno asc">			
+			<key>
+				<column name="ticket_no" />
+			</key>
+			<one-to-many class="com.resaleorder.model.ResaleOrderVO" />
+		</set>
+        
+    </class>
+</hibernate-mapping>

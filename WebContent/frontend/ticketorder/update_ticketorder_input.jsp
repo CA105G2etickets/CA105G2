@@ -80,8 +80,8 @@ pageContext.setAttribute("toVO",toVO);
 	</tr>
 	<tr>
 		<td>座位區編號:</td>
-		<td><input type="TEXT" name="ticarea_no" size="45"
-			 value="<%=toVO.getTicarea_no()%>" /></td>
+		<!--  <td><input type="TEXT" name="ticarea_no" size="45"
+			 value="<%=toVO.getTicarea_no()%>" /></td>  -->
 	</tr>
 	<tr>
 		<td>總價:</td>

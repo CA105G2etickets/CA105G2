@@ -206,8 +206,8 @@ public class TicketServlet extends HttpServlet {
 				
 				TicketVO tVO = new TicketVO();
 				tVO.setTicket_no(ticket_no);
-				tVO.setTicarea_no(ticarea_no);
-				tVO.setTicket_order_no(ticket_order_no);
+//				tVO.setTicarea_no(ticarea_no);
+//				tVO.setTicket_order_no(ticket_order_no);
 				tVO.setMember_no(member_no);
 				tVO.setTicket_status(ticket_status);
 				tVO.setTicket_create_time(ticket_create_time);
@@ -321,8 +321,8 @@ public class TicketServlet extends HttpServlet {
 				}
 				
 				TicketVO tVO = new TicketVO();
-				tVO.setTicarea_no(ticarea_no);
-				tVO.setTicket_order_no(ticket_order_no);
+//				tVO.setTicarea_no(ticarea_no);
+//				tVO.setTicket_order_no(ticket_order_no);
 				tVO.setMember_no(member_no);
 				tVO.setTicket_status(ticket_status);
 				tVO.setTicket_create_time(ticket_create_time);

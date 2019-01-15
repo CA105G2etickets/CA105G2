@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.event_title.model.EventTitle_H5_VO" table="event_title" >
+        <id name="evetit_no" column="evetit_no">
+              <generator class="generator.EventTitleGenerator"/>  
+            <!--<generator class="sequence">
+			  <param name="sequence_name">EVETIT_SEQ</param>
+			</generator>-->
+        </id>
+        
+        <property name="eveclass_no" column="eveclass_no" />
+        <property name="ticrefpolicy_no" column="ticrefpolicy_no" />
+        <property name="evetit_name" column="evetit_name" />
+        
+        <property name="evetit_startdate" column="evetit_startdate" />
+        <property name="evetit_enddate" column="evetit_enddate" />
+        <property name="evetit_poster" column="evetit_poster" />
+        
+        <property name="info" column="info" />
+        <property name="notices" column="notices" />
+        <property name="eticpurchaserules" column="eticpurchaserules" />
+        				
+        <property name="eticrules" column="eticrules" />
+        <property name="refundrules" column="refundrules" />
+        <property name="evetit_sessions" column="evetit_sessions" />
+        
+        <property name="evetit_status" column="evetit_status" />
+        <property name="launchdate" column="launchdate" />
+        <property name="offdate" column="offdate" />
+        <property name="promotionranking" column="promotionranking" />
+        
+        <set name="event_h5s" table="event" lazy="true" cascade="all"  inverse="true"  order-by="eve_no asc">			
+			<key>
+				<column name="evetit_no" />
+			</key>
+			<one-to-many class="com.event.model.Event_H5_VO" />
+		</set>
+        
+    </class>
+</hibernate-mapping>

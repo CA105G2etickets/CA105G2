@@ -8,31 +8,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
-List<SeatingAreaVO> slist = (List<SeatingAreaVO>)request.getAttribute("slist");
+List<SeatingArea_H5_VO> slist = (List<SeatingArea_H5_VO>)request.getAttribute("slist");
+Event_H5_VO eh5vo = (Event_H5_VO)request.getAttribute("eh5vo");
+
+/*maybe use requestScope can solve it?*/
 pageContext.setAttribute("slist",slist);
+pageContext.setAttribute("eh5vo",eh5vo);
+
+String noDataWarningMsg = null;
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>模擬訂票訂單資料附帶票券的新增 - eve_no_SelectedReady2Next.jsp</title>
-
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
 
 <style>
   table {
@@ -52,17 +41,9 @@ pageContext.setAttribute("slist",slist);
 </head>
 <body bgcolor='white'>
 <script>
-	var e = document.getElementById("ddlViewBy");
-	var strUser = e.options[e.selectedIndex].value;
 </script>
-<table id="table-1">
-	<tr><td>
-		 <h3>模擬訂票訂單資料附帶票券的新增 - eve_no_SelectedReady2Next.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
-	</td></tr>
-</table>
 
-<h3>資料新增:</h3>
+<h3>購票流程開始:</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -75,53 +56,57 @@ pageContext.setAttribute("slist",slist);
 </c:if>
 <table>
 	<tr>
-		<th>活動座位區編號</th>
+		<th>活動主題名稱</th>
+		<th>活動主題主海報</th>
+		<th>場次名稱</th>
+		<th>座位配置圖</th>
+		<th>活動開始日期</th>
+		<th>活動結束日期</th>
+		<th>售票結束日期</th>
+		<th>單一會員購買張數限制</th>
+		<th>可全額退款到期日的日期</th>
+		<th>場地名稱</th>
+		<th>場地地址</th>
+	</tr>
+	<tr>
+		<td>${eh5vo.eventtitle_h5VO.evetit_name}</td>
+		<td></td>
+		<td>${eh5vo.eve_sessionname}</td>
+		<td></td>
+		<td><fmt:formatDate value="${eh5vo.eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+		<td><fmt:formatDate value="${eh5vo.eve_enddate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+		<td><fmt:formatDate value="${eh5vo.eve_offsaledate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+		<td>${eh5vo.ticlimit}</td>
+		<td><fmt:formatDate value="${eh5vo.fullrefundenddate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+		<td>${eh5vo.venue_h5VO.venue_name}</td>
+		<td>${eh5vo.venue_h5VO.address}</td>
+	</tr>
+	
+</table>
+
+<table>
+	<tr>
+		<th>該票種名稱</th>
+		<th>該票種代表顏色</th>
 		<th>活動座位區名稱</th>
 		<th>總容許銷售張數</th>
 		<th>已訂的票券張數</th>
 		<th>單張票價</th>
-		<th>要買的張數</th>
-		<th>送出買票請求</th>
+		<th>請選要買的張數</th>
+		<th>送出購票請求</th>
 	</tr>
-	<!--  
-	<c:forEach var="SeatingAreaVO" items="${slist}">
-		<tr>
-			<td>${SeatingAreaVO.ticarea_no}</td>
-			<td>${SeatingAreaVO.ticarea_name}</td>
-			<td>${SeatingAreaVO.tictotalnumber}</td>
-			<td>${SeatingAreaVO.ticbookednumber}</td>
-			<td><select id = "ticketsCount">
-					<option value="1" selected="selected">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-				</select></td>
-			<td>
-				<FORM METHOD="post" ACTION="ticketorder.do">
-				<input type="submit" value="send">
-				<input type="hidden" name="ticarea_no"  value="${SeatingAreaVO.ticarea_no}">
-				<input type="hidden" name="ticketsNum"  value="2">
-				<input type="hidden" name="action"	value="buyTickets"></FORM>
-			</td>
-		</tr>
-	</c:forEach>
-	-->
-<jsp:useBean id="TicketTypeSvc" scope="page" class="com.ticket_type.model.TicketTypeService" />
-	<c:forEach var="SeatingAreaVO" items="${slist}">
-		<FORM METHOD="post" ACTION="ticketorder.do">
+	<c:forEach var="SeatingArea_H5_VO" items="${slist}">
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
 			<table>
 				<tr>
-					<td>${SeatingAreaVO.ticarea_no}</td>
-					<td>${SeatingAreaVO.ticarea_name}</td>
-					<td>${SeatingAreaVO.tictotalnumber}</td>
-					<td>${SeatingAreaVO.ticbookednumber}</td>
+					<td>${SeatingArea_H5_VO.tickettype_h5VO.tictype_name}</td>
+					<td>${SeatingArea_H5_VO.tickettype_h5VO.tictype_color}</td>
+					<td>${SeatingArea_H5_VO.ticarea_name}</td>
+					<td>${SeatingArea_H5_VO.tictotalnumber}</td>
+					<td><font color="red">${SeatingArea_H5_VO.ticbookednumber}</font></td>
+					<td>${SeatingArea_H5_VO.tickettype_h5VO.tictype_price}</td>
 					<td>
-						<c:forEach var="TicketTypeVO" items="${TicketTypeSvc.all}">
-							<c:if test="${SeatingAreaVO.tictype_no==TicketTypeVO.tictype_no}">
-								${TicketTypeVO.tictype_price}
-							</c:if>
-						</c:forEach>
-					</td>
-					<td>
+						<b>${eh5vo.ticlimit}</b>
 						<select name = "ticketsNum">
 						<option value="1" selected="selected">1</option>
 						<option value="2">2</option>
@@ -129,12 +114,22 @@ pageContext.setAttribute("slist",slist);
 						</select>
 					</td>
 					<td>
-						<input type="submit" value="send">
-						<input type="hidden" name="tictype_no"  value="${SeatingAreaVO.tictype_no}">
-						<input type="hidden" name="ticarea_no"  value="${SeatingAreaVO.ticarea_no}">
-						<input type="hidden" name="action"	value="buyTickets">
-						<%String str = (String)request.getAttribute("eve_no");%>
-						<input type="hidden" name="eve_no" value="<%=str%>">
+						<input type="submit" value="購買">
+						<input type="hidden" name="tictype_no"  value="${SeatingArea_H5_VO.tickettype_h5VO.tictype_no}">
+						<input type="hidden" name="ticarea_no"  value="${SeatingArea_H5_VO.ticarea_no}">
+						<input type="hidden" name="eve_no" value="${eh5vo.eve_no}">
+						<input type="hidden" name="action"	value="ticketNumSelected_buyTickets">
+						
+						<%-- 下列傳過去的值都是公開資料，因為用附在parameter上節省下一頁或下下頁要用到顯示的資料，節省資料庫連線--%>
+						<input type="hidden" name="evetit_nameForShow" value="${eh5vo.eventtitle_h5VO.evetit_name}">
+						<input type="hidden" name="eve_sessionnameForShow" value="${eh5vo.eve_sessionname}">
+						<input type="hidden" name="eve_startdateForShow" value="<fmt:formatDate value="${eh5vo.eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+						<input type="hidden" name="eve_enddateForShow" value="<fmt:formatDate value="${eh5vo.eve_enddate}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+						<input type="hidden" name="venue_nameForShow" value="${eh5vo.venue_h5VO.venue_name}">
+						<input type="hidden" name="addressForShow" value="${eh5vo.venue_h5VO.address}">
+						
+						<input type="hidden" name="tictype_nameForShow" value="${SeatingArea_H5_VO.tickettype_h5VO.tictype_name}">
+						
 					</td>
 				</tr>
 			</table>

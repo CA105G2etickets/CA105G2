@@ -6,16 +6,18 @@
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%
+<%-- <%
 /*
 String strEvetitNo = "E0001"; 
 System.out.println("string="+strEvetitNo);
 EventService eSvc = new EventService();
 List<EventVO> list = eSvc.findByEveTit_no(strEvetitNo);
 */
-List<EventVO> list = (List<EventVO>)request.getAttribute("elist"); 
-pageContext.setAttribute("elist",list);
 
+//original .jsp active-method
+/* List<EventVO> list = (List<EventVO>)request.getAttribute("elist"); 
+pageContext.setAttribute("elist",list);
+ */
 /*
 This .jsp is missing EVE_SEATMAP AND EVETIT_POSTER.
 */
@@ -25,7 +27,7 @@ SeatingAreaService saSvc = new SeatingAreaService();
 List<SeatingAreaVO> saList = saSvc.getAll();
 pageContext.setAttribute("saList",saList);
 */
-%>
+%> --%>
 
 <html>
 <head>
@@ -70,11 +72,8 @@ pageContext.setAttribute("saList",saList);
 <table id="table-1">
 	<tr><td>
 		 <h3>模擬訂票訂單資料附帶票券的新增 - evetit_no_SelectedReady2Next.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
-
-<h3>資料新增:</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -85,7 +84,7 @@ pageContext.setAttribute("saList",saList);
 		</c:forEach>
 	</ul>
 </c:if>
-<table>
+<%-- <table>
 	<tr>
 		<th>活動場次名稱</th>
 		<th>活動開始日期</th>
@@ -112,6 +111,18 @@ pageContext.setAttribute("saList",saList);
 			</td>
 		</tr>
 	</c:forEach>
-</table>
+</table> --%>
+<form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do" >
+	<table>
+		<tr>
+			<td>input eve_no here:</td>
+			<td><input type="TEXT" name="eve_no" size="10"
+			 value="EV00001" /></td>
+			 <td><input type="hidden" name="action"	value="select_EVE_NO_toBuyTickets"></td>
+			 <td><input type="submit" value="send"></td>
+		</tr>
+	</table>
+</form>
+<h4><a href="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">SendToWhere</a></h4>
 </body>
 </html>

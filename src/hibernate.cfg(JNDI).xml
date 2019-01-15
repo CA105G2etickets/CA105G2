@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+ 		<!-- JNDI連線池 (Apache Tomcat 連線池DBCP)設定 -->
+		<property name="hibernate.connection.datasource">java:/comp/env/jdbc/ETIckeTsDB</property>
+        
+		<!--SQL方言,以下使用Oracle -->
+		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+
+		<!--是否要顯示實際操作資料庫時的SQL -->
+		<property name="hibernate.show_sql">true</property>
+
+        <!-- Disable the second-level cache -->
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+		<!--交易管理類型, 以下使用JDBC Transaction -->
+		<property name="hibernate.transaction.coordinator_class">jdbc</property>
+        
+        <!-- Enable Hibernate's automatic session context management -->
+		<property name="hibernate.current_session_context_class">thread</property>
+
+		<!--Java物件與資料庫表格的映射檔 -->
+		<mapping resource="com/ticket/model/ticket.hbm.xml" />
+		<mapping resource="com/ticketorder/model/ticket_order.hbm.xml" />
+		<mapping resource="com/resaleorder/model/resale_order.hbm.xml" />
+		
+		<mapping resource="com/seating_area/model/seating_area.hbm.xml" />
+		<mapping resource="com/ticket_type/model/ticket_type.hbm.xml" />
+		<mapping resource="com/event/model/event.hbm.xml" />
+		<mapping resource="com/event_title/model/event_title.hbm.xml" />
+		<mapping resource="com/venue/model/venue.hbm.xml" />
+
+	</session-factory>
+	
+</hibernate-configuration>

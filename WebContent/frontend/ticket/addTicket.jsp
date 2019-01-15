@@ -70,13 +70,13 @@ TicketVO tVO = (TicketVO) request.getAttribute("tVO");
 <table>
 	<tr>
 		<td>座位區編號:</td>
-		<td><input type="TEXT" name="ticarea_no" size="45"
-			 value="<%= (tVO==null)? "ES00000001" : tVO.getTicarea_no()%>" /></td>
+		<!--  <td><input type="TEXT" name="ticarea_no" size="45"
+			 value="<%= (tVO==null)? "ES00000001" : tVO.getTicarea_no()%>" /></td> -->
 	</tr>
 	<tr>
 		<td>訂票訂單編號:</td>
-		<td><input type="TEXT" name="ticket_order_no" size="45"
-			 value="<%= (tVO==null)? "TO_20181225_000001" : tVO.getTicket_order_no()%>" /></td>
+		<!--  <td><input type="TEXT" name="ticket_order_no" size="45"
+			 value="<%= (tVO==null)? "TO_20181225_000001" : tVO.getTicket_order_no()%>" /></td> -->
 	</tr>
 	<tr>
 		<td>會員編號:</td>

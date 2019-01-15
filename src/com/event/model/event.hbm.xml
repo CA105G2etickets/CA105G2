@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.event.model.Event_H5_VO" table="event" >
+        
+        <id name="eve_no" column="eve_no">
+              <generator class="generator.EventGenerator"/>  
+            <!--<generator class="sequence">
+			  <param name="sequence_name">EVE_SEQ</param>
+			</generator>-->
+        </id>
+        
+         <many-to-one name="eventtitle_h5VO" class="com.event_title.model.EventTitle_H5_VO" lazy="false">
+            <column name="evetit_no" />
+        </many-to-one>
+        <many-to-one name="venue_h5VO" class="com.venue.model.Venue_H5_VO" lazy="false">
+            <column name="venue_no" />
+        </many-to-one>
+        <property name="eve_sessionname" column="eve_sessionname" />
+        <property name="eve_seatmap" column="eve_seatmap" />
+        <property name="eve_startdate" column="eve_startdate" />
+        <property name="eve_enddate" column="eve_enddate" />
+        <property name="eve_onsaledate" column="eve_onsaledate" />
+        <property name="eve_offsaledate" column="eve_offsaledate" />
+        <property name="ticlimit" column="ticlimit" />
+        <property name="fullrefundenddate" column="fullrefundenddate" />
+        <property name="eve_status" column="eve_status" />
+        
+        <set name="seatingarea_h5s" table="seating_area" lazy="true" cascade="save-update" order-by="ticarea_no asc">			
+			<key>
+				<column name="eve_no" />
+			</key>
+			<one-to-many class="com.seating_area.model.SeatingArea_H5_VO" />
+		</set>
+        
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.venue.model.Venue_H5_VO" table="venue">
+
+		<id name="venue_no" column="venue_no">
+			<generator class="generator.VenueGenerator"/>
+			<!--  <generator class="sequence">
+			  <param name="sequence_name">VENUE_SEQ</param>
+			</generator>-->
+		</id>
+
+		<property name="venue_name" column="venue_name" />
+		<property name="address" column="address" />
+		<property name="latitude" column="latitude" />
+		<property name="longitude" column="longitude" />
+		<property name="venue_info" column="venue_info" />
+		<property name="venue_locationPic" column="venue_locationPic" />
+
+		<set name="event_h5s" table="event" lazy="true" cascade="all"  inverse="true"  order-by="eve_no asc">			
+			<key>
+				<column name="venue_no" />
+			</key>
+			<one-to-many class="com.event.model.Event_H5_VO" />
+		</set>
+
+	</class>
+</hibernate-mapping>

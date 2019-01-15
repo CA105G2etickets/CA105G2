@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.resaleorder.model.ResaleOrderVO" table="resale_ord" >
+        
+        <id name="resale_ordno" column="resale_ordno">
+              <generator class="generator.ResaleOrderGenerator"/>  
+            <!--<generator class="sequence">
+			  <param name="sequence_name">resale_ord_seq</param>
+			</generator>-->
+        </id>
+        
+        <many-to-one name="ticketVO" class="com.ticket.model.TicketVO" lazy="false">
+            <column name="ticket_no" />
+        </many-to-one>
+        <property name="member_seller_no" column="member_seller_no" />
+        <property name="member_buyer_no" column="member_buyer_no" />
+        <property name="resale_ordprice" column="resale_ordprice" />
+        <property name="resale_ordstatus" column="resale_ordstatus" />
+        <property name="resale_ord_createtime" column="resale_ord_createtime" />
+        <property name="resale_ord_completetime" column="resale_ord_completetime" />
+        <property name="payment_method" column="payment_method" />
+        
+    </class>
+</hibernate-mapping>

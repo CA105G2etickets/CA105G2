@@ -97,7 +97,7 @@ try {
 		<td><input type="TEXT" name="creditCardNumber" size="45" value=""/></td>
 	</tr>
 	<tr>
-		<td>信用卡驗證碼:</td>
+		<td>信用卡驗證碼:</td> <!-- teperorilly use post form to send -->
 		<td><input type="TEXT" name="creditCardVerificationNumber" size="45" value=""/></td>
 	</tr>
 </table>

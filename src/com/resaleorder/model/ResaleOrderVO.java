@@ -2,9 +2,15 @@ package com.resaleorder.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.ticket.model.TicketVO;
+
 public class ResaleOrderVO implements Serializable{
+	
 	private String resale_ordno;
-	private String ticket_no;
+	
+//	private String ticket_no;
+	private TicketVO ticketVO;
+	
 	private String member_seller_no;
 	private String member_buyer_no;
 	private Integer resale_ordprice;
@@ -12,18 +18,21 @@ public class ResaleOrderVO implements Serializable{
 	private Timestamp resale_ord_createtime;
 	private Timestamp resale_ord_completetime;
 	private String payment_method;
+	
 	public String getResale_ordno() {
 		return resale_ordno;
 	}
 	public void setResale_ordno(String resale_ordno) {
 		this.resale_ordno = resale_ordno;
 	}
-	public String getTicket_no() {
-		return ticket_no;
-	}
-	public void setTicket_no(String ticket_no) {
-		this.ticket_no = ticket_no;
-	}
+	
+//	public String getTicket_no() {
+//		return ticket_no;
+//	}
+//	public void setTicket_no(String ticket_no) {
+//		this.ticket_no = ticket_no;
+//	}
+	
 	public String getMember_seller_no() {
 		return member_seller_no;
 	}
@@ -65,6 +74,12 @@ public class ResaleOrderVO implements Serializable{
 	}
 	public void setPayment_method(String payment_method) {
 		this.payment_method = payment_method;
+	}
+	public TicketVO getTicketVO() {
+		return ticketVO;
+	}
+	public void setTicketVO(TicketVO ticketVO) {
+		this.ticketVO = ticketVO;
 	}
 	
 }

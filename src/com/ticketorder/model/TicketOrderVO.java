@@ -2,16 +2,26 @@ package com.ticketorder.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.seating_area.model.SeatingArea_H5_VO;
+import com.ticket.model.TicketVO;
 
 public class TicketOrderVO implements Serializable{
+	
 	private String ticket_order_no;
 	private String member_no;
-	private String ticarea_no;
+	
+//	private String ticarea_no;
+	private SeatingArea_H5_VO seatingarea_h5VO;
+	
 	private Integer total_price;
 	private Integer total_amount;
 	private Timestamp ticket_order_time;
 	private String payment_method;
 	private String ticket_order_status;
+	private Set<TicketVO> tickets = new HashSet<TicketVO>();
 	public String getTicket_order_no() {
 		return ticket_order_no;
 	}
@@ -24,11 +34,11 @@ public class TicketOrderVO implements Serializable{
 	public void setMember_no(String member_no) {
 		this.member_no = member_no;
 	}
-	public String getTicarea_no() {
-		return ticarea_no;
+	public SeatingArea_H5_VO getSeatingarea_h5VO() {
+		return seatingarea_h5VO;
 	}
-	public void setTicarea_no(String ticarea_no) {
-		this.ticarea_no = ticarea_no;
+	public void setSeatingarea_h5VO(SeatingArea_H5_VO seatingarea_h5VO) {
+		this.seatingarea_h5VO = seatingarea_h5VO;
 	}
 	public Integer getTotal_price() {
 		return total_price;
@@ -60,5 +70,20 @@ public class TicketOrderVO implements Serializable{
 	public void setTicket_order_status(String ticket_order_status) {
 		this.ticket_order_status = ticket_order_status;
 	}
+	public Set<TicketVO> getTickets() {
+		return tickets;
+	}
+	public void setTickets(Set<TicketVO> tickets) {
+		this.tickets = tickets;
+	}
+	
+	
+//	public String getTicarea_no() {
+//		return ticarea_no;
+//	}
+//	public void setTicarea_no(String ticarea_no) {
+//		this.ticarea_no = ticarea_no;
+//	}
+	
 	
 }

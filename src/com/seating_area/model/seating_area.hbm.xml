@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.seating_area.model.SeatingArea_H5_VO" table="seating_area" >
+        
+        <id name="ticarea_no" column="ticarea_no">
+        	<generator class="generator.SeatingAreaGenerator"/>
+            <!--  
+            <generator class="sequence" >
+              <param name="sequence_name">TICAREA_SEQ</param>  
+            </generator> 
+            -->
+        </id>
+        
+        <many-to-one name="eve_h5VO" class="com.event.model.Event_H5_VO" lazy="false" >
+            <column name="eve_no" />
+        </many-to-one>
+        <many-to-one name="tickettype_h5VO" class="com.ticket_type.model.TicketType_H5_VO" lazy="false" >
+            <column name="tictype_no" />
+        </many-to-one>
+        <property name="ticarea_color" column="ticarea_color" />
+        <property name="ticarea_name" column="ticarea_name" />
+        <property name="tictotalnumber" column="tictotalnumber" />
+        <property name="ticbookednumber" column="ticbookednumber" />
+		
+		<set name="ticketorders" table="ticket_order" lazy="true" cascade="save-update" order-by="ticket_order_no asc">			
+			<key>
+				<column name="ticarea_no" />
+			</key>
+			<one-to-many class="com.ticketorder.model.TicketOrderVO" />
+		</set>
+		
+		<set name="tickets" table="ticket" lazy="true" cascade="save-update" order-by="ticket_no asc">			
+			<key>
+				<column name="ticarea_no" />
+			</key>
+			<one-to-many class="com.ticket.model.TicketVO" />
+		</set>
+		
+        
+    </class>
+</hibernate-mapping>
