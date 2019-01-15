@@ -1,213 +1,154 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%@ page import="java.util.*"%>
 <%@ page import="com.goods.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-	GoodsVO goodsVO = (GoodsVO) request.getAttribute("goodsVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+	String goods_no = request.getParameter("goods_no");
+	
+	GoodsService goodsService = new GoodsService();
+	GoodsVO goodsVO = goodsService.getOneGoods(goods_no);
+	pageContext.setAttribute("goodsVO", goodsVO);
 %>
- 
+
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>商品資料 - listOneGoods.jsp</title>
-
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-</style>
-<style>
-.memberphoto {
-	border-radius: 50px;
-	margin-top: 20px;
-}
-
-.membermenu {
-	margin-top: 100px;
-	margin-left: 200px;
-}
-
-.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-.topnav {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-</style>
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-</style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>${aEventTitle.evetit_name}</title>
+    <!-- Basic -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+		body {
+			font-family:微軟正黑體!important;
+		}	    
+		.right .carousel-control{
+			background-color:white;
+		}
+		.left .carousel-control{
+			background-color:white;
+		}
+    </style>
 </head>
-<nav class="navbar navbar-inverse" role="navigation">
+
+<body>
+
+
+
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
+	
+	
+	<div class="container" style="margin-bottom:10px;">
+		<a href="#" class="btn btn-warning" style="float:right;">發起揪團</a>
+		<a href="#" class="btn btn-info" style="float:right;margin-right:10px;">查看揪團</a>
+	</div>
+	
+	
+
 	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target=".navbar-ex1-collapse">
-				<span class="sr-only">選單切換</span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span>
-			</button>
-			<img src="images/LOGO_back-end.png" href="#" alt="LOGO"
-				width="202.25px" height="165.5px">
-		</div>
-
-		<!-- 手機隱藏選單區  -->
-
-		<div class="collapse navbar-collapse navbar-ex1-collapse">
-			<!-- 右選單 -->
-			<img
-				src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7"
-				class="memberphoto" href="#" alt="LOGO" style="float: right"
-				width="80px" height="80px">
-
-			<ul class="nav navbar-nav navbar-right membermenu">
-				<li><a href="#">管理員登出</a></li>
-				<li><a href="#">設定</a></li>
-				<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
-				<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
-				<!-- 					<ul class="dropdown-menu"> -->
-				<!-- 						<li><a href="#">繁體中文</a></li> -->
-				<!-- 						<li><a href="#">English</a></li> -->
-				<!-- 						<li><a href="#">日本語</a></li> -->
-				<!-- 					</ul> -->
-				<!-- 				</li> -->
-			</ul>
-		</div>
-		<!-- 手機隱藏選單區結束 -->
-	</div>
-	<div class="topnav">
-		<div class="col-xs-12 col-sm-2">
-			<div>
-				<a href="#" class="topnav" align="center">活動管理</a>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<div id="carousel-id" class="carousel slide" data-ride="carousel">
+				    <!-- 幻燈片小圓點區 -->
+				    <ol class="carousel-indicators">
+				        <li data-target="#carousel-id" data-slide-to="0" class="active"></li>
+				        <c:if test="${goodsVO.goods_picture2 != null}">
+				        	<li data-target="#carousel-id" data-slide-to="1" class=""></li>
+				        </c:if>
+				        <c:if test="${goodsVO.goods_picture3 != null}">
+				       		<li data-target="#carousel-id" data-slide-to="2" class=""></li>
+				        </c:if>
+				    </ol>
+				    <!-- 幻燈片主圖區 -->
+				    <div class="carousel-inner">
+				        <div class="item active">
+				            <img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" style="height:300px;width:auto;margin-left:auto;margin-right:auto;">
+				        </div>
+				        <c:if test="${goodsVO.goods_picture2 != null}">
+					        <div class="item">
+								<img src="<%=request.getContextPath()%>/goods/goodsImg2.do?goods_no=${goodsVO.goods_no}" style="height:300px;width:auto;margin-left:auto;margin-right:auto;">
+					        </div>
+				        </c:if>
+				        <c:if test="${goodsVO.goods_picture3 != null}">
+					        <div class="item">
+					            <img src="<%=request.getContextPath()%>/goods/goodsImg3.do?goods_no=${goodsVO.goods_no}" style="height:300px;width:auto;margin-left:auto;margin-right:auto;">
+					        </div>
+				        </c:if>
+				    </div>
+				    <!-- 上下頁控制區 -->
+				    <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+				    <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+				</div>
 			</div>
-		</div>
-		<div class="col-xs-12 col-sm-2">
-			<div>
-				<a href="#" class="topnav" align="center">票券管理</a>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-2">
-			<div>
-				<a href="#" class="topnav" align="center">商品管理</a>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-2">
-			<div>
-				<a href="#" class="topnav" align="center">團購管理</a>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-2">
-			<div>
-				<a href="#" class="topnav" align="center">常見問題管理</a>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-2">
-			<div>
-				<a href="#" class="topnav" align="center">公告管理</a>
-			</div>
+			<div class="col-xs-12 col-sm-6">
+				<h3 style="margin-top:0px;" class="alert alert-info" role="alert">${goodsVO.goods_name}</h3>
+				<h3>原價 : ${goodsVO.goods_price} 元 / 個</h3>
+				<h3>促銷價 :<font color="red">  ${goodsVO.forsales_a} </font></h3>
+				<h3>銷售量 : ${goodsVO.goods_sales_count}  個</h3>
+				<form name="shoppingForm" action="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do" method="POST">
+					<h3 style="text-align:right;">
+						數量：				
+						<input class="min" name="min" type="button" value="-" />
+						<input type="text" class="ordernum" name="goods_quantity" size="2" value=1>
+						<input class="add" name="add" type="button" value="+" />
+					</h3>
+					<h3 style="text-align:right;">
+						<input type="submit" name="Submit" value="放入購物車" style="float:right;">
+						<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
+					</h3>
+					<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
+	                <input type="hidden" name="evetit_no" value="${goodsVO.evetit_no}">
+					<input type="hidden" name="goods_name" value="${goodsVO.goods_name}">
+					<input type="hidden" name="goods_price" value="${goodsVO.goods_price}">
+					<input type="hidden" name="forsales_a" value="${goodsVO.forsales_a}">
+					<input type="hidden" name="goods_status" value="${goodsVO.goods_status}">
+					<input type="hidden" name="old_price" value="${goodsVO.goods_price}">
+					<input type="hidden" name="action" value="ADD">	
+				</form>
+        	</div>
 		</div>
 	</div>
-</nav>
 
-<table class="table">
-	<tr>
-		<th>商品編號</th>
-		<th>活動編號</th>
-		<th>商品名稱</th>
-		<th>售價</th>
-		<th>圖1</th>
-		<th>圖2</th>
-		<th>圖3</th>
-		<th>商品介紹</th>
-		<th>促銷價</th>
-		<th>喜愛人數</th>
-		<th>商品狀態</th>
-		<th>上架日期</th>
-		<th>下架日期</th>
-		<th>開團數</th>
-		<th>許願數</th>
-		<th>銷售量</th>
-	</tr>
-	<tr>
-		<td><%=goodsVO.getGoods_no()%></td>
-		<td><%=goodsVO.getEvetit_no()%></td>
-		<td><%=goodsVO.getGoods_name()%></td>
-		<td><%=goodsVO.getGoods_price()%></td>
-		<td><img
-			src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}"
-			width=50% /></td>
-		<td><img
-			src="<%=request.getContextPath()%>/goods/goodsImg2.do?goods_no=${goodsVO.goods_no}"
-			width=50% /></td>
-		<td><img
-			src="<%=request.getContextPath()%>/goods/goodsImg3.do?goods_no=${goodsVO.goods_no}"
-			width=50% /></td>
-		<td><%=goodsVO.getGoods_introduction()%></td>
-		<td><%=goodsVO.getForsales_a()%></td>
-		<td><%=goodsVO.getFavorite_count()%></td>
-		<td><%=goodsVO.getGoods_status()%></td>
-		<td><%=goodsVO.getLaunchdate()%></td>
-		<td><%=goodsVO.getOffdate()%></td>
-		<td><%=goodsVO.getGoods_group_count()%></td>
-		<td><%=goodsVO.getGoods_want_count()%></td>
-		<td><%=goodsVO.getGoods_sales_count()%></td>
+    <div class="container" style="margin-bottom:200px;">
+	    <h3>《商品介紹》</h3>
+	    <h4 style="margin-top:25px;">${goodsVO.goods_introduction}</h4>
+    </div>	
+	
+    
+    
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 
-	</tr>
-</table>
-<a href="select_page.jsp"><img src="images/back1.png" width="186"
-	height="81" border="0">
-	</body>
+    
+    
+    <!-- Basic -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+		$(function() {
+			$(".add").click(function() {
+				var t = $(this).prev();
+				if (t.val() == "" || undefined || null) {
+					t.val(0);
+				}
+				t.val(parseInt(t.val()) + 1)
+			})
+			$(".min").click(function() {
+				var t = $(this).next();
+				if (t.val() == "" || undefined || null) {
+					t.val(0);
+				}
+				t.val(parseInt(t.val()) - 1)
+				if (parseInt(t.val()) < 1) {
+					t.val(1);
+				}
+			})
+		})
+	</script>
+</body>
+
 </html>
