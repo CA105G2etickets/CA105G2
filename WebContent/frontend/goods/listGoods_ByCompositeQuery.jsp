@@ -86,7 +86,7 @@
 					<input type="hidden" name="old_price" value="${goodsVO.goods_price}">
 					<input type="hidden" name="action" value="ADD">	
 				</form>
-                        
+                          
                         </div>                   
                     </div>
                 </div>
