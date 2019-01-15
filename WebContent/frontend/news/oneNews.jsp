@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="com.news.model.*"%>
 
 <%
@@ -8,7 +9,7 @@
 
 <html>
 <head>
-<title>ETIckeTs後台 - 公告資料</title>
+<title>ETIckeTs - 公告詳情</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -25,37 +26,33 @@
   th, td {
     padding: 1px;
   }
+  .oneNewsHead {
+    width: 100px;
+  }
 </style>
 
 </head>
 
-<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 
 <div class="container table-responsive-md">
 
 <table class="table">
 	<tr>
-		<th>公告編號</th>
-		<th>公告分類代碼</th>
-		<th>標題</th>
-		<th>內容</th>
-		<th>發布日期</th>
-		<th>發布管理員編號</th>
+		<th class="oneNewsHead">標題</th>
+		<td><%=newsVO.getNews_title()%></td>
 	</tr>
 	<tr>
-		<td><%=newsVO.getNews_no()%></td>
-		<td><%=newsVO.getNews_classification_no()%></td>
-		<td><%=newsVO.getNews_title()%></td>
+		<th class="oneNewsHead">內容</th>
 		<td><%=newsVO.getNews_content()%></td>
+	</tr>
+	<tr>
+		<th class="oneNewsHead">發布日期</th>
 		<td><%=newsVO.getAnnounce_date()%></td>
-		<td><%=newsVO.getAdministrator_no()%></td>
 	</tr>
 </table>
 
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
-</div>
 </div>
 </body>
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>

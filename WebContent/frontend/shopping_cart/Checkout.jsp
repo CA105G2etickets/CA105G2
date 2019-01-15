@@ -32,7 +32,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="<%=request.getContextPath()%>/TWzipcode/jquery.twzipcode.min.js"></script>
-	
 </head>
 	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 	<style>
@@ -49,14 +48,11 @@
 	/*區塊範圍指定*/
 	.bBW{}
 </style>
-
 <body>
-
 <div class="container-fluid" style="margin-bottom: 400px">
     <div class="row">
         <div class="col-xs-12 col-sm-3"></div>
         <div class="col-xs-12 col-sm-6">
-            
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="panel1">
                     <h4 class="panel-title">
@@ -74,14 +70,12 @@
                                     <th>商品數量</th>
                                 </tr>
                             </thead>
-
-
                             <%
                                 Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");
                                 String amount =  (String) request.getAttribute("amount");
                             %>  
-
-                            <%  for (int i = 0; i < buylist.size(); i++) {
+                            <%  
+                            	for (int i = 0; i < buylist.size(); i++) {
                                 ShoppingCart order = buylist.get(i);
                                 String goods_no = order.getGoods_no();
                                 String goods_name = order.getGoods_name();
@@ -99,18 +93,14 @@
                             <%
                                 }
                             %>
-           
                         </table>
                         <h4> 付款金額：<font color="red">$<%=amount%></font></h4>  
-
                     </div>
                 </div>
             </div>
 
                 <input type="button" value="返回上一頁 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp'" >
 				<input type="button" value="繼續購物" class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/shopping_cart/EShop.jsp'" >
-						
-			
 			<div role="tabpanel" class="tab-pane active" id="history">
 				<c:if test="${not empty errorMsgs}">
 					<font style="color:red">請修正以下錯誤：</font>
@@ -121,132 +111,92 @@
 					</ul>
 				</c:if>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" name="form1" id="orderForm">
-					<hr>									
-
-
-								<h1>訂單紀錄</h1>
-								<hr>
-								<div class="form-group">
-									<label>會員編號：<%=memberVO.getMemberNo()%></label>
-									<input type="hidden" name="member_no" value="<%=memberVO.getMemberNo()%>" >
-<%-- 									<input type="TEXT" name="member_no" placeholder="請輸入會員編號" class="form-control" value="<%=(orderHistoryVO==null)? "M000001" : orderHistoryVO.getMember_no()%>" style="width:30%" > --%>
-								</div>
-								<div class="form-group">
-									<label>訂單總金額：$<%=amount%></label>
-									<input type="hidden" name="order_price" value="<%=amount%>" >
-								</div>
-								
-<!-- 								<div class="form-group" style="width:20%"> -->
-<!-- 									<label>付款方式：</label> -->
-<!-- 										<select class="form-control" size="1" name="pay_methods"> -->
-<!-- 											<option value="CREDITCARD" selected>信用卡</option> -->
-<!-- 											<option value="EWALLET">電子錢包</option> -->
-<!-- 										</select> -->
-<!-- 								</div> -->
-								
-									<input name="pay_methods" type="radio" value="CREDITCARD" checked="checked"><b>信用卡</b>
-									<input name="pay_methods" type="radio" value="EWALLET"><b>電子錢包</b><br>
-							
-									<!-- 如果開始要顯示要加入 style="display:block;" 不顯示則加入  style="display:none;"-->
-									<div class="creditcard pay_methods bBW" style="display:block;">
-										<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%"><font color="#fff">-</font><input type="TEXT" name="creditcard_no" placeholder="未3碼" class="form-control" value="" style="width:8%" >
-									</div>
-							
-									<div class="ewallet pay_methods bBW">
-										<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
-									</div>
-								
-								<br>	
-								<div class="form-group" style="width:20%">
-									<label>出貨方式：</label>
-										<select class="form-control" size="1" name="shipping_methods">
-											<option value="STOREPICKUP" selected>超商取貨</option>
-											<option value="HOMEDELIVERY">宅配</option>
-										</select>
-								</div>
-									
-						
-								<!--訂購日期 -->
-								<input type="hidden" name="order_date" id="f_date1" class="form-control" style="width:30%">
-								<!--出貨日期 -->
-								<input type="hidden" name="order_etd" id="f_date2" class="form-control" style="width:30%">
-								<!--取貨日期 -->
-								<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
-			
-								<div class="form-group" id="zipcode2">
-									<label>收件人地址：</label>
-									<script>
-										$("#zipcode2").twzipcode({
-											countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
-											districtSel: "大安區", // 地區預設值
-											zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
-											css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
-											countyName: "city", // 自訂城市 select 標籤的 name 值
-											districtName: "town" // 自訂地區 select 標籤的 name 值
-										});
-									</script>	
-									<input type="TEXT" name="street" id="street" placeholder="請輸入收件人地址" class="form-control" value="" style="width:50%" >
-									<input type="hidden" name="receiver_add" id="receiver_add" value="" >
-								</div>
-								<div class="form-group">
-									<label>收件人名稱：</label>
-									<input type="TEXT" name="receiver_name" id="receiver_name" placeholder="請輸入收件人名稱" class="form-control" value="<%= (orderHistoryVO==null)? memberVO.getMemberFullname() : orderHistoryVO.getReceiver_name()%>" style="width:20%">
-								</div>
-								<div class="form-group">
-									<label>收件人電話：</label>
-									<c:set value="<%=memberVO.getPhone() %>" var="member_phone"/>
-									<c:set var="phone" value="${fn:replace(member_phone,'-','')}" />
-									<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人電話" class="form-control" value="${ (orderHistoryVO == null) ? phone : orderHistoryVO.receiver_tel}" style="width:20%">
-								</div>
-								
-<!-- 								<div class="form-group" style="width:20%"> -->
-								<input type="hidden" name="order_status" value="PAYMENT1" >
-<!-- 									<label>訂單狀態：</label> -->
-<!-- 										<select class="form-control" size="1" name="order_status"> -->
-<!-- 											<option value="PAYMENT1" selected>已付款</option> -->
-<!-- 											<option value="SHIPPING2">出貨中</option> -->
-<!-- 											<option value="SHIPMENT3">已出貨</option> -->
-<!-- 											<option value="COMPLETE4">已完成</option> -->
-<!-- 											<option value="CANCEL5">已取消</option> -->
-<!-- 										</select> -->
-		
-							</div>
-								
-							<%	for (int i = 0; i < buylist.size(); i++) {
-									ShoppingCart order = buylist.get(i);
-									String goods_no = order.getGoods_no();
-									Integer goods_price = order.getGoods_price();
-									Integer goods_quantity = order.getGoods_quantity();	
-									
-							%>
-								<!--商品編號 -->
-								<input type="hidden" name="goods_no" value=<%=goods_no%>>
-								<!--商品價錢 -->
-								<input type="hidden" name="goods_bonus" value="<%=goods_price%>">
-								<!--商品數量 -->
-								<input type="hidden" name="goods_pc" value="<%=goods_quantity%>">
-							<%}%>								
-							
-
-						<hr>
-						<input type="hidden" name="action" value="insert_Front">
-						<input type="button" value="完成訂單" class="btn btn-primary" style="" id="completeOrderBtn">
-						
+					<hr>
+					<h1>訂單紀錄</h1>
+					<hr>
+						<div class="form-group">
+							<label>會員編號：<%=memberVO.getMemberNo()%></label>
+							<input type="hidden" name="member_no" value="<%=memberVO.getMemberNo()%>" >
+						</div>
+						<div class="form-group">
+							<label>訂單總金額：$<%=amount%></label>
+							<input type="hidden" name="order_price" value="<%=amount%>" >
+						</div>
+						<input name="pay_methods" type="radio" value="CREDITCARD" checked="checked"><b>信用卡</b>
+						<input name="pay_methods" type="radio" value="EWALLET"><b>電子錢包</b><br>
+						<!-- 如果開始要顯示要加入 style="display:block;" 不顯示則加入  style="display:none;"-->
+						<div class="creditcard pay_methods bBW" style="display:block;">
+							<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%"><font color="#fff">-</font><input type="TEXT" name="creditcard_no" placeholder="未3碼" class="form-control" value="" style="width:8%" >
+						</div>
+						<div class="ewallet pay_methods bBW">
+							<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
+						</div><br>	
+						<div class="form-group" style="width:20%">
+							<label>出貨方式：</label>
+								<select class="form-control" size="1" name="shipping_methods">
+									<option value="STOREPICKUP" selected>超商取貨</option>
+									<option value="HOMEDELIVERY">宅配</option>
+								</select>
+						</div>
+						<!--訂購日期 -->
+						<input type="hidden" name="order_date" id="f_date1" class="form-control" style="width:30%">
+						<!--出貨日期 -->
+						<input type="hidden" name="order_etd" id="f_date2" class="form-control" style="width:30%">
+						<!--取貨日期 -->
+						<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
+	
+						<div class="form-group" id="zipcode2" style="width:13%">
+							<label>收件人地址：</label>
+							<script>
+								$("#zipcode2").twzipcode({
+									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+									districtSel: "大安區", // 地區預設值
+									zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+									css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+									countyName: "city", // 自訂城市 select 標籤的 name 值
+									districtName: "town" // 自訂地區 select 標籤的 name 值
+								});
+							</script>	
+						</div>
+						<div class="form-group">
+							<input type="TEXT" name="street" id="street" placeholder="請輸入收件人地址" class="form-control" value="" style="width:40%">
+							<input type="hidden" name="receiver_add" id="receiver_add" value="" >
+						</div>
+						<div class="form-group">
+							<label>收件人名稱：</label>
+							<input type="TEXT" name="receiver_name" id="receiver_name" placeholder="請輸入收件人名稱" class="form-control" value="<%= (orderHistoryVO==null)? memberVO.getMemberFullname() : orderHistoryVO.getReceiver_name()%>" style="width:20%">
+						</div>
+						<div class="form-group">
+							<label>收件人電話：</label>
+							<c:set value="<%=memberVO.getPhone() %>" var="member_phone"/>
+							<c:set var="phone" value="${fn:replace(member_phone,'-','')}" />
+							<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人電話" class="form-control" value="${ (orderHistoryVO == null) ? phone : orderHistoryVO.receiver_tel}" style="width:20%">
+						</div>
+						<input type="hidden" name="order_status" value="PAYMENT1" >
+					
+						<%	
+							for (int i = 0; i < buylist.size(); i++) {
+							ShoppingCart order = buylist.get(i);
+							String goods_no = order.getGoods_no();
+							Integer goods_price = order.getGoods_price();
+							Integer goods_quantity = order.getGoods_quantity();	
+						%>
+							<!--商品編號 -->
+							<input type="hidden" name="goods_no" value=<%=goods_no%>>
+							<!--商品價錢 -->
+							<input type="hidden" name="goods_bonus" value="<%=goods_price%>">
+							<!--商品數量 -->
+							<input type="hidden" name="goods_pc" value="<%=goods_quantity%>">
+						<%}%>								
+					<hr>
+					<input type="hidden" name="action" value="insert_Front">
+					<input type="button" value="完成訂單" class="btn btn-primary" style="" id="completeOrderBtn">
 				</FORM>
-			
 			</div>	
-			
-			
-				
         </div>
     </div>
 </div>
 
-
-
-
-
-</center>
 </body>
 	<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 <script src="https://code.jquery.com/jquery.js"></script>
@@ -254,10 +204,6 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>	
 
 <script>
-// address
-</script>	
-
-</script>
 <% 
   java.sql.Timestamp order_date = null;
   try {
@@ -280,6 +226,7 @@
 		pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
    }
 %>
+</script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
@@ -330,7 +277,6 @@ $(document).ready(function(){
                 $(".pay_methods").hide();
                 $(".ewallet").show();
             }
-
         });
         
         $("#completeOrderBtn").click(function(){

@@ -5,12 +5,14 @@
 <%@ page import="com.order_detail.model.*"%>
 <%@ page import="com.order_history.model.*"%>
 <%@ page import="com.goods.model.*"%>
+<%@ page import="com.member.model.*"%>
 <%
 List<OrderDetailVO> detaillist = (List<OrderDetailVO>)request.getAttribute("orderDetailVO");
 pageContext.setAttribute("detaillist",detaillist);
 List<OrderHistoryVO> historylist = (List<OrderHistoryVO>)request.getAttribute("orderHistoryVO");
 pageContext.setAttribute("historylist",historylist);
 %>
+
 <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
 <html>
 	<head>
@@ -53,22 +55,29 @@ pageContext.setAttribute("historylist",historylist);
 									<th>商品數量</th>
 								</tr>
 							</thead>
-											
 							<tbody>
 								<c:forEach var="orderDetailVO" items="${detaillist}">
 									<tr>
-<%-- 										<td><a href="<%=request.getContextPath()%>/order_detail/OrderDetail.do?action=getAll_OrderDetail_For_A_OrderNo_Frontend&order_no=${orderDetailVO.order_no}">${orderDetailVO.order_no}</a></td> --%>
-										<td>${orderDetailVO.order_no}</td>
-										<td>${orderDetailVO.goods_no}</td>
+										<td>
+											<a href="<%=request.getContextPath()%>/frontend/order_history/oneMemberIsOrder.jsp?member_no=${memberVO.memberNo}">${orderDetailVO.order_no}</a>
+<%-- 										${orderDetailVO.order_no} --%>
+										</td>
+										<td>
+											<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${orderDetailVO.goods_no}</a>
+										</td>
 										<td>	
 											<c:forEach var="goodsVO" items="${goodsSvc.all}">
-												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">${goodsVO.goods_name}</c:if>
+												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">
+													<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${goodsVO.goods_name}</a>
+												</c:if>
 											</c:forEach>
 										</td>
 										<td>	
 											<c:forEach var="goodsVO" items="${goodsSvc.all}">
 												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">
-													<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" width=50px height= auto />
+													<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">
+														<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" width=50px height= auto />
+													</a>
 												</c:if>
 											</c:forEach>
 										</td>

@@ -487,7 +487,7 @@ public class MemberServlet extends HttpServlet {
 				}
 
 				String bankAccount = req.getParameter("bankAccount").trim();
-				if (bankAccount == null || bankAccount.trim().length() == 0 || bankAccount.trim().length() < 10) {
+				if (bankAccount == null || bankAccount.trim().length() == 0 || bankAccount.trim().length() != 16) {
 					errorMsgs.add("銀行帳號錯誤");
 					newEwalletBalance = memberVO.getEwalletBalance();
 				}
@@ -586,7 +586,7 @@ public class MemberServlet extends HttpServlet {
 				}
 				
 				String bankAccount = req.getParameter("bankAccount").trim();
-				if (bankAccount == null || bankAccount.trim().length() == 0 || bankAccount.trim().length() < 10) {
+				if (bankAccount == null || bankAccount.trim().length() == 0 || bankAccount.trim().length() != 16) {
 					errorMsgs.add("銀行帳號錯誤");
 					newEwalletBalance = memberVO.getEwalletBalance();
 				}

@@ -194,10 +194,14 @@
 								<c:forEach var="orderDetailVO" items="${listDetail}">							
 									<tr>
 										<td>${orderDetailVO.order_no}</td>
-										<td>${orderDetailVO.goods_no}</td>
+										<td>
+											<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${orderDetailVO.goods_no}</a>
+										</td>
 										<td>	
 											<c:forEach var="goodsVO" items="${goodsSvc.all}">
-												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">${goodsVO.goods_name}</c:if>
+												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">
+													<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">${goodsVO.goods_name}</a>
+												</c:if>
 											</c:forEach>
 										</td>
 										<td>${orderDetailVO.goods_bonus}</td>

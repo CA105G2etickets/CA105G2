@@ -79,7 +79,11 @@ hr {
 .paragraph {
 	margin: 5px 0;
     padding: 0;
-    display: inline-block;
+}
+.listAllNews {
+	display: inline-block;
+    float: right;
+    font-size: 14px;
 }
 body{
 	font-family:微軟正黑體!important;
@@ -189,7 +193,7 @@ body{
 <font size="3" style="font-weight:bold">
 <ul>
 <div class="paragraph">
-網站公告
+網站公告<a href="#" class="listAllNews"><i class="glyphicon glyphicon-chevron-right"></i>更多</a>
 </div>
 <hr>
 </ul>
@@ -198,7 +202,7 @@ body{
 			<font class="newstag">
 				${newsClassification.getOneNewsClassification(news.news_classification_no).newsClassification}
 			</font>
-				<a href="#" class="newsTitle">${news.news_title}</a>
+				<a href="<%=request.getContextPath()%>/frontend/news/news.do?action=getOne_For_Display_front&news_no=${news.news_no}" class="newsTitle">${news.news_title}</a>
 		</ul>
 	</c:forEach>
 <ul>
@@ -458,6 +462,9 @@ body{
 		
 		<!-- --------------------------------------------------------------公告部分------------------------------------------------------------ -->
 			$(".newsTitle").hover(function() {
+				$(this).css("text-decoration","none");
+			});
+			$(".listAllNews").hover(function() {
 				$(this).css("text-decoration","none");
 			});
 		<!-- --------------------------------------------------------------公告結束------------------------------------------------------------ -->
