@@ -8,6 +8,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.order_detail.model.OrderDetailVO;
+import com.shopping_cart.model.ShoppingCart;
+
 
 public class GoodsDAO implements GoodsDAO_interface {
  
@@ -29,7 +32,9 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 	private static final String DELETE = "DELETE FROM GOODS WHERE GOODS_NO = ?";
 
-	private static final String UPDATE = "UPDATE GOODS SET EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?, GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, FORSALES_A=?, GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=? WHERE GOODS_NO=?";
+	private static final String UPDATE = "UPDATE GOODS SET EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?, GOODS_PICTURE1=?, GOODS_PICTURE2=?, GOODS_PICTURE3=?"
+			+ ", GOODS_INTRODUCTION=?, FORSALES_A=?, FAVORITE_COUNT=?, GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?"
+			+ ", GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=? WHERE GOODS_NO=?";
 
 	private static final String GET_ALL_STMT_LAUNCHED= "SELECT * FROM GOODS WHERE (CURRENT_DATE BETWEEN launchdate and offdate)";
 	@Override
@@ -461,4 +466,90 @@ public class GoodsDAO implements GoodsDAO_interface {
 		return null;
 	}
 	
+	//訂單完成後將購買商品增加購買數量
+	public void updateGOODS_SALES_COUNT(List<OrderDetailVO> list) {
+		GoodsVO goodsVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			for (OrderDetailVO car : list) {
+				pstmt.setString(1, car.getGoods_no());
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					goodsVO = new GoodsVO();
+					goodsVO.setGoods_no(rs.getString("Goods_no"));
+					goodsVO.setEvetit_no(rs.getString("Evetit_no"));
+					goodsVO.setGoods_name(rs.getString("Goods_name"));
+					goodsVO.setGoods_price(rs.getInt("Goods_price"));
+					goodsVO.setGoods_picture1(rs.getBytes("Goods_picture1"));
+					goodsVO.setGoods_picture2(rs.getBytes("Goods_picture2"));
+					goodsVO.setGoods_picture3(rs.getBytes("Goods_picture3"));
+					goodsVO.setGoods_introduction(rs.getString("Goods_introduction"));
+					goodsVO.setForsales_a(rs.getInt("Forsales_a"));
+					goodsVO.setFavorite_count(rs.getInt("Favorite_count"));
+					goodsVO.setGoods_status(rs.getString("Goods_status"));
+					goodsVO.setLaunchdate(rs.getTimestamp("Launchdate"));
+					goodsVO.setOffdate(rs.getTimestamp("Offdate"));
+					goodsVO.setGoods_group_count(rs.getInt("Goods_group_count"));
+					goodsVO.setGoods_want_count(rs.getInt("Goods_want_count"));
+					goodsVO.setGoods_sales_count(rs.getInt("Goods_sales_count"));
+				}
+				goodsVO.setGoods_sales_count(goodsVO.getGoods_sales_count() + car.getGoods_pc().intValue());
+				pstmt.close();
+				pstmt = con.prepareStatement(UPDATE);
+				pstmt.setString(1, goodsVO.getEvetit_no());
+				pstmt.setString(2, goodsVO.getGoods_name());
+				pstmt.setInt(3, goodsVO.getGoods_price());
+				pstmt.setBytes(4, goodsVO.getGoods_picture1());
+				pstmt.setBytes(5, goodsVO.getGoods_picture2());
+				pstmt.setBytes(6, goodsVO.getGoods_picture3());
+				pstmt.setString(7, goodsVO.getGoods_introduction());
+				pstmt.setInt(8, goodsVO.getForsales_a());
+				pstmt.setInt(9, goodsVO.getFavorite_count());
+				pstmt.setString(10, goodsVO.getGoods_status());
+				pstmt.setTimestamp(11, goodsVO.getLaunchdate());
+				pstmt.setTimestamp(12, goodsVO.getOffdate());
+				pstmt.setInt(13, goodsVO.getGoods_group_count());
+				pstmt.setInt(14, goodsVO.getGoods_want_count());
+				pstmt.setInt(15, goodsVO.getGoods_sales_count());
+				pstmt.setString(16, goodsVO.getGoods_no());
+				pstmt.executeUpdate();
+			}
+			con.commit();
+		} catch (SQLException se) {
+			try {
+				se.printStackTrace();
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 }

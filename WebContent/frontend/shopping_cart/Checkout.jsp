@@ -1,11 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.shopping_cart.model.ShoppingCart" %>
 <%@ page import="com.order_history.model.*"%>
 <%@ page import="com.order_detail.model.*"%>
 <%@ page import="com.goods.model.*"%>
+<%@ page import="com.member.model.*"%>
 <%
 	OrderHistoryVO orderHistoryVO = (OrderHistoryVO) request.getAttribute("orderHistoryVO");
     OrderHistoryService orderHistorySvc = new OrderHistoryService();
@@ -15,6 +17,8 @@
     OrderDetailService orderDetailSvc = new OrderDetailService();
     List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
     pageContext.setAttribute("listDetail",listDetail);
+    
+	MemberVO memberVO = (MemberVO) session.getAttribute("member");
 %>
 <jsp:useBean id="OrderHistorySvc" scope="page" class="com.order_history.model.OrderHistoryService" />
 <jsp:useBean id="OrderDetailSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
@@ -122,8 +126,9 @@
 								<h1>訂單紀錄</h1>
 								<hr>
 								<div class="form-group">
-									<label>會員編號：</label>
-									<input type="TEXT" name="member_no" placeholder="請輸入會員編號" class="form-control" value="<%=(orderHistoryVO==null)? "M000001" : orderHistoryVO.getMember_no()%>" style="width:30%" >
+									<label>會員編號：<%=memberVO.getMemberNo()%></label>
+									<input type="hidden" name="member_no" value="<%=memberVO.getMemberNo()%>" >
+<%-- 									<input type="TEXT" name="member_no" placeholder="請輸入會員編號" class="form-control" value="<%=(orderHistoryVO==null)? "M000001" : orderHistoryVO.getMember_no()%>" style="width:30%" > --%>
 								</div>
 								<div class="form-group">
 									<label>訂單總金額：$<%=amount%></label>
@@ -133,8 +138,8 @@
 <!-- 								<div class="form-group" style="width:20%"> -->
 <!-- 									<label>付款方式：</label> -->
 <!-- 										<select class="form-control" size="1" name="pay_methods"> -->
-<!-- 											<option value="CREDITCARD" selected>電子錢包</option> -->
-<!-- 											<option value="EWALLET">信用卡</option> -->
+<!-- 											<option value="CREDITCARD" selected>信用卡</option> -->
+<!-- 											<option value="EWALLET">電子錢包</option> -->
 <!-- 										</select> -->
 <!-- 								</div> -->
 								
@@ -147,7 +152,7 @@
 									</div>
 							
 									<div class="ewallet pay_methods bBW">
-										<label>電子錢包餘額：$</label>
+										<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
 									</div>
 								
 								<br>	
@@ -173,11 +178,13 @@
 								</div>
 								<div class="form-group">
 									<label>收件人名稱：</label>
-									<input type="TEXT" name="receiver_name" id="receiver_name" placeholder="請輸入收件人名稱" class="form-control" value="<%= (orderHistoryVO==null)? "Peter1" : orderHistoryVO.getReceiver_name()%>" style="width:20%">
+									<input type="TEXT" name="receiver_name" id="receiver_name" placeholder="請輸入收件人名稱" class="form-control" value="<%= (orderHistoryVO==null)? memberVO.getMemberFullname() : orderHistoryVO.getReceiver_name()%>" style="width:20%">
 								</div>
 								<div class="form-group">
 									<label>收件人電話：</label>
-									<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人名稱" class="form-control" value="<%= (orderHistoryVO==null)? "0912345678" : orderHistoryVO.getReceiver_tel()%>" style="width:20%">
+									<c:set value="<%=memberVO.getPhone() %>" var="member_phone"/>
+									<c:set var="phone" value="${fn:replace(member_phone,'-','')}" />
+									<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人電話" class="form-control" value="${ (orderHistoryVO == null) ? phone : orderHistoryVO.receiver_tel}" style="width:20%">
 								</div>
 								
 <!-- 								<div class="form-group" style="width:20%"> -->
@@ -277,10 +284,6 @@
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: new Date(), // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
 
         $('#f_date2').datetimepicker({
@@ -289,10 +292,6 @@
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: new Date(), // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
         
         $('#f_date3').datetimepicker({
@@ -301,12 +300,7 @@
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: new Date(), // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
-        
 </script>
 
 <script>
