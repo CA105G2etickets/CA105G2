@@ -24,9 +24,26 @@
   th, td {
     padding: 1px;
   }
-  img {
+  .memberimg {
   	border-radius: 90%;
 }
+/****************************************** 通知部分 ******************************************/
+.badge-pill {
+    padding: 0.2em;
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+.badge-primary {
+    color: white;
+    background-color: #3399ff;
+}
+/****************************************** 通知結束 ******************************************/
 </style>
 </head>
 
@@ -36,7 +53,7 @@
 <table class="table">
 	<tr>
 		<td>會員大頭貼</td>
-		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
+		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50" class="memberimg"></td>
 	</tr>
 	<tr>
 		<td>會員姓名</td>

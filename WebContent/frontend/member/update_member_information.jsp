@@ -25,6 +25,23 @@
   th, td {
     padding: 1px;
   }
+  /****************************************** 通知部分 ******************************************/
+.badge-pill {
+    padding: 0.2em;
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+.badge-primary {
+    color: white;
+    background-color: #3399ff;
+}
+/****************************************** 通知結束 ******************************************/
 </style>
 <script>
 function readURL(input){

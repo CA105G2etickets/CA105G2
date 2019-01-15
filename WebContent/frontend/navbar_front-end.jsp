@@ -37,6 +37,9 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
+.shoppingC {
+	font-family:微軟正黑體!important;
+}
 /****************************************** 通知部分 ******************************************/
 .badge-pill {
     padding: 0.2em;
@@ -88,7 +91,7 @@
 					<%Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");%>
 					
 						  <li>
-						  	<a href="<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp">
+						  	<a href="<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp" class="shoppingC">
 						  		<i class="glyphicon glyphicon-shopping-cart"></i>
 						    	<span class="badge badge-primary badge-pill">
 							    	<%if (buylist != null) {%>
@@ -97,6 +100,7 @@
 							    		0
 							    	<%}%>
 						    	</span>
+						    	結帳
 						    </a>
 						  </li>
 					
