@@ -56,6 +56,10 @@
 		<servlet-name>NewsServlet</servlet-name>
 		<url-pattern>/backend/news/news.do</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>NewsServlet</servlet-name>
+		<url-pattern>/frontend/news/news.do</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>FaqServlet</servlet-name>
