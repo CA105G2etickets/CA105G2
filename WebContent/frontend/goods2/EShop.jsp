@@ -35,15 +35,15 @@
 	margin-left: auto;
     margin-right: auto;
 }
-.thumbnail h4{ 
+.picAreaThumbnail h4{ 
 	height: 50px; 
 } 
-.thumbnail{  
+.picAreaThumbnail{  
 	height:320px;  
 } 
 body {
 	font-family:微軟正黑體!important;
-}	
+}
 </style>
 </head>
 <body>
@@ -55,11 +55,11 @@ body {
 
 
     <div class="container">
-        <div class="row flex-row">
+        <div>
 			<c:forEach var="goodsVO" items="${goodsList}">
 				<form name="shoppingForm" action="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do" method="POST">
 	                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-	                    <div class="thumbnail">
+	                    <div class="thumbnail picAreaThumbnail">
 							<div class="imgBigger">
 								<a href="<%= request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">
 									<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}">
