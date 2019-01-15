@@ -84,7 +84,7 @@
 				    <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 				    <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 				</div>
-			</div>
+			</div> 
 			<div class="col-xs-12 col-sm-6">
 				<h3 style="margin-top:0px;" class="alert alert-info" role="alert">${goodsVO.goods_name}</h3>
 				<h3>原價 : ${goodsVO.goods_price} 元 / 個</h3>
