@@ -13,7 +13,7 @@ public class GoodsQaService {
 	}
 
 	public GoodsQaVO addGoodsQa(String goods_no, String member_no, String administrator_no, String questions_content,
-			String answer_content, Timestamp questions_date, Timestamp answer_date) {
+			String answer_content) {
 
 		GoodsQaVO goodsQaVO = new GoodsQaVO();
 
@@ -22,8 +22,8 @@ public class GoodsQaService {
 		goodsQaVO.setAdministrator_no(administrator_no);
 		goodsQaVO.setQuestions_content(questions_content);
 		goodsQaVO.setAnswer_content(answer_content);
-		goodsQaVO.setQuestions_date(questions_date);
-		goodsQaVO.setAnswer_date(answer_date);
+//		goodsQaVO.setQuestions_date(questions_date);
+//		goodsQaVO.setAnswer_date(answer_date);
 
 		goodsQaDAO.insert(goodsQaVO);
 
