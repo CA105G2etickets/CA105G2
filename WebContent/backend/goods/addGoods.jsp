@@ -206,6 +206,7 @@ body {
 	<script
 		src="<%=request.getContextPath()%>/backend/event_title/js/addGoods.js"></script>
 	<!-- JavaScript in HTML -->
+	
 	<script type="text/javascript">
 		$(function() {
 			initInfoEditor();
