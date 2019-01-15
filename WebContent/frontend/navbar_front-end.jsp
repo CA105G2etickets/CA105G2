@@ -93,6 +93,8 @@
 						    	<span class="badge badge-primary badge-pill">
 							    	<%if (buylist != null) {%>
 							    		<%=buylist.size()%>
+							    	<%} else {%>
+							    		0
 							    	<%}%>
 						    	</span>
 						    </a>
