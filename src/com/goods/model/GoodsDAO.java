@@ -8,8 +8,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.event_title.model.CompositeQuery_EventTitle_Launched;
-import com.event_title.model.EventTitleVO;
 
 public class GoodsDAO implements GoodsDAO_interface {
  
@@ -323,7 +321,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			String finalSQL = "SELECT * FROM GOODS WHERE (goods_status = 'confirmed') AND (CURRENT_DATE BETWEEN launchdate AND offdate) "
+			String finalSQL = "SELECT * FROM GOODS WHERE (CURRENT_DATE BETWEEN launchdate AND offdate) "
 			          + CompositeQuery_Goods_Launched.get_WhereCondition(map);
 			System.out.println("CompositeQuery_Goods_Launched : ");
 			System.out.println(finalSQL);
@@ -455,6 +453,12 @@ public class GoodsDAO implements GoodsDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Set<GoodsVO> getEventsByEventTitle(String evetit_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

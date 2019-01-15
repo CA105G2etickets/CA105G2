@@ -554,4 +554,10 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Set<GoodsVO> getEventsByEventTitle(String evetit_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

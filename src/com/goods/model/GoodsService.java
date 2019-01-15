@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 
-import java.io.*;
 
 public class GoodsService {
 
@@ -93,5 +92,7 @@ public class GoodsService {
 	public List<GoodsVO> getAllLaunched(Map<String, String[]> map) {
 		return goodsDao.getAllLaunched(map);
 	}
-	
+	public Set<GoodsVO> getEventsByEventTitle(String evetit_no) {
+		return goodsDao.getEventsByEventTitle(evetit_no);
+	}
 	}

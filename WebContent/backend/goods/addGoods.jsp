@@ -58,7 +58,6 @@ body {
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
 						<label for="launchdate">上架日期</label> 
-						<span class="text-danger">${goodsErrorMsgs.launchdate}</span>
 						<input type="text" id="launchdate" name="launchdate"
 							class="form-control"
 							value="${param.launchdate}" >
@@ -67,9 +66,6 @@ body {
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
 						<label for="offdate">下架日期</label> 
-						<span class="text-danger">${goodsErrorMsgs.offdate}</span>
-						<span class="text-danger">${goodsErrorMsgs.offdate_BiggerThanToday}</span>
-						<span class="text-danger">${goodsTitleErrorMsgs.offdate_BiggerThanLaunchdate}</span>
 						<input type="text" id="offdate" name="offdate"
 							class="form-control"
 							value="${param.offdate}" >

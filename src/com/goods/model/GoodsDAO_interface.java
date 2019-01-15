@@ -2,6 +2,7 @@ package com.goods.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
  
 public interface GoodsDAO_interface {
@@ -19,5 +20,9 @@ public interface GoodsDAO_interface {
 	public List<GoodsVO> getAllLaunched(Map<String, String[]> map);
 
 	public List<GoodsVO> getAllLaunched();
+
+	public Set<GoodsVO> getEventsByEventTitle(String evetit_no);
+
+
 
 }
