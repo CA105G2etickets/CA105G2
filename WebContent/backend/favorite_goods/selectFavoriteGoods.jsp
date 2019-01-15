@@ -54,11 +54,17 @@
 					<tbody>
 						<c:forEach var="favoriteGoodsVO" items="${list}">							
 							<tr>
-								<td>${favoriteGoodsVO.member_no}</td>
-								<td>${favoriteGoodsVO.goods_no}</td>
+								<td>
+									${favoriteGoodsVO.member_no}
+								</td>
+								<td>
+									<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${favoriteGoodsVO.goods_no}">${favoriteGoodsVO.goods_no}</a>
+								</td>
 								<td>	
 									<c:forEach var="goodsVO" items="${goodsSvc.all}">
-										<c:if test="${favoriteGoodsVO.goods_no == goodsVO.goods_no}">${goodsVO.goods_name}</c:if>
+										<c:if test="${favoriteGoodsVO.goods_no == goodsVO.goods_no}">
+											<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">${goodsVO.goods_name}</a>
+										</c:if>
 									</c:forEach>
 								</td>
 								<td>	
@@ -69,7 +75,9 @@
 								<td>	
 									<c:forEach var="goodsVO" items="${goodsSvc.all}">
 										<c:if test="${favoriteGoodsVO.goods_no == goodsVO.goods_no}">
-											<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" width=50px height= auto />
+											<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">
+												<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" width=50px height= auto />
+											</a>
 										</c:if>
 									</c:forEach>
 								</td>		

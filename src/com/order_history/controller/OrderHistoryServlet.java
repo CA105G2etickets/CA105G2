@@ -9,7 +9,6 @@ import javax.servlet.http.*;
 import com.order_detail.model.*;
 import com.order_history.model.*;
 import com.shopping_cart.model.ShoppingCart;
-import com.goods.model.GoodsDAO;
 import com.member.model.*;
 
 
@@ -454,7 +453,7 @@ public class OrderHistoryServlet extends HttpServlet {
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
-				errorMsgs.add("無法取得資料：" + e.getMessage());
+//				errorMsgs.add("無法取得資料：" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/login_front-end.jsp");
 				failureView.forward(req, res);
 			}
@@ -573,9 +572,6 @@ public class OrderHistoryServlet extends HttpServlet {
 
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
-				//新增商品累計銷售量開始
-				GoodsDAO goodsVO = new GoodsDAO();
-				goodsVO.updateGOODS_SALES_COUNT(list);
 				
 				req.setAttribute("orderHistoryVO", orderHistoryVO);
 				
@@ -586,7 +582,6 @@ public class OrderHistoryServlet extends HttpServlet {
 				
 				
 			} catch (Exception e) {
-				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/shopping_cart/Checkout.jsp");
 				failureView.forward(req, res);
