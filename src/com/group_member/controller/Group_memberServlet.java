@@ -109,8 +109,14 @@ public class Group_memberServlet extends HttpServlet {
 				group_memberVO = group_memberSvc.findByPrimaryKey(member_no, group_no);
 				group_openVO = group_openSvc.getOneGroup_open(group_no);
 				
-				String product = group_memberSvc.getproductquantity("G0001");	
-							System.out.println("Group_memberServlet113"+product);
+//				String product = group_memberSvc.getproductquantity("G0001");	
+//							System.out.println("Group_memberServlet113"+product);
+//				Integer ewallet = group_memberSvc.getewallet(member_no);
+//				System.out.println("取得電子錢包價格"+ewallet);
+//				group_memberSvc.updateewallet(50000, member_no);
+//				System.out.println("修改電子錢包成功group_memberServlet117");
+				
+			
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("group_memberVO", group_memberVO);
 				req.setAttribute("group_openVO", group_openVO);
@@ -336,6 +342,7 @@ public class Group_memberServlet extends HttpServlet {
 
 			}
 		}
+
 		// 加入跟團之後到自己有的跟團訂單
 		if ("insert2".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -349,6 +356,7 @@ public class Group_memberServlet extends HttpServlet {
 				if (member_no == null || member_no.trim().length() == 0) {
 					errorMsgs.add("會員編號請勿空白");
 				}
+						
 				String group_no = req.getParameter("group_no");
 				if (group_no == null || group_no.trim().length() == 0) {
 					errorMsgs.add("開團編號請勿空白");
@@ -395,30 +403,35 @@ public class Group_memberServlet extends HttpServlet {
 				group_memberVO.setLog_out_reason(log_out_reason);
 				group_memberVO.setOrder_phone(order_phone);
 				group_memberVO.setPay_method(pay_method);
-				System.out.println(group_no);
+		
 
 				if (!errorMsgs.isEmpty()) {
+					
 					req.setAttribute("group_memberVO", group_memberVO);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/frontend/group_member/addgroup_member.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-
+//				************************錯誤驗證2**************************
 				Group_memberService group_memberSvc = new Group_memberService();
 				Group_openService group_openSvc = new Group_openService();
-
+				
+				
+				
+			
 				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
-
 				group_memberVO = group_memberSvc.addGroup_member(member_no, group_no, join_time, product_quantity,
 						pay_status, group_member_status, log_out_reason, order_phone, pay_method);
 
+				
 				List<Group_memberVO> group_openBymember_no = group_memberSvc.getgroup_BY_member_no(member_no);
-
+				
 //				for(Group_memberVO str : group_openBymember_no) {
 //					System.out.println(str.getGroup_no());
 //				}
-
+			
+			
 				String url = "/frontend/group_member/group_memberBygroup_open.jsp";
 
 				req.setAttribute("group_openBymember_no", group_openBymember_no);
@@ -434,9 +447,9 @@ public class Group_memberServlet extends HttpServlet {
 			}
 
 		}
-		
 		// 退團
 		if ("quit".equals(action)) {
+//			System.out.println("Group_memberServlet440quit"+"有進來嗎");
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -489,11 +502,31 @@ public class Group_memberServlet extends HttpServlet {
 				/*************************** 3.寄出退團通知 ************/
 				Group_openService group_openSvc = new Group_openService();
 				String group_open_member_no = group_openSvc.getgroup_open_member_no(group_no);
+				
+				
 	
-				String email = group_memberSvc.getemail(group_open_member_no);
-				group_memberSvc.sendMail(email, log_out_reason);
+//				String email = group_memberSvc.getemail(group_open_member_no);
+//				group_memberSvc.sendMail(email, log_out_reason);
+				/***************************退款 ************/
+				//取的購買人購買數量	
+				Integer quantity =  group_memberSvc.findByPrimaryKey(member_no, group_no).getProduct_quantity();
+				//取得開團折扣
+				Integer group_price = group_openSvc.getOneGroup_open(group_no).getGroup_price();
+				//退款總數
+				Integer total = quantity*group_price;
+				System.out.println("group_memberServlet退款總數"+total);
+				//呼叫會員電子錢包
+				Integer ewallet = group_memberSvc.getewallet(member_no);
+				System.out.println("group_memberServlet電子錢包"+ewallet);
+				//退款
+				ewallet+=total;
+				System.out.println("group_memberServlet退款後電子錢包"+ewallet);
+				//更改
+				group_memberSvc.updateewallet(ewallet, member_no);
+		
+				System.out.println("退款完成");
 				
-				
+		
 				/*************************** 4.修改完成準備轉交 ************/
 				List<Group_memberVO> group_openBymember_no = group_memberSvc.getgroup_BY_member_no(member_no);
 				System.out.println(group_openBymember_no.isEmpty());

@@ -59,7 +59,10 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 	private static final String ALLGROUP_MEMBER_DIMISS = "select member_no from group_member where group_no = ? and group_member_status = 'withgroup' ";
 	private static final String GET_GROUP_PRODUCT_QUANTITY = "select  SUM (product_quantity) product from group_member where (group_member_status = 'withgroup' or group_member_status = 'grouplead') and group_no= ? group by  group_no  order by group_no";
 	private static final String GETGROUPSUCESSLIST = "select * from group_member where (group_member_status = 'withgroup' or group_member_status = 'grouplead') and group_no = ? order by group_member_status";
-	
+	private static final String GETMEMBEREWALLET = "SELECT EWALLET_BALANCE FROM MEMBER WHERE MEMBER_NO = ?";
+	private static final String UPDATEEWALLET = "UPDATE MEMBER SET  EWALLET_BALANCE = ? WHERE MEMBER_NO = ?";
+	private static final String GETQUITALLMEMBER_NO = "select * from group_member where group_no = ? ";
+
 	@Override
 	public void add(Group_memberVO group_memberVO) {
 
@@ -80,8 +83,10 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 			pstmt.setString(7, group_memberVO.getLog_out_reason());
 			pstmt.setString(8, group_memberVO.getOrder_phone());
 			pstmt.setString(9, group_memberVO.getPay_method());
+			System.out.println("xxxxxxxxxxx");
 
 			pstmt.executeUpdate();
+			System.out.println("yyyyyyyyyyyy");
 
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -378,7 +383,7 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 
 			if (rs.next()) {
 				product_quantity = rs.getString(1);
-				System.out.println("Group_memberDAO"+product_quantity);
+				System.out.println("Group_memberDAO" + product_quantity);
 
 			} else {
 				System.out.println("找不到商品數量");
@@ -435,7 +440,6 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 				list.add(group_memberVO);
 
 			}
-			
 
 		} catch (SQLException e) {
 
@@ -786,7 +790,7 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 		}
 
 	}
-	
+
 	public List<Group_memberVO> getall_member_dimiss(String group_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -840,32 +844,32 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 
 		return list;
 	}
+
 	public String getgroup_member_product(String group_no) {
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String product = null;
-		
+
 		try {
 			con = ds.getConnection();
-			
+
 			pstmt = con.prepareStatement(GET_GROUP_PRODUCT_QUANTITY);
-			
+
 			pstmt.setString(1, group_no);
 
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				product = rs.getString("product");
-			}else{
+			} else {
 				System.out.println("取不到值");
 			}
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -888,10 +892,11 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 				}
 			}
 		}
-	
+
 		return product;
 
 	}
+
 	public List<Group_memberVO> getgroupsucesslist(String group_no) {
 		List<Group_memberVO> list = new ArrayList<>();
 		Group_memberVO group_memberVO = null;
@@ -947,7 +952,159 @@ public class Group_memberDAO implements Group_memberDAO_interface {
 		}
 
 		return list;
-	}  ///加 sql指令  interface service
-	
+	} /// 加 sql指令 interface service
+
+	public Integer getewallet(String member_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer ewallet = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GETMEMBEREWALLET);
+
+			pstmt.setString(1, member_no);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				ewallet = rs.getInt("EWALLET_BALANCE");
+
+			} else {
+				System.out.println("取不到錢包值");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return ewallet;
+	}
+
+	public void updateewallet(Integer ewalletBalance, String member_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			;
+
+			pstmt = con.prepareStatement(UPDATEEWALLET);
+
+			pstmt.setInt(1, ewalletBalance);
+
+			pstmt.setString(2, member_no);
+
+			rs = pstmt.executeQuery();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
+	public List<Group_memberVO> getquitgroup_member(String group_no) {
+
+		List<Group_memberVO> list = new ArrayList();
+		Group_memberVO group_memberVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			;
+			pstmt = con.prepareStatement(GETQUITALLMEMBER_NO);
+			pstmt.setString(1, group_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				group_memberVO = new Group_memberVO();
+				group_memberVO.setMember_no(rs.getString("MEMBER_NO"));
+				group_memberVO.setGroup_no(rs.getString("GROUP_NO"));
+				group_memberVO.setJoin_time(rs.getTimestamp("JOIN_TIME"));
+				group_memberVO.setProduct_quantity(rs.getInt("PRODUCT_QUANTITY"));
+				group_memberVO.setPay_status(rs.getString("PAY_STATUS"));
+				group_memberVO.setGroup_member_status(rs.getString("GROUP_MEMBER_STATUS"));
+				group_memberVO.setLog_out_reason(rs.getString("LOG_OUT_REASON"));
+				group_memberVO.setOrder_phone(rs.getString("ORDER_PHONE"));
+				group_memberVO.setPay_method(rs.getString("PAY_METHODS"));
+				list.add(group_memberVO); // Store the row in the list
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 }

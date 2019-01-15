@@ -38,5 +38,12 @@ public interface Group_memberDAO_interface {
      public String getgroup_member_product(String group_no);
     //取得成功開團後的跟團人明細
      public List<Group_memberVO> getgroupsucesslist(String group_no);
+     //取的跟團人電子錢包
+     public Integer getewallet(String member_no);
+     //修改跟團人電子錢包
+     public void updateewallet(Integer ewalletBalance, String member_no);
+     //查詢此開團所有跟團人(包括開團人)
+     public List<Group_memberVO> getquitgroup_member(String group_no);
+     
 
 }

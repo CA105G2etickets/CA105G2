@@ -364,6 +364,30 @@ public class Group_memberJDBCDAO implements Group_memberDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+	@Override
+	public Integer getewallet(String member_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void updateewallet(Integer ewalletBalance, String member_no) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public List<Group_memberVO> getquitgroup_member(String group_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

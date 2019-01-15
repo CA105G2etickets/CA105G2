@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_open.model.*"%>  
+<%@ page import="com.member.model.*"%>
 
 <% 
 	Group_openVO group_openVO = (Group_openVO) request.getAttribute("group_openVO");
-
+	MemberVO memberVOsession = (MemberVO)session.getAttribute("member");
 %>
-
+<jsp:useBean id="eventtitleSvc" scope="page" class="com.event_title.model.EventTitleService" />
+<jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
  
 <!DOCTYPE html>
 <html >
@@ -143,35 +145,7 @@ $(function(){
 
 	</head>
 	<body>
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-						<span class="sr-only">選單切換</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<img src="https://i.imgur.com/T0YnkK9.png"  href="#" alt="LOGO" width="202.25px" height="165.5px">
-				</div>
-				
-				<!-- 手機隱藏選單區 -->
-				
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<!-- 右選單 -->
-					<img src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7" class="memberphoto" href="#"  alt="LOGO" style="float:right" width="80px" height="80px">
-				
-					<ul class="nav navbar-nav navbar-right membermenu">
-						<li><a href="#">登出</a></li>
-						<li><a href="#">個人設定</a></li>
-						<li><a href="group_open.jsp">回首頁</a></li>
-					</ul>
-				</div>
-				<!-- 手機隱藏選單區結束 -->
-			</div>
-		</nav>
-
-
+		<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-2">
@@ -208,29 +182,50 @@ $(function(){
 				<div class="col-xs-12 col-sm-6">
 				
 					商品圖片
-			    <div><img id="output1" height="200" width="200"/></div> 
+			    <div><img id="output1" height="200" width="200"/></div>
 				</div><!-- <div class="col-xs-12 col-sm-6"> -->	 
+				<br>
+				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1">
+				<div class="form-group">
+				 <label for="evetit">活動主題</label>	
+					<select name="evetit" id="evetit" class="form-control">
+					<option value="-1">請選擇</option>
+					<c:forEach var="eventtitleVO" items="${group_openSvc.geteventitle()}">
+						 <option value="${eventtitleVO.evetit_no}"${eventtitleVO.evetit_no==param.evetit_no?'selected':''}>${eventtitleVO.evetit_name}</option>
+					</c:forEach>
+					</select>
+					<input type="hidden" name="action" value="getSelect">
+					</div><!-- <div class="form-group"> -->
+				</Form>
 		
 		       <Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" name="form1" enctype="multipart/form-data">
 				<!-- 驗證到這邊 -->
-				<div class="form-group">
+			<%-- 	<div class="form-group">
 					<i class="glyphicon glyphicon-user"></i><label for="member_no">會員編號</label>
 					<input type="text" name="member_no" id="member_no" class="form-control"
 					value="<%= (group_openVO==null)? "M000004" : group_openVO.getMember_no()%>"/>
-				</div>
-				<div class="form-group">
+				</div> --%>
+				<%-- <div class="form-group">
 					<i class="glyphicon glyphicon-gift"></i><label for="goods_no">商品編號</label>
 					<input type="text" name="goods_no" id="goods_no" class="form-control"
 					value="<%= (group_openVO==null)? "P0000006" : group_openVO.getGoods_no()%>"/>
-				</div>
+				</div> --%>
+				<div class="form-group">			
+				 <label for="evetit">商品名稱</label>	
+			<select id="goods" class="form-control" name="goods_no">
+				<c:forEach var="eventtitlemap" items="${evetitle_goods}">
+				<option value="${eventtitlemap.key}">${eventtitlemap.value}${eventtitlemap.key}</option>${eventtitlemap.key}
+				</c:forEach>
+			</select>			
+				</div><!-- <div class="form-group"> -->	
 				<div class="form-group">
 					<label for="group_name">開團名稱</label>
 					<input type="text" name="group_name" id="group_name" class="form-control"
 					value="<%= (group_openVO==null)? "五月天螢光棒" : group_openVO.getGroup_name()%>"/>
 				</div>
 				<div class="form-group">
-					<label for="group_limit">開團下限</label>
-					<input type="text" name="group_limit" id="group_limit" class="form-control"
+					<!-- <label for="group_limit">開團下限</label> -->
+					<input type="hidden" name="group_limit" id="group_limit" class="form-control"
 					value="<%= (group_openVO==null)? 10 : group_openVO.getGroup_limit()%>"/>
 				</div>
 				<div class="form-group">
@@ -246,12 +241,13 @@ $(function(){
 					<!-- </textarea> -->
 				</div>
 				<div class="form-group">
-					<i class="glyphicon glyphicon-time"></i><label for="start_dateTime">開團開始時間</label>
-					<input type="text" name="group_start_date" id="start_dateTime" class="form-control"/>
+				<!-- 	<i class="glyphicon glyphicon-time"></i><label for="start_dateTime">開團開始時間</label> -->
+					<input type="hidden" name="group_start_date" id="start_dateTime" class="form-control"/>
 				</div>
 				<div class="form-group">
 					<i class="glyphicon glyphicon-time"></i><label for="end_dateTime">開團結束時間</label>
-					<input type="text" name="group_close_date" id="end_dateTime" class="form-control"/>
+					<input type="text" name="group_close_date" id="end_dateTime" class="form-control"
+					<%= (group_openVO==null)? "請輸入開團時間" : group_openVO.getGroup_close_date()%>/>
 				</div>
 				<div class="form-group">
    					 <label for="group_banner_1">開團封面1</label>
@@ -261,61 +257,99 @@ $(function(){
    					 <label for="group_banner_2">開團封面2</label>
     					<input type="file" name="group_banner_2" class="form-control-file" id="group_banner_2"  onchange="loadFile2(event)"/>
   				</div>
-  				
-  			   <label for="group_status">開團狀態</label>
-  			<select class="form-control" name="group_status" id="group_status">
+  				<div class="form-group">
+   					<!--  <label for="group_status">開團狀態</label> -->
+    					<input type="hidden" name="group_status" class="form-control-file" id="group_status" value="process1"/>
+  				</div>			
+  			<!--    <label for="group_status">開團狀態</label>
+  			<select  class="form-control" name="group_status" id="group_status">
   				<option value="process1">process1</option>
   				<option value="fail2">fail2</option>
   				<option value="sucess3">sucess3</option>
-			</select>
+			</select> -->
 			<div class="form-group">
 					<label for="group_address">面交地址</label>
 					<input name="group_address" type="text" id="group_address" size="50" maxlength="50" onchange="codeAddress()"class="form-control"/>
 		<!-- 			<input type="text" name="group_address" id="group_address" class="form-control"/> -->
 			</div>
-			<div class="form-group">
-					<label for="latitude">緯度</label>
-					<input name="latitude" type="text" id="latitude" value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>" class="form-control"/>
+			<!-- <div class="form-group"> -->
+					<!-- <label for="latitude">緯度</label> -->
+					<input name="latitude" type="hidden" id="latitude" value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>" class="form-control"/>
 					<%-- <input type="text" name="latitude" id="latitude" class="form-control"
 					value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>"/> --%>
-			</div>
-				<div class="form-group">
-					<label for="longitude">經度</label>
-					<input name="longitude" type="text" id="longitude" value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>" class="form-control"/>
+			<!-- </div> -->
+			<!-- 	<div class="form-group"> -->
+					<!-- <label for="longitude">經度</label> -->
+					<input name="longitude" type="hidden" id="longitude" value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>" class="form-control"/>
 					<%-- <input type="text" name="longitude" id="longitude" class="form-control"
 					value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>"/> --%>
-			</div>
+				<!--</div> -->
 			<div class="form-group">
 				<i class="glyphicon glyphicon-time"></i><label for="group_time">面交時間</label>
 				<input type="text" name="group_time" id="group_dateTime" class="form-control"/>
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<i class="glyphicon glyphicon-piggy-bank"></i><label for="group_price">商品促銷價格</label>
 				<input type="text" name="group_price" id="group_price" class="form-control"/>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<i class="glyphicon glyphicon-piggy-bank"></i><label for="group_quantity">商品購買數量</label>
 				<input type="text" name="group_quantity" id="group_quantity" class="form-control"/>
-			</div>
-			
-			
+			</div>	
 			<input type="hidden" name="action" value="insert2">
+			<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
 			<input type="hidden" name="group_member_status" value="grouplead">
 			<input type="submit" value="送出新增">
-			
-
-			
 			</Form>
 				</div><!-- <div class="panel-body"> -->
 			</div><!-- <div class="panel panel-default"> -->
 				</div>
 				<div class="col-xs-12 col-sm-2">
+						<!-- 地址連動選單 -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+		<!-- <script src="你的網頁空間/jquery.twzipcode.min.js"></script> -->
+		<!-- /地址連動選單 -->
 				<img id="output1" />
-				<img id="output"/>
-				
-				
-				
-				
+				<img id="output"/>	
+				<div id="zipcode3">
+<div class="f3" data-role="county">
+</div>
+<div class="f4" data-role="district">
+</div>
+</div><!-- <div id="zipcode3"> -->
+<input name="Address" type="text" class="f13 address form-control">
+<script>
+$("#zipcode3").twzipcode({
+"zipcodeIntoDistrict": true,
+"css": ["city form-control", "town form-control"],
+"countyName": "city", // 指定城市 select name
+"districtName": "town" // 指定地區 select name
+});
+</script>
+<style>
+.city, .town{width: 100%;}
+.f1{float:left;margin-left:5px;margin-right:5px;width:calc(5% - 10px)}
+.f2{float:left;margin-left:5px;margin-right:5px;width:calc(10% - 10px)}
+.f3{float:left;margin-left:5px;margin-right:5px;width:calc(15% - 10px)}
+.f4{float:left;margin-left:5px;margin-right:5px;width:calc(20% - 10px)}
+.f5{float:left;margin-left:5px;margin-right:5px;width:calc(25% - 10px)}
+.f6{float:left;margin-left:5px;margin-right:5px;width:calc(30% - 10px)}
+.f7{float:left;margin-left:5px;margin-right:5px;width:calc(35% - 10px)}
+.f8{float:left;margin-left:5px;margin-right:5px;width:calc(40% - 10px)}
+.f9{float:left;margin-left:5px;margin-right:5px;width:calc(45% - 10px)}
+.f10{float:left;margin-left:5px;margin-right:5px;width:calc(50% - 10px)}
+.f11{float:left;margin-left:5px;margin-right:5px;width:calc(55% - 10px)}
+.f12{float:left;margin-left:5px;margin-right:5px;width:calc(60% - 10px)}
+.f13{float:left;margin-left:5px;margin-right:5px;width:calc(65% - 10px)}
+.f14{float:left;margin-left:5px;margin-right:5px;width:calc(70% - 10px)}
+.f15{float:left;margin-left:5px;margin-right:5px;width:calc(75% - 10px)}
+.f16{float:left;margin-left:5px;margin-right:5px;width:calc(80% - 10px)}
+.f17{float:left;margin-left:5px;margin-right:5px;width:calc(85% - 10px)}
+.f18{float:left;margin-left:5px;margin-right:5px;width:calc(90% - 10px)}
+.f19{float:left;margin-left:5px;margin-right:5px;width:calc(95% - 10px)}
+.f20{float:left;margin-left:5px;margin-right:5px;width:calc(100% - 10px)}
+</style>		
 			  </div>
 			</div>
 		   </div>
@@ -326,7 +360,17 @@ $(function(){
 			CKEDITOR.replace( 'group_mind', {});
 			CKEDITOR.replace( 'group_introduction', {});
 		</script>
+		
+		<script type="text/javascript">
+		$(document).ready(function(){
+			 $('#evetit').change(function(){
+				 $('#form1').submit();
+			 })
+		})
+
+</script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places" async defer></script>
+		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 	</body>
 </html>
 

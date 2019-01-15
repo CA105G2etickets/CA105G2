@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.event_title.model.EventTitleVO;
 import com.group_member.model.Group_memberJDBCDAO;
 import com.group_member.model.Group_memberVO;
 
@@ -909,6 +910,30 @@ public class Group_openJDBCDAO implements Group_openDAO_interface {
 	public void group_open_sucess(String group_no) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getgroup_price(String goods_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_openVO> getcompoundsearch(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, String> getevetitle_goods(String evetit_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EventTitleVO> geteventitle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

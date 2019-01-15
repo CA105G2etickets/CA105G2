@@ -159,7 +159,7 @@ $(function(){
 	
 	<tr>
 		<td>開團開始時間</td>
-		<td><input name="group_start_date" id="start_dateTime" type="text" value="<%=group_openVO.getGroup_start_date()%>" ></td>
+		<td><input name="group_start_date" id="start_dateTime" type="text" value="<%=group_openVO.getGroup_start_date()%>" readonly="readonly"></td>
 	</tr>
 	<tr>
 		<td>開團結束時間</td>
@@ -209,7 +209,7 @@ $(function(){
 <input type="hidden" name="group_no" value="<%=group_openVO.getGroup_no()%>"> 
 <input type="submit" value="送出修改">
 </FORM>
-
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 
 </body>
 </html>

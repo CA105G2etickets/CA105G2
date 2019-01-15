@@ -6,13 +6,18 @@
 <%@ page import="com.member.model.*"%>
 
 <%
+	if(request.getAttribute("list")==null){
 	Group_openService grpSvc = new Group_openService();
 	List<Group_openVO> list = grpSvc.getAll();
 	pageContext.setAttribute("list", list);
-	
+	}else{
+		
+	}
 	MemberService memberSvc = new MemberService();
 	List<MemberVO> list2 =  memberSvc.getAll();
 	pageContext.setAttribute("list2", list2);
+	
+	MemberVO memberVOsession = (MemberVO)session.getAttribute("member"); 
 				
 %>
 
@@ -31,6 +36,11 @@
 	href="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<!-- Owl Stylesheets -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.2.4/assets/owl.carousel.min.css"></link>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.2.4/assets/owl.theme.default.min.css"></link>
+
 <!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -77,82 +87,87 @@
 	width: 200px;
 	height: 200px;
 }
+.flash{
+	width: 100%;
+	height: 100%;
+}
 </style>
 
 
 <SCRIPT language="javascript">
 
-	function timeback(time){
-	var startDate = new Date();
-	var endDate = new Date("2019-01-10 07:00:40");
-	var spantime = (endDate - startDate) / 1000;
 
-	function getString(dt) {
-		return dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月"
-				+ dt.getDate() + "日" + dt.getHours() + "时" + dt.getMinutes()
-				+ "分";
-	}
-	function cal() {
-		spantime--;
-		var d = Math.floor(spantime / (24 * 3600));
-		var h = Math.floor((spantime % (24 * 3600)) / 3600);
-		var m = Math.floor((spantime % 3600) / (60));
-		var s = Math.floor(spantime % 60);
-		str = d + "天 " + h + "时 " + m + "分 " + s + "秒 ";
-		document.getElementById("pad").innerHTML = str;
-	}
+// 	var startDate = new Date();
+// 	var endDate = new Date("2019-01-10 07:00:40");
+// 	var spantime = (endDate - startDate) / 1000;
+	
+// 	function getTime(){
+// 		var startDate = new Date();
+// 		var endDate = new Date("2019-01-10 07:00:40");
+// 		var spantime = (endDate - startDate) / 1000;
+// 		return spantime;
+// 		return 'abc';
+// 	}
+	
 
-	window.onload = function() {
-		document.getElementById("start_pad").innerHTML = getString(startDate);
-		document.getElementById("end_pad").innerHTML = getString(endDate);
-		
-		setInterval(cal, 1000);
-	  }
-	}
+// 	function getString(dt) {
+// 		return dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月"
+// 				+ dt.getDate() + "日" + dt.getHours() + "时" + dt.getMinutes()
+// 				+ "分";
+// 	}
+// 	function cal(spantime) {
+// 		console.log(spantime);
+// 		spantime--;
+// 		var d = Math.floor(spantime / (24 * 3600));
+// 		var h = Math.floor((spantime % (24 * 3600)) / 3600);
+// 		var m = Math.floor((spantime % 3600) / (60));
+// 		var s = Math.floor(spantime % 60);
+// 		str = d + "天 " + h + "时 " + m + "分 " + s + "秒 ";
+// 		console.log(str);
+// 		return str;
+// 	}
+
+// 	window.onload = function() {
+// 		document.getElementById("start_pad").innerHTML = getString(startDate);
+// 		document.getElementById("end_pad").innerHTML = getString(endDate);
+// 		setInterval(cal, 1000);
+// 	}
+	
 	
 	
 </SCRIPT>
 </head>
 <body>
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-xs-12 col-sm-2">
+				</div><!-- <div class="col-xs-12 col-sm-2"> -->
+				<div class="col-xs-12 col-sm-8">
+					<form class="navbar-form navbar-left" role="search" METHOD="post" ACTION="group_open.do" >
+						<div class="form-group">
+							<input type="text" name="EVETIT_NAME" class="form-control" placeholder="請輸入關鍵字">
+						</div>
+						<button type="submit" class="btn btn-default">活動主題搜尋</button>
+						<div class="form-group">
+							<input type="text" name="GOODS_NAME" class="form-control" placeholder="請輸入關鍵字">
+						</div>
+						<button type="submit" class="btn btn-default">商品搜尋</button>
+						<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+					</form><!-- <form class="navbar-form navbar-left" role="search"> -->
+					<a href="addgroup_open.jsp"><button type="button" class="btn btn-info .btn-md">我要開團</button></a>
+					<a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=get_group_open_Bymember_no&member_no=<%=memberVOsession.getMemberNo()%>"><button type="button" class="btn btn-info .btn-success">我的開團管理</button></a>
+					  <a href="<%=request.getContextPath()%>/frontend/group_member/group_member.do?action=getOne_For_Display&member_no=<%=memberVOsession.getMemberNo()%>"><button type="button" class="btn btn-info .btn-success">我的跟團管理</button></a>
+				</div><!-- <div class="col-xs-12 col-sm-8"> -->
+				<div class="col-xs-12 col-sm-2">
+				</div><!-- <div class="col-xs-12 col-sm-2"> -->
+			</div><!-- <div class="row"> -->
+		</div><!-- <div class="container"> -->
+	
+	
 	<div class="container-fluid">
 		<div class="row">
-			<nav class="navbar navbar-default" role="navigation">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse"
-							data-target=".navbar-ex1-collapse">
-							<span class="sr-only">選單切換</span> <span class="icon-bar"></span>
-							<span class="icon-bar"></span> <span class="icon-bar"></span>
-						</button>
-						<img src="https://i.imgur.com/T0YnkK9.png" href="#" alt="LOGO"
-							width="202.25px" height="165.5px">
-					</div>
-
-					<!-- 手機隱藏選單區 -->
-
-					<div class="collapse navbar-collapse navbar-ex1-collapse">
-						<!-- 右選單 -->
-						<img
-							src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7"
-							class="memberphoto" href="#" alt="LOGO" style="float: right"
-							width="80px" height="80px">
-
-						<ul class="nav navbar-nav navbar-right membermenu">
-							<li><a href="#">登出</a></li>
-							<li><a href="#">個人設定</a></li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">繁體中文 <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">繁體中文</a></li>
-									<li><a href="#">English</a></li>
-									<li><a href="#">日本語</a></li>
-								</ul></li>
-						</ul>
-					</div>
-					<!-- 手機隱藏選單區結束 -->
-				</div>
-			</nav>
-
 		</div>
 	</div>
 	<div class="container-fluid">
@@ -229,46 +244,23 @@
 						</FORM>
 					</div>
 					<!-- <div class="panel-body"> -->
-					<div class="panel-body">
-
-						<a href="addgroup_open.jsp">我要開團</a>
-					</div>
-					<!-- <div class="panel-body"> -->
 				</div>
 				<!-- <div class="panel panel-info" id='example'> -->
 			</div>
 			<!-- <div class="col-xs-12 col-sm-3"> -->
 			<div class="col-xs-12 col-sm-6">
-				<div id="myCarousel" class="carousel slide">
-					<!-- 轮播（Carousel）指标 -->
-					<ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-					</ol>
-					<!-- 轮播（Carousel）项目 -->
-					<div class="carousel-inner" width="50%" height="50%">
-						<div class="item active">
-							<img src="<%=request.getContextPath()%>/images/5566.jpg"
-								alt="First slide">
-						</div>
-						<div class="item">
-							<img src="<%=request.getContextPath()%>/images/groupimage5.jpg"
-								alt="Third slide">
-						</div>
-					</div>
-					<!-- 轮播（Carousel）导航 -->
-					<a class="left carousel-control" href="#myCarousel" role="button"
-						data-slide="prev"> <span
-						class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
-					</a> <a class="right carousel-control" href="#myCarousel" role="button"
-						data-slide="next"> <span
-						class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
-					</a>
-				</div>
-				<!-- <div id="myCarousel" class="carousel slide"> -->
+				
+				
+				<div class="owl-carousel owl-theme">
+				<c:forEach var="group_openVO" items="${list}">
+    		<div class="item flash"><h4><img src="Group_openImg1.do?group_no=${group_openVO.group_no}"></h4></div>
+    			</c:forEach>  
+				</div><!-- <div class="owl-carousel owl-theme"> -->
+				
+				
+				
+				
+				
 			</div>
 			<!-- <div class="col-xs-12 col-sm-6"> -->
 			<div class="col-xs-12 col-sm-3">
@@ -347,11 +339,44 @@
 												<small class="text-muted">${group_openVO.group_close_date}</small>
 											</p>
 											<p class="card-text">
-											開始時間：<span id="start_pad"></span><br>
-											結束時間：<p class="bg-danger"><span id="end_pad"></span></p><br>
+										<!-- 	開始時間：<span id="start_pad"></span><br>
+											結束時間：<p class="bg-danger"><span class="end_pad"></span></p><br> -->
 											
-											剩餘時間：<div class="timeback"><h3> <span id="pad"></span> </h3></div>
 											
+											
+											剩餘時間：<div class="timeback"><h3><span id="pad_${group_openVO.group_no}">${group_openVO.group_no}</span></h3></div>
+											<!-- ------------------------------change------------------------------ -->
+												<script>
+													var startDate = new Date();
+													var endDate = new Date('${group_openVO.group_close_date}');
+													var spantime_${group_openVO.group_no} = (endDate - startDate) / 1000;
+	 
+													cal_${group_openVO.group_no}();
+													var spantime_${group_openVO.group_no};
+													function cal_${group_openVO.group_no}(){														
+														spantime_${group_openVO.group_no}--;
+														if(spantime_${group_openVO.group_no} <= 0){
+															clearInterval(time_${group_openVO.group_no});
+															$("#pad_${group_openVO.group_no}").html("揪團已結束");
+															
+															readonly="readonly"
+														} else { 
+															console.log(spantime_${group_openVO.group_no});
+															var d = Math.floor(spantime_${group_openVO.group_no} / (24 * 3600));
+															var h = Math.floor((spantime_${group_openVO.group_no} % (24 * 3600)) / 3600);
+															var m = Math.floor((spantime_${group_openVO.group_no} % 3600) / (60));
+															var s = Math.floor(spantime_${group_openVO.group_no} % 60);
+															str = d + "天 " + h + "时 " + m + "分 " + s + "秒 ";
+															console.log('${group_openVO.group_no}' + "----------" + str);
+															console.log("here");
+															$("#pad_${group_openVO.group_no}").html(str);
+														}
+													}
+													var time_${group_openVO.group_no} = setInterval(cal_${group_openVO.group_no}, 1000);
+												</script>
+											<!-- ------------------------------change------------------------------ -->
+												
+												
 											
 										</div>
 									</div>
@@ -377,8 +402,7 @@
 											</c:forEach>
 											<FORM METHOD="post" ACTION="group_open.do">
 												<input type="submit" value="我要跟團" class="btn btn-primary">                      
-												<input type="hidden" name="action"
-													value="getgroup_for_display"> <input type="hidden"
+												<input type="hidden" name="action" value="getgroup_for_display"> <input type="hidden"
 													name="group_no" value="${group_openVO.group_no}"
 													class="btn btn-primary">
 											</Form>
@@ -409,20 +433,34 @@
 	<!-- <div class="container"> -->
 	<br>
 	<br>
-	<div class="container-fluid">
-		<div class="row">
-			<footer align="center" style="background-color: rgb(51, 153, 255);">
-				<br> | 關於我們 | 會員服務條款 | 隱私權政策 | <br> <br> <br> <br>
-				ETIckeTs娛樂客服信箱
-				<p>ca105.java.002@gmail.com</p>
-				<br>
-			</footer>
-		</div>
-	</div>
-	<!-- <div class="container-fluid">-->
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.2.4/owl.carousel.min.js"></script>
+		
+		<script>
+		
+	var owl = $('.owl-carousel');
+owl.owlCarousel({
+    items:1,
+    loop:true,
+    animateOut: 'fadeOut',
+    margin:10,
+    autoplay:true,
+    autoplayTimeout:1000,
+    autoplayHoverPause:true
+});
+
+$('.play').on('click',function(){
+    owl.trigger('play.owl.autoplay',[1000])
+})
+$('.stop').on('click',function(){
+    owl.trigger('stop.owl.autoplay')
+})
+
+
+</script>
 </body>
 </html>

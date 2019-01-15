@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.event_title.model.EventTitleVO;
 import com.group_member.model.Group_memberVO;
 
 public interface Group_openDAO_interface {
@@ -35,6 +36,15 @@ public interface Group_openDAO_interface {
 	  public void group_open_quit(String group_no);
 	  //開團成功
 	  public void group_open_sucess(String group_no);
+	  //取得折扣價格
+	  public String getgroup_price(String goods_no);
+	  //複合查詢
+	  public List<Group_openVO> getcompoundsearch(Map<String,String[]>map);
+	  //查詢活動主題跟商品名稱
+	  public Map<String,String> getevetitle_goods(String evetit_no);
+	  //查詢活動主題
+	  public List <EventTitleVO> geteventitle();
+	  
 		
 }
 

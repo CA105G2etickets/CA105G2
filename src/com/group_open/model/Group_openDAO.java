@@ -16,6 +16,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.event_title.model.EventTitleVO;
 import com.group_member.model.Group_memberDAO;
 import com.group_member.model.Group_memberVO;
+
+import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_group_open;
 
 public class Group_openDAO implements Group_openDAO_interface {
 	private static DataSource ds = null;
@@ -55,6 +59,10 @@ public class Group_openDAO implements Group_openDAO_interface {
 	private static final String GET_GROUP_OPEN_MEMBER_NO = "select DISTINCT  member_no from group_open where group_no = ?";
 	private static final String GROUP_OPEN_QUIT = "UPDATE GROUP_OPEN set GROUP_STATUS = 'fail2' where GROUP_NO = ? ";
 	private static final String GROUP_OPEN_SUCESS = "UPDATE GROUP_OPEN set GROUP_STATUS = 'sucess3' where GROUP_NO = ? ";
+	private static final String GROUP_SALESPRICE = "select FORSALES_A from group_open right join goods on group_open.goods_no = goods.goods_no where group_open.goods_no = ?";
+//	private static final String GETEVENTITLE_GOODS = "select event_title.evetit_name,goods.goods_name from event_title right join goods on event_title.evetit_no = goods.evetit_no where event_title.evetit_no = ?";
+	private static final String GETEVENTITLE_GOODS = "select goods.goods_no,goods.goods_name from event_title right join goods on event_title.evetit_no = goods.evetit_no where event_title.evetit_no = ?";
+	private static final String GETEVENTITLE = "select DISTINCT event_title.evetit_no,event_title.evetit_name from event_title right join goods on event_title.evetit_no = goods.evetit_no ";
 //	@Override
 	// 新增
 	public void add(Group_openVO group_openVO) {
@@ -548,6 +556,10 @@ public class Group_openDAO implements Group_openDAO_interface {
 			group_memberVO.setGroup_no(next_group_no);
 			group_memberVO.setMember_no(group_openVO.getMember_no());
 			
+			
+			
+			
+			
 			group_memberdao.add2(group_memberVO, con);
 		
 
@@ -812,7 +824,229 @@ public class Group_openDAO implements Group_openDAO_interface {
 			}
 			
 		}
+	  public String getgroup_price(String goods_no) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String price = null;
 
+			try {
+				con = ds.getConnection();
+
+				pstmt = con.prepareStatement(GROUP_SALESPRICE);
+				
+				System.out.println("Group_openServlet"+goods_no);
+				pstmt.setString(1, goods_no);
+				System.out.println(goods_no);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					price = rs.getString("FORSALES_A");
+				} else {
+					System.out.println("xxxxxxxx");
+					System.out.println("Group_price取不到值");
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return price;
+		}
+	  @Override
+	  public List<Group_openVO> getcompoundsearch(Map<String,String[]>map){
+		  List<Group_openVO> list = new ArrayList<Group_openVO>();
+		  Group_openVO group_openVO = null;
+		  
+		  Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				
+				String finalSQL = "select * from event_title right join (select * from group_open left join goods on group_open.goods_no = goods.goods_no order by group_no) group_goods on event_title.evetit_no = group_goods.evetit_no"
+									+ jdbcUtil_CompositeQuery_group_open.get_WhereCondition(map)
+									+" order by group_no";
+				pstmt = con.prepareStatement(finalSQL);
+				System.out.println("finalSQL(byDAO) = " +finalSQL);
+				rs=pstmt.executeQuery();
+				
+				System.out.println("DAO測試到while885");
+				
+				while(rs.next()) {
+					System.out.println("DAO測試到while888");
+					group_openVO = new Group_openVO();
+					group_openVO.setGroup_no(rs.getString("GROUP_NO"));
+					System.out.println(rs.getString("GROUP_NO"));
+					group_openVO.setMember_no(rs.getString("MEMBER_NO"));
+					System.out.println(rs.getString("MEMBER_NO"));
+					group_openVO.setGoods_no(rs.getString("QCSJ_C000000000500000"));
+					group_openVO.setGroup_name(rs.getString("GROUP_NAME"));
+					group_openVO.setGroup_limit(rs.getInt("GROUP_LIMIT"));
+					group_openVO.setGroup_introduction(rs.getString("GROUP_INTRODUCTION"));
+					group_openVO.setGroup_mind(rs.getString("GROUP_MIND"));
+					group_openVO.setGroup_start_date(rs.getTimestamp("GROUP_START_DATE"));
+					group_openVO.setGroup_close_date(rs.getTimestamp("GROUP_CLOSE_DATE"));
+					group_openVO.setGroup_banner_1(rs.getBytes("GROUP_BANNER_1"));
+					group_openVO.setGroup_banner_2(rs.getBytes("GROUP_BANNER_2"));
+					group_openVO.setGroup_status(rs.getString("GROUP_STATUS"));
+					group_openVO.setGroup_address(rs.getString("GROUP_ADDRESS"));
+					group_openVO.setLatitude(rs.getDouble("LATITUDE"));
+					group_openVO.setLongitude(rs.getDouble("LONGITUDE"));
+					group_openVO.setGroup_time(rs.getTimestamp("GROUP_TIME"));
+					group_openVO.setGroup_price(rs.getInt("GROUP_PRICE"));
+					list.add(group_openVO);			
+					
+					System.out.println("Group_openDAO測試"+rs.getString("GROUP_NO"));
+					System.out.println("Group_openDAO測試"+rs.getString("MEMBER_NO"));
+					System.out.println("Group_openDAO測試"+rs.getDouble("LONGITUDE"));
+					System.out.println("Group_openDAO測試"+rs.getString("GROUP_NAME"));
+				}			
+			}catch(SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+			
+	  public Map<String,String> getevetitle_goods(String evetit_no) {
+			Map<String, String> map = new IdentityHashMap<>();
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GETEVENTITLE_GOODS);
+				
+				pstmt.setString(1,evetit_no);
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					map.put(rs.getString("GOODS_NO"),rs.getString("GOODS_NAME"));	
+				}
+				
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return map;
+		}
+	  public List <EventTitleVO> geteventitle(){
+		  
+		  List<EventTitleVO> list = new ArrayList<>();
+		  EventTitleVO eventTitleVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GETEVENTITLE);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					eventTitleVO = new EventTitleVO();
+					eventTitleVO.setEvetit_no(rs.getString("evetit_no"));
+					eventTitleVO.setEvetit_name(rs.getString("evetit_name"));
+					list.add(eventTitleVO);
+				}
+			
+			}catch(Exception e) {
+				e.printStackTrace(System.err);
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+				return list;
+		  
+	  }
+		  
 
 	public static String getLongString(String path) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(path));

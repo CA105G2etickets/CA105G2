@@ -14,12 +14,15 @@
 	 List <ForumVO> list = forumSvc.getall_forum_by_group(group_openVO.getGroup_no());
 	 pageContext.setAttribute("list", list);
 	 
+	 MemberVO memberVOsession = (MemberVO)session.getAttribute("member");
+	 
 		MemberService memberSvc = new MemberService();
 		List<MemberVO> list2 =  memberSvc.getAll();
 		pageContext.setAttribute("list2", list2);
-	
-
 %>
+<jsp:useBean id="group_memberSvc" scope="page" class="com.group_member.model.Group_memberService" />
+<jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
+<jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
 
 
 
@@ -38,17 +41,6 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		<style>
-		.memberphoto {
-			border-radius: 50px;
-			margin-top:20px;
-			}
-		.membermenu {
-			margin-top:100px;
-			margin-left: 200px;
-			}
-		.member{
-			width:50px;
-		}
 		.custom_class > .custom_class {
     		background-image: none;
     		background-color: #ADD8E6;
@@ -98,6 +90,14 @@
 				height:500px;
 				overflow:scroll;
 			}
+			#responseareax{
+				background-color:#F5F5F5;
+				border-radius: 10px;
+				width:auto;
+				height:auto;
+				direction: rtl;
+			
+			}
 		</style>
 		<script>
 		$(function(){
@@ -118,10 +118,10 @@
 					success: function(res){
 						console.log(res);
 						$('.forum').append("<div class='panel-body'>"+
-					     "<div id='responsearea'>"+
-							"<img src='<%=request.getContextPath()%>/images/peoplephoto.jpg' class='img-circle res'>"+
-								"<span>人物名稱</span>"+
-								"<span>"+res.answer+"</span>"+
+					     "<div id='responseareax'>"+
+							"<img src='<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=memberVOsession.getMemberNo()%>' class='img-circle res' style='text-align:right';>"+
+								"<span style='text-align:right'>"+res.answer+"</span> &nbsp;"+
+								"<span><%=memberVOsession.getMemberFullname()%></span>"+
 						 "</div>"+"</div>");	
 					},
 					error: function(res){
@@ -134,40 +134,7 @@
 		</script>
 	</head>
 	<body>
-			<nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-						<span class="sr-only">選單切換</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<img src="https://i.imgur.com/T0YnkK9.png"  href="#" alt="LOGO" width="202.25px" height="165.5px">
-				</div>
-				
-				<!-- 手機隱藏選單區 -->
-				
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<!-- 右選單 -->
-					<img src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7" class="memberphoto" href="#"  alt="LOGO" style="float:right" width="80px" height="80px">
-				
-					<ul class="nav navbar-nav navbar-right membermenu">
-						<li><a href="#">登出</a></li>
-						<li><a href="#">個人設定</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">繁體中文</a></li>
-								<li><a href="#">English</a></li>
-								<li><a href="#">日本語</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<!-- 手機隱藏選單區結束 -->
-			</div>
-		</nav>
+			<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-1">
@@ -190,11 +157,36 @@
 								<br>
 								<br>
 								<br>
-							<div><span> 商品名稱</span></div>	
-							<div><span> 商品價格</span></div>	
-							<div><span> 折扣後商品價格</span></div>	
-							<div><span> 目前跟團數量</span></div>	
-							<div><span> 售出數量</span></div>
+							<div><span> 開團名稱</span>:${group_openVO.group_name}</div>	
+							<div><span> 商品名稱</span>
+											<c:forEach var="goodsVO" items="${goodsSvc.getAll()}">
+												<c:if test="${group_openVO.goods_no==goodsVO.goods_no}">
+	                   									${goodsVO.goods_name}
+                    							</c:if>	
+											</c:forEach>				
+							</div>	
+							<div><span> 商品價格</span>
+											<c:forEach var="goodsVO" items="${goodsSvc.getAll()}">		
+												<c:if test="${group_openVO.goods_no==goodsVO.goods_no}">
+	                   									${goodsVO.goods_price}
+                    							</c:if>	
+											</c:forEach>	
+							</div>	
+							<div><span> 折扣後商品價格</span>:${group_openVO.group_price}</div>	
+							<div><span> 目前跟團人數</span>:
+											<c:forEach var="group_openmap" items="${group_openSvc.member_count}">
+												<c:if test="${group_openVO.group_no==group_openmap.key}">
+	                   							${group_openmap.value}
+                    							</c:if>	
+											</c:forEach>												
+							</div>	
+							<div><span> 售出數量</span>:
+												<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
+												<c:if test="${group_openVO.group_no==group_membermap.key}">
+	                   							${group_membermap.value}
+                    							</c:if>	
+                    							</c:forEach>
+							</div>
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 						
 
@@ -279,19 +271,19 @@
 						<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_member/group_member.do" name="form1"><!-- 表單開始 -->
 								<!-- 選項開始 -->
 							<div class="form-group">
-  								<label for="member_no">
+  								<!-- <label for="member_no">
   									會員編號
-  								</label>
-  									<input name="member_no" type="text" class="form-control" id="member_no"
-  									value="<%= (group_memberVO==null) ? "請輸入會員編號" : group_memberVO.getMember_no()%>"/>
+  								</label> -->
+  									<input name="member_no" type="hidden" class="form-control" id="member_no"
+  									value="<%=memberVOsession.getMemberNo()%>"/>
 							</div><!-- <div class="form-group"> -->	
 								<!-- 選項結束 -->
 								<!-- 選項開始 -->
 							<div class="form-group">
-  								<label for="usr">
+  							<!-- 	<label for="usr">
   									開團編號
-  								</label>
-  									<input name="group_no" type="text" class="form-control" id="group_no"
+  								</label> -->
+  									<input name="group_no" type="hidden" class="form-control" id="group_no"
   									value="${group_openVO.group_no}">
 							</div><!-- <div class="form-group"> -->	
 								<!-- 選項結束 -->
@@ -322,12 +314,12 @@
        							  <option value="EWALLET">EWALLET電子錢包</option>
       							  <option value="CREDITCARD">CREDITCARD信用卡</option>   							 
         						</select>
-        						
+        						<br>
 								<!-- 選項結束 -->
 							<input type="hidden" name="group_member_status" value="withgroup">
 							<input type="hidden" name="pay_status" value="COMPLETE2">
 							<input type="hidden" name="action" value="insert2">
-							<input type="submit" value="送出跟團單">
+							<input type="submit" value="送出跟團單" class="btn btn-success">
 						</FORM><!-- 表單結束 -->
 						</div><!-- <div class="panel-body"> -->
 					</div><!-- <div class="panel panel-default"> -->
@@ -345,13 +337,35 @@
 					    <h3 class="panel-title">討論區</h3>
 					  </div><!-- <div class="panel-heading"> -->
 				 <c:forEach var="forumVO" items= "${list}" > 
-					<div class="panel-body"><!-- foreach開始 -->
+				 				 		
+				 		<c:if test="${forumVO.member_no==sessionScope.member.getMemberNo()}">
+    					     <div class="panel-body"><!-- foreach開始 -->
+					     <div id="responseareax">
+					     <c:forEach var="memberVO" items="${list2}">
+					        <c:if test="${forumVO.member_no==memberVO.memberNo}">
+							<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${forumVO.member_no}" class="img-circle res" style="text-align:right;">
+							</c:if>	
+						 </c:forEach>		
+						 <span style="text-align:right;">${forumVO.forum_content}</span>			 
+							<span>
+							  <c:forEach var="memberVO" items="${list2}" >
+					        <c:if test="${forumVO.member_no==memberVO.memberNo}">
+								${memberVO.memberFullname}
+							</c:if>	
+						 	   </c:forEach>
+							</span>
+						 </div><!-- <div id="responsearea"> -->
+					  </div><!-- <div class="panel-body"> --><!-- foreach結束 -->     
+						</c:if> 
+						<!--跟來這頁的跟團人做比對 不來這頁跟團人  -->
+						<c:if test="${forumVO.member_no!=sessionScope.member.getMemberNo()}"> 
+   					  			<div class="panel-body"><!-- foreach開始 -->
 					     <div id="responsearea">
 					     <c:forEach var="memberVO" items="${list2}">
 					        <c:if test="${forumVO.member_no==memberVO.memberNo}">
-							<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${memberVO.memberNo}" class="img-circle res">
+							<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${forumVO.member_no}" class="img-circle res">
 							</c:if>	
-						 </c:forEach>	
+						 </c:forEach>					 
 							<span>
 							  <c:forEach var="memberVO" items="${list2}">
 					        <c:if test="${forumVO.member_no==memberVO.memberNo}">
@@ -362,18 +376,19 @@
 								<span>${forumVO.forum_content}</span>
 						 </div><!-- <div id="responsearea"> -->
 					  </div><!-- <div class="panel-body"> --><!-- foreach結束 -->
+						</c:if> 			 
 					  </c:forEach> 
 				</div><!-- <div class="panel panel-success"> -->
 					<div id="messageform">
 					
 					
-							<img src="<%=request.getContextPath()%>/images/peoplephoto.jpg" class="img-circle"> wilson
-							
+							<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=memberVOsession.getMemberNo()%>" class="img-circle"><%=memberVOsession.getMemberFullname()%>
+																				
 							
 							<br>
 						<input type="text" class="form-control" placeholder="回覆" id="message">
-						<input type="hidden" class="form-control" id="group_noms" value="${group_openVO.group_no}">
-						<input type="text" class="form-control" id="member_noms">
+						<input type="hidden" class="form-control" id="group_noms" value="${group_openVO.group_no}">         
+						<input type="hidden" class="form-control" id="member_noms" value="<%=memberVOsession.getMemberNo()%>">
 						<button type="button" class="btn btn-info" id="btn">留言</button>
 					</div><!-- <div id="messageform"> -->
 
@@ -381,7 +396,7 @@
 				</div><!-- <div class="row"> -->
 			</div><!-- <div class="container"> -->
 			
-		
+		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

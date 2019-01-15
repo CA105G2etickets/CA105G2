@@ -17,7 +17,6 @@
 
 <jsp:useBean id="group_memberSvc" scope="page" class="com.group_member.model.Group_memberService" />
 <jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
-
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -42,15 +41,13 @@
 		.member{
 			width:50px;
 		}
+		.tabletitle{
+			background-color: #CCEEFF;
+
+		}
 		.img-thumbnail{
 			width:80%;
 			height: 80%;
-
-		}
-		.finish{
-			margin-left:80%;	
-
-
 
 		}
 		</style>
@@ -91,47 +88,27 @@
 			</div>
 		</nav>
 
-
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-1">
 					
 
-				</div>
+
+
+
+				</div><!-- <div class="col-xs-12 col-sm-1"> -->
 				<div class="col-xs-12 col-sm-10">
 					<div class="col-xs-12 col-sm-6">
-						
 						<img src="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" class="img-thumbnail">
 
 
-
 					</div><!-- <div class="col-xs-12 col-sm-6"> -->
 					<div class="col-xs-12 col-sm-6">
 						
 
 
-
-					</div><!-- <div class="col-xs-12 col-sm-6"> -->
-				<div class="col-xs-12 col-sm-1">
-					
-
-				</div><!-- <div class="col-xs-12 col-sm-1"> -->
-			</div><!-- <div class="row"> -->
-		</div><!-- <div class="container"> -->
-			<br><br>
-
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-1">
-					
-
-
-
-
-
-				</div>
-				<div class="col-xs-12 col-sm-10">
-											<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+					</div><!-- <div class="col-xs-12 col-sm-6"> -->			
+					<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 					  <!-- 區塊1 -->
 					  <div class="panel panel-default">
 					    <div class="panel-heading" role="tab" id="panel1">
@@ -180,12 +157,6 @@
 								</td>
 							</tr>
 							</c:forEach>
-							<tr>
-							<td>總計數量&nbsp;&nbsp;&nbsp;<%=product%></td>
-							</tr>
-							<tr>
-							<td><h4><font color="red">付款金額:&nbsp;&nbsp;&nbsp;$<%=total%></font></h4></td>
-							</tr>
 						</tbody>
 					</table>
 
@@ -195,8 +166,66 @@
 					    </div><!-- <div id="aaa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel1"> -->
 					  </div><!-- <div class="panel panel-default"> -->	
 					</div><!-- <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true"> -->
+					<br>
+					<br>
+					<br>
 					
-					
+					<div class="col-xs-12 col-sm-6">
+
+						<div class="panel panel-info">
+						  <div class="panel-heading">
+						    <h3 class="panel-title">團購訂單</h3>
+						  </div>
+						  <div class="panel-body">
+						    <div class="form-group">
+  								<label for="usr">收件人地址</label>
+  								<input type="text" class="form-control" id="usr">
+							</div><!-- <div class="form-group"> -->
+						  </div>
+						  <div class="panel-body">
+						       <div class="form-group">
+  									<label for="usr">收件人電話</label>
+  									<input type="text" class="form-control" id="usr">
+								</div><!-- <div class="form-group"> -->
+						  </div>
+						  <div class="panel-body">
+						   <div class="form-group">
+ 							 <label for="sel1"></label>
+  								<select class="form-control" id="sel1">
+   									 <option>超商取貨</option>
+    								 <option>宅配</option>
+  								</select>
+						   </div>
+						  </div><!-- <div class="panel-body"> -->
+						</div><!-- <div class="panel panel-info"> -->
+						
+					</div><!-- <div class="col-xs-12 col-sm-6"> -->
+					<div class="col-xs-12 col-sm-6">
+						<table class="table table-hover">
+							<caption>訂單總計</caption>
+							<tbody>
+								<tr>
+									<td>總計數量</td>
+									<td>
+									<%=product%>		
+									</td>
+								</tr>
+								<tr>
+									<td>總計價格</td>
+									<td><%=total%></td>
+								</tr>
+								<tr> 
+									<td></td>
+									<td>
+									<button type="button" class="btn btn-info">開團成功</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+					</div><!-- <div class="col-xs-12 col-sm-3"> -->
+				
+
 
 
 
@@ -209,71 +238,15 @@
 
 
 
-
 				</div><!-- <div class="col-xs-12 col-sm-1"> -->
 				
 
 
 			</div><!-- <div class="row"> -->
 		</div><!-- <div class="container"> -->
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 col-sm-1">
-						
-
-
-					</div>
-					<div class="col-xs-12 col-sm-10">
-						<div class="col-xs-12 col-sm-6">
-						<h3>團購訂單</h3>
-							<hr>
-							 <div class="form-group">
-  								<label for="usr">收件人名稱</label>
-  								<input type="text" class="form-control" id="usr">
-							</div><!-- <div class="form-group"> -->
-						    <div class="form-group">
-  								<label for="usr">收件人地址</label>
-  								<input type="text" class="form-control" id="usr">
-							</div><!-- <div class="form-group"> -->					 
-						       <div class="form-group">
-  									<label for="usr">收件人電話</label>
-  									<input type="text" class="form-control" id="usr">
-								</div><!-- <div class="form-group"> -->
-						  
-					
-						   <div class="form-group">
- 							 <label for="sel1">出貨方式</label>
-  								<select class="form-control" id="sel1">
-   									 <option>超商取貨</option>
-    								 <option>宅配</option>
-  								</select>
-						   </div>
-							<hr>
-							<button type="button" class="btn btn-primary finish">產生訂單</button>
-						</div><!-- <div class="col-xs-12 col-sm-6"> -->
-						<div class="col-xs-12 col-sm-6">
-							
-
-
-						</div><!-- <div class="col-xs-12 col-sm-6"> -->
-					</div>
-					<div class="col-xs-12 col-sm-1">
-						
-
-
-					</div>
-				</div><!-- <div class="row"> -->
-			</div><!-- <div class="container"> -->
-
-
 		
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>
 </html>
-
-
-
-
-

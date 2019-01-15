@@ -32,9 +32,9 @@ public class Group_memberService {
 		group_memberVO.setLog_out_reason(log_out_reason);
 		group_memberVO.setOrder_phone(order_phone);
 		group_memberVO.setPay_method(pay_method);
-		
+	
 		dao.add(group_memberVO);
-		
+	
 			
 		return group_memberVO;
 		
@@ -126,5 +126,15 @@ public class Group_memberService {
 		   //取得成功開團後的跟團人明細
 		   public List<Group_memberVO> getgroupsucesslist(String group_no){
 			   return dao.getgroupsucesslist(group_no);
+		   }
+		   //取得跟團人電子錢包
+		   public Integer getewallet(String member_no) {
+			   return dao.getewallet(member_no);
+		   }
+		   public void updateewallet(Integer ewalletBalance, String member_no) {
+			   dao.updateewallet(ewalletBalance, member_no);
+		   }
+		   public List<Group_memberVO> getquitgroup_member(String group_no){
+			  return dao.getquitgroup_member(group_no);
 		   }
 }
