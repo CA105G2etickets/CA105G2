@@ -38,6 +38,9 @@ public class ShoppingCartServlet extends HttpServlet {
 			}
 			// 新增商品至購物車中
 			else if ("ADD".equals(action)) {
+				
+				System.out.println("===" + req.getParameter("goods_quantity"));
+				
 				boolean match = false;
 				// 取得後來新增的商品
 				ShoppingCart agoods = getShoppingCart(req);

@@ -50,7 +50,8 @@ pageContext.setAttribute("list",list);
 						<td>${goodsVO.goods_price}</td>
 						<td>${goodsVO.forsales_a}</td>
 						<td>
-							數量：<input class="min" name="min" type="button" value="-" />  
+							數量：
+							<input class="min" name="min" type="button" value="-" />  
 							<input type="text" class="ordernum" name="goods_quantity" size="2" value=1>
 							<input class="add" name="add" type="button" value="+" /> 
 						</td>
