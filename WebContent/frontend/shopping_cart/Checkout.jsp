@@ -212,7 +212,6 @@
 	<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>	
 
 <script>
