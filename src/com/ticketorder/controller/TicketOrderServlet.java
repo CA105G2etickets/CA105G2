@@ -1152,7 +1152,7 @@ public class TicketOrderServlet extends HttpServlet {
 				//check the status is selling or not, should from db
 				TicketService tSvc = new TicketService();
 				TicketVO tvoFromDB = tSvc.getOneTicket(ticket_no);
-				if("SELLING2".equals(tvoFromDB.getTicket_resale_status()) || "WAITFORPAY2".equals(tvoFromDB.getTicket_resale_status())) {
+				if("SELLING1".equals(tvoFromDB.getTicket_resale_status()) || "WAITFORPAY2".equals(tvoFromDB.getTicket_resale_status())) {
 					errorMsgs.add("此票已販賣中或是正在等待結帳，不可再度販賣或更動狀態");
 				}else {
 					
