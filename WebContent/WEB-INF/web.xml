@@ -335,5 +335,13 @@
     <servlet-name>GoodsQaServlet</servlet-name>
     <url-pattern>/goodsqa/GoodsQaServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+        <servlet-name>ResaleOrderServlet</servlet-name>
+        <servlet-class>com.resaleorder.controller.ResaleOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResaleOrderServlet</servlet-name>
+        <url-pattern>/frontend/resaleorder/resaleorder.do</url-pattern>
+    </servlet-mapping>
     
 </web-app> 
