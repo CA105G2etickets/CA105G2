@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.news.model.*"%>
+<%@ page import="com.goods.model.*"%>
 
 
 <!-- --------------------------------------------------DAI ::: advertisement relative ::: begin-------------------------------------------------- -->
@@ -16,6 +17,13 @@
 <%
 	List<AdvertisementVO> advertisementList = advertisementService.getLaunched();
 	pageContext.setAttribute("advertisementList", advertisementList);
+%>
+<%
+	if(request.getAttribute("listGoods_ByCompositeQuery") == null){
+		GoodsService goodsService = new GoodsService();
+		List<GoodsVO> list = goodsService.getAllLaunched();
+		pageContext.setAttribute("listGoods_ByCompositeQuery", list); 
+	}
 %>
 <!-- --------------------------------------------------DAI ::: advertisement relative ::: end-------------------------------------------------- -->
 
@@ -81,6 +89,9 @@
     border-radius: 5px;
     vertical-align: middle;
     display: inline-block;
+}
+.indexultachi {
+	padding: 0;
 }
 hr {
  	height: 2px;
@@ -204,193 +215,52 @@ body{
 
 <jsp:useBean id="newsClassification" scope="page" class="com.news_classification.model.NewsClassificationService" />
 <font size="3" style="font-weight:bold">
-<ul>
+<ul class="indexultachi">
 <div class="paragraph">
 網站公告<a href="<%=request.getContextPath()%>/frontend/news/listAllNews.jsp" class="listAllNews"><i class="glyphicon glyphicon-chevron-right"></i>更多</a>
 </div>
 <hr>
 </ul>
 	<c:forEach var="news" items="${list}" end="4">
-		<ul>
+		<ul class="indexultachi">
 			<font class="newstag">
 				${newsClassification.getOneNewsClassification(news.news_classification_no).newsClassification}
 			</font>
 				<a href="<%=request.getContextPath()%>/frontend/news/news.do?action=getOne_For_Display_front&news_no=${news.news_no}" class="newsTitle">${news.news_title}</a>
 		</ul>
 	</c:forEach>
-<ul>
+<ul class="indexultachi">
 <div class="paragraph">
-下面待補
+相關周邊商品
 </div>
 <hr>
 </ul>
 </font>
 		<div>
-				<div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="http://www.fangoods.com.tw/UMG/Uploads/Product/O_20180402164850_0.jpg" alt="" width="30%" height="30%">
+			<div class="row">
+				<c:forEach var="goodsVO" items="${listGoods_ByCompositeQuery}" end="7">
+				
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="row">
+						
+						
+						
+							<div class="thumbnail" style="border: 0">
+								<img src="<%= request.getContextPath()%>/goods/GoodsGifReader?scaleSize=425&goods_no=${goodsVO.goods_no}" width="200px" height="200px">
 								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
+									<p style="font-size: 1.2em;">${goodsVO.goods_name}</p>
 								</div>
 							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://shoplineimg.com/594c83239f9a4ff00f00631d/5af178b510abb9e38100357b/400x.webp?source_format=jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="http://www.fangoods.com.tw/UMG/Uploads/Product/O_20161202182430_0.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
+							
+							
+							
+						</div>	
 					</div>
-				</div>
-			</div>
-			<div>
-				<div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://shoplineimg.com/594c83239f9a4ff00f00631d/5af178b70e64fe332900190a/400x.webp?source_format=jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://shoplineimg.com/594c83239f9a4ff00f00631d/5af178c70e64fe068300332a/400x.webp?source_format=jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="http://www.fangoods.com.tw/UMG/Uploads/Product/O_20161205180205_0.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div>
-				<div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="http://www.fangoods.com.tw/UMG/Uploads/Product/O_20161205183921_0.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="http://www.fangoods.com.tw/UMG/Uploads/Product/O_20161205190011_0.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="http://www.fangoods.com.tw/UMG/Uploads/Product/O_20161205182128_0.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div>
-				<div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://www.rockmall.com.tw/public/files/product/thumb/N56716-64495R.png" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://www.rockmall.com.tw/public/files/product/thumb/N04311-50205R.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://www.rockmall.com.tw/public/files/product/thumb/N77730-53359R.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div>
-				<div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://www.rockmall.com.tw/public/files/product/thumb/N17407-49085R.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://www.rockmall.com.tw/public/files/product/thumb/N22991-86992R.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4">
-							<div class="thumbnail">
-								<img src="https://www.rockmall.com.tw/public/files/product/thumb/N39705-24419R.jpg" alt="" width="30%" height="30%">
-								<div class="caption">
-									<h2>商品</h2>
-									<p>簡短介紹</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+					
+				</c:forEach>
 			</div>
 		</div>
+	</div>
 
 
 

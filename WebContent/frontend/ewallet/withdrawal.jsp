@@ -59,17 +59,20 @@ body{
 <jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 
 <div class="container">
+<div class="row">
 	<div class="walletcolumn walletcolumn-2">
 		<div class="wallettabs">
-			<div class="walletblock walletblock-m">
+			<div class="walletblock walletblock-m" align="center">
 				<img src="<%=request.getContextPath()%>/frontend/ewallet/images/提領.png" class="walletimage">
 				<h3 class="heading" align="center">提領</h3>
 			</div>
 		</div>
 	</div>
 </div>
+</div>
 
 <div class="container">
+<div class="row">
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -126,7 +129,10 @@ body{
 <input type="hidden" name="memberStatus" value="<%=member.getMemberStatus()%>">
 <input type="hidden" name="thirduid" value="<%=member.getThirduid()%>">
 <input type="hidden" name="action" value="update_withdrawal">
-<input type="submit" value="申請提領"></FORM>
+<input type="submit" value="申請提領">
+
+</FORM>
+</div>
 
 </div>
 

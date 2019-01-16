@@ -60,6 +60,7 @@ body{
 <jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 
 <div class="container">
+<div class="row">
 	<div class="walletcolumn walletcolumn-2">
 		<div class="wallettabs">
 		<a href="deposit.jsp" class="wallethref">
@@ -80,6 +81,7 @@ body{
 		</a>
 		</div>
 	</div>
+</div>
 </div>
 
 </body>
