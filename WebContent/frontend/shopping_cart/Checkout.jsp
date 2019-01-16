@@ -13,10 +13,10 @@
     OrderHistoryService orderHistorySvc = new OrderHistoryService();
     List<OrderHistoryVO> listHistory = orderHistorySvc.getAll();
     pageContext.setAttribute("listHistory",listHistory);
-	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");   
-    OrderDetailService orderDetailSvc = new OrderDetailService();
-    List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
-    pageContext.setAttribute("listDetail",listDetail);
+// 	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");   
+//     OrderDetailService orderDetailSvc = new OrderDetailService();
+//     List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
+//     pageContext.setAttribute("listDetail",listDetail);
     
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
 %>
@@ -100,7 +100,7 @@
             </div>
 
                 <input type="button" value="返回上一頁 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp'" >
-				<input type="button" value="繼續購物" class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/shopping_cart/EShop.jsp'" >
+				<input type="button" value="繼續購物" class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/goods/selectGoods.jsp'" >
 			<div role="tabpanel" class="tab-pane active" id="history">
 				<c:if test="${not empty errorMsgs}">
 					<font style="color:red">請修正以下錯誤：</font>
@@ -126,7 +126,7 @@
 						<input name="pay_methods" type="radio" value="EWALLET"><b>電子錢包</b><br>
 						<!-- 如果開始要顯示要加入 style="display:block;" 不顯示則加入  style="display:none;"-->
 						<div class="creditcard pay_methods bBW" style="display:block;">
-							<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%"><font color="#fff">-</font><input type="TEXT" name="creditcard_no" placeholder="未3碼" class="form-control" value="" style="width:8%" >
+							<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16"><font color="#fff">-</font><input type="TEXT" name="creditcard_no" placeholder="未3碼" class="form-control" value="" style="width:8%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
 						</div>
 						<div class="ewallet pay_methods bBW">
 							<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
@@ -147,9 +147,6 @@
 	
 						<div class="form-group" id="zipcode2" style="width:13%">
 							<label>收件人地址：</label>
-							
-							
-							
 							<script>
 								$("#zipcode2").twzipcode({
 									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
@@ -173,10 +170,9 @@
 							<label>收件人電話：</label>
 							<c:set value="<%=memberVO.getPhone() %>" var="member_phone"/>
 							<c:set var="phone" value="${fn:replace(member_phone,'-','')}" />
-							<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人電話" class="form-control" value="${ (orderHistoryVO == null) ? phone : orderHistoryVO.receiver_tel}" style="width:20%">
+							<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人電話" class="form-control" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="10" value="${ (orderHistoryVO == null) ? phone : orderHistoryVO.receiver_tel}" style="width:20%">
 						</div>
 						<input type="hidden" name="order_status" value="PAYMENT1" >
-					
 						<%	
 							for (int i = 0; i < buylist.size(); i++) {
 							ShoppingCart order = buylist.get(i);
@@ -190,7 +186,20 @@
 							<input type="hidden" name="goods_bonus" value="<%=goods_price%>">
 							<!--商品數量 -->
 							<input type="hidden" name="goods_pc" value="<%=goods_quantity%>">
-						<%}%>								
+							
+						<%}%>
+						
+						<input type="hidden" name="memberno" value="<%=memberVO.getMemberNo()%>">
+						<input type="hidden" name="memberFullname" value="<%=memberVO.getMemberFullname()%>">
+						<input type="hidden" name="email" value="<%=memberVO.getEmail()%>">
+						<input type="hidden" name="phone" value="<%=memberVO.getPhone()%>">
+						<input type="hidden" name="idcard" value="<%=memberVO.getIdcard()%>">
+						<input type="hidden" name="memberAccount" value="<%=memberVO.getMemberAccount()%>">
+						<input type="hidden" name="memberPassword" value="<%=memberVO.getMemberPassword()%>">
+						<input type="hidden" name="creationDate" value="<%=memberVO.getCreationDate()%>">
+						<input type="hidden" name="memberStatus" value="<%=memberVO.getMemberStatus()%>">
+						<input type="hidden" name="thirduid" value="<%=memberVO.getThirduid()%>">
+						
 					<hr>
 					<input type="hidden" name="action" value="insert_Front">
 					<input type="button" value="完成訂單" class="btn btn-primary" style="" id="completeOrderBtn">

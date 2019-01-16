@@ -1,6 +1,7 @@
 package com.order_history.controller;
 
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.*;
@@ -310,10 +311,7 @@ public class OrderHistoryServlet extends HttpServlet {
 				}
 				
 				String order_status = new String(req.getParameter("order_status").trim());
-				
-				//測試
 				String goods_no = new String(req.getParameter("goods_no").trim());
-				
 				Double goods_bonus = null;
 				try {
 					goods_bonus = new Double(req.getParameter("goods_bonus").trim());
@@ -436,13 +434,12 @@ public class OrderHistoryServlet extends HttpServlet {
 			}
 		}
 		
-		
-		
 		if ("getOne_For_MemAllOrd_Front".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = req.getSession();
 			MemberVO memberVO = (MemberVO) session.getAttribute("member");
+			MemberVO member = new MemberVO();
 			try {
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				List<OrderHistoryVO> orderHistoryVO = (List<OrderHistoryVO>) orderHistorySvc.findByMemberNo(memberVO.getMemberNo());
@@ -463,7 +460,7 @@ public class OrderHistoryServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = req.getSession();
-			
+			MemberVO memberVO = (MemberVO) session.getAttribute("member");
 			try {
 				String member_no = new String(req.getParameter("member_no").trim());
 				
@@ -478,29 +475,9 @@ public class OrderHistoryServlet extends HttpServlet {
 				String pay_methods = new String(req.getParameter("pay_methods").trim());
 				String shipping_methods = new String(req.getParameter("shipping_methods").trim());
 				
-				java.sql.Timestamp order_date = null;
-				try {
-					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
-				} catch (IllegalArgumentException e) {
-					order_date = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入訂購日期。");
-				}
-				
-				java.sql.Timestamp order_etd = null;
-				try {
-					order_etd = java.sql.Timestamp.valueOf(req.getParameter("order_etd").trim());
-				} catch (IllegalArgumentException e) {
-					order_etd = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入出貨日期。");
-				}
-				
-				java.sql.Timestamp pickup_date = null;
-				try {
-					pickup_date = java.sql.Timestamp.valueOf(req.getParameter("pickup_date").trim());
-				} catch (IllegalArgumentException e) {
-					pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入取貨日期。");
-				}
+				java.sql.Timestamp order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
+				java.sql.Timestamp order_etd =  java.sql.Timestamp.valueOf(req.getParameter("order_etd").trim());
+				java.sql.Timestamp pickup_date = java.sql.Timestamp.valueOf(req.getParameter("pickup_date").trim());
 				
 				String receiver_add = req.getParameter("receiver_add");
 				if (receiver_add == null || receiver_add.trim().length() == 0) {
@@ -518,7 +495,6 @@ public class OrderHistoryServlet extends HttpServlet {
 				}
 				String order_status = new String(req.getParameter("order_status").trim());
 				String goods_no = new String(req.getParameter("goods_no").trim());
-				
 				Double goods_bonus = null;
 				try {
 					goods_bonus = new Double(req.getParameter("goods_bonus").trim());
@@ -569,17 +545,60 @@ public class OrderHistoryServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-
+				
+				//判斷是付款方式為電子錢包則進行扣款
+				if ("EWALLET".equals(pay_methods)) {
+					String memberNo = req.getParameter("memberno").trim();
+					String memberFullname = req.getParameter("memberFullname");
+					String email = req.getParameter("email").trim();
+					String phone = req.getParameter("phone").trim();
+					String idcard = req.getParameter("idcard").trim();
+					String memberAccount = req.getParameter("memberAccount").trim();
+					String memberPassword = req.getParameter("memberPassword").trim();
+					Integer newEwalletBalance = null;
+					try {
+						order_price = new Double(req.getParameter("order_price").trim());
+						newEwalletBalance = memberVO.getEwalletBalance() - order_price.intValue();
+						if (order_price > memberVO.getEwalletBalance()) {
+							throw new Exception();
+						}
+					} catch (Exception e) {
+						newEwalletBalance = memberVO.getEwalletBalance();
+						errorMsgs.add("電子錢包餘額不足");
+						RequestDispatcher failureView = req.getRequestDispatcher("/frontend/shopping_cart/Checkout.jsp");
+						failureView.forward(req, res);
+					}
+					Timestamp creationDate = Timestamp.valueOf(req.getParameter("creationDate").trim());
+					byte[] profilePicture = memberVO.getProfilePicture();
+					String memberStatus = req.getParameter("memberStatus").trim();
+					String thirduid = req.getParameter("thirduid").trim();
+					
+					memberVO.setMemberNo(memberNo);
+					memberVO.setMemberFullname(memberFullname);
+					memberVO.setEmail(email);
+					memberVO.setPhone(phone);
+					memberVO.setIdcard(idcard);
+					memberVO.setMemberAccount(memberAccount);
+					memberVO.setMemberPassword(memberPassword);
+					memberVO.setEwalletBalance(newEwalletBalance);
+					memberVO.setCreationDate(creationDate);
+					memberVO.setProfilePicture(profilePicture);
+					memberVO.setMemberStatus(memberStatus);
+					memberVO.setThirduid(thirduid);
+					MemberService memberSvc = new MemberService();
+					memberSvc.memberWithdrawal(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, newEwalletBalance, creationDate, profilePicture, memberStatus, thirduid);
+				}
+				
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
 				
+				session.setAttribute("member", memberVO);
 				req.setAttribute("orderHistoryVO", orderHistoryVO);
-				
 				session.removeAttribute("shoppingcart");
 				String url = "/frontend/shopping_cart/CheckoutCompleted.jsp";
+				
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
 				
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
@@ -587,7 +606,5 @@ public class OrderHistoryServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}		
 		}
-		
 	}
-	
 }
