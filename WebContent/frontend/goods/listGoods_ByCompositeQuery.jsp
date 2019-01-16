@@ -65,8 +65,11 @@
                             <img src="<%= request.getContextPath()%>/goods/GoodsGifReader?scaleSize=425&goods_no=${goodsVO.goods_no}" alt="">
                         </a>                       
                         <div class="caption">
-                               
-                            <h4><a href="<%= request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}" target="_blank">
+                            <p class="flex-text">${goodsVO.launchdate}
+                                ${(goodsVO.launchdate == goodsVO.offdate) ? '' : ' ~ '}
+                                ${(goodsVO.launchdate == goodsVO.offdate) ? '' : goodsVO.offdate}
+                            </p>
+                        <h4><a href="<%= request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}" target="_blank">
                             	${goodsVO.goods_name}                   
                             </a></h4>
                               <h4> 售價：  ${goodsVO.goods_price}</h4>
@@ -94,6 +97,9 @@
         </div>
     </div>
     
+                               
+                            
+
     
     
     <!-- Basic -->

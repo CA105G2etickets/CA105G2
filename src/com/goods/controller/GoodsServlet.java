@@ -315,8 +315,7 @@ public class GoodsServlet extends HttpServlet {
 					
 				}
 				goodsVO.setGoods_picture3(goods_picture3);
-//				
-//				
+				
 				
 				GoodsService goodsSvc = new GoodsService();
 				goodsVO = goodsSvc.updateGoods(goods_no, evetit_no, goods_name, goods_price, goods_picture1,
@@ -351,26 +350,42 @@ public class GoodsServlet extends HttpServlet {
 					goodsErrorMsgs.put("goods_name", "請輸入商品名稱");
 				}
 				
+				
+				
 				Integer goods_price = new Integer (req.getParameter("goods_price"));
 				
 				 java.sql.Timestamp today = new  java.sql.Timestamp(System.currentTimeMillis());
-					byte[] goods_picture1 = null;
-					Part part = req.getPart("goods_picture1");
-					try {
-						String uploadFileName = part.getSubmittedFileName();
-						if (uploadFileName != null && part.getContentType() != null) {
-							InputStream in = part.getInputStream();
-							goods_picture1 = new byte[in.available()];
-							in.read(goods_picture1);
-							in.close();
-						}
-					} catch (FileNotFoundException e) {
-						goodsErrorMsgs.put("goods_picture1","找不到檔案");
-					}
-					if (part.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture1","請上傳圖片");
-					}
+				 
 				
+				 byte[] goods_picture1 = null;
+					String goods_picture1_status = req.getParameter("goods_picture1_status");
+					if("noUpload".equals(goods_picture1_status)) {
+						
+						req.setAttribute("goods_picture1_status", "noUpload");					
+					} else if ("yesUpload".equals(goods_picture1_status)){
+						String saveDirectory1 = "/tempGoods";
+						String realPath1 = getServletContext().getRealPath(saveDirectory1);
+						File fileSaveDirectory1 = new File(realPath1);		
+						if(!fileSaveDirectory1.exists()) {
+							fileSaveDirectory1.mkdirs();
+						}
+						Part part1 = req.getPart("goods_picture1");
+						DateFormat dateFormat1 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+						String strToday1 = dateFormat1.format(today); 
+						String submittedFileName1 = strToday1 + part1.getSubmittedFileName();
+						
+						if(submittedFileName1.length() != 0 && part1.getContentType() != null) {
+							File fileHere1 = new File(fileSaveDirectory1, submittedFileName1);
+							part1.write(fileHere1.toString());								
+						}			
+						
+						req.setAttribute("goods_picture1_status", "alreadyUpload");						
+						req.getSession().setAttribute("goods_picture1_path", req.getContextPath() + saveDirectory1 + "/" + submittedFileName1);									
+					} else if ("alreadyUpload".equals(goods_picture1_status)){
+						req.setAttribute("goods_picture1_status", "alreadyUpload");	
+					}
+				 
+				 
 				
 				byte[] goods_picture2 = null;
 				String goods_picture2_status = req.getParameter("goods_picture2_status");
@@ -448,7 +463,7 @@ public class GoodsServlet extends HttpServlet {
 						goodsErrorMsgs.put("offdate", "請輸入下架日期");
 					}
 				
-				//inti number is zero.
+			
 				Integer favorite_count = 0;
 				Integer goods_sales_count = 0;
 				Integer goods_group_count = 0;
@@ -513,7 +528,7 @@ public class GoodsServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				RequestDispatcher successView = req.getRequestDispatcher("/frontend/goods/listOneGoods.jsp"); // 修改成功後,轉交listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp"); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/

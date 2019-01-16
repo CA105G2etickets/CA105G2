@@ -202,9 +202,9 @@ body {
 		src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
 	<!-- JavaScript in File -->
 	<script
-		src="<%=request.getContextPath()%>/backend/event_title/js/goodsCKEditor.js"></script>
+		src="<%=request.getContextPath()%>/backend/goods/js/goodsCKEditor.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/backend/event_title/js/addGoods.js"></script>
+		src="<%=request.getContextPath()%>/backend/goods/js/addGoods.js"></script>
 	<!-- JavaScript in HTML -->
 	
 	<script type="text/javascript">
