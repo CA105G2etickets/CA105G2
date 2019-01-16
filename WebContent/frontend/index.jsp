@@ -41,14 +41,24 @@
 <style>
 .memberphoto {
 	border-radius: 50px;
-	margin-top: 20px;
+	position: absolute;
+	margin-top: 30;
+	z-index:1;
 }
-
+.memberPhotoEdit {
+	position: absolute;
+	margin-top: 30;
+	visibility: hidden;
+}
 .membermenu {
-	margin-top: 100px;
-	margin-left: 200px;
+	margin-top: 8em;
+	margin-left: 20%;
 }
-
+.navbarmemberbtn {
+	position: absolute;
+	margin-bottom: 0;
+	padding: 1px;
+}
 .topnav {
 	list-style-type: none;
 	margin: 0;
@@ -59,6 +69,9 @@
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
+}
+.shoppingC {
+	font-family:微軟正黑體!important;
 }
 .newstag {
     background-color: #3399ff;

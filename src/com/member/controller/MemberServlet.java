@@ -351,6 +351,7 @@ public class MemberServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = req.getSession();
+			MemberVO motomember = (MemberVO) session.getAttribute("member");
 			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
@@ -369,7 +370,9 @@ public class MemberServlet extends HttpServlet {
 				String phone = req.getParameter("phone").trim();
 				if (phone == null || phone.trim().length() == 0) {
 					errorMsgs.add("電話號碼請勿空白");
-				}	
+				}
+				
+				String idcard = req.getParameter("idcard");
 				
 				String memberAccount = req.getParameter("memberAccount").trim();
 				if (memberAccount == null || memberAccount.trim().length() == 0) {
@@ -379,41 +382,34 @@ public class MemberServlet extends HttpServlet {
 				String memberPassword = req.getParameter("memberPassword").trim();
 				if (memberPassword == null || memberPassword.trim().length() == 0) {
 					errorMsgs.add("密碼請勿空白");
-				}	
-				
-				byte[] profilePicture = null;
-				Part part = req.getPart("picture");
-				try {
-					String uploadFileName = part.getSubmittedFileName();
-					if (uploadFileName != null && part.getContentType() != null) {
-						InputStream in = part.getInputStream();
-						profilePicture = new byte[in.available()];
-						in.read(profilePicture);
-						in.close();
-					}
-				} catch (FileNotFoundException e) {
-					errorMsgs.add("找不到檔案");
-				}
-				if (part.getSize() == 0) {
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
 				}
 				
-				MemberVO memberN = new MemberVO();
-				memberN.setMemberNo(memberNo);
-				memberN.setMemberFullname(memberFullname);
-				memberN.setEmail(email);
-				memberN.setPhone(phone);
-				memberN.setMemberAccount(memberAccount);
-				memberN.setMemberPassword(memberPassword);
-				memberN.setProfilePicture(profilePicture);
+				Integer ewalletBalance = Integer.parseInt(req.getParameter("ewalletBalance"));
+				
+				Timestamp creationDate = Timestamp.valueOf(req.getParameter("creationDate").trim());
+				
+				byte[] profilePicture = motomember.getProfilePicture();
+				
+				String memberStatus = req.getParameter("memberStatus").trim();
+
+				String thirduid = req.getParameter("thirduid").trim();
+				
+				MemberVO newmember = new MemberVO();
+				newmember.setMemberNo(memberNo);
+				newmember.setMemberFullname(memberFullname);
+				newmember.setEmail(email);
+				newmember.setPhone(phone);
+				newmember.setIdcard(idcard);
+				newmember.setMemberAccount(memberAccount);
+				newmember.setMemberPassword(memberPassword);
+				newmember.setEwalletBalance(ewalletBalance);
+				newmember.setCreationDate(creationDate);
+				newmember.setProfilePicture(profilePicture);
+				newmember.setMemberStatus(memberStatus);
+				newmember.setThirduid(thirduid);
 				
 				if (!errorMsgs.isEmpty()) {
-					session.removeAttribute("member");
-					session.setAttribute("member", memberN);
+					session.setAttribute("member", motomember);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/frontend/member/update_member_information.jsp");
 					failureView.forward(req, res);
@@ -421,14 +417,14 @@ public class MemberServlet extends HttpServlet {
 				}
 				
 				MemberService memberService = new MemberService();
-				memberService.updateMemberFront(memberNo, memberFullname, email, phone, memberAccount, memberPassword, profilePicture);
+				memberService.updateMemberFront(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, ewalletBalance, creationDate, profilePicture, memberStatus, thirduid);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				
 				session.removeAttribute("member");
 				
 				if(session.getAttribute("member") == null){
-					session.setAttribute("member", memberN);
+					session.setAttribute("member", newmember);
 				} else {
 					errorMsgs.add("個人資料修改失敗");
 				}

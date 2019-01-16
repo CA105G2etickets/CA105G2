@@ -56,8 +56,9 @@ public class MemberService {
 		return member;
 	}
 	
-	public MemberVO updateMemberFront(String memberNo, String memberFullname, String email, String phone,
-			String memberAccount, String memberPassword, byte[] profilePicture) {
+	public MemberVO updateMemberFront(String memberNo, String memberFullname, String email, String phone, String idcard, String memberAccount,
+			String memberPassword, Integer ewalletBalance, Timestamp creationDate, byte[] profilePicture,
+			String memberStatus, String thirduid) {
 		
 		MemberVO member = new MemberVO();
 		
@@ -65,9 +66,14 @@ public class MemberService {
 		member.setMemberFullname(memberFullname);
 		member.setEmail(email);
 		member.setPhone(phone);
+		member.setIdcard(idcard);
 		member.setMemberAccount(memberAccount);
 		member.setMemberPassword(memberPassword);
+		member.setEwalletBalance(ewalletBalance);
+		member.setCreationDate(creationDate);
 		member.setProfilePicture(profilePicture);
+		member.setMemberStatus(memberStatus);
+		member.setThirduid(thirduid);
 		dao.update_front(member);
 		
 		return member;

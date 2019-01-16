@@ -91,12 +91,9 @@ function readURL(input){
 		<td>會員編號:<font color=red></font></td>
 		<td><%=member.getMemberNo()%></td>
 	</tr>
-	<tr height="145">
-		<td>會員大頭貼:</td>
-		<td>
-		<input type="file" accept="image/jpeg, image/png" name="picture" onchange="readURL(this)" targetID="previewImg">
-		<img id="previewImg" src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="100" width="100">
-		</td>
+	<tr>
+		<td>會員大頭貼</td>
+		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50" class="memberimg"></td>
 	</tr>
 	<tr>
 		<td>會員姓名:</td>
@@ -133,6 +130,11 @@ function readURL(input){
 </table>
 <br>
 <input type="hidden" name="action" value="update_front">
+<input type="hidden" name="idcard" value="<%=member.getIdcard()%>">
+<input type="hidden" name="ewalletBalance" value="<%=member.getEwalletBalance()%>">
+<input type="hidden" name="creationDate" value="<%=member.getCreationDate()%>">
+<input type="hidden" name="memberStatus" value="<%=member.getMemberStatus()%>">
+<input type="hidden" name="thirduid" value="<%=member.getThirduid()%>">
 <input type="hidden" name="memberno" value="<%=member.getMemberNo()%>">
 <div class="col-xs-12 col-sm-12 frontmemberbutton">
 <input type="submit" value="送出修改" class="btn btn-primary btn-lg memberprofilebtn">

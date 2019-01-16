@@ -12,6 +12,7 @@
 <title>ETIckeTs娛樂</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -20,11 +21,23 @@
 <style>
 .memberphoto {
 	border-radius: 50px;
-	margin-top: 20px;
+	position: absolute;
+	margin-top: 30;
+	z-index:1;
+}
+.memberPhotoEdit {
+	position: absolute;
+	margin-top: 30;
+	visibility: hidden;
 }
 .membermenu {
-	margin-top: 100px;
-	margin-left: 200px;
+	margin-top: 8em;
+	margin-left: 20%;
+}
+.navbarmemberbtn {
+	position: absolute;
+	margin-bottom: 0;
+	padding: 1px;
 }
 .topnav {
 	list-style-type: none;
@@ -64,6 +77,7 @@
 
 <nav class="navbar navbar-default" role="navigation">
 			<div class="container">
+			<div class="row">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 						<span class="sr-only">選單切換</span>
@@ -81,17 +95,26 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<!-- 右選單 -->
 					<%if (session.getAttribute("member") == null) {%>
-					<a href="/CA105G2/frontend/login_front-end.jsp"><img src="https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"></a>
+					<a href="/CA105G2/frontend/login_front-end.jsp">
+					<div style="float:right; margin-right: 5%">
+					<img src="https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" class="memberphoto" alt="memberphoto" width="80px" height="80px">
+					</div>
+					</a>
 					<% } else {%>
-					<a href="<%=request.getContextPath()%>/frontend/member/member_profile.jsp"><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"></a>
+					<a href="<%=request.getContextPath()%>/frontend/member/member_profile.jsp">
+					<div style="float:right; margin-right: 5%">
+					<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" width="80px" height="80px">
+					<img src="<%=request.getContextPath()%>/frontend/member/images/編輯.png" class="memberPhotoEdit" width="80px" height="80px"">
+					</div>
+					</a>
 					<%}%>
 <%-- 					<img src="${member eq null ? "https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" : "<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=request.getContextPath()%>"}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"> --%>
 					<ul class="nav navbar-nav navbar-right membermenu">
 					
 					<%Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");%>
 					
-						  <li>
-						  	<a href="<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp" class="shoppingC">
+						  <li style="padding: 0; margin-top: 0">
+						  	<a href="<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp" class="shoppingC navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">
 						  		<i class="glyphicon glyphicon-shopping-cart"></i>
 						    	<span class="badge badge-primary badge-pill">
 							    	<%if (buylist != null) {%>
@@ -107,16 +130,16 @@
 						<%if (session.getAttribute("member") == null) {%>
 						
 						<% } else {%>
-						<li><a href="<%=request.getContextPath()%>/frontend/ewallet/memberEwallet.jsp">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li>
+						<li style="padding: 0; margin-top: 0"><a href="<%=request.getContextPath()%>/frontend/ewallet/memberEwallet.jsp" class="navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li>
 						<%}%>
 						
 						
-						<li>
+						<li style="padding: 0; margin-top: 0">
 						<%if (session.getAttribute("member") == null) {%>
-						<a href="/CA105G2/frontend/login_front-end.jsp"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;登入</font></a>
+						<a href="/CA105G2/frontend/login_front-end.jsp" class="navbarmemberbtn" style="padding-bottom: 0; padding-top: 30"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;登入</font></a>
 						<% } else {%>
-						<a>
-						<form  METHOD="post" ACTION="/CA105G2/member/member.do">
+						<a class="navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">
+						<form  METHOD="post" ACTION="/CA105G2/member/member.do" style="margin: 0">
                                 <input type="hidden" name="action" value="member_Logout">
 								<i class="glyphicon glyphicon-log-out"></i>
 								<input type="submit" value="登出" style="border: none ; background: none">
@@ -141,8 +164,10 @@
 				</div>
 				<!-- 手機隱藏選單區結束 -->
 			</div>
-			<div class="container">
-			<div class="topnav">
+			</div>
+<div class="container">
+	<div class="row">
+		<div class="topnav">
 			<font size="4">
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
 				<div>
@@ -176,7 +201,21 @@
 			</div>
 			</font>
 		</div>
-		</div>
+	</div>
+</div>
 		</nav>
+		
+<script>
+$(document).ready(function() {
+		$(".memberphoto").hover(function() {
+			$(this).css("opacity","0.4");
+			$(".memberPhotoEdit").css("visibility","visible");
+		},function() {
+			$(this).css("opacity","1");
+			$(".memberPhotoEdit").css("visibility","hidden");
+		});
+});
+</script>
+
 </body>
 </html>

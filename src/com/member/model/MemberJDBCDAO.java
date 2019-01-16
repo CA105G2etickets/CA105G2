@@ -19,7 +19,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	private static final String UPDATE = 
 			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, IDCARD = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, EWALLET_BALANCE = ?, CREATION_DATE = ?, PROFILE_PICTURE = ?, MEMBER_STATUS = ? WHERE MEMBER_NO = ?";
 	private static final String UPDATE_FOR_FRONT = 
-			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, PROFILE_PICTURE = ? WHERE MEMBER_NO = ?";
+			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, IDCARD = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, EWALLET_BALANCE = ?, CREATION_DATE = ?, PROFILE_PICTURE = ?, MEMBER_STATUS = ?, THIRDUID = ? WHERE MEMBER_NO = ?";
 	private static final String UPDATE_FOR_WITHDRAWAL = 
 			"UPDATE MEMBER SET MEMBER_FULLNAME = ?, EMAIL = ?, PHONE = ?, IDCARD = ?, MEMBER_ACCOUNT = ?, MEMBER_PASSWORD = ?, EWALLET_BALANCE = ?, CREATION_DATE = ?, PROFILE_PICTURE = ?, MEMBER_STATUS = ?, THIRDUID = ? WHERE MEMBER_NO = ?";
 	private static final String UPDATE_FOR_DEPOSIT = 
@@ -142,10 +142,15 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			pstmt.setString(1, member.getMemberFullname());
 			pstmt.setString(2, member.getEmail());
 			pstmt.setString(3, member.getPhone());
-			pstmt.setString(4, member.getMemberAccount());
-			pstmt.setString(5, member.getMemberPassword());
-			pstmt.setBytes(6, member.getProfilePicture());
-			pstmt.setString(7, member.getMemberNo());
+			pstmt.setString(4, member.getIdcard());
+			pstmt.setString(5, member.getMemberAccount());
+			pstmt.setString(6, member.getMemberPassword());
+			pstmt.setInt(7, member.getEwalletBalance());
+			pstmt.setTimestamp(8, member.getCreationDate());
+			pstmt.setBytes(9, member.getProfilePicture());
+			pstmt.setString(10, member.getMemberStatus());
+			pstmt.setString(11, member.getThirduid());
+			pstmt.setString(12, member.getMemberNo());
 			
 			pstmt.executeUpdate();
 			
