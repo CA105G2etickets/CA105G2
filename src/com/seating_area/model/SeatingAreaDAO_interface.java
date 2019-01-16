@@ -2,7 +2,9 @@ package com.seating_area.model;
 import java.util.*;
 
 import com.ticket.model.TicketVO;
+import com.ticket.model.TicketVO2;
 import com.ticketorder.model.TicketOrderVO;
+import com.ticketorder.model.TicketOrderVO2;
 
 
 public interface SeatingAreaDAO_interface {
@@ -15,8 +17,8 @@ public interface SeatingAreaDAO_interface {
     
     
     public void insertFromTicketType(SeatingAreaVO seatingareaVO , java.sql.Connection con);
-    public Set<TicketOrderVO> getTicketOrders_BySeatingArea(String ticarea_no);
-    public Set<TicketVO> getTickets_BySeatingArea(String ticarea_no);
+    public Set<TicketOrderVO2> getTicketOrders_BySeatingArea(String ticarea_no);
+    public Set<TicketVO2> getTickets_BySeatingArea(String ticarea_no);
     
     
 	//========== BEAR begin ======================================================================

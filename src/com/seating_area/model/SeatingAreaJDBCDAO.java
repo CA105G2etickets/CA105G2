@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.ticket.model.TicketVO;
+import com.ticket.model.TicketVO2;
 import com.ticketorder.model.TicketOrderVO;
+import com.ticketorder.model.TicketOrderVO2;
 
 
 public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
@@ -375,10 +377,10 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
     
     
 	@Override
-	public Set<TicketOrderVO> getTicketOrders_BySeatingArea(String ticarea_no) {
+	public Set<TicketOrderVO2> getTicketOrders_BySeatingArea(String ticarea_no) {
 		
-		Set<TicketOrderVO> ticketOrderVOset = new LinkedHashSet<TicketOrderVO>();
-		TicketOrderVO ticketorderVO = null;
+		Set<TicketOrderVO2> ticketOrderVOset = new LinkedHashSet<>();
+		TicketOrderVO2 ticketorderVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -393,7 +395,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				ticketorderVO = new TicketOrderVO();
+				ticketorderVO = new TicketOrderVO2();
 				ticketorderVO.setTicket_order_no(rs.getString("ticket_order_no"));
 				ticketorderVO.setMember_no(rs.getString("member_no"));
 				ticketorderVO.setTicarea_no(rs.getString("ticarea_no"));
@@ -440,10 +442,10 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 	
 	
 	@Override
-	public Set<TicketVO> getTickets_BySeatingArea(String ticarea_no) {
+	public Set<TicketVO2> getTickets_BySeatingArea(String ticarea_no) {
 		
-		Set<TicketVO> ticketOrderVOset = new LinkedHashSet<TicketVO>();
-		TicketVO ticketVO = null;
+		Set<TicketVO2> ticketOrderVOset = new LinkedHashSet<>();
+		TicketVO2 ticketVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -458,7 +460,7 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				ticketVO = new TicketVO();
+				ticketVO = new TicketVO2();
 				ticketVO.setTicket_no(rs.getString("ticket_no"));
 				ticketVO.setTicarea_no(rs.getString("ticarea_no"));
 				ticketVO.setTicket_order_no(rs.getString("ticket_order_no"));
@@ -609,8 +611,8 @@ public class SeatingAreaJDBCDAO implements SeatingAreaDAO_interface{
 //		System.out.println("---------------------");
 		
 		//用票區找票券
-		Set<TicketVO> ticketVolist = dao.getTickets_BySeatingArea("ES00000001");
-		for(TicketVO aTicketVO : ticketVolist) {
+		Set<TicketVO2> ticketVolist = dao.getTickets_BySeatingArea("ES00000001");
+		for(TicketVO2 aTicketVO : ticketVolist) {
 			System.out.print(aTicketVO.getTicarea_no() + ",");
 			System.out.print(aTicketVO.getTicket_order_no() + ",");
 			System.out.print(aTicketVO.getMember_no() + ",");

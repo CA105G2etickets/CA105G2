@@ -13,6 +13,7 @@ import com.event.model.EventVO;
 import com.seating_area.model.SeatingAreaService;
 import com.seating_area.model.SeatingAreaVO;
 import com.ticket.model.TicketVO;
+import com.ticket.model.TicketVO2;
 
 public class EventTitleService {
 
@@ -121,11 +122,11 @@ public class EventTitleService {
 		return eventTitleList;
 	}
 	
-	public Set<TicketVO> getTicketsByEventTitle(String evetit_no) {		
+	public Set<TicketVO2> getTicketsByEventTitle(String evetit_no) {		
 		
 		Set<EventVO> eventVOset = getEventsByEventTitle(evetit_no);
 		
-		Set<TicketVO> ticketVO_ByEvent = new LinkedHashSet<>();
+		Set<TicketVO2> ticketVO_ByEvent = new LinkedHashSet<>();
 		
 		EventService eventService = new EventService();
 		SeatingAreaService seatingAreaService = new SeatingAreaService();
@@ -133,8 +134,8 @@ public class EventTitleService {
 		for(EventVO eventVO : eventVOset) {
 			Set<SeatingAreaVO> SeatingAreaVoSet = eventService.getSeatingAreasByEvent(eventVO.getEve_no());
 			for(SeatingAreaVO aSeatingAreaVO : SeatingAreaVoSet) {
-				Set<TicketVO> ticketVOset = seatingAreaService.getTickets_BySeatingArea(aSeatingAreaVO.getTicarea_no());
-				for(TicketVO aTicketVO : ticketVOset) {
+				Set<TicketVO2> ticketVOset = seatingAreaService.getTickets_BySeatingArea(aSeatingAreaVO.getTicarea_no());
+				for(TicketVO2 aTicketVO : ticketVOset) {
 					ticketVO_ByEvent.add(aTicketVO);
 				}
 			}

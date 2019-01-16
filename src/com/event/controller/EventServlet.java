@@ -27,6 +27,7 @@ import com.event.model.EventVO;
 import com.event_title.model.EventTitleService;
 import com.member.model.MemberService;
 import com.ticket.model.TicketVO;
+import com.ticket.model.TicketVO2;
 import com.ticket_type.model.TicketTypeVO;
 import com.ticketorder.model.TicketOrderVO;
 
@@ -455,7 +456,7 @@ public class EventServlet extends HttpServlet {
 				/****************************** 2.開始查詢資料 **************************************************/
 				EventService eventService = new EventService();
 				EventTitleService eventTitleService = new EventTitleService();
-				Set<TicketVO> ticketVOset = null;
+				Set<TicketVO2> ticketVOset = null;
 				if("allEvents".equals(eve_no)) {
 					ticketVOset = eventTitleService.getTicketsByEventTitle(evetit_no);
 				} else {
@@ -504,7 +505,7 @@ public class EventServlet extends HttpServlet {
 				/****************************** 2.開始查詢資料 **************************************************/
 				EventService eventService = new EventService();
 				EventTitleService eventTitleService = new EventTitleService();
-				Set<TicketVO> ticketVOset = null;
+				Set<TicketVO2> ticketVOset = null;
 				
 				if("allEvents".equals(eve_no)) {
 					ticketVOset = eventTitleService.getTicketsByEventTitle(evetit_no);
@@ -520,7 +521,7 @@ public class EventServlet extends HttpServlet {
 				Set<String> emailAddressSet = new HashSet<>();
 				Set<String> phoneNumberSet = new HashSet<>();
 				
-				for(TicketVO aTicketVO : ticketVOset) {
+				for(TicketVO2 aTicketVO : ticketVOset) {
 					String emailAddress = memberService.getOneMember(aTicketVO.getMember_no()).getEmail();
 					emailAddressSet.add(emailAddress);
 					String phoneNumber = memberService.getOneMember(aTicketVO.getMember_no()).getPhone().replace("-", "");
