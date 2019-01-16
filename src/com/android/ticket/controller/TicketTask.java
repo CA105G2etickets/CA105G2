@@ -2,14 +2,15 @@ package com.android.ticket.controller;
 
 import java.util.TimerTask;
 
+import com.ticketorder.model.Old_TicketOrderVO;
 import com.ticketorder.model.TicketOrderService;
 import com.ticketorder.model.TicketOrderVO;
 
 public class TicketTask extends TimerTask{
-	private TicketOrderVO ticketOrderVO = null;
+	private Old_TicketOrderVO ticketOrderVO = null;
 	private TicketOrderService ticketOrderService = new TicketOrderService();
 	
-	public TicketTask(TicketOrderVO ticketOrderVO) {
+	public TicketTask(Old_TicketOrderVO ticketOrderVO) {
 		this.ticketOrderVO = ticketOrderVO;
 		System.out.println(ticketOrderVO.getTicket_order_no()+"15分鐘開始");
 	}

@@ -4,16 +4,19 @@ import java.util.List;
 import java.util.Set;
 
 import com.seating_area.model.SeatingAreaVO;
+import com.ticket.model.Old_TicketVO;
 import com.ticket.model.TicketVO;
 import com.ticket.model.TicketVO2;
 
 public class TicketOrderService {
 	private TicketOrderDAO_interface dao;
+	private Old_TicketOrderDAO_interface old_dao;
 	
 	public TicketOrderService() {
 //		dao = new TicketOrderDAOJDBC();
 //		dao2 = new TicketOrderDAO();
 		dao = new TicketOrderHibernateDAO();
+		old_dao = new Old_TicketOrderDAO();
 	}
 	public TicketOrderVO addTicketOrder(String member_no, String ticarea_no, Integer total_price, 
 			Integer total_amount,Timestamp ticket_order_time,String payment_method,
@@ -87,4 +90,23 @@ public class TicketOrderService {
 //	public String cancelTicketOrderByServlet(String ticket_order_no) {
 //		return dao.cancelTicketOrderByServlet(ticket_order_no);
 //	}
+	
+	
+	
+	//================================================== 與舊版本相容 ==================================================
+	public void insertWithTickets(Old_TicketOrderVO ticketorderVO, List<Old_TicketVO> list) {
+		old_dao.insertWithTickets(ticketorderVO, list);
+	}
+	public String insertTicketOrderAndUpdateTicArea(Old_TicketOrderVO ticketorderVO, SeatingAreaVO seatingareaVO) {
+		return old_dao.insertTicketOrderAndUpdateTicArea(ticketorderVO, seatingareaVO);
+	}
+	public String cancelTicketOrderByServlet(String ticket_order_no) {
+		return old_dao.cancelTicketOrderByServlet(ticket_order_no);
+	}
+	public void updateTicketOrderAndInsertTickets(Old_TicketOrderVO ticketorderVO2, List<Old_TicketVO> ticket2List) {
+		com.ticketorder.model.Old_TicketOrderDAO dao2 = new com.ticketorder.model.Old_TicketOrderDAO();
+		dao2.updateTicketOrderAndInsertTickets(ticketorderVO2, ticket2List);
+	}
+	//================================================== 與舊版本相容 ==================================================
+	
 }

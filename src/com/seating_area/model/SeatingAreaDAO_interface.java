@@ -3,8 +3,8 @@ import java.util.*;
 
 import com.ticket.model.TicketVO;
 import com.ticket.model.TicketVO2;
+import com.ticketorder.model.Old_TicketOrderVO;
 import com.ticketorder.model.TicketOrderVO;
-import com.ticketorder.model.TicketOrderVO2;
 
 
 public interface SeatingAreaDAO_interface {
@@ -17,7 +17,7 @@ public interface SeatingAreaDAO_interface {
     
     
     public void insertFromTicketType(SeatingAreaVO seatingareaVO , java.sql.Connection con);
-    public Set<TicketOrderVO2> getTicketOrders_BySeatingArea(String ticarea_no);
+    public Set<Old_TicketOrderVO> getTicketOrders_BySeatingArea(String ticarea_no);
     public Set<TicketVO2> getTickets_BySeatingArea(String ticarea_no);
     
     

@@ -17,8 +17,8 @@ import com.seating_area.model.SeatingAreaVO;
 import com.ticket.model.TicketVO;
 import com.ticket.model.TicketVO2;
 import com.ticket_type.model.TicketTypeVO;
+import com.ticketorder.model.Old_TicketOrderVO;
 import com.ticketorder.model.TicketOrderVO;
-import com.ticketorder.model.TicketOrderVO2;
 
 public class EventService {
 
@@ -116,13 +116,13 @@ public class EventService {
 	}
 	
 	
-	public Set<TicketOrderVO2> getTicketOrdersByEvent(String eve_no) {				
+	public Set<Old_TicketOrderVO> getTicketOrdersByEvent(String eve_no) {				
 		Set<SeatingAreaVO> SeatingAreaVoSet = getSeatingAreasByEvent(eve_no);
-		Set<TicketOrderVO2> ticketOrderVO_ByEvent = new LinkedHashSet<>();
+		Set<Old_TicketOrderVO> ticketOrderVO_ByEvent = new LinkedHashSet<>();
 		SeatingAreaService seatingAreaService = new SeatingAreaService();
 		for(SeatingAreaVO aSeatingAreaVO : SeatingAreaVoSet) {
-			Set<TicketOrderVO2> ticketOrderVOset = seatingAreaService.getTicketOrders_BySeatingArea(aSeatingAreaVO.getTicarea_no());
-			for(TicketOrderVO2 aTicketOrderVO : ticketOrderVOset) {
+			Set<Old_TicketOrderVO> ticketOrderVOset = seatingAreaService.getTicketOrders_BySeatingArea(aSeatingAreaVO.getTicarea_no());
+			for(Old_TicketOrderVO aTicketOrderVO : ticketOrderVOset) {
 				ticketOrderVO_ByEvent.add(aTicketOrderVO);
 			}
 		}

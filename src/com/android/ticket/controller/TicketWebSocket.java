@@ -28,7 +28,9 @@ import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.seating_area.model.SeatingAreaService;
 import com.seating_area.model.SeatingAreaVO;
+import com.ticket.model.Old_TicketVO;
 import com.ticket.model.TicketVO;
+import com.ticketorder.model.Old_TicketOrderVO;
 import com.ticketorder.model.TicketOrderService;
 import com.ticketorder.model.TicketOrderVO;
 
@@ -37,7 +39,7 @@ public class TicketWebSocket {
 	private static java.util.Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
 	private static java.util.Map<String, Timer> timersessions = new ConcurrentHashMap<>();
-	private static java.util.Map<String, TicketOrderVO> ordersessions = new ConcurrentHashMap<>();
+	private static java.util.Map<String, Old_TicketOrderVO> ordersessions = new ConcurrentHashMap<>();
 	
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
@@ -62,7 +64,7 @@ public class TicketWebSocket {
 			Integer total_price = Integer.valueOf(jsin.get("total_price").getAsString());
 			Integer total_amount = Integer.valueOf(jsin.get("total_amount").getAsString());	
 			java.sql.Timestamp ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
-			TicketOrderVO ticketOrderVO = new TicketOrderVO();
+			Old_TicketOrderVO ticketOrderVO = new Old_TicketOrderVO();
 			ticketOrderVO.setMember_no(member_no);
 			ticketOrderVO.setTicarea_no(ticarea_no);
 			ticketOrderVO.setTotal_price(total_price);
@@ -75,7 +77,7 @@ public class TicketWebSocket {
 
 			Integer booked = sVo.getTicbookednumber();
 			sVo.setTicbookednumber(booked+total_amount);
-			
+			 
 			TicketOrderService ticketOrderService = new TicketOrderService();
 			String orderNo = ticketOrderService.insertTicketOrderAndUpdateTicArea(ticketOrderVO, sVo);
 			ticketOrderVO.setTicket_order_no(orderNo);
@@ -89,11 +91,11 @@ public class TicketWebSocket {
 			}
 		}
 		if("pay".equals(action)) {
-			List<TicketVO> tlist = new ArrayList<TicketVO>();
+			List<Old_TicketVO> tlist = new ArrayList<Old_TicketVO>();
 			String payType = jsin.get("payType").getAsString();
 			String memberNo = jsin.get("memberNo").getAsString();
 			String totalPrice = jsin.get("totalPrice").getAsString();
-			TicketOrderVO toVO = ordersessions.get(memberNo);
+			Old_TicketOrderVO toVO = ordersessions.get(memberNo);
 			if("wallet".equals(payType)) {
 				MemberDAO memberDAO = new MemberDAO();
 				MemberVO memberVO = memberDAO.findByPrimaryKey(memberNo);
@@ -108,7 +110,7 @@ public class TicketWebSocket {
 				Integer ticket_resale_price = 0;
 				String is_from_resale = "NO";
 				
-				TicketVO tVO = new TicketVO();
+				Old_TicketVO tVO = new Old_TicketVO();
 				tVO.setTicarea_no(toVO.getTicarea_no());
 				tVO.setMember_no(toVO.getMember_no());
 				tVO.setTicket_status(ticket_status);
@@ -129,11 +131,11 @@ public class TicketWebSocket {
 		if("cancel".equals(action)) {
 			String memberNo = jsin.get("memberNo").getAsString();
 			timersessions.get(memberNo).cancel();
-			TicketOrderVO ticketOrderVO = ordersessions.get(memberNo);
+			Old_TicketOrderVO ticketOrderVO = ordersessions.get(memberNo);
 			TicketOrderService ticketOrderService = new TicketOrderService();
 			ticketOrderService.cancelTicketOrderByServlet(ticketOrderVO.getTicket_order_no());
 		}
-		
+		 
 	}
 	
 	@OnError
