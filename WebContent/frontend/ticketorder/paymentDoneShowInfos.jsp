@@ -1,24 +1,34 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.ticketorder.model.*"%>
 <%@ page import="com.ticket.model.*"%>
-<%@ page import="com.seating_area.model.*"%>
-<%@ page import="com.event.model.*"%>
+<%@ page import="com.ticketorder.model.*"%>
+
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%-- <%
+TicketOrderVO toVO = (TicketOrderVO)request.getAttribute("updated_tovo");
+Event_H5_VO eh5VO = (Event_H5_VO)request.getAttribute("eh5vo");
+List<TicketVO> tVOs = (List<TicketVO>)request.getAttribute("memberListTVO");
+List<SeatingArea_H5_VO> sVOs = (List<SeatingArea_H5_VO>)request.getAttribute("slist");
+pageContext.setAttribute("toVO",toVO);
+pageContext.setAttribute("eh5VO",eh5VO);
+pageContext.setAttribute("tVOs",tVOs);
+pageContext.setAttribute("sVOs",sVOs);
+String eve_noFromPage = request.getParameter("eve_no");
+%> --%>
+
 <%
 TicketOrderVO toVO = (TicketOrderVO)request.getAttribute("updated_tovo");
-List<TicketVO> tVO = (List<TicketVO>)request.getAttribute("memberListTVO");
+List<ShowTicketVO> stvos = (List<ShowTicketVO>)request.getAttribute("listShow");
 pageContext.setAttribute("toVO",toVO);
-pageContext.setAttribute("tVO",tVO);
-String eve_noFromPage = request.getParameter("eve_no");
+pageContext.setAttribute("stvos", stvos);
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>模擬訂票訂單資料附帶票券的新增 - selectPayment.jsp</title><h3><%=eve_noFromPage%></h3>
+<title>模擬訂票訂單資料附帶票券的新增 - selectPayment.jsp</title>
 
 <style>
   table {
@@ -38,7 +48,7 @@ String eve_noFromPage = request.getParameter("eve_no");
 </head>
 <body bgcolor='white'>
 
-<%-- 錯誤表列 --%>
+<%--  錯誤表列 
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -55,7 +65,7 @@ String eve_noFromPage = request.getParameter("eve_no");
 			<li style="color:blue">${message}</li>
 		</c:forEach>
 	</ul>
-</c:if>
+</c:if> --%>
 
 <table>
 	<tr>
@@ -90,29 +100,40 @@ String eve_noFromPage = request.getParameter("eve_no");
 <h3>列出該訂單的所有票券</h3>
 <table>
 	<tr>
-		<th>員工編號</th>
-		<th>員工姓名</th>
-		<th>職位</th>
-		<th>雇用日期</th>
-		<th>薪水</th>
-		<th>獎金</th>
-		<th>部門</th>
-		<th>修改</th>
-		<th>刪除</th>
+		<th>票券編號</th>
+		<th>持票人會員編號</th>
+		<th>票券狀態</th>
+		<th>活動座位區名稱</th>
+		<th>活動座位區顏色代碼</th>
+		
+		<th>票種名稱</th>
+		<th>票種價格</th>
+		<th>場次名稱</th>
+		<th>活動開始日期</th>
+		<th>活動結束日期</th>
+		<th>售票結束日期</th>
+		<th>活動主題名稱</th>
+		<th>場地名稱</th>
+		<th>場地地址</th>
+		
 	</tr>
-	<c:forEach var="empVO" items="${list}">
+	<c:forEach var="showticketVO" items="${stvos}">
 		<tr>
-			<td>${empVO.empno}</td>
-			<td>${empVO.ename}</td>
-			<td>${empVO.job}</td>
-			<td>${empVO.hiredate}</td>
-			<td>${empVO.sal}</td>
-			<td>${empVO.comm}</td>			
-			<td>
-			  ${empVO.deptVO.deptno}【<font color=orange>${empVO.deptVO.dname}</font> - ${empVO.deptVO.loc}】
-			</td>
-			<td></td>
-			<td></td>
+			<td>${showticketVO.ticket_no}</td>
+			<td>${showticketVO.member_no}</td>
+			<td>${showticketVO.ticket_status}</td>
+			<td>${showticketVO.ticarea_name}</td>
+			<td>${showticketVO.ticarea_color}</td>
+			
+			<td>${showticketVO.tictype_name}</td>
+			<td>${showticketVO.tictype_price}</td>
+			<td>${showticketVO.eve_sessionname}</td>
+			<td>${showticketVO.eve_startdate}</td>
+			<td>${showticketVO.eve_enddate}</td>
+			<td>${showticketVO.eve_offsaledate}</td>
+			<td>${showticketVO.evetit_name}</td>
+			<td>${showticketVO.venue_name}</td>
+			<td>${showticketVO.address}</td>
 		</tr>
 	</c:forEach>
 </table>

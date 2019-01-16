@@ -22,7 +22,7 @@
         <property name="payment_method" column="payment_method" />
         <property name="ticket_order_status" column="ticket_order_status" />
         
-        <set name="tickets" table="ticket" lazy="true" cascade="all" order-by="ticket_no asc">			
+        <set name="tickets" table="ticket" lazy="false" cascade="all" order-by="ticket_no asc">			
 			<key>
 				<column name="ticket_order_no" />
 			</key>

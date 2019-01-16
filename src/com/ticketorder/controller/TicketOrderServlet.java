@@ -20,6 +20,7 @@ import com.seating_area.model.SeatingAreaService;
 import com.seating_area.model.SeatingAreaVO;
 import com.seating_area.model.SeatingArea_H5_Service;
 import com.seating_area.model.SeatingArea_H5_VO;
+import com.ticket.model.ShowTicketVO;
 import com.ticket.model.TicketService;
 import com.ticket.model.TicketVO;
 import com.ticket.model.TicketVO2;
@@ -531,11 +532,14 @@ public class TicketOrderServlet extends HttpServlet {
 			Event_H5_VO eh5vo = new Event_H5_VO();
 			List<String> list4PassValue = new LinkedList<String>();
 			
+			//set eve_no to req to get data user want to see.
+			String eve_no = req.getParameter("eve_no");
+			
 			try {
 				String ticarea_no = req.getParameter("ticarea_no");
 				String ticketsNum = req.getParameter("ticketsNum");
 				String tictype_no = req.getParameter("tictype_no");
-				String eve_no = req.getParameter("eve_no");
+				
 				
 				list4PassValue.add(req.getParameter("evetit_nameForShow"));
 				list4PassValue.add(req.getParameter("eve_sessionnameForShow"));
@@ -738,6 +742,7 @@ public class TicketOrderServlet extends HttpServlet {
 				errorMsgs.add("錯誤訊息如下:"+ne.getMessage());
 				req.setAttribute("slist", list);
 				req.setAttribute("eh5vo", eh5vo);
+				req.setAttribute("eve_no", eve_no);
 				req.setAttribute("list4PassValue", list4PassValue);
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
@@ -757,6 +762,7 @@ public class TicketOrderServlet extends HttpServlet {
 				
 				req.setAttribute("slist", list);
 				req.setAttribute("eh5vo", eh5vo);
+				req.setAttribute("eve_no", eve_no);
 				req.setAttribute("list4PassValue", list4PassValue);
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
@@ -766,21 +772,22 @@ public class TicketOrderServlet extends HttpServlet {
         if("userPaying".equals(action)) {
         	List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			List<String> list4PassValue = new LinkedList<String>();
+//			List<String> list4PassValue = new LinkedList<String>();
+			String eve_no = req.getParameter("eve_no");
 			
 			try {
 				String ticket_order_no = req.getParameter("ticket_order_no");
 				String creditCardNumber = req.getParameter("creditCardNumber");
 				String creditCardVerificationNumber = req.getParameter("creditCardVerificationNumber");
 				
-				//lsit4showInfo
-				list4PassValue.add(req.getParameter("evetit_nameForShow"));
-				list4PassValue.add(req.getParameter("eve_sessionnameForShow"));
-				list4PassValue.add(req.getParameter("eve_startdateForShow"));
-				list4PassValue.add(req.getParameter("eve_enddateForShow"));
-				list4PassValue.add(req.getParameter("venue_nameForShow"));
-				list4PassValue.add(req.getParameter("addressForShow"));
-				list4PassValue.add(req.getParameter("tictype_nameForShow"));
+//				//lsit4showInfo
+//				list4PassValue.add(req.getParameter("evetit_nameForShow"));
+//				list4PassValue.add(req.getParameter("eve_sessionnameForShow"));
+//				list4PassValue.add(req.getParameter("eve_startdateForShow"));
+//				list4PassValue.add(req.getParameter("eve_enddateForShow"));
+//				list4PassValue.add(req.getParameter("venue_nameForShow"));
+//				list4PassValue.add(req.getParameter("addressForShow"));
+//				list4PassValue.add(req.getParameter("tictype_nameForShow"));
 				
 				//ticket_order_no
 				if (ticket_order_no == null || (ticket_order_no.trim()).length() == 0) {
@@ -822,7 +829,8 @@ public class TicketOrderServlet extends HttpServlet {
 				
 				//set toVO for userStartPaying.jsp and to use
 				req.setAttribute("toVO", toVO);
-				req.setAttribute("list4PassValue", list4PassValue);
+				req.setAttribute("eve_no", eve_no);
+//				req.setAttribute("list4PassValue", list4PassValue);
 				
 				//check toVO's status to let user cant update the status when it's OUTDATE4
 				String targetToVoStatus = toVO.getTicket_order_status();
@@ -881,7 +889,70 @@ public class TicketOrderServlet extends HttpServlet {
 				map.put("ticket_order_no", new String[] {ticket_order_no});
 				map.put("member_no", new String[] {"M000001"});
 				List<TicketVO> memberListTVO = tSvc.getAll_map(map, "ticket_create_time");
-				req.setAttribute("memberListTVO", memberListTVO);
+//				req.setAttribute("memberListTVO", memberListTVO); //maybe useless while listShow work on
+				
+//				String[] strasdfasdef = memberListTVO.toArray(new String[memberListTVO.size()]);
+//				System.out.println(strasdfasdef);
+				
+				map.clear();
+//				map.put("eve_no", new String[] {eve_no});
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+//				List<SeatingArea_H5_VO> slist = sh5Svc.getAll(map, "ticarea_no");
+//				Event_H5_Service eh5Svc = new Event_H5_Service();
+//				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+//				
+//				req.setAttribute("slist", slist);
+//				req.setAttribute("eh5vo", eh5vo);
+				
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				List<ShowTicketVO> listShow = new LinkedList<ShowTicketVO>();
+				
+				for(TicketVO at:memberListTVO) {
+					ShowTicketVO stvo = new ShowTicketVO();
+					stvo.setTicket_no(at.getTicket_no());
+					stvo.setMember_no(at.getMember_no());
+					stvo.setTicket_status(at.getTicket_status());
+					
+//					System.out.println("at="+at.getSeatingarea_h5VO().getTicarea_no());
+					SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(at.getSeatingarea_h5VO().getTicarea_no());
+					stvo.setTicarea_name(sh5VO.getTicarea_name());
+					stvo.setTicarea_color(sh5VO.getTicarea_color());
+					stvo.setTictype_name(sh5VO.getTickettype_h5VO().getTictype_name());
+					stvo.setTictype_price(sh5VO.getTickettype_h5VO().getTictype_price());
+					
+//					System.out.println("sh5VO.get="+sh5VO.getEve_h5VO().getEve_no());
+					Event_H5_VO eh5VO = eh5Svc.getOneEvent_H5(sh5VO.getEve_h5VO().getEve_no());
+//					System.out.println("eh5VO.get="+eh5VO.getVenue_h5VO().getAddress());
+					stvo.setEve_sessionname(eh5VO.getEve_sessionname());
+					stvo.setEve_startdate(eh5VO.getEve_startdate());
+					stvo.setEve_enddate(eh5VO.getEve_enddate());
+					stvo.setEve_offsaledate(eh5VO.getEve_offsaledate());
+					stvo.setEvetit_name(eh5VO.getEventtitle_h5VO().getEvetit_name());
+					stvo.setVenue_name(eh5VO.getVenue_h5VO().getVenue_name());
+					stvo.setAddress(eh5VO.getVenue_h5VO().getAddress());
+					listShow.add(stvo);
+				}
+				req.setAttribute("listShow", listShow);
+				
+//				List<String> listTest = new LinkedList<String>();
+				
+//				for(TicketVO at:memberListTVO) {
+//					for(SeatingArea_H5_VO as:slist) {
+//						if(at.getSeatingarea_h5VO().getTicarea_no().equals(as.getTicarea_no())) {
+//							listTest.add(as.getTicarea_no());
+//						}
+//					}
+//				}
+				
+				
+				
+				
+				
+				//use List<ticketvo>'s ticarea_no to find event
+//				map.clear();
+//				for(TicketVO avo:memberListTVO) {
+//					
+//				}
 				
 				String url = "/frontend/ticketorder/paymentDoneShowInfos.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

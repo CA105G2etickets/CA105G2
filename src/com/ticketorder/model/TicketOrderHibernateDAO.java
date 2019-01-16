@@ -168,41 +168,53 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 //		dao.update(tovoi);
 		
 		//sim buyTickets update targetTicketorder and add tickets.
-		TicketOrderVO tovo1 = new TicketOrderVO();
-		com.ticketorder.model.TicketOrderService toSvc = new com.ticketorder.model.TicketOrderService();
-		tovo1 = toSvc.getOneTicketOrder("TO_20181225_000003");
+//		TicketOrderVO tovo1 = new TicketOrderVO();
+//		com.ticketorder.model.TicketOrderService toSvc = new com.ticketorder.model.TicketOrderService();
+//		tovo1 = toSvc.getOneTicketOrder("TO_20181225_000003");
+//		
+//		com.seating_area.model.SeatingArea_H5_VO svoNew = new com.seating_area.model.SeatingArea_H5_VO();
+//		com.seating_area.model.SeatingArea_H5_Service sh5Svc = new com.seating_area.model.SeatingArea_H5_Service();
+//		svoNew = sh5Svc.getOneSeatingArea_H5(tovo1.getSeatingarea_h5VO().getTicarea_no());
+//		Set<TicketVO> tset = new LinkedHashSet<TicketVO>();
+//		
+//		TicketVO tvo1 = new TicketVO();
+//		tvo1.setMember_no(tovo1.getMember_no());
+//		tvo1.setTicket_status("ACTIVE1");
+//		tvo1.setTicket_create_time(new java.sql.Timestamp(System.currentTimeMillis()));
+//		tvo1.setTicket_resale_status("NONE1");
+//		tvo1.setTicket_resale_price(0);
+//		tvo1.setIs_from_resale("no");
+//		tvo1.setSeatingarea_h5VO(svoNew);
+//		tvo1.setTicketorderVO(tovo1);
+//		
+//		TicketVO tvo2 = new TicketVO();
+//		tvo2.setMember_no("M000007");
+//		tvo2.setTicket_status("ACTIVE1");
+//		tvo2.setTicket_create_time(new java.sql.Timestamp(System.currentTimeMillis()));
+//		tvo2.setTicket_resale_status("NONE1");
+//		tvo2.setTicket_resale_price(0);
+//		tvo2.setIs_from_resale("no");
+//		tvo2.setSeatingarea_h5VO(svoNew);
+//		tvo2.setTicketorderVO(tovo1);
+//		
+//		tset.add(tvo1);
+//		tset.add(tvo2);
+//		
+//		tovo1.setTicket_order_status("UPDATES");
+//		tovo1.setTickets(tset);
+//		dao.update(tovo1);
 		
-		com.seating_area.model.SeatingArea_H5_VO svoNew = new com.seating_area.model.SeatingArea_H5_VO();
-		com.seating_area.model.SeatingArea_H5_Service sh5Svc = new com.seating_area.model.SeatingArea_H5_Service();
-		svoNew = sh5Svc.getOneSeatingArea_H5(tovo1.getSeatingarea_h5VO().getTicarea_no());
-		Set<TicketVO> tset = new LinkedHashSet<TicketVO>();
-		
-		TicketVO tvo1 = new TicketVO();
-		tvo1.setMember_no(tovo1.getMember_no());
-		tvo1.setTicket_status("ACTIVE1");
-		tvo1.setTicket_create_time(new java.sql.Timestamp(System.currentTimeMillis()));
-		tvo1.setTicket_resale_status("NONE1");
-		tvo1.setTicket_resale_price(0);
-		tvo1.setIs_from_resale("no");
-		tvo1.setSeatingarea_h5VO(svoNew);
-		tvo1.setTicketorderVO(tovo1);
-		
-		TicketVO tvo2 = new TicketVO();
-		tvo2.setMember_no("M000007");
-		tvo2.setTicket_status("ACTIVE1");
-		tvo2.setTicket_create_time(new java.sql.Timestamp(System.currentTimeMillis()));
-		tvo2.setTicket_resale_status("NONE1");
-		tvo2.setTicket_resale_price(0);
-		tvo2.setIs_from_resale("no");
-		tvo2.setSeatingarea_h5VO(svoNew);
-		tvo2.setTicketorderVO(tovo1);
-		
-		tset.add(tvo1);
-		tset.add(tvo2);
-		
-		tovo1.setTicket_order_status("UPDATES");
-		tovo1.setTickets(tset);
-		dao.update(tovo1);
+//		List<TicketOrderVO> list77 = dao.getAll();
+//		for(TicketOrderVO ato :list77) {
+//			System.out.print(ato.getTicket_order_no() + ",");
+//			System.out.println("\n----------------");
+//			Set<TicketVO> set77 = ato.getTickets();
+//			for(TicketVO at:set77) {
+//				System.out.print(at.getTicket_no() + ",");
+//				System.out.print(at.getTicket_create_time() + ",");
+//				System.out.println("\n----------------");
+//			}
+//		}
 		
 		//getall
 //		List<TicketOrderVO> list = dao.getAll();

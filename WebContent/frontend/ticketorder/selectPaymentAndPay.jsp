@@ -122,6 +122,7 @@ try {
 	<br>
 <input type="hidden" name="action" value="userPaying">
 <input type="hidden" name="ticket_order_no"  value="${toVO.ticket_order_no}">
+<input type="hidden" name="eve_no"  value="<%=eve_no%>">
 <input type="submit" value="進行付款">
 </FORM>
 
