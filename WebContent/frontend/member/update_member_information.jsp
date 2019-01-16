@@ -11,7 +11,9 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>ETIckeTs - 會員個人資料修改</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   table {
 	width: 450px;
@@ -25,7 +27,16 @@
   th, td {
     padding: 1px;
   }
-  /****************************************** 通知部分 ******************************************/
+  .memberprofilebtn {
+  	width: calc((100% - 4px) / 2);
+  }
+  .frontmemberbutton {
+  	margin-bottom: 40px;
+  	float: none;
+  	position: fixed;
+  	align-content: center;
+  }
+/****************************************** 通知部分 ******************************************/
 .badge-pill {
     padding: 0.2em;
     display: inline-block;
@@ -43,6 +54,7 @@
 }
 /****************************************** 通知結束 ******************************************/
 </style>
+
 <script>
 function readURL(input){
   if(input.files && input.files[0]){
@@ -56,7 +68,10 @@ function readURL(input){
   }
 }
 </script>
+
 </head>
+
+<body>
 
 <jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 
@@ -85,7 +100,7 @@ function readURL(input){
 	</tr>
 	<tr>
 		<td>會員姓名:</td>
-		<td><input type="TEXT" name="name" size="45" value="<%=member.getMemberFullname()%>" /></td>
+		<td><input type="TEXT" name="memberFullname" size="45" value="<%=member.getMemberFullname()%>" /></td>
 	</tr>
 	<tr>
 		<td>會員電子郵件:</td>
@@ -119,14 +134,11 @@ function readURL(input){
 <br>
 <input type="hidden" name="action" value="update_front">
 <input type="hidden" name="memberno" value="<%=member.getMemberNo()%>">
-<input type="submit" value="送出修改"></FORM>
-
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
+<div class="col-xs-12 col-sm-12 frontmemberbutton">
+<input type="submit" value="送出修改" class="btn btn-primary btn-lg memberprofilebtn">
+<a href="<%=request.getContextPath()%>/frontend/member/member_profile.jsp"><button type="button" class="btn btn-primary btn-lg memberprofilebtn">取消</button></a>
 </div>
-
+</FORM>
 </div>
 
 </body>

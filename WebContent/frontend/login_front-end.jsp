@@ -39,11 +39,11 @@
                                 <div class="form-group">
                                     <input class="form-control" id="password" placeholder="password" name="member_password" type="text">
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div>
+<!--                                 <div class="checkbox"> -->
+<!--                                     <label> -->
+<!--                                         <input name="remember" type="checkbox" value="Remember Me">Remember Me -->
+<!--                                     </label> -->
+<!--                                 </div> -->
                                 <input type="hidden" name="action" value="find_By_Account">
 								<input type="submit" value="Login">
 <!--                                 <a href="index.html" class="btn btn-info btn-block">Login</a> -->
@@ -67,7 +67,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
 			$(document).ready(function(){
-				$('#userlist').prepend(new Option('','', true));
+				$('#userlist').prepend(new Option('account,password','', true));
 				$('#userlist')[0].selectedIndex = 0;
 				$('#userlist').on('change',function(){
 					var str = $(this).val();
