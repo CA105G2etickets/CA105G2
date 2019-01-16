@@ -1,20 +1,19 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@ page import="java.util.*"%>
 <%@ page import="com.goods.model.*"%>
 <%@ page import="com.goods_qa.model.*"%>
-
+<%@ page import="com.favorite_goods.model.*"%>
 <%
 	GoodsQaVO goodsqaVO = (GoodsQaVO) request.getAttribute("goodsQaVO");
-%>
-<%
 	String goods_no = request.getParameter("goods_no");
-
 	GoodsService goodsService = new GoodsService();
 	GoodsVO goodsVO = goodsService.getOneGoods(goods_no);
 	pageContext.setAttribute("goodsVO", goodsVO);
+%>
+<%		
+	session.getAttribute("member");
 %>
 
 <!DOCTYPE html>
@@ -25,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>${aEventTitle.evetit_name}</title>
+<title>瀏覽商品詳情</title>
 <!-- Basic -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -46,9 +45,9 @@ body {
 
 <body>
 
-
-
 	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
+	<input type="hidden" name="member_no" id="member_no" value="${member.memberNo}">
+	<input type="hidden" name="projectName" id="projectName" value="<%=request.getContextPath() %>">
 
 
 	<div class="container" style="margin-bottom: 10px;">
@@ -106,25 +105,26 @@ body {
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<h3 style="margin-top: 0px;" class="alert alert-info" role="alert">${goodsVO.goods_name}</h3>
+				<div id="toggleFavoriteGoods" style="color:red;text-align:right">
+					<h3><i class="glyphicon glyphicon-heart-empty " id="clickFavoriteGoods">加入最愛</i></h3>
+					<input type="hidden" id="favoriteGoodsStatus" value="outTheFavoriteGoods">
+				</div>
 				<h3>原價 : ${goodsVO.goods_price} 元 / 個</h3>
-				<h3>
-					促銷價 :<font color="red"> ${goodsVO.forsales_a} </font>
-				</h3>
-				<h3>銷售量 : ${goodsVO.goods_sales_count} 個</h3>
-				<form name="shoppingForm"
-					action="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do"
-					method="POST">
-					<h3 style="text-align: right;">
-						數量： <input class="min" name="min" type="button" value="-" /> <input
-							type="text" class="ordernum" name="goods_quantity" size="2"
-							value=1> <input class="add" name="add" type="button"
-							value="+" />
+				<h3>促銷價 :<font color="red">  ${goodsVO.forsales_a} <font size="2">（購買十個以上即享有促銷價）</font></font></h3>
+				<h3>銷售量 : ${goodsVO.goods_sales_count}  個</h3>
+				<form name="shoppingForm" action="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do" method="POST">
+					<h3 style="text-align:right;">數量：
+						<div class="input-group" style="width:25%;float:right">
+							<div class="input-group-btn min"><input class="btn btn-default" type="button" value="-"/></div>
+							<input type="text" class="input-group form-control" name="goods_quantity" size="1" value=1>
+							<div class="input-group-btn add" ><input class="btn btn-default" type="button" value="+"/></div>
+						</div>
 					</h3>
-					<h3 style="text-align: right;">
-						<input type="submit" name="Submit" value="放入購物車"
-							style="float: right;"> <input type="hidden"
-							name="goods_no" value="${goodsVO.goods_no}">
-					</h3>
+						<div>
+							<input type="submit" name="Submit" class="btn btn-default" value="放入購物車" style="float:right;font-size:large">
+							<input type="hidden" name="goods_no" id="goods_no"  value="${goodsVO.goods_no}">
+						</div>
+						
 					<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
 					<input type="hidden" name="evetit_no" value="${goodsVO.evetit_no}">
 					<input type="hidden" name="goods_name"
@@ -220,6 +220,147 @@ body {
 				})
 			})
 		</script>
+		<script>
+	
+		    $(document).ready(function() {
+		    	
+		    	console.log('${member.memberNo}');
+		    	
+				$("#toggleFavoriteGoods").click(function(){
+		        	console.log("in the toggleFavoriteGoods");
+		        	// checkFavoriteGoodsData
+		        	var member_no = $("#member_no").val();
+		        	console.log($("#member_no").val());
+		        	if(member_no == null || member_no.trim().length != 7){
+		        		window.alert("請先登入");
+		        		return;
+		        	}
+		        	var goods_no = $("#goods_no").val();
+		        	if(goods_no.trim().length != 8){
+		        		window.alert("找不到商品編號");
+		        		return;
+		        	}
+		        	// deleteFavoriteGoods
+		        	if($("#favoriteGoodsStatus").val() == "inTheFavoriteGoods"){
+		        		console.log("in the inTheFavoriteGoods");
+		        		var url = $("#projectName").val();
+		                var data = '';
+		                url += '/favorite_goods/FavoriteGoods.do';
+		              	data += 'member_no=';
+		               	data += member_no;
+		               	data += '&goods_no=';
+		               	data += goods_no;
+		               	data += '&';
+		                data += 'action=deleteFavoriteGoods_Front';
+		                console.log(data);
+		                $.ajax({
+		                    type: 'post',
+		                    url: url,
+		                    data: data,
+		                    success: function(data) {    
+		                   	if(data.indexOf("成") != -1){
+		                		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+		                		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
+		                		$("#clickFavoriteGoods").html("加入最愛");
+		                	} else {
+		                		window.alert(data);
+		                	}
+		                    	
+		                   		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+		                   		$("#favoriteGoodsStatus").val("outTheFavoriteGoods");
+		                   		$("#clickFavoriteGoods").html("加入最愛");
+		                    }
+		                });	
+		        	}
+		        	// addFavoriteGoods
+		        	if($("#favoriteGoodsStatus").val() == "outTheFavoriteGoods"){
+		        		console.log("in the outTheFavoriteGoods");
+		        		var url = $("#projectName").val();
+		                url += '/favorite_goods/FavoriteGoods.do';
+		                var data = '';
+		               	data += 'member_no=';
+		               	data += member_no;
+		               	data += '&goods_no=';
+		               	data += goods_no;
+		               	data += '&';
+		                data += 'action=addFavoriteGoods_Front';
+		                console.log(data);
+		                $.ajax({
+		                    type: 'post',
+		                    url: url,
+		                    data: data,
+		                    success: function(data) {              	
+		                    	if(data.indexOf("成") != -1){
+		                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+		                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
+		                    		$("#clickFavoriteGoods").html("取消最愛");
+		                    	} else {
+		                    		window.alert(data);
+		                    	}
+		                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+		                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
+		                    		$("#clickFavoriteGoods").html("取消最愛");
+		                    }
+		                });
+		        	}
+		        });
+					//????????????????????????????
+			        toDataURL($("#poster").attr("src"), function(dataUrl) {
+			        	if(localStorage.getItem("eventTitleBrowsingHistory") == null){
+			        		var eventTitleBrowsingHistoryArray = [];
+			        	} else {
+			        		var eventTitleBrowsingHistoryJSONstr = localStorage.getItem("eventTitleBrowsingHistory");
+			        		var eventTitleBrowsingHistoryArray = JSON.parse(eventTitleBrowsingHistoryJSONstr);
+			        	}
+			            var evetit_name = $("#evetit_name").html();
+			            var evetit_no = $("#evetit_no").val();
+						var oneEventTitleBrowsingHistory = new eventTitleBrowsingHistory(evetit_no, evetit_name, dataUrl);
+						if(!isEventTitleBrowsingHistoryExist(eventTitleBrowsingHistoryArray, oneEventTitleBrowsingHistory)){
+			 				eventTitleBrowsingHistoryArray.push(oneEventTitleBrowsingHistory);
+			 			}
+						var eventTitleBrowsingHistoryJSONstr = JSON.stringify(eventTitleBrowsingHistoryArray);
+						localStorage.setItem("eventTitleBrowsingHistory", eventTitleBrowsingHistoryJSONstr);
+			        }); 
+			        //????????????????????????????????
+			        
+			        
+			        console.log($("#member_no").val());
+			        console.log("in the init favorite goods state");
+			     	// the init favorite event state
+			     	if($("#member_no").val() != null && $("#member_no").val().trim().length == 7 && $("#goods_no").val().trim().length == 8){
+			        	var member_no = $("#member_no").val();
+			        	var goods_no = $("#goods_no").val();
+			     		var url = $("#projectName").val();
+			            url += '/favorite_goods/FavoriteGoods.do';
+			            var data = '';
+			           	data += 'member_no=';
+			           	data += member_no;
+			           	data += '&goods_no=';
+			           	data += goods_no;
+			           	data += '&';
+			            data += 'action=getAll_Goods_Of_A_Member_Front';
+			            console.log(data);
+			            $.ajax({
+			                type: 'post',
+			                url: url,
+			                data: data,
+			                success: function(data) {   
+			                	if(data.indexOf("true") != -1){
+			                		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+			                		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
+			                		$("#clickFavoriteGoods").html("取消最愛");
+			                	}
+			                	else if(data.indexOf("false") != -1){
+									//do nothing if not in the record
+			                	} else {
+			                		window.alert(data);
+			                	}
+			                }
+			            });
+			     	}
+			     	
+			    });
+	</script>
 </body>
 
 </html>

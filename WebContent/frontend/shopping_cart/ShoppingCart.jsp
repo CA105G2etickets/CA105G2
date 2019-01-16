@@ -55,10 +55,20 @@
 							%>
 								<tbody>
 									<tr>
-										<td><%=order.getGoods_no()%></td>
-										<td><%=order.getEvetit_no()%></td>
-										<td><%=order.getGoods_name()%></td>
-										<td><img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=<%=order.getGoods_no()%>" width=50px height= auto /></td>
+										<td>
+											<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=<%=order.getGoods_no()%>"><%=order.getGoods_no()%></a>
+										</td>
+										<td>
+											<a href="<%=request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=<%=order.getEvetit_no()%>"><%=order.getEvetit_no()%></a>
+										</td>
+										<td>
+											<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=<%=order.getGoods_no()%>"><%=order.getGoods_name()%></a>
+										</td>
+										<td>
+											<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=<%=order.getGoods_no()%>">
+												<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=<%=order.getGoods_no()%>" width=50px height= auto />
+											</a>
+										</td>
 										<td class="price"><%=order.getOld_price()%></td>
 										<td><%=order.getForsales_a()%></td>
 										<td>

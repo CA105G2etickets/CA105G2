@@ -84,10 +84,10 @@
                             %>
                             <tbody>
                                 <tr>
-                                    <td><div align="center"><b><%=goods_no%></b></div></td>
-                                    <td><div align="center"><b><%=goods_name%></b></div></td>
-                                    <td><div align="center"><b><%=goods_price%></b></div></td>
-                                    <td><div align="center"><b><%=goods_quantity%></b></div></td>
+                                    <td><div><b><a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=<%=goods_no%>"><%=goods_no%></a></b></div></td>
+                                    <td><div><b><a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=<%=goods_no%>"><%=goods_name%></a></b></div></td>
+                                    <td><div><b><%=goods_price%></b></div></td>
+                                    <td><div><b><%=goods_quantity%></b></div></td>
                                 </tr>
                             </tbody>
                             <%
@@ -147,6 +147,9 @@
 	
 						<div class="form-group" id="zipcode2" style="width:13%">
 							<label>收件人地址：</label>
+							
+							
+							
 							<script>
 								$("#zipcode2").twzipcode({
 									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料

@@ -37,23 +37,6 @@ public class ShoppingCartServlet extends HttpServlet {
 				buylist.removeAllElements();
 //				session.invalidate();
 			}
-			else if ("BACK".equals(action)) {
-				// 取得後來修改的商品數量
-				String [] quantity = req.getParameterValues("goods_quantity");
-				for (int i = 0; i < buylist.size(); i++) {
-					ShoppingCart goods = buylist.get(i);
-					goods.setGoods_quantity(Integer.parseInt(quantity[i]));
-					if ((Integer.parseInt(quantity[i])) >= 10 ) {
-						goods.setGoods_price(goods.getForsales_a());
-					}else {
-						goods.setGoods_price(goods.getOld_price());
-					}
-				} 
-				session.setAttribute("shoppingcart", buylist);
-				String url = "/frontend/shopping_cart/EShop.jsp";
-				RequestDispatcher rd = req.getRequestDispatcher(url);
-				rd.forward(req, res);
-			}
 			
 			// 新增商品至購物車中
 			else if ("ADD".equals(action)) {
@@ -89,34 +72,34 @@ public class ShoppingCartServlet extends HttpServlet {
 			// 取得後來修改的商品數量
 			String [] quantity = req.getParameterValues("goods_quantity");
 			MemberVO memberVO = (MemberVO) session.getAttribute("member");
-			if (memberVO != null) {
-				for (int i = 0; i < buylist.size(); i++) {
-					ShoppingCart goods = buylist.get(i);
-					goods.setGoods_quantity(Integer.parseInt(quantity[i]));
-					if ((Integer.parseInt(quantity[i])) >= 10 ) {
-						goods.setGoods_price(goods.getForsales_a());
-					}else {
-						goods.setGoods_price(goods.getOld_price());
-					}
-				} 
-				session.setAttribute("shoppingcart", buylist);
-				float total = 0;
-				for (int i = 0; i < buylist.size(); i++) {
-					ShoppingCart order = buylist.get(i);
-					int goods_price = order.getGoods_price();
-					int goods_quantity = order.getGoods_quantity();
-					total += (goods_price * goods_quantity);
-				}
-	
-				String amount = String.valueOf(total);
-				req.setAttribute("amount", amount);
-				String url = "/frontend/shopping_cart/Checkout.jsp";
-				RequestDispatcher rd = req.getRequestDispatcher(url);
-				rd.forward(req, res);
-			}
-		String url = "/frontend/login_front-end.jsp";
-		RequestDispatcher rd = req.getRequestDispatcher(url);
 			
+			if (memberVO == null) {
+				res.sendRedirect(req.getContextPath()+"/frontend/login_front-end.jsp");
+				return;
+			}
+			for (int i = 0; i < buylist.size(); i++) {
+				ShoppingCart goods = buylist.get(i);
+				goods.setGoods_quantity(Integer.parseInt(quantity[i]));
+				if ((Integer.parseInt(quantity[i])) >= 10 ) {
+					goods.setGoods_price(goods.getForsales_a());
+				}else {
+					goods.setGoods_price(goods.getOld_price());
+				}
+			} 
+			session.setAttribute("shoppingcart", buylist);
+			float total = 0;
+			for (int i = 0; i < buylist.size(); i++) {
+				ShoppingCart order = buylist.get(i);
+				int goods_price = order.getGoods_price();
+				int goods_quantity = order.getGoods_quantity();
+				total += (goods_price * goods_quantity);
+			}
+
+			String amount = String.valueOf(total);
+			req.setAttribute("amount", amount);
+			String url = "/frontend/shopping_cart/Checkout.jsp";
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, res);
 		}
 	}
 
