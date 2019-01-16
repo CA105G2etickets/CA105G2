@@ -44,8 +44,9 @@
     	<div class="container" style="margin-bottom:30px;">    	
 	        <form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/goods/GoodsServlet.do"> 	            
 	            <div class="form-group">
-	                <label for="goods_no">商品編號</label>
-	                <input type="text" name="goods_no" id="goods_no" class="form-control" value="${goodsVO.goods_no}" readonly>
+	                <label for="goods_no">商品編號</label><br>
+					${goodsVO.goods_no}
+	                <input type="hidden" name="goods_no" id="goods_no" class="form-control" value="${goodsVO.goods_no}" readonly>
 	            </div>	        
 	                        <div class="form-group">
 	                <label for="evetit_no">活動編號</label>

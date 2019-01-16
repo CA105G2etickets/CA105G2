@@ -322,7 +322,7 @@ public class GoodsServlet extends HttpServlet {
 						goods_picture2, goods_picture3, goods_introduction, forsales_a, favorite_count, goods_status, launchdate,
 						offdate,goods_group_count,goods_group_count,goods_group_count); 
 				req.setAttribute("goodsVO", goodsVO); 
-				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listOneGoods.jsp"); 
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp"); 
 				successView.forward(req, res);
 
 				req.getSession().removeAttribute("goods_picture1_path");

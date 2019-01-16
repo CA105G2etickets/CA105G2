@@ -29,7 +29,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			"favorite_count, goods_status, launchdate, offdate," + 
 			"goods_group_count, goods_want_count, goods_sales_count) VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
 
-	private static final String GET_ALL_STMT = "SELECT * FROM GOODS";
+	private static final String GET_ALL_STMT = "SELECT * FROM GOODS ORDER BY GOODS_NO";
 
 	private static final String GET_ONE_STMT = "SELECT * FROM GOODS WHERE GOODS_NO = ? ";
 
@@ -110,13 +110,13 @@ public class GoodsDAO implements GoodsDAO_interface {
 			pstmt.setString(7, goodsVO.getGoods_introduction());
 			pstmt.setInt(8, goodsVO.getForsales_a());
 			pstmt.setInt(9, goodsVO.getFavorite_count());
-			pstmt.setString(9, goodsVO.getGoods_status());
-			pstmt.setTimestamp(10, goodsVO.getLaunchdate());
-			pstmt.setTimestamp(11, goodsVO.getOffdate());
+			pstmt.setString(10, goodsVO.getGoods_status());
+			pstmt.setTimestamp(11, goodsVO.getLaunchdate());
+			pstmt.setTimestamp(12, goodsVO.getOffdate());
 			pstmt.setInt(13, goodsVO.getGoods_group_count());
 			pstmt.setInt(14, goodsVO.getGoods_want_count());
 			pstmt.setInt(15, goodsVO.getGoods_sales_count());
-			pstmt.setString(12, goodsVO.getGoods_no());
+			pstmt.setString(16, goodsVO.getGoods_no());
 			pstmt.executeUpdate();
 
 			System.out.println("----------Updated----------");
