@@ -193,7 +193,7 @@ body{
 <font size="3" style="font-weight:bold">
 <ul>
 <div class="paragraph">
-網站公告<a href="#" class="listAllNews"><i class="glyphicon glyphicon-chevron-right"></i>更多</a>
+網站公告<a href="<%=request.getContextPath()%>/frontend/news/listAllNews.jsp" class="listAllNews"><i class="glyphicon glyphicon-chevron-right"></i>更多</a>
 </div>
 <hr>
 </ul>

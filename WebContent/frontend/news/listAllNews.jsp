@@ -12,9 +12,10 @@
 
 <html>
 <head>
-<title>ETIckeTs後台 - 所有公告</title>
+<title>ETIckeTs - 所有公告</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
 table {
@@ -32,66 +33,64 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+.newstag {
+    background-color: #3399ff;
+    color: #fff;
+    padding: 3px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.allnewshr {
+	margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+    height: 0;
+    box-sizing: content-box;
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+}
 </style>
 
 </head>
 
-<jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color: red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color: red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<div class="container">
 
-<div class="container table-responsive-md">
-<table class="table">
-	<tr>
-		<th>公告編號</th>
-		<th>公告分類代碼</th>
-		<th>標題</th>
-		<th>內容</th>
-		<th>發布日期</th>
-		<th>發布管理員編號</th>
-	</tr>
+<jsp:useBean id="newsClassification" scope="page" class="com.news_classification.model.NewsClassificationService" />
+
 	<c:forEach var="news" items="${list}">
-
-		<tr>
-			<td>${news.news_no}</td>
-			<td>${news.news_classification_no}</td>
-			<td>${news.news_title}</td>
-			<td>${news.news_content}</td>
-			<td>${news.announce_date}</td>
-			<td>${news.administrator_no}</td>
-			<td>
-				<FORM METHOD="post"
-					ACTION="news.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="修改"> <input type="hidden"
-						name="news_no" value="${news.news_no}"> <input
-						type="hidden" name="action" value="getOne_For_Update">
-				</FORM>
-			</td>
-			<td>
-				<FORM METHOD="post"
-					ACTION="news.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="刪除"> <input type="hidden"
-						name="news_no" value="${news.news_no}"> 
-						<input type="hidden" name="action" value="delete">
-				</FORM>
-			</td>
-		</tr>
+<font size="3" style="font-weight:bold">
+		<ul>
+			<font class="newstag">
+				${newsClassification.getOneNewsClassification(news.news_classification_no).newsClassification}
+			</font>
+				<a href="<%=request.getContextPath()%>/frontend/news/news.do?action=getOne_For_Display_front&news_no=${news.news_no}" class="newsTitle">${news.news_title}</a>
+		</ul>
+</font>
+		<ul>
+			<font size="2" style="cursor: none;color: #6c6c6c">${news.announce_date}</font>
+		</ul>
+		<hr class="allnewshr">
 	</c:forEach>
-</table>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
 </div>
-</div>
+
+<script>
+$(document).ready(function() {
+		$(".newsTitle").hover(function() {
+			$(this).css("text-decoration","none");
+		});
+});
+</script>
+
 </body>
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 </html>
