@@ -13,6 +13,11 @@
 			MemberService memberSvc = new MemberService();
 			List<MemberVO> list2 =  memberSvc.getAll();
 			pageContext.setAttribute("list2", list2);
+			
+			MemberVO memberVOsession = (MemberVO)session.getAttribute("member"); 
+			
+			
+			
 %>
 
 <jsp:useBean id="group_memberSvc" scope="page" class="com.group_member.model.Group_memberService" />
@@ -225,31 +230,43 @@
 					</div>
 					<div class="col-xs-12 col-sm-10">
 						<div class="col-xs-12 col-sm-6">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" name="form1">
 						<h3>團購訂單</h3>
 							<hr>
 							 <div class="form-group">
   								<label for="usr">收件人名稱</label>
-  								<input type="text" class="form-control" id="usr">
+  								<input type="text" class="form-control" id="usr" name="receiver_name">
 							</div><!-- <div class="form-group"> -->
 						    <div class="form-group">
   								<label for="usr">收件人地址</label>
-  								<input type="text" class="form-control" id="usr">
+  								<input type="text" class="form-control" id="usr" name="receiver_add">
 							</div><!-- <div class="form-group"> -->					 
 						       <div class="form-group">
   									<label for="usr">收件人電話</label>
-  									<input type="text" class="form-control" id="usr">
+  									<input type="text" class="form-control" id="usr" name="receiver_tel">
 								</div><!-- <div class="form-group"> -->
-						  
-					
+\		
 						   <div class="form-group">
  							 <label for="sel1">出貨方式</label>
-  								<select class="form-control" id="sel1">
+  								<select class="form-control" id="sel1" name="shipping_methods">
    									 <option>超商取貨</option>
     								 <option>宅配</option>
   								</select>
 						   </div>
 							<hr>
-							<button type="button" class="btn btn-primary finish">產生訂單</button>
+								<input type="hidden" name="pay_methods" value="EWALLET1" >
+								<input type="hidden" name="group_no" value="${group_openVO.group_no}" >
+								<input type="hidden" name="goods_bonus" value="${group_openVO.group_price}" >
+								<input type="hidden" name="goods_no" value="${group_openVO.goods_no}">
+								<input type="hidden" name="goods_pc" value="<%=product%>">
+								<input type="hidden" name="order_price" value="<%=total%>">
+								<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
+								<input type="hidden" name="order_status" value="PAYMENT1" >
+								<input type="hidden" name="order_date" id="f_date1" class="form-control" style="width:30%">
+								<input type="hidden" name="order_etd" id="f_date2" class="form-control" style="width:30%">
+								<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
+								<input type="hidden" name="action" value="insert_Front">		
+								<button type="submit" class="btn btn-primary finish">產生訂單</button>
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 						<div class="col-xs-12 col-sm-6">
 							
@@ -258,7 +275,14 @@
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 					</div>
 					<div class="col-xs-12 col-sm-1">
-						
+								<c:if test="${not empty errorMsgs}">
+					<font style="color:red">請修正以下錯誤：</font>
+					<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color:red">${message}</li>
+					</c:forEach>
+					</ul>
+				</c:if>
 
 
 					</div>

@@ -44,6 +44,8 @@ public interface Group_openDAO_interface {
 	  public Map<String,String> getevetitle_goods(String evetit_no);
 	  //查詢活動主題
 	  public List <EventTitleVO> geteventitle();
+	  //開團完成
+	  public void group_complete(String group_no);
 	  
 		
 }

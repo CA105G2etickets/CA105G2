@@ -136,20 +136,20 @@
             <tr>
                 <th>跟團會員編號</th>
                 <th>開團編號</th>
-                <th>現有數量</th>
-                <th>現有人數</th>
-                <th>跟團會員狀態</th>
+                <th>入團時間</th>
+                <th>購買數量</th>
+                <th>付款方式</th>
             </tr>
         </thead>
         <tbody>
         <!-- foreach開始 -->
           <c:forEach var="group_memberVO" items= "${group_memberSvc.all}" >
             <tr>
-                <td>G0001</td>
-                <td>M000001</td>
-                <td>13</td>
-                <td>11</td>
-                <td>wait</td>
+                <td>${group_memberVO.member_no}</td>
+                <td>${group_memberVO.group_no}</td>
+                <td>${group_memberVO.join_time}</td>
+                <td>${group_memberVO.product_quantity}</td>
+                <td>${group_memberVO.pay_method==''}</td>
             </tr>
           </c:forEach>  
         <!-- foreach結束 -->

@@ -21,6 +21,8 @@
 				
 %>
 
+
+
 <!DOCTYPE html>
 <html lang="">
 <head>
@@ -94,57 +96,15 @@
 </style>
 
 
-<SCRIPT language="javascript">
-
-
-// 	var startDate = new Date();
-// 	var endDate = new Date("2019-01-10 07:00:40");
-// 	var spantime = (endDate - startDate) / 1000;
-	
-// 	function getTime(){
-// 		var startDate = new Date();
-// 		var endDate = new Date("2019-01-10 07:00:40");
-// 		var spantime = (endDate - startDate) / 1000;
-// 		return spantime;
-// 		return 'abc';
-// 	}
-	
-
-// 	function getString(dt) {
-// 		return dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月"
-// 				+ dt.getDate() + "日" + dt.getHours() + "时" + dt.getMinutes()
-// 				+ "分";
-// 	}
-// 	function cal(spantime) {
-// 		console.log(spantime);
-// 		spantime--;
-// 		var d = Math.floor(spantime / (24 * 3600));
-// 		var h = Math.floor((spantime % (24 * 3600)) / 3600);
-// 		var m = Math.floor((spantime % 3600) / (60));
-// 		var s = Math.floor(spantime % 60);
-// 		str = d + "天 " + h + "时 " + m + "分 " + s + "秒 ";
-// 		console.log(str);
-// 		return str;
-// 	}
-
-// 	window.onload = function() {
-// 		document.getElementById("start_pad").innerHTML = getString(startDate);
-// 		document.getElementById("end_pad").innerHTML = getString(endDate);
-// 		setInterval(cal, 1000);
-// 	}
-	
-	
-	
-</SCRIPT>
 </head>
 <body>
 	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
 				
-				<div class="col-xs-12 col-sm-2">
+				<div class="col-xs-12 col-sm-4">
 				</div><!-- <div class="col-xs-12 col-sm-2"> -->
-				<div class="col-xs-12 col-sm-8">
+				<div class="col-xs-12 col-sm-6">
 					<form class="navbar-form navbar-left" role="search" METHOD="post" ACTION="group_open.do" >
 						<div class="form-group">
 							<input type="text" name="EVETIT_NAME" class="form-control" placeholder="請輸入關鍵字">
@@ -156,9 +116,9 @@
 						<button type="submit" class="btn btn-default">商品搜尋</button>
 						<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
 					</form><!-- <form class="navbar-form navbar-left" role="search"> -->
-					<a href="addgroup_open.jsp"><button type="button" class="btn btn-info .btn-md">我要開團</button></a>
+					<%-- <a href="addgroup_open.jsp"><button type="button" class="btn btn-info .btn-md">我要開團</button></a>
 					<a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=get_group_open_Bymember_no&member_no=<%=memberVOsession.getMemberNo()%>"><button type="button" class="btn btn-info .btn-success">我的開團管理</button></a>
-					  <a href="<%=request.getContextPath()%>/frontend/group_member/group_member.do?action=getOne_For_Display&member_no=<%=memberVOsession.getMemberNo()%>"><button type="button" class="btn btn-info .btn-success">我的跟團管理</button></a>
+					  <a href="<%=request.getContextPath()%>/frontend/group_member/group_member.do?action=getOne_For_Display&member_no=<%=memberVOsession.getMemberNo()%>"><button type="button" class="btn btn-info .btn-success">我的跟團管理</button></a> --%>
 				</div><!-- <div class="col-xs-12 col-sm-8"> -->
 				<div class="col-xs-12 col-sm-2">
 				</div><!-- <div class="col-xs-12 col-sm-2"> -->
@@ -175,73 +135,18 @@
 			<div class="col-xs-12 col-sm-3">
 				<div class="panel panel-info" id='example'>
 					<div class="panel-heading">
-						<h3 class="panel-title">搜尋列表</h3>
+						<h3 class="panel-title">我的團購管理</h3>
 					</div>
-					<div class="panel-body">
-						<select name="YourLocation">
-							<option value="Taipei">蕭敬騰演唱會</option>
-							<option value="Taoyuan">五月天演唱會</option>
-							<option value="Hsinchu">小熊維尼主題展</option>
-						</select>
-					</div>
-
-					<jsp:useBean id="group_openSvc" scope="page"
-						class="com.group_open.model.Group_openService" />
-
-					<div class="panel-body">
-						<FORM METHOD="post" ACTION="group_open.do">
-							<b>選擇開團者姓名:</b> <select size="1" name="member_no">
-								<c:forEach var="group_openVO"
-									items="${group_openSvc.all_member_BYgroup_open}">
-									<option value="${group_openVO.member_no}">${group_openVO.member_no}
-								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
-								name="action" value="get_group_open_Bymember_no">
-						</FORM>
-					</div>
-					<!-- <div class="panel-body"> -->
-
-					<jsp:useBean id="group_memberSvc" scope="page"
-						class="com.group_member.model.Group_memberService" />
-
-					<div class="panel-body">
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/frontend/group_member/group_member.do">
-							<b>選擇跟團者姓名:</b> <select size="1" name="member_no">
-								<c:forEach var="group_memberVO"
-									items="${group_memberSvc.member_BY_group_member}">
-									<option value="${group_memberVO.member_no}">${group_memberVO.member_no}
-								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOne_For_Display">
-						</FORM>
-
-						<jsp:useBean id="forumSvc" scope="page"
-							class="com.forum.model.ForumService" />
+				<div class="panel-body">
+						<a href="addgroup_open.jsp">我要開團</a></li>
 					</div>
 					<!-- <div class="panel-body"> -->
 					<div class="panel-body">
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/frontend/forum/forum.do">
-							<b>選擇該團所有討論</b> <select size="1" name="group_no">
-								<c:forEach var="forumVO" items="${forumSvc.allgroup}">
-									<option value="${forumVO.group_no}">${forumVO.group_no}
-								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
-								name="action" value="getall_forum_by_group">
-						</FORM>
+						<a href=<%=(memberVOsession!=null)?request.getContextPath()+"/frontend/group_open/group_open.do?action=get_group_open_Bymember_no&member_no="+memberVOsession.getMemberNo():request.getContextPath()+"/frontend/index.jsp" %> >開團管理</a>
 					</div>
 					<!-- <div class="panel-body"> -->
 					<div class="panel-body">
-						<FORM METHOD="post" ACTION="group_member.do">
-							<b>選擇該會員所發言論</b> <select size="1" name="member_no">
-								<c:forEach var="group_memberVO"
-									items="${group_memberSvc.member_BY_group_member}">
-									<option value="${group_memberVO.member_no}">${group_memberVO.member_no}
-								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOne_For_Display">
-						</FORM>
+						<a href=<%=(memberVOsession!=null)?request.getContextPath()+"/frontend/group_member/group_member.do?action=getOne_For_Display&member_no="+memberVOsession.getMemberNo():request.getContextPath()+"/frontend/index.jsp" %> >我的跟團管理</a>
 					</div>
 					<!-- <div class="panel-body"> -->
 				</div>
@@ -264,6 +169,7 @@
 			</div>
 			<!-- <div class="col-xs-12 col-sm-6"> -->
 			<div class="col-xs-12 col-sm-3">
+				
 				<br>
 				<table class="table table-hover">
 					<div class="title" style="text-align: center">
@@ -334,17 +240,16 @@
 											src="Group_openImg1.do?group_no=${group_openVO.group_no}"
 											height="200px">
 										<div class="card-body">
-											<h5 class="card-title">${group_openVO.group_name}</h5>
-											<p class="card-text">
-												<small class="text-muted">${group_openVO.group_close_date}</small>
+											<h4 class="card-title ">${group_openVO.group_name}</h4>
+											<p class="card-text bg-warning">
+											<h3>開團結束倒數計時</h3>
+												<div class="timeback" style="background-color:#D3D3D3;"><p class="bg-warning"><h3><span id="pad_${group_openVO.group_no}"  style="color:#FF0000;">${group_openVO.group_no}</span></h3></div>	
 											</p>
 											<p class="card-text">
 										<!-- 	開始時間：<span id="start_pad"></span><br>
 											結束時間：<p class="bg-danger"><span class="end_pad"></span></p><br> -->
-											
-											
-											
-											剩餘時間：<div class="timeback"><h3><span id="pad_${group_openVO.group_no}">${group_openVO.group_no}</span></h3></div>
+						
+										<%-- 	剩餘時間：<div class="timeback"><p class="bg-warning"><h3><span id="pad_${group_openVO.group_no}">${group_openVO.group_no}</span></h3></p></div> --%>
 											<!-- ------------------------------change------------------------------ -->
 												<script>
 													var startDate = new Date();
@@ -425,7 +330,9 @@
 
 			</div>
 			<!-- <div class="col-xs-12 col-sm-8"> -->
-			<div class="col-xs-12 col-sm-2"></div>
+			<div class="col-xs-12 col-sm-2">
+				
+			</div>
 			<!-- <div class="col-xs-12 col-sm-2"> -->
 		</div>
 		<!-- <div class="row"> -->

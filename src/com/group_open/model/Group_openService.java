@@ -152,5 +152,9 @@ public class Group_openService {
 	 public List <EventTitleVO> geteventitle(){
 		 return dao.geteventitle();
 	 }
+	 //開團完成
+	 public void group_complete(String group_no) {
+		 dao.group_complete(group_no);
+	 }
 	 	
 }

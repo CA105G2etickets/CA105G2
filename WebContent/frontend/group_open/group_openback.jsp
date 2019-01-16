@@ -1,8 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group_open.model.*"%>
 <%@ page import="com.group_member.model.*"%>
+<% 
+
+Group_openService grpSvc = new Group_openService();
+List<Group_openVO> list = grpSvc.getAll();
+pageContext.setAttribute("list", list);
+
+
+%>
+
+
 <jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" /> 
 <jsp:useBean id="group_memberSvc" scope="page" class="com.group_member.model.Group_memberService" /> 
 <!DOCTYPE html>
@@ -137,8 +148,9 @@
                 <th>現有數量</th>
                 <th>現有人數</th>
                 <th>開團狀態</th>
-                <th>修改該團</th>
-                <th>刪除該團</th>
+                <th>開始時間</th>
+                <th>結束時間</th>
+                <th>面交時間</th>
             </tr>
         </thead>
         <tbody>
@@ -150,18 +162,26 @@
                 <td>
                 	<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
 						<c:if test="${group_openVO.group_no==group_membermap.key}">
-	                   			${group_membermap.value}
+	                   			${(group_membermap.value== 0 )? "失敗" : group_membermap.value}
                     	</c:if>	
 					</c:forEach>	 
                 </td>
-                <td>11</td>
-                <td>${group_open.group_status}</td>
                 <td>
-                
+                	<c:forEach var="group_openmap" items="${group_openSvc.member_count}">
+							<c:if test="${group_openVO.group_no==group_openmap.key}">
+	                   			${group_openmap.value}
+                    		</c:if>	
+					</c:forEach>								          
+                </td>
+                <td>${group_openVO.group_status}</td>
+                <td>
+                <fmt:formatDate value="${group_openVO.group_start_date}" pattern="yyyy-MM-dd HH:mm"/>
                 </td>
                 <td>
-                
-                
+				<fmt:formatDate value="${group_openVO.group_close_date}" pattern="yyyy-MM-dd HH:mm"/> 
+                </td>
+                <td>
+                <fmt:formatDate value="${group_openVO.group_time}" pattern="yyyy-MM-dd HH:mm"/> 
                 </td>
                 
             </tr>

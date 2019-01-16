@@ -246,7 +246,8 @@
 							<input type="hidden" name="group_member_status" value="withgroup">
 							<input type="hidden" name="pay_status" value="COMPLETE2">
 							<input type="hidden" name="action" value="update">	
-							<input type="submit" value="送出跟團單">
+							<br>
+							<input type="submit" value="送出跟團單" class="btn btn-success" style="float:right">
 						</FORM><!-- 表單結束 -->
 						</div><!-- <div class="panel-body"> -->
 					</div><!-- <div class="panel panel-default"> -->

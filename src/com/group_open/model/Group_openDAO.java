@@ -50,7 +50,7 @@ public class Group_openDAO implements Group_openDAO_interface {
 	private static final String DELETE_STMTGROUP_MEMBER = "DELETE FROM GROUP_MEMBER WHERE GROUP_NO = ?";
 	
 	private static final String GET_ONE_STMT = "SELECT * FROM GROUP_OPEN WHERE GROUP_NO = ? ";
-	private static final String GET_ALL_STMT = "select * from GROUP_OPEN";
+	private static final String GET_ALL_STMT = "select * from GROUP_OPEN order by GROUP_CLOSE_DATE";
 
 	private static final String GET_Group_open_ByGroup_no_STMT = "SELECT member_no,group_no,join_time, product_quantity ,pay_status,group_member_status,log_out_reason,order_phone,pay_methods FROM group_member where group_no = ? order by member_no";
 	private static final String GET_Group_open_ByMember_no_STMT = "select *  from group_open  where member_no = ? ";
@@ -63,6 +63,7 @@ public class Group_openDAO implements Group_openDAO_interface {
 //	private static final String GETEVENTITLE_GOODS = "select event_title.evetit_name,goods.goods_name from event_title right join goods on event_title.evetit_no = goods.evetit_no where event_title.evetit_no = ?";
 	private static final String GETEVENTITLE_GOODS = "select goods.goods_no,goods.goods_name from event_title right join goods on event_title.evetit_no = goods.evetit_no where event_title.evetit_no = ?";
 	private static final String GETEVENTITLE = "select DISTINCT event_title.evetit_no,event_title.evetit_name from event_title right join goods on event_title.evetit_no = goods.evetit_no ";
+	private static final String GROUP_OPEN_COMPLETE = "UPDATE GROUP_OPEN set GROUP_STATUS = 'finish4' where GROUP_NO = ? ";
 //	@Override
 	// 新增
 	public void add(Group_openVO group_openVO) {
@@ -1046,6 +1047,49 @@ public class Group_openDAO implements Group_openDAO_interface {
 				return list;
 		  
 	  }
+	  public void group_complete(String group_no) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GROUP_OPEN_COMPLETE);
+				
+				pstmt.setString(1, group_no);
+				
+				pstmt.executeQuery();
+		
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+		}
+	  
+	  
 		  
 
 	public static String getLongString(String path) throws IOException {

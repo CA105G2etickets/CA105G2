@@ -936,4 +936,10 @@ public class Group_openJDBCDAO implements Group_openDAO_interface {
 		return null;
 	}
 
+	@Override
+	public void group_complete(String group_no) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -39,6 +39,9 @@ import com.group_member.model.Group_memberVO;
 import com.group_open.model.Group_openService;
 import com.group_open.model.Group_openVO;
 import com.mysql.fabric.xmlrpc.base.Member;
+import com.order_detail.model.OrderDetailVO;
+import com.order_history.model.OrderHistoryService;
+import com.order_history.model.OrderHistoryVO;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @MultipartConfig
@@ -52,6 +55,7 @@ public class Group_openServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		System.out.println(action+"58XXXXXXXXXXXXXXXXXXXX");
 
 		// 查詢單一欄位
 		if ("getOne_For_Display".equals(action)) {
@@ -112,11 +116,18 @@ public class Group_openServlet extends HttpServlet {
 			try {
 
 				String group_no = req.getParameter("group_no");
+				
+				String member_no = req.getParameter("member_no");
 
 				Group_openService grpSvc = new Group_openService();
 				Group_openVO group_openVO = grpSvc.getOneGroup_open(group_no);
+				Group_memberService group_memberSvc = new Group_memberService();
+				Group_memberVO group_memberVO = group_memberSvc.findByPrimaryKey(member_no, group_no);
+				
+				
 
 				req.setAttribute("group_openVO", group_openVO);
+				req.setAttribute("group_memberVO", group_memberVO);
 
 				String url = "/frontend/group_open/update_group_open.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -129,8 +140,9 @@ public class Group_openServlet extends HttpServlet {
 			}
 
 		}
-
+		
 		if ("update".equals(action)) {
+			
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -143,9 +155,9 @@ public class Group_openServlet extends HttpServlet {
 					errorMsgs.add("會員編號不可為空");
 				}
 				String goods_no = req.getParameter("goods_no");
-				if (goods_no == null || goods_no.trim().length() == 0) {
-					errorMsgs.add("商品編號不可為空");
-				}
+//				if (goods_no == null || goods_no.trim().length() == 0) {
+//					errorMsgs.add("商品編號不可為空");
+//				}
 				String group_name = req.getParameter("group_name");
 				String group_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
 				if (group_name == null || group_name.trim().length() == 0) {
@@ -201,7 +213,6 @@ public class Group_openServlet extends HttpServlet {
 					group_openVO = group_openService.getOneGroup_open(group_no);
 
 					group_banner_1 = group_openVO.getGroup_banner_1();
-//						System.out.println("banner_1 write in");
 
 				}
 
@@ -261,7 +272,25 @@ public class Group_openServlet extends HttpServlet {
 				}
 
 				Group_openVO group_openVO = new Group_openVO();
-
+				System.out.println(group_no);
+				System.out.println(member_no);
+				System.out.println(goods_no);
+				System.out.println(group_name);
+				System.out.println(group_limit);
+				System.out.println(group_introduction);
+				System.out.println(group_mind);
+				System.out.println(group_start_date);
+				System.out.println(group_close_date);
+				System.out.println(group_banner_1);
+				System.out.println(group_banner_2);
+				System.out.println(group_status);
+				System.out.println(group_address);
+				System.out.println(latitude);
+				System.out.println(longitude);
+				System.out.println(group_time);
+				System.out.println(group_price);
+				
+				
 				group_openVO.setGroup_no(group_no);
 				group_openVO.setMember_no(member_no);
 				group_openVO.setGoods_no(goods_no);
@@ -279,6 +308,7 @@ public class Group_openServlet extends HttpServlet {
 				group_openVO.setLongitude(longitude);
 				group_openVO.setGroup_time(group_time);
 				group_openVO.setGroup_price(group_price);
+				System.out.println("+++++"+group_price);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("group_openVO", group_openVO);
@@ -294,7 +324,7 @@ public class Group_openServlet extends HttpServlet {
 						group_introduction, group_mind, group_start_date, group_close_date, group_banner_1,
 						group_banner_2, group_status, group_address, latitude, longitude, group_time, group_price);
 
-				String url = "/frontend/group_open/listAllgroup_open.jsp";
+				String url = "/frontend/group_open/listGroup_memberBygroup_no.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 
@@ -525,7 +555,7 @@ public class Group_openServlet extends HttpServlet {
 		}
 
 		if ("insert2".equals(action)) {
-			System.out.println(action+"526");
+		
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -594,6 +624,8 @@ public class Group_openServlet extends HttpServlet {
 				group_banner_2 = getPictureByteArray(fileContent2);
 
 				String group_status = req.getParameter("group_status");
+				
+				String pay_method = req.getParameter("pay_method");
 
 				String group_address = req.getParameter("group_address");
 
@@ -680,6 +712,8 @@ public class Group_openServlet extends HttpServlet {
 				GoodsVO goodsVO = new GoodsVO();
 				
 				/*************************** 3.開始扣款資料 **********************/
+				
+				
 				//取的購買人購買數量	
 //				group_quatity  
 				//取得開團折扣
@@ -687,17 +721,22 @@ public class Group_openServlet extends HttpServlet {
 				Integer group_price = goodsVO.getForsales_a();			
 				//退款總數
 				Integer total = group_quatity*group_price;
-				System.out.println("group_memberServlet退款總數"+total);
+				System.out.println("group_memberServlet扣款總數"+total);
+				if("EWALLET".equals(pay_method)) {
 //				//呼叫會員電子錢包
 				Integer ewallet = group_memberSvc.getewallet(member_no);
 				System.out.println("group_memberServlet電子錢包"+ewallet);
 //				//退款
 				ewallet-=total;
-				System.out.println("group_memberServlet退款後電子錢包"+ewallet);
+			
+				
+				
+				System.out.println("group_memberServlet扣款後電子錢包"+ewallet);
 //				//更改
 				group_memberSvc.updateewallet(ewallet, member_no);
 		
 				System.out.println("退款完成");
+				}
 
 //				group_openVO = grpSvc.addGroup_open(member_no, goods_no, group_name, group_limit, group_introduction,
 //						group_mind, group_start_date, group_close_date, group_banner_1, group_banner_2, group_status,
@@ -707,6 +746,7 @@ public class Group_openServlet extends HttpServlet {
 				group_openVO.setGroup_price(group_price);
 				group_memberVO.setProduct_quantity(group_quatity);
 				group_memberVO.setGroup_member_status(group_member_status);
+				group_memberVO.setPay_method(pay_method);
 
 				group_openSvc.add2(group_openVO, group_memberVO);
 
@@ -1047,12 +1087,21 @@ public class Group_openServlet extends HttpServlet {
 				String evetit_no = req.getParameter("evetit");
 				
 //			******************查詢資料*********************
-				Group_openService group_openSvc = new Group_openService();
+				String group_no = req.getParameter("group_no");		
+				System.out.println(group_no);
+				String member_no = req.getParameter("member_no");
+				System.out.println(member_no);
 				
+				
+				Group_memberService group_memberSvc = new Group_memberService();
+				Group_openService group_openSvc = new Group_openService();
+				Group_memberVO group_memberVO = group_memberSvc.findByPrimaryKey(member_no, group_no);
+				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
 				Map <String,String> map = group_openSvc.getevetitle_goods(evetit_no);
 			
 //			******************轉交資料*********************
-				
+				req.setAttribute("group_openVO", group_openVO);
+				req.setAttribute("group_memberVO", group_memberVO);
 				req.setAttribute("evetitle_goods", map);
 				String url = "/frontend/group_open/addgroup_open.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -1076,6 +1125,174 @@ public class Group_openServlet extends HttpServlet {
 		
 			
 		}
+		
+		if ("insert_Front".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			
+			
+			try {
+				String member_no = new String(req.getParameter("member_no").trim());
+				
+				String group_no = req.getParameter("group_no");
+				
+				
+				Double order_price = null;
+				try {
+					order_price = new Double(req.getParameter("order_price").trim());
+				} catch (NumberFormatException e) {
+					order_price = 0.0;
+					errorMsgs.add("訂單總金額請填金額。");
+				}
+				
+				String pay_methods = new String(req.getParameter("pay_methods").trim());
+				String shipping_methods = new String(req.getParameter("shipping_methods").trim());
+				
+				java.sql.Timestamp order_date = new java.sql.Timestamp(System.currentTimeMillis());
+//				try {
+//					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
+//				} catch (IllegalArgumentException e) {
+//					order_date = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入訂購日期。");
+//				}
+//				
+				java.sql.Timestamp order_etd = new java.sql.Timestamp(System.currentTimeMillis());
+//				try {
+//					order_etd = java.sql.Timestamp.valueOf(req.getParameter("order_etd").trim());
+//				} catch (IllegalArgumentException e) {
+//					order_etd = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入出貨日期。");
+//				}
+				
+				java.sql.Timestamp pickup_date =new java.sql.Timestamp(System.currentTimeMillis());
+//				try {
+//					pickup_date = java.sql.Timestamp.valueOf(req.getParameter("pickup_date").trim());
+//				} catch (IllegalArgumentException e) {
+//					pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入取貨日期。");
+//				}
+				
+				String receiver_add = req.getParameter("receiver_add");
+				if (receiver_add == null || receiver_add.trim().length() == 0) {
+					errorMsgs.add("送貨地址請勿空白。");
+				}
+				
+				String receiver_name = req.getParameter("receiver_name");
+				if (receiver_name == null || receiver_name.trim().length() == 0) {
+					errorMsgs.add("收件人名稱請勿空白。");
+				}
+				
+				String receiver_tel = req.getParameter("receiver_tel");
+				if (receiver_tel == null || receiver_tel.trim().length() == 0) {
+					errorMsgs.add("收件人電話請勿空白。");
+				}
+				String order_status = new String(req.getParameter("order_status").trim());
+				String goods_no = new String(req.getParameter("goods_no").trim());
+				
+				Double goods_bonus = null;
+				try {
+					goods_bonus = new Double(req.getParameter("goods_bonus").trim());
+				} catch (NumberFormatException e) {
+					goods_bonus = 0.0;
+					errorMsgs.add("請填入實際交易金額。");
+				}
+				Double goods_pc = null;
+				try {
+					goods_pc = new Double(req.getParameter("goods_pc").trim());
+				} catch (NumberFormatException e) {
+					goods_pc = 0.0;
+					errorMsgs.add("請填入商品數量。");
+				}
+				
+				OrderHistoryVO orderHistoryVO = new OrderHistoryVO();
+				orderHistoryVO.setMember_no(member_no);
+				//訂單總金額 
+				System.out.println(member_no);
+				orderHistoryVO.setOrder_price(order_price);
+				//付款方式
+				System.out.println(order_price);
+				orderHistoryVO.setPay_methods(pay_methods);
+				//取貨方式
+				System.out.println(pay_methods);
+				orderHistoryVO.setShipping_methods(shipping_methods);
+				//系統
+				System.out.println(shipping_methods);
+				orderHistoryVO.setOrder_date(order_date);
+				//系統
+				orderHistoryVO.setOrder_etd(order_etd);
+				//系統
+				orderHistoryVO.setPickup_date(pickup_date);
+				//收件人地址
+				System.out.println(receiver_add);
+				orderHistoryVO.setReceiver_add(receiver_add);
+				//收件人名稱
+				System.out.println(receiver_name);
+				orderHistoryVO.setReceiver_name(receiver_name);
+				//收貨電話
+				System.out.println(receiver_tel);
+				orderHistoryVO.setReceiver_tel(receiver_tel);
+				//訂單狀態
+				System.out.println(order_status);
+				orderHistoryVO.setOrder_status(order_status);
+				//商品編號
+				String goodsno[] = req.getParameterValues("goods_no");
+				System.out.println(goodsno[0]);
+				//實際價格
+				String goodsbonus[] = req.getParameterValues("goods_bonus");
+				System.out.println("Group_openServlet1197"+goodsbonus[0]);
+				//數量
+				String goodspc[] = req.getParameterValues("goods_pc");
+				System.out.println("Group_openServlet1200"+goodspc[0]);
+				//訂單明細的集合
+				List<OrderDetailVO> list = new ArrayList<OrderDetailVO>(); 			
+				if (goodsno != null) { 
+					
+					for (int i=0; i<goodsno.length; i++) { 
+						OrderDetailVO orderDetailVO = new OrderDetailVO();
+						orderDetailVO.setGoods_no(goodsno[i]);
+						orderDetailVO.setGoods_bonus(new Double(goodsbonus[i]));
+						orderDetailVO.setGoods_pc(new Double(goodspc[i]));
+						list.add(orderDetailVO);
+					} 
+				} 
+				
+				
+				if (!errorMsgs.isEmpty()) {
+					for(String error : errorMsgs) {
+						System.out.println(error);
+					}
+					req.setAttribute("orderHistoryVO", orderHistoryVO); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_no.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				OrderHistoryService orderHistorySvc = new OrderHistoryService();
+				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
+				
+			
+				//改變開團人狀態
+				Group_openService group_openSvc = new Group_openService();
+				group_openSvc.group_complete(group_no);
+				List<Group_openVO> list2 = group_openSvc.getgroup_openBymember_no(member_no);
+				
+				// 如何取的裡面所有的member_no物件 才可以去查
+
+				req.setAttribute("group_openBymember_no", list2);
+
+				String url = "/frontend/group_open/listGroup_memberBygroup_no.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+				
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_no.jsp");
+				failureView.forward(req, res);
+			}		
+		
+			}
 		
 
 	}

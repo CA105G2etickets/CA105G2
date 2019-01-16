@@ -115,7 +115,7 @@
 	    <td>${group_openVO.group_time}</td>
 	    <td>${group_openVO.group_price}</td><!-- 為何這邊的VO是小寫  -->
 		<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/group_open/group_open.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="group_no"  value="${group_openVO.group_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update">

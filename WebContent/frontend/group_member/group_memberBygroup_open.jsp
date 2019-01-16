@@ -78,10 +78,16 @@
 							</tr>
 						</thead>
 						<tbody>
+						<!-- 跟團人所有跟團 -->
 						<c:forEach var="group_memberVO" items= "${group_openBymember_no}" >
+					<c:if test="${group_memberVO.group_member_status=='withgroup'||group_memberVO.group_member_status=='quit'}">
 						<!--EL自動去找page request session   -->
-						 <c:if test="${group_memberVO.group_member_status=='withgroup'||group_memberVO.group_member_status=='quit'}"><!-- 顯示自己有的跟團 -->
-							<tr>
+						<%--  <c:if test="${group_memberVO.group_member_status=='withgroup'||group_memberVO.group_member_status=='quit'}"> --%><!-- 顯示自己有的跟團 -->
+						<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					    <c:if test="${group_openVO.group_status=='sucess3'}">
+	                   					<!--開團成功開始  -->
+	                   					<tr>
 								<td>
 									<c:forEach var="group_openVO" items="${group_openSvc.all}">
                    						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
@@ -140,7 +146,120 @@
 								<td>
 									<c:forEach var="group_openVO" items="${group_openSvc.all}">
                    					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
-	                   						 ${group_openVO.group_status=='process1'?"進行中":"失敗"} 
+	                   						 ${group_openVO.group_status=='sucess3'?"成功":""} 
+                    					</c:if>
+               						</c:forEach>								
+								</td>
+								<td>
+								<%--  <FORM METHOD="post" ACTION="group_member.do" style="margin-bottom: 0px;">
+			     					<input type="submit" value="修改" class="btn-warning btn-sm">
+			     					<input type="hidden" name="group_no"  value="${group_memberVO.group_no}">
+			     					<input type="hidden" name="member_no"  value="${group_memberVO.member_no}">
+			     					<input type="hidden" name="action"	value="getOne_For_Update">
+			 					 </FORM> --%>		
+								</td>
+								<td> 
+			  						 <%-- <!-- Trigger the modal with a button -->
+									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal_${group_memberVO.group_no}">退團</button>
+								     	<!-- Modal -->
+										<div id="myModal_${group_memberVO.group_no}" class="modal fade" role="dialog">
+  											<div class="modal-dialog">
+    									<!-- Modal content-->
+   										<div class="modal-content">
+      										<div class="modal-header">
+        										<button type="button" class="close" data-dismiss="modal">&times;</button>
+        											<h4 class="modal-title">退團就像是你的女朋友等不到你過聖誕節一樣的感覺</h4>
+      										</div><!-- <div class="modal-header"> -->
+     									<div class="modal-body">
+											<FORM METHOD="post" ACTION="group_member.do" style="margin-bottom: 0px;">
+					     					 <input type="hidden" name="group_no"  value="${group_memberVO.group_no}">
+					     					 <input type="hidden" name="member_no"  value="${group_memberVO.member_no}">
+					     					 <input type="hidden" name="group_member_status"  value="quit">
+					     					 <input type="hidden" name="pay_status"  value="CANCEL3">	     					 
+					     					 <div class="form-group">
+												<label for="aa">退團原因</label>
+												<input type="text" name="log_out_reason" id="aa" class="form-control">
+											</div>
+					    					 <input type="hidden" name="action" value="quit">
+					    					  <input type="submit" value="退團" class="btn btn-danger btn-sm">
+					  						 </FORM>  	
+      									</div><!-- <div class="modal-body"> -->
+      								<div class="modal-footer">
+        								<!-- <button type="submit" class="btn btn-default" data-dismiss="modal">退團</button> -->
+      								</div><!-- <div class="modal-footer"> -->
+    								</div><!-- <div class="modal-content"> -->		
+  									</div><!-- <div class="modal-dialog"> -->
+									</div><!-- <div id="myModal" class="modal fade" role="dialog"> --> --%>
+								</td>			
+							</tr>
+		   					<!--開團成功結束  -->
+	                   					</c:if>
+                    					</c:if>
+               						</c:forEach>
+               						<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					    <c:if test="${group_openVO.group_status=='process1'}">
+	                   					<!--開團進行中開始  -->
+								<tr>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+                    					</c:if>
+               						</c:forEach>
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   				${group_openVO.group_name}
+                    				</c:if>
+               						</c:forEach>					
+								</td>
+							    <td>
+							    	${group_memberVO.product_quantity}
+							    </td>
+								<td>
+				
+								</td>
+								<td>
+									${group_memberVO.group_member_status=='withgroup'?"跟團中":"退團"}
+								</td>
+								<td>
+									<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
+										<c:if test="${group_memberVO.group_no==group_membermap.key}">
+	                   						${group_membermap.value}
+                    					</c:if>	
+									</c:forEach>	 			
+								</td>
+								<td>
+								${group_memberVO.pay_status}
+								</td>
+								<td> 
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   				<fmt:formatDate value="${group_openVO.group_close_date}" pattern="yyyy-MM-dd HH:mm"/>                   
+	                   					</c:if>
+               						</c:forEach>																
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						${group_openVO.group_address} 
+                    					</c:if>
+               						</c:forEach>
+									</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					 <fmt:formatDate value="${group_openVO.group_time}" pattern="yyyy-MM-dd HH:mm"/> 
+	                   					<%-- 	${group_openVO.group_time}  --%>
+                    					</c:if>
+               						</c:forEach>								
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						 ${group_openVO.group_status=='process1'?"進行中":"進行中這欄有錯"} 
                     					</c:if>
                						</c:forEach>								
 								</td>
@@ -185,10 +304,241 @@
   									</div><!-- <div class="modal-dialog"> -->
 									</div><!-- <div id="myModal" class="modal fade" role="dialog"> -->
 								</td>			
+							</tr>	
+						
+						<!--開團進行中結束  -->
+	                   					</c:if>
+                    					</c:if>
+               						</c:forEach>
+               							<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					    <c:if test="${group_openVO.group_status=='finish4'}">
+	                   					<!--開團進行中開始  -->
+						<tr>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+                    					</c:if>
+               						</c:forEach>
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   				${group_openVO.group_name}
+                    				</c:if>
+               						</c:forEach>					
+								</td>
+							    <td>
+							    	${group_memberVO.product_quantity}
+							    </td>
+								<td>
+				
+								</td>
+								<td>
+									${group_memberVO.group_member_status=='withgroup'?"跟團中":"退團"}
+								</td>
+								<td>
+									<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
+										<c:if test="${group_memberVO.group_no==group_membermap.key}">
+	                   						${group_membermap.value}
+                    					</c:if>	
+									</c:forEach>	 			
+								</td>
+								<td>
+								${group_memberVO.pay_status}
+								</td>
+								<td> 
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   				<fmt:formatDate value="${group_openVO.group_close_date}" pattern="yyyy-MM-dd HH:mm"/>                   
+	                   					</c:if>
+               						</c:forEach>																
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						${group_openVO.group_address} 
+                    					</c:if>
+               						</c:forEach>
+									</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					 <fmt:formatDate value="${group_openVO.group_time}" pattern="yyyy-MM-dd HH:mm"/> 
+	                   					<%-- 	${group_openVO.group_time}  --%>
+                    					</c:if>
+               						</c:forEach>								
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						 ${group_openVO.group_status=='finish4'?"完成":"完成這邊有錯"} 
+                    					</c:if>
+               						</c:forEach>								
+								</td>
+								<td>
+								<%--  <FORM METHOD="post" ACTION="group_member.do" style="margin-bottom: 0px;">
+			     					<input type="submit" value="修改" class="btn-warning btn-sm">
+			     					<input type="hidden" name="group_no"  value="${group_memberVO.group_no}">
+			     					<input type="hidden" name="member_no"  value="${group_memberVO.member_no}">
+			     					<input type="hidden" name="action"	value="getOne_For_Update">
+			 					 </FORM>		 --%>
+								</td>
+								<td> 
+			  						<%--  <!-- Trigger the modal with a button -->
+									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal_${group_memberVO.group_no}">退團</button>
+								     	<!-- Modal -->
+										<div id="myModal_${group_memberVO.group_no}" class="modal fade" role="dialog">
+  											<div class="modal-dialog">
+    									<!-- Modal content-->
+   										<div class="modal-content">
+      										<div class="modal-header">
+        										<button type="button" class="close" data-dismiss="modal">&times;</button>
+        											<h4 class="modal-title">退團就像是你的女朋友等不到你過聖誕節一樣的感覺</h4>
+      										</div><!-- <div class="modal-header"> -->
+     									<div class="modal-body">
+											<FORM METHOD="post" ACTION="group_member.do" style="margin-bottom: 0px;">
+					     					 <input type="hidden" name="group_no"  value="${group_memberVO.group_no}">
+					     					 <input type="hidden" name="member_no"  value="${group_memberVO.member_no}">
+					     					 <input type="hidden" name="group_member_status"  value="quit">
+					     					 <input type="hidden" name="pay_status"  value="CANCEL3">	     					 
+					     					 <div class="form-group">
+												<label for="aa">退團原因</label>
+												<input type="text" name="log_out_reason" id="aa" class="form-control">
+											</div>
+					    					 <input type="hidden" name="action" value="quit">
+					    					  <input type="submit" value="退團" class="btn btn-danger btn-sm">
+					  						 </FORM>  	
+      									</div><!-- <div class="modal-body"> -->
+      								<div class="modal-footer">
+        								<!-- <button type="submit" class="btn btn-default" data-dismiss="modal">退團</button> -->
+      								</div><!-- <div class="modal-footer"> -->
+    								</div><!-- <div class="modal-content"> -->		
+  									</div><!-- <div class="modal-dialog"> -->
+									</div><!-- <div id="myModal" class="modal fade" role="dialog"> --> --%>
+								</td>			
+							</tr>		
+						<!--開團進行中結束  -->
+	                   					</c:if>
+                    					</c:if>
+               						</c:forEach>
+               							<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					    <c:if test="${group_openVO.group_status=='fail2'}">
+	                   					<!--開團失敗開始  -->
+						<tr>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+                    					</c:if>
+               						</c:forEach>
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   				${group_openVO.group_name}
+                    				</c:if>
+               						</c:forEach>					
+								</td>
+							    <td>
+							    	${group_memberVO.product_quantity}
+							    </td>
+								<td>
+				
+								</td>
+								<td>
+									${group_memberVO.group_member_status=='withgroup'?"跟團中":"退團"}
+								</td>
+								<td>
+									<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
+										<c:if test="${group_memberVO.group_no==group_membermap.key}">
+	                   						${group_membermap.value}
+                    					</c:if>	
+									</c:forEach>	 			
+								</td>
+								<td>
+								${group_memberVO.pay_status}
+								</td>
+								<td> 
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   				<fmt:formatDate value="${group_openVO.group_close_date}" pattern="yyyy-MM-dd HH:mm"/>                   
+	                   					</c:if>
+               						</c:forEach>																
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						${group_openVO.group_address} 
+                    					</c:if>
+               						</c:forEach>
+									</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					 <fmt:formatDate value="${group_openVO.group_time}" pattern="yyyy-MM-dd HH:mm"/> 
+	                   					<%-- 	${group_openVO.group_time}  --%>
+                    					</c:if>
+               						</c:forEach>								
+								</td>
+								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						 ${group_openVO.group_status=='fail2'?"失敗":""} 
+                    					</c:if>
+               						</c:forEach>								
+								</td>
+								<td>
+								<%--  <FORM METHOD="post" ACTION="group_member.do" style="margin-bottom: 0px;">
+			     					<input type="submit" value="修改" class="btn-warning btn-sm">
+			     					<input type="hidden" name="group_no"  value="${group_memberVO.group_no}">
+			     					<input type="hidden" name="member_no"  value="${group_memberVO.member_no}">
+			     					<input type="hidden" name="action"	value="getOne_For_Update">
+			 					 </FORM>		 --%>
+								</td>
+								<td> 
+			  						<%--  <!-- Trigger the modal with a button -->
+									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal_${group_memberVO.group_no}">退團</button>
+								     	<!-- Modal -->
+										<div id="myModal_${group_memberVO.group_no}" class="modal fade" role="dialog">
+  											<div class="modal-dialog">
+    									<!-- Modal content-->
+   										<div class="modal-content">
+      										<div class="modal-header">
+        										<button type="button" class="close" data-dismiss="modal">&times;</button>
+        											<h4 class="modal-title">退團就像是你的女朋友等不到你過聖誕節一樣的感覺</h4>
+      										</div><!-- <div class="modal-header"> -->
+     									<div class="modal-body">
+											<FORM METHOD="post" ACTION="group_member.do" style="margin-bottom: 0px;">
+					     					 <input type="hidden" name="group_no"  value="${group_memberVO.group_no}">
+					     					 <input type="hidden" name="member_no"  value="${group_memberVO.member_no}">
+					     					 <input type="hidden" name="group_member_status"  value="quit">
+					     					 <input type="hidden" name="pay_status"  value="CANCEL3">	     					 
+					     					 <div class="form-group">
+												<label for="aa">退團原因</label>
+												<input type="text" name="log_out_reason" id="aa" class="form-control">
+											</div>
+					    					 <input type="hidden" name="action" value="quit">
+					    					  <input type="submit" value="退團" class="btn btn-danger btn-sm">
+					  						 </FORM>  	
+      									</div><!-- <div class="modal-body"> -->
+      								<div class="modal-footer">
+        								<!-- <button type="submit" class="btn btn-default" data-dismiss="modal">退團</button> -->
+      								</div><!-- <div class="modal-footer"> -->
+    								</div><!-- <div class="modal-content"> -->		
+  									</div><!-- <div class="modal-dialog"> -->
+									</div><!-- <div id="myModal" class="modal fade" role="dialog"> --> --%>
+								</td>			
 							</tr>
-			
-							</c:if>
-							</c:forEach>
+	
+						<!--開團失敗結束  -->
+	                   					</c:if>
+                    					</c:if>
+               						</c:forEach><%-- <c:forEach var="group_openVO" items="${group_openSvc.all}"> --%>
+               					</c:if>
+							</c:forEach><%-- <c:forEach var="group_memberVO" items= "${group_openBymember_no}" > --%>
 						</tbody>
 					</table>
 				</div><!-- <div class="col-xs-12 col-sm-10"> -->
