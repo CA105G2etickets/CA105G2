@@ -13,10 +13,10 @@
     OrderHistoryService orderHistorySvc = new OrderHistoryService();
     List<OrderHistoryVO> listHistory = orderHistorySvc.getAll();
     pageContext.setAttribute("listHistory",listHistory);
-// 	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");   
-//     OrderDetailService orderDetailSvc = new OrderDetailService();
-//     List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
-//     pageContext.setAttribute("listDetail",listDetail);
+	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");   
+    OrderDetailService orderDetailSvc = new OrderDetailService();
+    List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
+    pageContext.setAttribute("listDetail",listDetail);
     
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
 %>
@@ -28,7 +28,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<title>購物車結帳頁面</title>
+	<title>ETIckeTs - 購物車結帳頁面</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="<%=request.getContextPath()%>/TWzipcode/jquery.twzipcode.min.js"></script>
@@ -91,7 +91,7 @@
                                 </tr>
                             </tbody>
                             <%
-                                }
+                            }
                             %>
                         </table>
                         <h4> 付款金額：<font color="red">$<%=amount%></font></h4>  
@@ -133,10 +133,10 @@
 						</div><br>	
 						<div class="form-group" style="width:20%">
 							<label>出貨方式：</label>
-								<select class="form-control" size="1" name="shipping_methods">
-									<option value="STOREPICKUP" selected>超商取貨</option>
-									<option value="HOMEDELIVERY">宅配</option>
-								</select>
+							<select class="form-control" size="1" name="shipping_methods">
+								<option value="STOREPICKUP" selected>超商取貨</option>
+								<option value="HOMEDELIVERY">宅配</option>
+							</select>
 						</div>
 						<!--訂購日期 -->
 						<input type="hidden" name="order_date" id="f_date1" class="form-control" style="width:30%">
@@ -186,7 +186,6 @@
 							<input type="hidden" name="goods_bonus" value="<%=goods_price%>">
 							<!--商品數量 -->
 							<input type="hidden" name="goods_pc" value="<%=goods_quantity%>">
-							
 						<%}%>
 						
 						<input type="hidden" name="memberno" value="<%=memberVO.getMemberNo()%>">
@@ -213,6 +212,7 @@
 	<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>	
 
 <script>
