@@ -42,6 +42,8 @@ public class FavoriteGoodsDAO implements FavoriteGoodsDAO_interface {
 		"SELECT DISTINCT GOODS_NO FROM FAVORITE_GOODS ORDER BY GOODS_NO";
 	private static final String GET_ALL_MEMBERN_OF_A_GOODS = 
 		"SELECT * FROM FAVORITE_GOODS WHERE GOODS_NO = ?";
+	private static final String GET_ONE_FAVORITEGOODS =
+		"SELECT MEMBER_NO, GOODS_NO FROM FAVORITE_GOODS WHERE MEMBER_NO=? AND GOODS_NO=?";	
 	
 	@Override
 	public void insert(FavoriteGoodsVO favoriteGoodsVO) {
@@ -427,5 +429,51 @@ public class FavoriteGoodsDAO implements FavoriteGoodsDAO_interface {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public boolean getOneFavoriteGoods(String member_no, String goods_no) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;	
+		ResultSet rs = null;
+		boolean result;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_FAVORITEGOODS);
+			
+			pstmt.setString(1, member_no); 
+			pstmt.setString(2, goods_no); 
+			rs = pstmt.executeQuery();
+			
+			result = rs.next();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return result;
 	}
 }

@@ -80,15 +80,15 @@
 							<input type="text" class="ordernum" name="goods_quantity" size="2" value=1>
 							<input class="add" name="add" type="button" value="+" /> 
 						    <input type="submit" name="Submit" value="放入購物車">
-					<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
-					<input type="hidden" name="evetit_no" value="${goodsVO.evetit_no}">
-					<input type="hidden" name="goods_name" value="${goodsVO.goods_name}">
-					<input type="hidden" name="goods_price" value="${goodsVO.goods_price}">
-					<input type="hidden" name="forsales_a" value="${goodsVO.forsales_a}">
-					<input type="hidden" name="goods_status" value="${goodsVO.goods_status}">
-					<input type="hidden" name="old_price" value="${goodsVO.goods_price}">
-					<input type="hidden" name="action" value="ADD">	
-				</form>
+							<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
+							<input type="hidden" name="evetit_no" value="${goodsVO.evetit_no}">
+							<input type="hidden" name="goods_name" value="${goodsVO.goods_name}">
+							<input type="hidden" name="goods_price" value="${goodsVO.goods_price}">
+							<input type="hidden" name="forsales_a" value="${goodsVO.forsales_a}">
+							<input type="hidden" name="goods_status" value="${goodsVO.goods_status}">
+							<input type="hidden" name="old_price" value="${goodsVO.goods_price}">
+							<input type="hidden" name="action" value="ADD">	
+						</form>
                            
                         </div>                   
                     </div>

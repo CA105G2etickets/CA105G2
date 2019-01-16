@@ -59,8 +59,8 @@ pageContext.setAttribute("historylist",historylist);
 								<c:forEach var="orderDetailVO" items="${detaillist}">
 									<tr>
 										<td>
-											<a href="<%=request.getContextPath()%>/frontend/order_history/oneMemberIsOrder.jsp?member_no=${memberVO.memberNo}">${orderDetailVO.order_no}</a>
-<%-- 										${orderDetailVO.order_no} --%>
+<%-- 											<a href="<%=request.getContextPath()%>/frontend/order_history/oneMemberIsOrder.jsp?member_no=${memberVO.memberNo}">${orderDetailVO.order_no}</a> --%>
+										${orderDetailVO.order_no}
 										</td>
 										<td>
 											<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${orderDetailVO.goods_no}</a>

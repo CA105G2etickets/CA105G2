@@ -2,7 +2,6 @@ package com.favorite_goods.controller;
 
 import java.io.*;
 import java.util.*;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -18,6 +17,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		PrintWriter out = res.getWriter();
 		
 		if ("getAll_Goods_Of_A_Member".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -327,6 +327,20 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/favorite_goods/AllGoodsOfAMember.jsp");
 				failureView.forward(req, res);
+			}
+		}
+		
+		if ("getOneFavoriteEvent_For_Display_Front".equals(action)) {
+			try {
+				String member_no = req.getParameter("member_no");
+				String goods_no = req.getParameter("goods_no");
+				FavoriteGoodsService favoriteGoodsService = new FavoriteGoodsService();
+				boolean result = favoriteGoodsService.getOneFavoriteGoods(member_no, goods_no);
+
+				out.println(result);
+
+			} catch (Exception e) {
+				out.println("  ###" + " 查詢失敗 : " +  e.getMessage());
 			}
 		}
 		

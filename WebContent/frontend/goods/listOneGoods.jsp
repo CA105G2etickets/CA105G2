@@ -258,17 +258,16 @@ body {
 		                    url: url,
 		                    data: data,
 		                    success: function(data) {    
-		                   	if(data.indexOf("成") != -1){
-		                		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
-		                		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
-		                		$("#clickFavoriteGoods").html("加入最愛");
-		                	} else {
-		                		window.alert(data);
-		                	}
-		                    	
-		                   		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
-		                   		$("#favoriteGoodsStatus").val("outTheFavoriteGoods");
-		                   		$("#clickFavoriteGoods").html("加入最愛");
+// 			                   	if(data.indexOf("成") != -1){
+// 			                		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+// 			                		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
+// 			                		$("#clickFavoriteGoods").html("加入最愛");
+// 			                	} else {
+// 			                		window.alert(data);
+// 			                	}
+			                   		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+			                   		$("#favoriteGoodsStatus").val("outTheFavoriteGoods");
+			                   		$("#clickFavoriteGoods").html("加入最愛");
 		                    }
 		                });	
 		        	}
@@ -290,39 +289,20 @@ body {
 		                    url: url,
 		                    data: data,
 		                    success: function(data) {              	
-		                    	if(data.indexOf("成") != -1){
-		                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
-		                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
-		                    		$("#clickFavoriteGoods").html("取消最愛");
-		                    	} else {
-		                    		window.alert(data);
-		                    	}
-		                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
-		                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
-		                    		$("#clickFavoriteGoods").html("取消最愛");
-		                    }
-		                });
+// 	                    	if(data.indexOf("成") != -1){
+// 	                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+// 	                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
+// 	                    		$("#clickFavoriteGoods").html("取消最愛");
+// 	                    	} else {
+// 	                    		window.alert(data);
+// 	                    	}
+	                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
+	                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
+	                    		$("#clickFavoriteGoods").html("取消最愛");
+	                    	}
+	                	});
 		        	}
 		        });
-					//????????????????????????????
-			        toDataURL($("#poster").attr("src"), function(dataUrl) {
-			        	if(localStorage.getItem("eventTitleBrowsingHistory") == null){
-			        		var eventTitleBrowsingHistoryArray = [];
-			        	} else {
-			        		var eventTitleBrowsingHistoryJSONstr = localStorage.getItem("eventTitleBrowsingHistory");
-			        		var eventTitleBrowsingHistoryArray = JSON.parse(eventTitleBrowsingHistoryJSONstr);
-			        	}
-			            var evetit_name = $("#evetit_name").html();
-			            var evetit_no = $("#evetit_no").val();
-						var oneEventTitleBrowsingHistory = new eventTitleBrowsingHistory(evetit_no, evetit_name, dataUrl);
-						if(!isEventTitleBrowsingHistoryExist(eventTitleBrowsingHistoryArray, oneEventTitleBrowsingHistory)){
-			 				eventTitleBrowsingHistoryArray.push(oneEventTitleBrowsingHistory);
-			 			}
-						var eventTitleBrowsingHistoryJSONstr = JSON.stringify(eventTitleBrowsingHistoryArray);
-						localStorage.setItem("eventTitleBrowsingHistory", eventTitleBrowsingHistoryJSONstr);
-			        }); 
-			        //????????????????????????????????
-			        
 			        
 			        console.log($("#member_no").val());
 			        console.log("in the init favorite goods state");
@@ -338,7 +318,7 @@ body {
 			           	data += '&goods_no=';
 			           	data += goods_no;
 			           	data += '&';
-			            data += 'action=getAll_Goods_Of_A_Member_Front';
+			            data += 'action=getOneFavoriteEvent_For_Display_Front';
 			            console.log(data);
 			            $.ajax({
 			                type: 'post',

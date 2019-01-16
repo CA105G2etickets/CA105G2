@@ -504,4 +504,10 @@ public class FavoriteGoodsJDBCDAO implements FavoriteGoodsDAO_interface {
 //			System.out.println("------------------------------------");
 //		}
 	}
+
+	@Override
+	public boolean getOneFavoriteGoods(String member_no, String goods_no) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

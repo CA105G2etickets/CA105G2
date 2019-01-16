@@ -12,4 +12,5 @@ public interface FavoriteGoodsDAO_interface {
     public List<FavoriteGoodsVO> findByMemberNo(String member_no);
     public List<String> getAllGoodsNo();
     public List<FavoriteGoodsVO> findByGoodsNo(String goods_no);
+	public boolean getOneFavoriteGoods(String member_no, String goods_no);
 }

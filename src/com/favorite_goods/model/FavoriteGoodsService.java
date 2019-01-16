@@ -56,4 +56,8 @@ public class FavoriteGoodsService {
 	public List<FavoriteGoodsVO> findByGoodsNo(String goods_no) {
 		return dao.findByGoodsNo(goods_no);
 	}
+	
+	public boolean getOneFavoriteGoods(String member_no, String goods_no) {
+		return dao.getOneFavoriteGoods(member_no, goods_no);
+	}
 }
