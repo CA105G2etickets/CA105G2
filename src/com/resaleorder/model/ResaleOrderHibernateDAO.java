@@ -163,7 +163,10 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 //		dao.insert(empVO1);
 		
 		com.ticket.model.TicketVO ticketVO = new com.ticket.model.TicketVO();
-		ticketVO.setTicket_no("T_20181225_000002");
+		com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
+		ticketVO = tSvc.getOneTicket("T_20181225_000002");
+		ticketVO.setTicket_resale_status("SELLING2");
+		ticketVO.setTicket_resale_price(977);
 		
 //		com.ticketorder.model.TicketOrderVO tovo = new com.ticketorder.model.TicketOrderVO();
 //		tovo.setTicket_order_no("TO_20181225_000002");
@@ -178,10 +181,10 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		resaleorderVO.setMember_buyer_no("");
 		resaleorderVO.setMember_seller_no("M000001");
 		resaleorderVO.setPayment_method("TEST");
-		resaleorderVO.setResale_ord_completetime(java.sql.Timestamp.valueOf("2005-01-01 01:01:01"));
+		resaleorderVO.setResale_ord_completetime(null);
 		resaleorderVO.setResale_ord_createtime(java.sql.Timestamp.valueOf("2005-01-01 01:01:01"));
-		resaleorderVO.setResale_ordprice(500);
-		resaleorderVO.setResale_ordstatus("statusT");
+		resaleorderVO.setResale_ordprice(0);
+		resaleorderVO.setResale_ordstatus("SELLING1");
 		resaleorderVO.setTicketVO(ticketVO);
 		dao.insert(resaleorderVO); //success
 		

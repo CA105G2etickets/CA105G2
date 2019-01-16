@@ -12,7 +12,7 @@
 			</generator>-->
         </id>
         
-        <many-to-one name="ticketVO" class="com.ticket.model.TicketVO" lazy="false">
+        <many-to-one name="ticketVO" class="com.ticket.model.TicketVO" lazy="false" cascade="save-update">
             <column name="ticket_no" />
         </many-to-one>
         <property name="member_seller_no" column="member_seller_no" />

@@ -73,6 +73,10 @@ public class ResaleOrderService {
 		return dao.getAll();
 	}
 	
+	public void insert(ResaleOrderVO resaleorderVO) {
+		dao.insert(resaleorderVO);
+	}
+	
 	public List<ResaleOrderVO> getAll(Map<String, String[]> map, String strOrderByTargetColumnName) {
 		return dao.getAll(map,strOrderByTargetColumnName);
 	}

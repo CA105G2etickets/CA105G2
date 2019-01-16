@@ -28,7 +28,7 @@ pageContext.setAttribute("stvos", stvos);
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>模擬訂票訂單資料附帶票券的新增 - selectPayment.jsp</title>
+<title>paymentDoneShowInfos.jsp</title>
 
 <style>
   table {
@@ -140,8 +140,12 @@ pageContext.setAttribute("stvos", stvos);
 
 
 
-<h4><a href="<%=request.getContextPath()%>/frontend/ticketorder/select_page.jsp">前往會員的訂單查詢</a></h4>
-
+<%-- <h4><a href="<%=request.getContextPath()%>/frontend/ticketorder/select_page.jsp">前往會員的訂單查詢</a></h4> --%>
+<form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
+	<input type="hidden" name="action" value="member_select_ticketorders">
+	<input type="hidden" name="member_no" value="${toVO.member_no}"> <!--Member not done yet, only been set as M000001 -->
+	<input type="submit" value="前往會員的訂單查詢">
+</form>
 
 </body>
 </html>

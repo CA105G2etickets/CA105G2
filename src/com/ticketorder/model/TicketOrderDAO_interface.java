@@ -16,6 +16,8 @@ public interface TicketOrderDAO_interface {
     
     public Set<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no);
     
+    public List<TicketOrderVO> getTicketOrdersByMemberNo(String member_no);
+    
 //    public void insertWithTickets(TicketOrderVO ticketorderVO, List<TicketVO> list);
     
     //functions to implements Listener

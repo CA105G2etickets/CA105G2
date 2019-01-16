@@ -5,37 +5,12 @@
 <head>
 <title>TicketOrder_select_page</title>
 
-<style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
 </head>
 <body bgcolor='white'>
 
-<table id="table-1">
-   <tr><td><h3>TicketOrder: Home</h3><h4>( MVC )</h4></td></tr>
-</table>
+<p>進行查詢的會員編號，目前寫死為M000001</p>
 
-<p>This is the Home page for TicketOrder: Home</p>
-
-<h3>資料查詢:</h3>
+<h3>會員的訂票訂單查詢:</h3>
 	
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -104,17 +79,6 @@
        <input type="submit" value="送出">
     </FORM>
   </li>
-</ul>
-<!-- 
-<h3>訂票訂單管理</h3>
-<ul>
-  <li><a href='addTicketOrder.jsp'>Add</a> a new TicketOrder.</li>
-</ul>
- -->
-
-<h3>go to My ticket</h3>
-<ul>
-  <li><a href='<%=request.getContextPath()%>/frontend/ticket/select_page.jsp'>ticket</a></li>
 </ul>
 
 </body>

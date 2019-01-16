@@ -1,6 +1,7 @@
 package com.ticketorder.model;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import com.seating_area.model.SeatingAreaVO;
 import com.ticket.model.TicketVO;
@@ -63,6 +64,12 @@ public class TicketOrderService {
 		return dao.insertThenGetLatestToNoWithCondition(ticketorderVO);
 	}
 	
+	public List<TicketOrderVO> getTicketOrdersByMemberNo(String member_no){
+		return dao.getTicketOrdersByMemberNo(member_no);
+	}
+	public Set<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no){
+		return dao.getTicketsByTicketOrderNo(ticket_order_no);
+	}
 	
 //	public void insertWithTickets(TicketOrderVO ticketorderVO, List<TicketVO> list) {
 //		dao.insertWithTickets(ticketorderVO, list);

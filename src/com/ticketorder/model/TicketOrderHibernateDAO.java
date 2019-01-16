@@ -146,6 +146,23 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 		Set<TicketVO>	set = findByPrimaryKey(ticket_order_no).getTickets();
 		return set;
 	}
+	
+	@Override
+	public List<TicketOrderVO> getTicketOrdersByMemberNo(String member_no) {
+		List<TicketOrderVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query<TicketOrderVO> query = session.createQuery("from TicketOrderVO where member_no=?0 order by ticket_order_time", TicketOrderVO.class);
+			query.setParameter(0, member_no);
+			list = query.getResultList();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
 
 	public static void main(String[] args) {
 
@@ -367,4 +384,6 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 //			System.out.println();
 //		}
 	}
+
+	
 }

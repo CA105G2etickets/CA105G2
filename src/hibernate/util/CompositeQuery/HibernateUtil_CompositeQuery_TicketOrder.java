@@ -26,9 +26,9 @@ import com.event.model.*;
 import com.event_title.model.*;
 import com.resaleorder.model.ResaleOrderVO;
 
-public class HibernateUtil_CompositeQuery_Ticket {
+public class HibernateUtil_CompositeQuery_TicketOrder {
 
-	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<TicketVO> root, 
+	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<TicketOrderVO> root, 
 			String columnName, String value) {
 
 		/* SQL COMMAND
@@ -41,8 +41,10 @@ public class HibernateUtil_CompositeQuery_Ticket {
 		 * Restrictions.in:SQL's IN
 		 * */
 		
+		//weird, cant output anything.
+		
 		Predicate predicate = null;
-		if ("ticket_resale_price".equals(columnName)) // for Integer
+		if ("total_price".equals(columnName) || "total_amount".equals(columnName)) // for Integer
 			{
 //			predicate = builder.equal(root.get(columnName), new Integer(value));
 			predicate = builder.le(root.get(columnName), new Integer(value));
@@ -51,43 +53,38 @@ public class HibernateUtil_CompositeQuery_Ticket {
 			{
 			predicate = builder.equal(root.get(columnName), new Double(value));
 			}
-		else if ("is_from_resale".equals(columnName) || "ticket_resale_status".equals(columnName) 
-				|| "ticket_status".equals(columnName) || "member_no".equals(columnName) 
-				|| "ticket_no".equals(columnName)) // for varchar2
+		else if ("ticket_order_status".equals(columnName) 
+				|| "payment_method".equals(columnName) || "member_no".equals(columnName) 
+				|| "ticket_order_no".equals(columnName)) // for varchar2
 			{
 			predicate = builder.like(root.get(columnName), "%" + value + "%");
 			}
-		else if ("ticket_create_time".equals(columnName)) // change to Timestamp
+		else if ("ticket_order_time".equals(columnName)) // change to Timestamp
 //			predicate = builder.equal(root.get(columnName), java.sql.Date.valueOf(value));
 			{
 			predicate = builder.equal(root.get(columnName), java.sql.Timestamp.valueOf(value));
 			}
-		else if ("ticarea_no".equals(columnName)) { //seems write wrong vo here;
+		else if ("ticarea_no".equals(columnName)) {
 			SeatingArea_H5_VO seatingarea_h5VO = new SeatingArea_H5_VO();
 			seatingarea_h5VO.setTicarea_no(value);  
-			predicate = builder.equal(root.get("seatingarea_h5VO"),seatingarea_h5VO); 
-		}
-		else if ("ticket_order_no".equals(columnName)) {
-			TicketOrderVO ticketorderVO = new TicketOrderVO();
-			ticketorderVO.setTicket_order_no(value);;  
-			predicate = builder.equal(root.get("ticketorderVO"),ticketorderVO); //success
+			predicate = builder.equal(root.get("seatingarea_h5VO"),seatingarea_h5VO); //success
 		}
 		return predicate;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<TicketVO> getAllC(Map<String, String[]> map, String strOrderByTargetColumnName) {
+	public static List<TicketOrderVO> getAllC(Map<String, String[]> map, String strOrderByTargetColumnName) {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		List<TicketVO> list = null;
+		List<TicketOrderVO> list = null;
 		try {
 			// �i���Ы� CriteriaBuilder�j
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			// �i���Ы� CriteriaQuery�j
-			CriteriaQuery<TicketVO> criteriaQuery = builder.createQuery(TicketVO.class);
+			CriteriaQuery<TicketOrderVO> criteriaQuery = builder.createQuery(TicketOrderVO.class);
 			// �i���Ы� Root�j
-			Root<TicketVO> root = criteriaQuery.from(TicketVO.class);
+			Root<TicketOrderVO> root = criteriaQuery.from(TicketOrderVO.class);
 
 			List<Predicate> predicateList = new ArrayList<Predicate>();
 			
@@ -137,16 +134,14 @@ public class HibernateUtil_CompositeQuery_Ticket {
 		
 //		map.put("resale_ordstatus", new String[] { "CO" });
 		
-//		map.put("resale_ordprice", new String[] { "1900" });
-//		map.put("ticarea_no", new String[] { "ES00000001" });
+		map.put("member_no", new String[] { "M000002" });
 
 
-		List<TicketVO> list = getAllC(map, "ticket_create_time"); 
-		for (TicketVO aVO : list) {
+		List<TicketOrderVO> list = getAllC(map, "ticket_order_time"); 
+		for (TicketOrderVO aVO : list) {
 			
-			System.out.print(aVO.getTicket_no() + ",");
-			System.out.print(aVO.getTicket_resale_price() + ",");
-			System.out.print(aVO.getTicket_resale_status() + ",");
+			System.out.print(aVO.getMember_no() + ",");
+			System.out.print(aVO.getTicket_order_no() + ",");
 			
 			// 注意以下三行的寫法 (優!)
 //			System.out.print(aVO.getSeatingarea_h5VO().getTicbookednumber()+",");
