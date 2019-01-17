@@ -64,7 +64,7 @@ body{
 <div class="container">
 	<div class="walletcolumn walletcolumn-2">
 		<div class="wallettabs">
-		<a href="#" class="wallethref">
+		<a href="<%=request.getContextPath()%>/frontend/favorite_event/listFavoriteEventTitle_ByMember.jsp" class="wallethref">
 			<div class="walletblock walletblock-m">
 				<img src="<%=request.getContextPath()%>/frontend/favorite/images/最愛活動.png" class="walletimage">
 				<h3 class="heading" align="center">最愛活動</h3>

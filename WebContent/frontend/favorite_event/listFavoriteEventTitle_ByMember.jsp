@@ -11,9 +11,12 @@
 <%@ page import="com.member.model.*"%>
 
 <%
-	MemberVO memberVO = (MemberVO)session.getAttribute("member");
-	String member_no = memberVO.getMemberNo();
-	
+	String member_no = null;
+	if(session.getAttribute("member") != null){
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		member_no = memberVO.getMemberNo();
+	}
+
 	FavoriteEventService favoriteEventService = new FavoriteEventService();
 	List<FavoriteEventVO> list = favoriteEventService.findFavoriteEventByMember(member_no);
 	pageContext.setAttribute("listFavoriteEventTitle_ByMember", list); 
