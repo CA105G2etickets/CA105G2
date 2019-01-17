@@ -6,7 +6,7 @@
 
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,18 +57,15 @@ body {
 			<div class="row">
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
-						<label for="launchdate">上架日期</label> 
-						<input type="text" id="launchdate" name="launchdate"
-							class="form-control"
-							value="${param.launchdate}" >
+						<label for="launchdate">上架日期</label> <input type="text"
+							id="launchdate" name="launchdate" class="form-control"
+							value="${param.launchdate}">
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
-						<label for="offdate">下架日期</label> 
-						<input type="text" id="offdate" name="offdate"
-							class="form-control"
-							value="${param.offdate}" >
+						<label for="offdate">下架日期</label> <input type="text" id="offdate"
+							name="offdate" class="form-control" value="${param.offdate}">
 					</div>
 				</div>
 			</div>
@@ -90,8 +87,7 @@ body {
 				<div class="col-xs-12 col-sm-3">
 					<div class="form-group">
 						<label>優惠價</label> <input type="text" name="forsales_a"
-							id="forsales_a" class="form-control"
-							value="${param.forsales_a}">
+							id="forsales_a" class="form-control" value="${param.forsales_a}">
 					</div>
 				</div>
 
@@ -116,24 +112,24 @@ body {
 					class="form-control" accept="image/*"> <input type="hidden"
 					id="goods_picture1_status" name="goods_picture1_status"
 					value="${(goods_picture1_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				   <img src="${goods_picture1_path}" id="goods_picture1_preview">
-		
-				
+				<img src="${goods_picture1_path}" id="goods_picture1_preview">
+
+
 				<label for="goods_picture2">圖片2</label> <span class="text-danger">${goodsErrorMsgs.goods_picture2}</span>
 				<input type="file" id="goods_picture2" name="goods_picture2"
 					class="form-control" accept="image/*"> <input type="hidden"
 					id="goods_picture2_status" name="goods_picture2_status"
 					value="${(goods_picture2_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				   <img src="${goods_picture2_path}" id="goods_picture2_preview">
-				
+				<img src="${goods_picture2_path}" id="goods_picture2_preview">
+
 
 				<label for="goods_picture3">圖片3</label> <span class="text-danger">${goodsErrorMsgs.goods_picture3}</span>
 				<input type="file" id="goods_picture3" name="goods_picture3"
 					class="form-control" accept="image/*"> <input type="hidden"
 					id="goods_picture3_status" name="goods_picture3_status"
 					value="${(goods_picture3_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				   <img src="${goods_picture3_path}" id="goods_picture3_preview">
-				</div>
+				<img src="${goods_picture3_path}" id="goods_picture3_preview">
+			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
 					<div class="form-group">
@@ -181,8 +177,8 @@ body {
 
 				</div>
 			</div>
-			<input type="hidden" name="action" value="insertGoods">
-<input type="submit" value="送出新增" >
+			<input type="hidden" name="action" value="insertGoods"> <input
+				type="submit" value="送出新增">
 		</form>
 	</div>
 
@@ -206,7 +202,7 @@ body {
 	<script
 		src="<%=request.getContextPath()%>/backend/goods/js/addGoods.js"></script>
 	<!-- JavaScript in HTML -->
-	
+
 	<script type="text/javascript">
 		$(function() {
 			initInfoEditor();
