@@ -39,7 +39,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			+ ", GOODS_INTRODUCTION=?, FORSALES_A=?, FAVORITE_COUNT=?, GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?"
 			+ ", GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=? WHERE GOODS_NO=?";
 
-	private static final String GET_ALL_STMT_LAUNCHED= "SELECT * FROM GOODS WHERE (CURRENT_DATE BETWEEN launchdate and offdate) ORDER BY goods_no DESC";
+	private static final String GET_ALL_STMT_LAUNCHED= "SELECT * FROM GOODS WHERE (goods_status = 'confirmed') and (CURRENT_DATE BETWEEN launchdate and offdate) ORDER BY goods_no DESC";
 	@Override
 	public void insert(GoodsVO goodsVO) {
 		Connection con = null;
@@ -329,7 +329,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			String finalSQL = "SELECT * FROM GOODS WHERE (CURRENT_DATE BETWEEN launchdate AND offdate) "
+			String finalSQL = "SELECT * FROM GOODS WHERE (goods_status = 'confirmed') and (CURRENT_DATE BETWEEN launchdate AND offdate) "
 			          + CompositeQuery_Goods_Launched.get_WhereCondition(map)+ "ORDER BY goods_no DESC";
 			System.out.println("CompositeQuery_Goods_Launched : ");
 			System.out.println(finalSQL);
