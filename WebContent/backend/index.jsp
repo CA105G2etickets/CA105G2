@@ -14,11 +14,13 @@
 <style>
 .administratorphoto {
 	border-radius: 50px;
-	margin-top: 20px;
+	position: absolute;
+	margin-top: 30;
+	z-index:1;
 }
 .administratormenu {
-	margin-top: 100px;
-	margin-left: 200px;
+	margin-top: 8em;
+	margin-left: 20%;
 }
 .topnav {
 	list-style-type: none;
@@ -36,6 +38,7 @@ body{
 	font-family:微軟正黑體!important;
 }
 </style>
+
 <body>
    <!-- Basic -->
     <script src="https://code.jquery.com/jquery.js"></script>

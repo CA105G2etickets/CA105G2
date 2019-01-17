@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*" %>
 <%@page import="com.administrator.model.*"%>
 
 <html>
@@ -18,7 +19,9 @@
 <style>
 .administratorphoto {
 	border-radius: 50px;
-	margin-top: 20px;
+	position: absolute;
+	margin-top: 30;
+	z-index:1;
 }
 .administratormenu {
 	margin-top: 100px;
@@ -40,10 +43,14 @@ body{
 	font-family:微軟正黑體!important;
 }
 </style>
+
 </head>
+
 <body>
-	<nav class="navbar navbar-inverse" role="navigation">
-		<div class="container">
+
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="row">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target=".navbar-ex1-collapse">
@@ -51,7 +58,7 @@ body{
 						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a href="<%=request.getContextPath()%>/backend/index.jsp">
-				<img src="/CA105G2/backend/LOGO_back-end.png" href="#" alt="LOGO"
+				<img src="<%=request.getContextPath()%>/backend/LOGO_back-end.png" alt="back-endLOGO"
 					width="202.25px" height="165.5px">
 				</a>
 			</div>
@@ -60,6 +67,26 @@ body{
 
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<!-- 右選單 -->
+				<%if (session.getAttribute("administratorVO") == null) {%>
+					<a href="<%=request.getContextPath()%>/backend/login_back-end.jsp">
+					<div style="float:right; margin-right: 5%">
+					<img src="https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" class="administratorphoto" alt="administratorphoto" width="80px" height="80px">
+					</div>
+					</a>
+				<% } else {%>
+					<a href="<%=request.getContextPath()%>/backend/administrator/administrator_profile.jsp">
+					<div style="float:right; margin-right: 5%">
+					<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" width="80px" height="80px">
+					<img src="<%=request.getContextPath()%>/frontend/member/images/編輯.png" class="memberPhotoEdit" width="80px" height="80px">
+					</div>
+					</a>
+				<%}%>
+				
+				
+				
+				
+				
+				
 				<a href="#">
 					<%if (session.getAttribute("administratorVO") == null) {%>
 						<img src="https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" class="administratorphoto" alt="administratorphoto" style="float:right" width="80px" height="80px">
@@ -68,6 +95,14 @@ body{
 					<%}%>
 <%-- 					<img src="${member eq null ? "https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" : "<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=request.getContextPath()%>"}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"> --%>
 				</a>
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				<ul class="nav navbar-nav navbar-right administratormenu">
 <%-- 					<%if (session.getAttribute("member") == null) {%> --%>
@@ -104,6 +139,7 @@ body{
 			</div>
 			<!-- 手機隱藏選單區結束 -->
 		</div>
+	</div>
 		<div class="container">
 		<div class="topnav row">
 		<font size="4">

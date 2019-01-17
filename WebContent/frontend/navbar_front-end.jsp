@@ -102,8 +102,8 @@
 <body>
 
 <nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-			<div class="row">
+	<div class="container">
+		<div class="row">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 						<span class="sr-only">選單切換</span>
@@ -111,7 +111,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="/CA105G2/frontend/index.jsp">
+					<a href="<%=request.getContextPath()%>/frontend/index.jsp">
 					<img src="/CA105G2/frontend/LOGO_front-end.png" alt="LOGO" width="202.25px" height="165.5px">
 					</a>
 				</div>
