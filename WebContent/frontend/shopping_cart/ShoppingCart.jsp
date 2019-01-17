@@ -118,7 +118,7 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-3"></div>
 					<div class="col-xs-12 col-sm-6">
-						<p><font color="red" size="7"><b>　　購物車內尚無商品</b></font><p>
+						<p style="text-align:center;"><font color="red" size="7"><b>購物車內尚無商品</b></font><p>
 						<input type="button" value="返回商品" style="display:block; margin:auto;" class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/goods/selectGoods.jsp'" >
 					</div>
 				</div>

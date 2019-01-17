@@ -603,7 +603,7 @@ public class OrderHistoryDAO implements OrderHistoryDAO_interface {
 					throw new RuntimeException("rollback error occured. " + excep.getMessage());
 				}
 			}
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());  
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -622,5 +622,7 @@ public class OrderHistoryDAO implements OrderHistoryDAO_interface {
 			}
 		}
 
+		
+		
 	}
 }

@@ -556,18 +556,33 @@ public class OrderHistoryServlet extends HttpServlet {
 					String memberAccount = req.getParameter("memberAccount").trim();
 					String memberPassword = req.getParameter("memberPassword").trim();
 					Integer newEwalletBalance = null;
-					try {
+//					try {
 						order_price = new Double(req.getParameter("order_price").trim());
 						newEwalletBalance = memberVO.getEwalletBalance() - order_price.intValue();
-						if (order_price > memberVO.getEwalletBalance()) {
-							throw new Exception();
+						if (newEwalletBalance < 0) {
+//						List<String> errorMsgs = new LinkedList<String>();
+//						req.setAttribute("errorMsgs", errorMsgs);
+//							throw new Exception();
+							newEwalletBalance = memberVO.getEwalletBalance();
+							errorMsgs.add("電子錢包餘額不足");
+//							RequestDispatcher failureView = req.getRequestDispatcher("/frontend/shopping_cart/Checkout.jsp");
+//							failureView.forward(req, res);
+							
+							HttpSession error = req.getSession();
+							error.setAttribute("errorMsgs", errorMsgs);
+//							req.setAttribute("errorMsgs", errorMsgs);
+							res.sendRedirect(req.getContextPath()+"/frontend/shopping_cart/Checkout.jsp");
+							return;
 						}
-					} catch (Exception e) {
-						newEwalletBalance = memberVO.getEwalletBalance();
-						errorMsgs.add("電子錢包餘額不足");
-						RequestDispatcher failureView = req.getRequestDispatcher("/frontend/shopping_cart/Checkout.jsp");
-						failureView.forward(req, res);
-					}
+//					} catch (Exception e) {
+//						newEwalletBalance = memberVO.getEwalletBalance();
+//						errorMsgs.add("電子錢包餘額不足");
+//						RequestDispatcher failureView = req.getRequestDispatcher("/frontend/shopping_cart/Checkout.jsp");
+//						failureView.forward(req, res);
+//						PrintWriter out = res.getWriter();
+//						res.sendRedirect(req.getContextPath()+"/frontend/shopping_cart/Checkout.jsp");
+//						return;
+//					}
 					Timestamp creationDate = Timestamp.valueOf(req.getParameter("creationDate").trim());
 					byte[] profilePicture = memberVO.getProfilePicture();
 					String memberStatus = req.getParameter("memberStatus").trim();
@@ -588,7 +603,6 @@ public class OrderHistoryServlet extends HttpServlet {
 					MemberService memberSvc = new MemberService();
 					memberSvc.memberWithdrawal(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, newEwalletBalance, creationDate, profilePicture, memberStatus, thirduid);
 				}
-				
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
 				

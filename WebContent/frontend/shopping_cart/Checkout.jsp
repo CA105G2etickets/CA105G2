@@ -13,10 +13,10 @@
     OrderHistoryService orderHistorySvc = new OrderHistoryService();
     List<OrderHistoryVO> listHistory = orderHistorySvc.getAll();
     pageContext.setAttribute("listHistory",listHistory);
-	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");   
-    OrderDetailService orderDetailSvc = new OrderDetailService();
-    List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
-    pageContext.setAttribute("listDetail",listDetail);
+// 	OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");   
+//     OrderDetailService orderDetailSvc = new OrderDetailService();
+//     List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
+//     pageContext.setAttribute("listDetail",listDetail);
     
 	MemberVO memberVO = (MemberVO) session.getAttribute("member");
 %>
@@ -75,12 +75,16 @@
                                 String amount =  (String) request.getAttribute("amount");
                             %>  
                             <%  
+                            	int total_amount = 0;
+                            
                             	for (int i = 0; i < buylist.size(); i++) {
                                 ShoppingCart order = buylist.get(i);
                                 String goods_no = order.getGoods_no();
                                 String goods_name = order.getGoods_name();
                                 Integer goods_price = order.getGoods_price();
-                                Integer goods_quantity = order.getGoods_quantity(); 
+                                Integer goods_quantity = order.getGoods_quantity();
+                                total_amount += (order.getGoods_price()*order.getGoods_quantity());
+                                
                             %>
                             <tbody>
                                 <tr>
@@ -91,10 +95,12 @@
                                 </tr>
                             </tbody>
                             <%
-                            }
+                           		}
                             %>
                         </table>
-                        <h4> 付款金額：<font color="red">$<%=amount%></font></h4>  
+<%--                         <h4> 付款金額：<font color="red">$<%=amount%></font></h4>   --%>
+                        <h4> 付款金額：<font color="red">$<%=total_amount%></font></h4>  
+                        
                     </div>
                 </div>
             </div>
@@ -107,6 +113,8 @@
 					<ul>
 					<c:forEach var="message" items="${errorMsgs}">
 						<li style="color:red">${message}</li>
+<%-- 						<c:remove var='message' scope="session"/> --%>
+						<%session.removeAttribute("errorMsgs"); %>
 					</c:forEach>
 					</ul>
 				</c:if>
@@ -119,14 +127,17 @@
 							<input type="hidden" name="member_no" value="<%=memberVO.getMemberNo()%>" >
 						</div>
 						<div class="form-group">
-							<label>訂單總金額：$<%=amount%></label>
-							<input type="hidden" name="order_price" value="<%=amount%>" >
+<%-- 							<label>訂單總金額：$<%=amount%></label> --%>
+<%-- 							<input type="hidden" name="order_price" value="<%=amount%>" > --%>
+							<label>訂單總金額：$<%=total_amount%></label>
+							<input type="hidden" name="order_price" value="<%=total_amount%>" >
+							
 						</div>
 						<input name="pay_methods" type="radio" value="CREDITCARD" checked="checked"><b>信用卡</b>
 						<input name="pay_methods" type="radio" value="EWALLET"><b>電子錢包</b><br>
 						<!-- 如果開始要顯示要加入 style="display:block;" 不顯示則加入  style="display:none;"-->
 						<div class="creditcard pay_methods bBW" style="display:block;">
-							<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16"><font color="#fff">-</font><input type="TEXT" name="creditcard_no" placeholder="未3碼" class="form-control" value="" style="width:8%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
+							<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16"><font color="#fff">-</font><input type="TEXT" name="creditcard_no" placeholder="安全碼" class="form-control" value="" style="width:8%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
 						</div>
 						<div class="ewallet pay_methods bBW">
 							<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
