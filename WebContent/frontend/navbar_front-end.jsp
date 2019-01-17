@@ -216,7 +216,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
-					<a href="<%=request.getContextPath()%>/frontend/goods2/EShop.jsp" class="topnav" align="center">周邊商品</a>
+					<a href="<%=request.getContextPath()%>/frontend/goods/selectGoods.jsp" class="topnav" align="center">周邊商品</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">

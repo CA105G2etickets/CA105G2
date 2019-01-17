@@ -233,9 +233,9 @@ body{
 </font>
 		<div>
 			<div class="row">
-				<c:forEach var="goodsVO" items="${listGoods_ByCompositeQuery}" end="7">
+				<c:forEach var="goodsVO" items="${listGoods_ByCompositeQuery}" end="8">
 				
-					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 						<div class="row">
 						
 						
