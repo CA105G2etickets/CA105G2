@@ -156,5 +156,9 @@ public class Group_openService {
 	 public void group_complete(String group_no) {
 		 dao.group_complete(group_no);
 	 }
+	 //人氣商品前三
+	 public Map<String, Integer> getfavorite(){
+		return dao.getfavorite();
+	 }
 	 	
 }

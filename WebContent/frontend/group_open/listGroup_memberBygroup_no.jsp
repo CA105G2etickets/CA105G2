@@ -87,7 +87,7 @@
 								  <!--開團進行中 開始  -->
 								<tr>
 										<td>
-										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+										<img src ="<%=request.getContextPath()%>/frontend/group_open/GoodsImgServlet1.do?goods_no=${group_openmap.key}" height="80" width="80"/>
 										</td>
 										<td>
 										${group_openVO.group_name}
@@ -124,7 +124,7 @@
 										<input type="submit" value="解散該團" >
 										 </FORM>	 --%>
 										 	  <!-- Trigger the modal with a button -->
-									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal_${group_openVO.group_no}">退團</button>
+									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal_${group_openVO.group_no}">解散該團</button>
 								     	<!-- Modal -->
 										<div id="myModal_${group_openVO.group_no}" class="modal fade" role="dialog">
   											<div class="modal-dialog">

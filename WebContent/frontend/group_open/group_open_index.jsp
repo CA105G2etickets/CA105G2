@@ -20,8 +20,9 @@
 	MemberVO memberVOsession = (MemberVO)session.getAttribute("member"); 
 				
 %>
-
-
+<jsp:useBean id="group_memberSvc" scope="page" class="com.group_member.model.Group_memberService"/>
+<jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService"/>
+<jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService"/>
 
 <!DOCTYPE html>
 <html lang="">
@@ -107,11 +108,11 @@
 				<div class="col-xs-12 col-sm-6">
 					<form class="navbar-form navbar-left" role="search" METHOD="post" ACTION="group_open.do" >
 						<div class="form-group">
-							<input type="text" name="EVETIT_NAME" class="form-control" placeholder="請輸入關鍵字">
+							<input type="text" name="EVETIT_NAME" class="form-control" placeholder="請輸入關鍵字" value="${param.EVETIT_NAME}">
 						</div>
 						<button type="submit" class="btn btn-default">活動主題搜尋</button>
 						<div class="form-group">
-							<input type="text" name="GOODS_NAME" class="form-control" placeholder="請輸入關鍵字">
+							<input type="text" name="GOODS_NAME" class="form-control" placeholder="請輸入關鍵字" value="${param.GOODS_NAME}">
 						</div>
 						<button type="submit" class="btn btn-default">商品搜尋</button>
 						<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
@@ -133,6 +134,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-12 col-sm-3">
+			<br>
 				<div class="panel panel-info" id='example'>
 					<div class="panel-heading">
 						<h3 class="panel-title">我的團購管理</h3>
@@ -169,41 +171,39 @@
 			</div>
 			<!-- <div class="col-xs-12 col-sm-6"> -->
 			<div class="col-xs-12 col-sm-3">
-				
-				<br>
 				<table class="table table-hover">
 					<div class="title" style="text-align: center">
-						<span style="color: white;"><h3>人氣團購</h3></span>
+						<span style="color: white;"><h3>人氣最愛商品</h3></span>
 					</div>
 					<thead>
 						<tr>
 							<th>圖片</th>
-							<th>開團名稱</th>
+							<th>商品名稱</th>
 							<th>最愛商品次數</th>
+							<th>我要開團</th>
 						</tr>
 					</thead>
 					<tbody>
+					<c:forEach var="goodsmap" items = "${group_openSvc.getfavorite()}">
 						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/G0002_GROUP_BANNER_1.jpg"
-								class="shop"></td>
-							<td>Bangalore</td>
-							<td>Bangalore</td>
+							<td> <img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsmap.key}" class="shop"> </td>
+							<td>
+						<c:forEach var="goodsVO" items = "${goodsSvc.getAll()}">
+							<c:if test="${goodsVO.goods_no==goodsmap.key}">
+							${goodsVO.goods_name}			
+							</c:if>
+						</c:forEach>
+						   </td>
+							<td>${goodsmap.value}</td>
+							<td>  
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do">
+								<input type="submit" value="想要開團" class="btn btn-primary">  
+								<input type="hidden" name="action" value="getOnefordisplay_goods"> 
+								<input type="hidden" name="goods_no" value="${goodsmap.key}">
+								</Form>
+							</td>
 						</tr>
-						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/G0002_GROUP_BANNER_1.jpg"
-								class="shop"></td>
-							<td>Mumbai</td>
-							<td>Mumbai</td>
-						</tr>
-						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/G0002_GROUP_BANNER_1.jpg"
-								class="shop"></td>
-							<td>Pune</td>
-							<td>Pune</td>
-						</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -228,8 +228,10 @@
 			</div>
 			<!-- <div class="col-xs-12 col-sm-2"> -->
 			<div class="col-xs-12 col-sm-8">
-				<div class="container">
+				<div class="container">	
 					<c:forEach var="group_openVO" items="${list}">
+					
+
 						<c:if test="${group_openVO.group_status=='process1'}">
 							<!-- 只能顯示進行中的團 -->
 							<div class="row">
@@ -306,7 +308,27 @@
 											</c:if>	
 											</c:forEach>
 											<FORM METHOD="post" ACTION="group_open.do">
-												<input type="submit" value="我要跟團" class="btn btn-primary">                      
+												<input type="submit" value="我要跟團" class="btn btn-primary">  
+											
+							
+								
+									<%-- 		<c:forEach var="group_memberVO" items="${group_memberSvc.getquitgroup_member(group_openVO.group_no)}">
+											<c:if test="${group_memberVO.member_no==memberVO.memberNo}">
+												<input type="submit" value="你已經跟團了" class="btn btn-primary" readonly="readonly">   
+										 	</c:if>	 
+										 	</c:forEach>
+										 	<c:forEach var="group_memberVO" items="${group_memberSvc.getquitgroup_member(group_openVO.group_no)}">
+										 	<c:if test="${group_memberVO.member_no!=memberVO.memberNo}">
+										 	${memberVOsession.memberNo}
+										 	<%=memberVOsession.getMemberNo()%>
+												<input type="submit" value="我要跟團" class="btn btn-primary">   
+										 	</c:if>	
+											</c:forEach> --%>
+								
+								
+								
+								
+								              
 												<input type="hidden" name="action" value="getgroup_for_display"> <input type="hidden"
 													name="group_no" value="${group_openVO.group_no}"
 													class="btn btn-primary">
@@ -322,6 +344,22 @@
 							</div>
 							<!-- <div class="row"> -->
 						</c:if>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					</c:forEach>
 				</div>
 				<!-- <div class="container"> -->
@@ -331,7 +369,9 @@
 			</div>
 			<!-- <div class="col-xs-12 col-sm-8"> -->
 			<div class="col-xs-12 col-sm-2">
+					
 				
+		
 			</div>
 			<!-- <div class="col-xs-12 col-sm-2"> -->
 		</div>

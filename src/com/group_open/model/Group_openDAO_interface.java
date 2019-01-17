@@ -46,6 +46,8 @@ public interface Group_openDAO_interface {
 	  public List <EventTitleVO> geteventitle();
 	  //開團完成
 	  public void group_complete(String group_no);
+	  //人氣商品前三
+	  public Map<String, Integer> getfavorite();
 	  
 		
 }

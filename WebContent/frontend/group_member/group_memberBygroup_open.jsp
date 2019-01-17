@@ -198,6 +198,10 @@
                						</c:forEach>
                						<c:forEach var="group_openVO" items="${group_openSvc.all}">
                    					    <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+                   					    
+                   					    
+                   					    
+                   					    
                    					    <c:if test="${group_openVO.group_status=='process1'}">
 	                   					<!--開團進行中開始  -->
 								<tr>
@@ -254,6 +258,7 @@
                    					 <fmt:formatDate value="${group_openVO.group_time}" pattern="yyyy-MM-dd HH:mm"/> 
 	                   					<%-- 	${group_openVO.group_time}  --%>
                     					</c:if>
+	
                						</c:forEach>								
 								</td>
 								<td>
@@ -264,14 +269,20 @@
                						</c:forEach>								
 								</td>
 								<td>
+								  <c:if test="${group_memberVO.group_member_status=='withgroup'}">
+								<!-- 第一個 -->
 								 <FORM METHOD="post" ACTION="group_member.do" style="margin-bottom: 0px;">
 			     					<input type="submit" value="修改" class="btn-warning btn-sm">
 			     					<input type="hidden" name="group_no"  value="${group_memberVO.group_no}">
 			     					<input type="hidden" name="member_no"  value="${group_memberVO.member_no}">
 			     					<input type="hidden" name="action"	value="getOne_For_Update">
-			 					 </FORM>		
+			 					 </FORM>	
+			 					 
+			 					 </c:if>	
 								</td>
-								<td> 
+								<td>
+								 <c:if test="${group_memberVO.group_member_status=='withgroup'}"> 
+								<!-- 第個 -->
 			  						 <!-- Trigger the modal with a button -->
 									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal_${group_memberVO.group_no}">退團</button>
 								     	<!-- Modal -->
@@ -303,11 +314,14 @@
     								</div><!-- <div class="modal-content"> -->		
   									</div><!-- <div class="modal-dialog"> -->
 									</div><!-- <div id="myModal" class="modal fade" role="dialog"> -->
+									 </c:if>
 								</td>			
 							</tr>	
 						
 						<!--開團進行中結束  -->
 	                   					</c:if>
+
+	                   					
                     					</c:if>
                						</c:forEach>
                							<c:forEach var="group_openVO" items="${group_openSvc.all}">

@@ -11,6 +11,7 @@
 %>
 <jsp:useBean id="eventtitleSvc" scope="page" class="com.event_title.model.EventTitleService" />
 <jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
+<jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
  
 <!DOCTYPE html>
 <html >
@@ -19,15 +20,15 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  
-		<title>Title Page</title>
+		<title>修改開團紀錄</title>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="<%=request.getContextPath()%>/vendor/ckeditor_easyImage_final/ckeditor.js"></script>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" /> 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
-		<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
+ 		<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
+		<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script> 
 		<!-- <script>CKEDITOR.replace('content', {});</script> -->
-		<script src="<%=request.getContextPath()%>/vendor/ckeditor_full/ckeditor.js"></script>
 
 		<style>
   		.xdsoft_datetimepicker .xdsoft_datepicker {
@@ -64,6 +65,29 @@
 			width: 100%;
 			max-width: none;
 		}
+				#map {
+  height: 430px;
+  position: relative;
+  width: 100%;
+}
+
+.maps-frame {
+  height: 430px;
+  width: 100%;
+}
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
 		</style>
 		
 <script>
@@ -103,17 +127,30 @@ $(function(){
 		 }); 
 	     }); 
 		var loadFile = function(event) {
-		var output = document.getElementById('output');
-		output.src = URL.createObjectURL(event.target.files[0]);
+			var output = document.getElementById('output');
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			reader.onload = function () {
+				output.src = this.result;
+				document.getElementById('url1').value = this.result;
+			};
+			
+// 			output.src = URL.createObjectURL(event.target.files[0]);
 		};
 
 		var loadFile2 = function(event) {
-		var output = document.getElementById('output1');
-		output.src = URL.createObjectURL(event.target.files[0]);
+			var output = document.getElementById('output1');
+// 		output.src = URL.createObjectURL(event.target.files[0]);
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			reader.onload = function () {
+				output.src = this.result;
+				document.getElementById('url2').value = this.result;
+			};
 		};
 		function codeAddress(){
 
-			var add = document.getElementById("group_address");
+			var add = document.getElementById("address");
 
 			var Longitude = document.getElementById("longitude");
 
@@ -171,9 +208,9 @@ $(function(){
 		      
 		      
 		      
-		      <div class="panel panel-default">
+		      <div class="panel panel-warning">
 		       <div class="panel-heading">
-		   		 <h3 class="panel-title">我要開團</h3>
+		   		 <h3 class="panel-title">我要修改團購資訊</h3>
 				  </div><!-- <div class="panel-heading"> -->
 			  <div class="panel-body">
 			 
@@ -184,7 +221,7 @@ $(function(){
 				<div class="col-xs-12 col-sm-6">
 				
 					商品圖片
-			    <div><img src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg1.do?group_no="+group_openVO.getGroup_no()%>"id="output1" height="200" width="200"/></div>
+			    <div><img src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg2.do?group_no="+group_openVO.getGroup_no()%>"id="output1" height="200" width="200"/></div>
 				</div><!-- <div class="col-xs-12 col-sm-6"> -->	 
 				<br>
 				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1">
@@ -193,10 +230,10 @@ $(function(){
 					<select name="evetit" id="evetit" class="form-control">
 					<option value="-1">請選擇</option>
 					<c:forEach var="eventtitleVO" items="${group_openSvc.geteventitle()}">
-						 <option value="${eventtitleVO.evetit_no}"${eventtitleVO.evetit_no==param.evetit_no?'selected':''}>${eventtitleVO.evetit_name}</option>
+						 <option value="${eventtitleVO.evetit_no}"${eventtitleVO.evetit_no==param.evetit?'selected':''}>${eventtitleVO.evetit_name}</option>
 					</c:forEach>
 					</select>
-					<input type="hidden" name="action" value="getSelect">
+					<input type="hidden" name="action" value="getSelect2">
 					<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
 					<input type="hidden" name="group_no" value="<%=group_openVO.getGroup_no()%>">
 					</div><!-- <div class="form-group"> -->
@@ -217,9 +254,9 @@ $(function(){
 				<div class="form-group">			
 				 <label for="evetit">商品名稱</label>	
 			<select id="goods" class="form-control" name="goods_no">
-				<c:forEach var="eventtitlemap" items="${evetitle_goods}">
-				<option value="${eventtitlemap.key}">${eventtitlemap.value}${eventtitlemap.key}</option>${eventtitlemap.key}
-				</c:forEach>
+				<%-- <c:forEach var="eventtitlemap" items="${evetitle_goods}"> --%>
+				<option value="<%=group_openVO.getGoods_no()%>"><%=goodsSvc.getOneGoods(group_openVO.getGoods_no()).getGoods_name()%></option>
+				<%-- </c:forEach> --%>
 			</select>			
 				</div><!-- <div class="form-group"> -->	
 				<div class="form-group">
@@ -271,11 +308,19 @@ $(function(){
   				<option value="fail2">fail2</option>
   				<option value="sucess3">sucess3</option>
 			</select> -->
-			<div class="form-group">
+		<div class="form-group">
 					<label for="group_address">面交地址</label>
-					<input name="group_address" type="text" id="group_address" size="50" maxlength="50" onchange="codeAddress()"class="form-control" value="<%= (group_openVO==null)? "請輸入地址" : group_openVO.getGroup_address()%>"/>
-		<!-- 			<input type="text" name="group_address" id="group_address" class="form-control"/> -->
+					<input id="address"  name="group_address" type="textbox"  size="50" maxlength="50" onchange="codeAddress()"class="form-control" value="<%= (group_openVO==null) ? "請輸入面交地址" : group_openVO.getGroup_address()%>"/>
+					<!-- <input type="text" name="group_address" id="group_address" class="form-control"/>  -->
+					<input id="submit" type="button" value="Geocode">
 			</div>
+				<div class="form-group">
+				<!--  <div id="floating-panel"> -->
+      			<!-- 	<input id="address" type="textbox" value="Sydney, NSW">
+     				 <input id="submit" type="button" value="Geocode"> -->
+    		<!-- 	</div> -->
+    				<div id="map"></div>
+    			</div>
 			<!-- <div class="form-group"> -->
 					<!-- <label for="latitude">緯度</label> -->
 					<input name="latitude" type="hidden" id="latitude" value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>" class="form-control"/>
@@ -297,63 +342,22 @@ $(function(){
 				<input type="text" name="group_price" id="group_price" class="form-control"/>
 			</div> -->
 			<div class="form-group">
-				<i class="glyphicon glyphicon-piggy-bank"></i><label for="group_quantity">商品購買數量</label>
+				<i class="glyphicon glyphicon-piggy-bank"></i><label for="group_quantity">商品購買數量</label><%=group_openVO.getGroup_price()%>
 				<input type="text" name="group_quantity" id="group_quantity" class="form-control" value="<%= (group_memberVO==null)? "請輸入購買數量" : group_memberVO.getProduct_quantity()%>"/>
 			</div>	
-			<input type="hidden" name="action" value="update">
+			<input type="hidden" name="group_no" value="<%=group_openVO.getGroup_no()%>">
 			<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
 			<input type="hidden" name="group_member_status" value="grouplead">
+			<input type="hidden" name="action" value="update">
+			<input type="hidden" name="group_price" value="<%=group_openVO.getGroup_price()%>">
 			<input type="submit" value="送出修改">
 			</Form>
 				</div><!-- <div class="panel-body"> -->
 			</div><!-- <div class="panel panel-default"> -->
 				</div>
 				<div class="col-xs-12 col-sm-2">
-						<!-- 地址連動選單 -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
-		<!-- <script src="你的網頁空間/jquery.twzipcode.min.js"></script> -->
-		<!-- /地址連動選單 -->
-				<img id="output1" />
-				<img id="output"/>	
-				<div id="zipcode3">
-<div class="f3" data-role="county">
-</div>
-<div class="f4" data-role="district">
-</div>
-</div><!-- <div id="zipcode3"> -->
-<input name="Address" type="text" class="f13 address form-control">
-<script>
-$("#zipcode3").twzipcode({
-"zipcodeIntoDistrict": true,
-"css": ["city form-control", "town form-control"],
-"countyName": "city", // 指定城市 select name
-"districtName": "town" // 指定地區 select name
-});
-</script>
-<style>
-.city, .town{width: 100%;}
-.f1{float:left;margin-left:5px;margin-right:5px;width:calc(5% - 10px)}
-.f2{float:left;margin-left:5px;margin-right:5px;width:calc(10% - 10px)}
-.f3{float:left;margin-left:5px;margin-right:5px;width:calc(15% - 10px)}
-.f4{float:left;margin-left:5px;margin-right:5px;width:calc(20% - 10px)}
-.f5{float:left;margin-left:5px;margin-right:5px;width:calc(25% - 10px)}
-.f6{float:left;margin-left:5px;margin-right:5px;width:calc(30% - 10px)}
-.f7{float:left;margin-left:5px;margin-right:5px;width:calc(35% - 10px)}
-.f8{float:left;margin-left:5px;margin-right:5px;width:calc(40% - 10px)}
-.f9{float:left;margin-left:5px;margin-right:5px;width:calc(45% - 10px)}
-.f10{float:left;margin-left:5px;margin-right:5px;width:calc(50% - 10px)}
-.f11{float:left;margin-left:5px;margin-right:5px;width:calc(55% - 10px)}
-.f12{float:left;margin-left:5px;margin-right:5px;width:calc(60% - 10px)}
-.f13{float:left;margin-left:5px;margin-right:5px;width:calc(65% - 10px)}
-.f14{float:left;margin-left:5px;margin-right:5px;width:calc(70% - 10px)}
-.f15{float:left;margin-left:5px;margin-right:5px;width:calc(75% - 10px)}
-.f16{float:left;margin-left:5px;margin-right:5px;width:calc(80% - 10px)}
-.f17{float:left;margin-left:5px;margin-right:5px;width:calc(85% - 10px)}
-.f18{float:left;margin-left:5px;margin-right:5px;width:calc(90% - 10px)}
-.f19{float:left;margin-left:5px;margin-right:5px;width:calc(95% - 10px)}
-.f20{float:left;margin-left:5px;margin-right:5px;width:calc(100% - 10px)}
-</style>		
+	
+
 			  </div>
 			</div>
 		   </div>
@@ -361,10 +365,21 @@ $("#zipcode3").twzipcode({
 		  <br>
 		</div>
 		<script>
-			CKEDITOR.replace( 'group_mind', {});
-			CKEDITOR.replace( 'group_introduction', {});
+/* 			CKEDITOR.replace( 'group_mind', {});
+			CKEDITOR.replace( 'group_introduction', {}); */
+			CKEDITOR.replace( 'group_mind', {
+				removePlugins: 'image',
+				extraPlugins: 'easyimage',
+				cloudServices_tokenUrl: 'https://36762.cke-cs.com/token/dev/UM6e5GmaKWwu89mPGLfo7csdkFHnd6pThBTSG6KZ3PZIOnotQZZOpXzO92Lu',
+				cloudServices_uploadUrl: 'https://36762.cke-cs.com/easyimage/upload/'
+			});
+			CKEDITOR.replace( 'group_introduction', {
+				removePlugins: 'image',
+				extraPlugins: 'easyimage',
+				cloudServices_tokenUrl: 'https://36762.cke-cs.com/token/dev/UM6e5GmaKWwu89mPGLfo7csdkFHnd6pThBTSG6KZ3PZIOnotQZZOpXzO92Lu',
+				cloudServices_uploadUrl: 'https://36762.cke-cs.com/easyimage/upload/'
+			});
 		</script>
-		
 		<script type="text/javascript">
 		$(document).ready(function(){
 			 $('#evetit').change(function(){
@@ -373,6 +388,38 @@ $("#zipcode3").twzipcode({
 		})
 
 </script>
+<script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: {
+        	  lat: ${group_openVO.latitude},
+        	  
+        	  lng: ${group_openVO.longitude}
+        	  }
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    </script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places" async defer></script>
 		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 	</body>

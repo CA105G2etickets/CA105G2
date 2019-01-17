@@ -55,44 +55,11 @@
 		</style>
 	</head>
 	<body>
-			<nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-						<span class="sr-only">選單切換</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<img src="https://i.imgur.com/T0YnkK9.png"  href="#" alt="LOGO" width="202.25px" height="165.5px">
-				</div>
-				
-				<!-- 手機隱藏選單區 -->
-				
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<!-- 右選單 -->
-					<img src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7" class="memberphoto" href="#"  alt="LOGO" style="float:right" width="80px" height="80px">
-				
-					<ul class="nav navbar-nav navbar-right membermenu">
-						<li><a href="#">登出</a></li>
-						<li><a href="#">個人設定</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">繁體中文</a></li>
-								<li><a href="#">English</a></li>
-								<li><a href="#">日本語</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<!-- 手機隱藏選單區結束 -->
-			</div>
-		</nav>
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 col-sm-1">
-						<%-- 錯誤表列 --%>
+		<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />	
+		
+				<div class="container">
+								<div class="row">
+										<%-- 錯誤表列 --%>
 							<c:if test="${not empty errorMsgs}">
 								<font style="color:red">請修正以下錯誤:</font>
 									<ul>
@@ -101,6 +68,13 @@
 									</c:forEach>
 									</ul>
 							</c:if>
+							</div><!-- <div class="row"> -->
+							</div><!-- <div class="container"> -->			
+		
+		
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-1">
 					</div><!-- <div class="col-xs-12 col-sm-1"> -->
 					<div class="col-xs-12 col-sm-10">
 						<div class="col-xs-12 col-sm-6">
@@ -171,7 +145,7 @@
 								        </div>
 								        <div role="tabpanel" class="tab-pane" id="tab2">${group_openVO.group_mind}
 								        </div>
-								        <div role="tabpanel" class="tab-pane" id="tab3"><div id="map"></div>
+								        <div role="tabpanel" class="tab-pane" id="tab3"><h4>${group_openVO.group_address}</h4><div id="map"></div>
 								        </div>
 								    </div><!-- <div class="tab-content"> -->
 								</div><!-- <div role="tabpanel"> -->
@@ -199,19 +173,19 @@
 						<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_member/group_member.do" name="form1"><!-- 表單開始 -->
 								<!-- 選項開始 -->
 							<div class="form-group">
-  								<label for="member_no">
+  							<!-- 	<label for="member_no">
   									會員編號
-  								</label>
-  									<input name="member_no" type="text" class="form-control" id="member_no"
+  								</label> -->
+  									<input name="member_no" type="hidden" class="form-control" id="member_no"
   									value="<%= (group_memberVO==null) ? "請輸入會員編號" : group_memberVO.getMember_no()%>"/>
 							</div><!-- <div class="form-group"> -->	
 								<!-- 選項結束 -->
 								<!-- 選項開始 -->
 							<div class="form-group">
-  								<label for="usr">
+  							<!-- 	<label for="usr">
   									開團編號
-  								</label>
-  									<input name="group_no" type="text" class="form-control" id="group_no"
+  								</label> -->
+  									<input name="group_no" type="hidden" class="form-control" id="group_no"
   									value="${group_openVO.group_no}">
 							</div><!-- <div class="form-group"> -->	
 								<!-- 選項結束 -->
@@ -243,7 +217,7 @@
       							  <option value="CREDITCARD">CREDITCARD信用卡</option>   							 
         						</select>
 								<!-- 選項結束 -->
-							<input type="hidden" name="group_member_status" value="withgroup">
+							<input type="hidden" name="group_member_status" value="withgroup">									
 							<input type="hidden" name="pay_status" value="COMPLETE2">
 							<input type="hidden" name="action" value="update">	
 							<br>

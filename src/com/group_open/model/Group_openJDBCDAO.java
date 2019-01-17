@@ -942,4 +942,10 @@ public class Group_openJDBCDAO implements Group_openDAO_interface {
 		
 	}
 
+	@Override
+	public Map<String, Integer> getfavorite() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -150,9 +150,13 @@ public class Group_memberServlet extends HttpServlet {
 				// 跟團時間修改戳記
 				Timestamp join_time = new Timestamp(System.currentTimeMillis());
 
-				String product_quantitys = req.getParameter("product_quantity");
-				Integer product_quantity = Integer.valueOf(product_quantitys);
-
+				Integer product_quantity = null;
+				try{
+					String product_quantitys = req.getParameter("product_quantity");
+					product_quantity = Integer.valueOf(product_quantitys);
+				}catch(NumberFormatException e) {
+					errorMsgs.add("購買數量格式錯誤");
+				}
 				if (product_quantity == null) {
 					errorMsgs.add("購買數量請勿空白");
 				}
@@ -172,7 +176,22 @@ public class Group_memberServlet extends HttpServlet {
 						errorMsgs.add("退團理由請勿空白");
 					}
 				}
+				
 				String order_phone = req.getParameter("order_phone");
+				if(order_phone.length()!=10) {
+					errorMsgs.add("聯絡電話格式錯誤");
+				}
+//				product_quantity = Integer.valueOf(product_quantitys);
+				try {
+				  Integer  order_phoneint =  Integer.valueOf(order_phone);
+				}catch(Exception e) {
+					errorMsgs.add("聯絡電話格式錯誤，不能有符號");
+				}
+				if (order_phone == null || order_phone.trim().length() == 0) {
+					errorMsgs.add("聯絡電話請勿空白");
+				}
+		
+				
 				String pay_method = req.getParameter("pay_method");
 				if (pay_method == null || pay_method.trim().length() == 0) {
 					errorMsgs.add("付款方法請勿空白");
@@ -189,15 +208,18 @@ public class Group_memberServlet extends HttpServlet {
 				group_memberVO.setOrder_phone(order_phone);
 				group_memberVO.setOrder_phone(order_phone);
 				group_memberVO.setPay_method(pay_method);
+				
+				Group_openService group_openSvc = new Group_openService();
+				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
 
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("group_memberVO", group_memberVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				if (!errorMsgs.isEmpty()) {				
+					req.setAttribute("group_openVO", group_openVO);
+					req.setAttribute("group_memberVO", group_memberVO);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/frontend/group_member/update_group_member.jsp");
 					failureView.forward(req, res);
-					return; // 中斷
+					return;
 				}
-
 				/*************************** 2.開始修改資料 ************/
 				Group_memberService group_memberSvc = new Group_memberService();
 				group_memberVO = group_memberSvc.updateGroup_member(member_no, group_no, join_time, product_quantity,
@@ -345,12 +367,13 @@ public class Group_memberServlet extends HttpServlet {
 
 		// 加入跟團之後到自己有的跟團訂單
 		if ("insert2".equals(action)) {
+			System.out.println(action+"group_memberServlet348");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				// 接受請求參數
 				String member_no = req.getParameter("member_no");
 				if (member_no == null || member_no.trim().length() == 0) {
@@ -363,10 +386,14 @@ public class Group_memberServlet extends HttpServlet {
 				}
 				// 入團時間
 				Timestamp join_time = new Timestamp(System.currentTimeMillis());
-
-				String product_quantitys = req.getParameter("product_quantity");
-				Integer product_quantity = Integer.valueOf(product_quantitys);
-
+				
+				Integer product_quantity = null;
+				try{
+					String product_quantitys = req.getParameter("product_quantity");
+					product_quantity = Integer.valueOf(product_quantitys);
+				}catch(NumberFormatException e) {
+					errorMsgs.add("購買數量格式錯誤");
+				}
 				if (product_quantity == null) {
 					errorMsgs.add("購買數量請勿空白");
 				}
@@ -386,14 +413,34 @@ public class Group_memberServlet extends HttpServlet {
 						errorMsgs.add("退團理由請勿空白");
 					}
 				}
+				
+				
 				String order_phone = req.getParameter("order_phone");
+				if(order_phone.length()!=10) {
+					errorMsgs.add("聯絡電話格式錯誤");
+				}
+//				product_quantity = Integer.valueOf(product_quantitys);
+				try {
+				  Integer  order_phoneint =  Integer.valueOf(order_phone);
+				}catch(Exception e) {
+					errorMsgs.add("聯絡電話格式錯誤，不能有符號");
+				}
+				if (order_phone == null || order_phone.trim().length() == 0) {
+					errorMsgs.add("聯絡電話請勿空白");
+				}
+				
+				
+				
 				String pay_method = req.getParameter("pay_method");
 				if (pay_method == null || pay_method.trim().length() == 0) {
 					errorMsgs.add("付款方法請勿空白");
 				}
+				
+				
 
 				Group_memberVO group_memberVO = new Group_memberVO();
-
+					
+				
 				group_memberVO.setMember_no(member_no);
 				group_memberVO.setGroup_no(group_no);
 				group_memberVO.setJoin_time(join_time);
@@ -403,24 +450,29 @@ public class Group_memberServlet extends HttpServlet {
 				group_memberVO.setLog_out_reason(log_out_reason);
 				group_memberVO.setOrder_phone(order_phone);
 				group_memberVO.setPay_method(pay_method);
-		
-
+				
+				
+				Group_openService group_openSvc = new Group_openService();
+				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
+				
+				
 				if (!errorMsgs.isEmpty()) {
-					
+					req.setAttribute("group_openVO", group_openVO);
 					req.setAttribute("group_memberVO", group_memberVO);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/frontend/group_member/addgroup_member.jsp");
 					failureView.forward(req, res);
 					return;
 				}
+				
 //				************************錯誤驗證2**************************
 				Group_memberService group_memberSvc = new Group_memberService();
-				Group_openService group_openSvc = new Group_openService();
+//				Group_openService group_openSvc = new Group_openService();
 				
 				
 				
 			
-				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
+//				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
 				group_memberVO = group_memberSvc.addGroup_member(member_no, group_no, join_time, product_quantity,
 						pay_status, group_member_status, log_out_reason, order_phone, pay_method);
 
@@ -440,11 +492,11 @@ public class Group_memberServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_member/addgroup_member.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_member/addgroup_member.jsp");
+//				failureView.forward(req, res);
+//			}
 
 		}
 		// 退團
@@ -474,11 +526,8 @@ public class Group_memberServlet extends HttpServlet {
 //				}
 				// 退團裡有可以為空
 				String log_out_reason = req.getParameter("log_out_reason");
-				if ("quit".equals(group_member_status)) {
-					if (log_out_reason == null || log_out_reason.trim().length() == 0) {
-						errorMsgs.add("退團理由請勿空白");
-					}
-				}
+			
+		
 
 				Group_memberVO group_memberVO = new Group_memberVO();
 				group_memberVO.setMember_no(member_no);

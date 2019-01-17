@@ -2,10 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_open.model.*"%>  
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.goods.model.*"%>
 
 <% 
 	Group_openVO group_openVO = (Group_openVO) request.getAttribute("group_openVO");
 	MemberVO memberVOsession = (MemberVO)session.getAttribute("member");
+	String url1 = (String) request.getAttribute("url1");
+	String url2 = (String) request.getAttribute("url2");
+	GoodsVO goodsVO = (GoodsVO) request.getAttribute("goodsVO");
 %>
 <jsp:useBean id="eventtitleSvc" scope="page" class="com.event_title.model.EventTitleService" />
 <jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
@@ -17,15 +21,16 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  
-		<title>Title Page</title>
+		<title>我要開團</title>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="<%=request.getContextPath()%>/vendor/ckeditor_easyImage_final/ckeditor.js"></script>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" /> 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
  		<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
 		<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script> 
 		<!-- <script>CKEDITOR.replace('content', {});</script> -->
-		<script src="<%=request.getContextPath()%>/vendor/ckeditor_full/ckeditor.js"></script>
+	
 
 		<style>
   		.xdsoft_datetimepicker .xdsoft_datepicker {
@@ -124,13 +129,26 @@ $(function(){
 		 }); 
 	     }); 
 		var loadFile = function(event) {
-		var output = document.getElementById('output');
-		output.src = URL.createObjectURL(event.target.files[0]);
+			var output = document.getElementById('output');
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			reader.onload = function () {
+				output.src = this.result;
+				document.getElementById('url1').value = this.result;
+			};
+			
+// 			output.src = URL.createObjectURL(event.target.files[0]);
 		};
 
 		var loadFile2 = function(event) {
-		var output = document.getElementById('output1');
-		output.src = URL.createObjectURL(event.target.files[0]);
+			var output = document.getElementById('output1');
+// 		output.src = URL.createObjectURL(event.target.files[0]);
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]);
+			reader.onload = function () {
+				output.src = this.result;
+				document.getElementById('url2').value = this.result;
+			};
 		};
 		function codeAddress(){
 
@@ -197,15 +215,32 @@ $(function(){
 			 
 			 	 <div class="col-xs-12 col-sm-6">
 					商品封面
-				<div><img id="output" height="150" width="300" /></div>
+				<div>
+				<c:if test="${goodsVO.goods_no==null}">
+<%-- 				<img id="output" height="150" width="300"  src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg1.do?group_no="+group_openVO.getGroup_no()%>"/> --%>
+				<img id="output" height="150" width="300"  src="<%= (url1 == null)? null : url1 %>"/>
+				 </c:if>
+				 <c:if test="${goodsVO.goods_no!=null}">
+					 <img id="output1" height="150" width="300" src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}"/>
+				 </c:if>
+				
+				</div>
 				</div><!-- <div class="col-xs-12 col-sm-6"> -->
 				<div class="col-xs-12 col-sm-6">
-				
 					商品圖片
-			    <div><img id="output1" height="200" width="200"/></div>
+			    <div>
+			    <c:if test="${goodsVO.goods_no==null}">
+<%-- 			    <img id="output1" height="200" width="200" src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg2.do?group_no="+group_openVO.getGroup_no()%>"/> --%>
+			    <img id="output1" height="200" width="200" src="<%= (url2 == null)? null : url2 %>"/>
+			    </c:if>
+			     <c:if test="${goodsVO.goods_no!=null}">
+					 <img id="output1" height="200" width="200" src="<%=request.getContextPath()%>/goods/goodsImg2.do?goods_no=${goodsVO.goods_no}"/>
+				 </c:if>
+			    
+			    </div>
 				</div><!-- <div class="col-xs-12 col-sm-6"> -->	 
 				<br>
-				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1">
+				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1" >
 				<div class="form-group">
 				 <label for="evetit">活動主題</label>	
 					<select name="evetit" id="evetit" class="form-control">
@@ -214,6 +249,8 @@ $(function(){
 						 <option value="${eventtitleVO.evetit_no}"${eventtitleVO.evetit_no==param.evetit?'selected':''}>${eventtitleVO.evetit_name}</option>
 					</c:forEach>
 					</select>
+					<input type="hidden" name="url1" id="url1" value="">
+					<input type="hidden" name="url2" id="url2" value="">
 					<input type="hidden" name="action" value="getSelect">
 					</div><!-- <div class="form-group"> -->
 				</Form>
@@ -232,16 +269,20 @@ $(function(){
 				</div> --%>
 				<div class="form-group">			
 				 <label for="evetit">商品名稱</label>	
+			
 			<select id="goods" class="form-control" name="goods_no">
 				<c:forEach var="eventtitlemap" items="${evetitle_goods}">
 				<option value="${eventtitlemap.key}">${eventtitlemap.value}${eventtitlemap.key}</option>${eventtitlemap.key}
 				</c:forEach>
+					 <c:if test="${goodsVO.goods_no!=null}">
+					<option value="${goodsVO.goods_no}">${goodsVO.goods_name}</option>
+					 </c:if>
 			</select>			
 				</div><!-- <div class="form-group"> -->	
 				<div class="form-group">
 					<label for="group_name">開團名稱</label>
 					<input type="text" name="group_name" id="group_name" class="form-control"
-					value="<%= (group_openVO==null)? "五月天螢光棒" : group_openVO.getGroup_name()%>"/>
+					value="<%= (group_openVO==null)? " " : group_openVO.getGroup_name()%>"/>
 				</div>
 				<div class="form-group">
 					<!-- <label for="group_limit">開團下限</label> -->
@@ -251,13 +292,13 @@ $(function(){
 				<div class="form-group">
 					<label for="group_introduction">開團介紹</label>
 					<!-- <textarea name="group_introduction" id="group_introduction" class="form-control"> -->	
-					<textarea name="group_introduction" id="group_introduction" rows="10" cols="80"></textarea>
+					<textarea name="group_introduction" id="group_introduction" rows="10" cols="80">${param.group_mind}</textarea>
 					<!-- </textarea> -->
 				</div>
 				<div class="form-group">
 					<label for="group_mind">開團注意事項</label>
 					<!-- <textarea name="group_mind" id="group_mind" class="form-control"> -->
-					<textarea name="group_mind" id="group_mind" rows="10" cols="80"></textarea>	
+					<textarea name="group_mind" id="group_mind" rows="10" cols="80">${param.group_mind}</textarea>	
 					<!-- </textarea> -->
 				</div>
 				<div class="form-group">
@@ -289,7 +330,7 @@ $(function(){
 			</select> -->
 			<div class="form-group">
 					<label for="group_address">面交地址</label>
-					<input id="address"  name="group_address" type="textbox"  size="50" maxlength="50" onchange="codeAddress()"class="form-control"/>
+					<input id="address"  name="group_address" type="textbox"  size="50" maxlength="50" onchange="codeAddress()"class="form-control" value="<%= (group_openVO==null) ? "請輸入面交地址" : group_openVO.getGroup_address()%>"/>
 					<!-- <input type="text" name="group_address" id="group_address" class="form-control"/>  -->
 					<input id="submit" type="button" value="Geocode">
 			</div>
@@ -339,6 +380,9 @@ $(function(){
 			<input type="hidden" name="action" value="insert2">
 			<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
 			<input type="hidden" name="group_member_status" value="grouplead">
+			<input type="hidden" name="url1" id="url1" value="">
+			<input type="hidden" name="url2" id="url2" value="">
+			
 			<input type="submit" value="送出新增">
 			</Form>
 				</div><!-- <div class="panel-body"> -->
@@ -355,8 +399,21 @@ $(function(){
 		  <br>
 		</div>
 		<script>
-			CKEDITOR.replace( 'group_mind', {});
-			CKEDITOR.replace( 'group_introduction', {});
+		/* 	CKEDITOR.replace( 'group_mind', {});
+			CKEDITOR.replace( 'group_introduction', {}); */
+			
+			CKEDITOR.replace( 'group_mind', {
+				removePlugins: 'image',
+				extraPlugins: 'easyimage',
+				cloudServices_tokenUrl: 'https://36762.cke-cs.com/token/dev/UM6e5GmaKWwu89mPGLfo7csdkFHnd6pThBTSG6KZ3PZIOnotQZZOpXzO92Lu',
+				cloudServices_uploadUrl: 'https://36762.cke-cs.com/easyimage/upload/'
+			});
+			CKEDITOR.replace( 'group_introduction', {
+				removePlugins: 'image',
+				extraPlugins: 'easyimage',
+				cloudServices_tokenUrl: 'https://36762.cke-cs.com/token/dev/UM6e5GmaKWwu89mPGLfo7csdkFHnd6pThBTSG6KZ3PZIOnotQZZOpXzO92Lu',
+				cloudServices_uploadUrl: 'https://36762.cke-cs.com/easyimage/upload/'
+			});
 		</script>
 		
 		<script type="text/javascript">
@@ -371,7 +428,10 @@ $(function(){
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 14,
-          center: {lat: 24.9680014, lng: 121.1900142}
+          center: {lat: 24.9680014,
+        	  
+        	  	   lng: 121.1900142
+        	  	   }
         });
         var geocoder = new google.maps.Geocoder();
 
@@ -395,18 +455,9 @@ $(function(){
         });
       }
     </script>
-	
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places" async defer></script>
 		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 	</body>
 </html>
 
 
-<!-- 	<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">標題</h3>
-		  </div><div class="panel-heading">
-		  <div class="panel-body">
-		    內容文字
-		  </div><div class="panel-body">
-		</div><div class="panel panel-default"> -->

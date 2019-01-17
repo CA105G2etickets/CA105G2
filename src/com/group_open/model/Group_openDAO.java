@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class Group_openDAO implements Group_openDAO_interface {
 	private static final String GETEVENTITLE_GOODS = "select goods.goods_no,goods.goods_name from event_title right join goods on event_title.evetit_no = goods.evetit_no where event_title.evetit_no = ?";
 	private static final String GETEVENTITLE = "select DISTINCT event_title.evetit_no,event_title.evetit_name from event_title right join goods on event_title.evetit_no = goods.evetit_no ";
 	private static final String GROUP_OPEN_COMPLETE = "UPDATE GROUP_OPEN set GROUP_STATUS = 'finish4' where GROUP_NO = ? ";
+	private static final String FAVORITE = "select * from (select goods_no,count(*) as goods_count from favorite_goods group by goods_no order by goods_count desc) where rownum<=3";
 //	@Override
 	// 新增
 	public void add(Group_openVO group_openVO) {
@@ -1087,6 +1089,53 @@ public class Group_openDAO implements Group_openDAO_interface {
 				}
 			}
 			
+		}
+	  public Map<String, Integer> getfavorite() {
+			Map<String, Integer> map = new LinkedHashMap<>();
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+				con = ds.getConnection();
+
+				pstmt = con.prepareStatement(FAVORITE);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					map.put(rs.getString("GOODS_NO"), rs.getInt("GOODS_COUNT"));
+				}
+
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
+			return map;
+
 		}
 	  
 	  

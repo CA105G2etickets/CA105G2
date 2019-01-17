@@ -11,6 +11,7 @@
 	Group_memberVO group_memberVO = (Group_memberVO) request.getAttribute("group_memberVO");
 	Group_openVO group_openVO = (Group_openVO) request.getAttribute("group_openVO");
 	ForumService forumSvc = new ForumService();
+	
 	 List <ForumVO> list = forumSvc.getall_forum_by_group(group_openVO.getGroup_no());
 	 pageContext.setAttribute("list", list);
 	 
@@ -134,11 +135,10 @@
 		</script>
 	</head>
 	<body>
-			<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 col-sm-1">
-						<%-- 錯誤表列 --%>
+			<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />	
+							<div class="container">
+								<div class="row">
+										<%-- 錯誤表列 --%>
 							<c:if test="${not empty errorMsgs}">
 								<font style="color:red">請修正以下錯誤:</font>
 									<ul>
@@ -147,10 +147,16 @@
 									</c:forEach>
 									</ul>
 							</c:if>
+							</div><!-- <div class="row"> -->
+							</div><!-- <div class="container"> -->			
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-1">
 					</div><!-- <div class="col-xs-12 col-sm-1"> -->
 					<div class="col-xs-12 col-sm-10">
 						<div class="col-xs-12 col-sm-6">
-							<img src="Group_openImg1.do?group_no=${group_openVO.group_no}" width="400" height="200">
+						<%-- 	<img src="Group_openImg1.do?group_no=${group_openVO.group_no}" width="400" height="200"> --%>
+							<img src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg1.do?group_no="+group_openVO.getGroup_no()%>" width="400" height="200">
 
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 						<div class="col-xs-12 col-sm-6">
@@ -195,7 +201,8 @@
 						
 					</div><!-- <div class="col-xs-12 col-sm-1"> -->
 				</div><!-- <div class="row"> -->
-			</div><!-- <div class="container"> -->
+					</div><!-- <div class="container"> -->
+			
 				<br>
 				<br>
 		<div class="container">
@@ -211,8 +218,8 @@
 					    <div class="panel-body">
 					      	<div class="row">					      
 								<div class="col-xs-12 col-sm-2">					
-									<img src="Group_openImg2.do?group_no=${group_openVO.group_no}" class="img-circle people">
-									
+								<%-- 	<img src="Group_openImg2.do?group_no=${group_openVO.group_no}" class="img-circle people"> --%>
+									<img src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg2.do?group_no="+group_openVO.getGroup_no()%>" class="img-circle people" >
 								</div><!-- <div class="col-xs-12 col-sm-2"> -->
 								<div class="col-xs-12 col-sm-10">					
 										<div class="well well-sm">
@@ -242,7 +249,7 @@
 								        </div>
 								        <div role="tabpanel" class="tab-pane" id="tab2">${group_openVO.group_mind}
 								        </div>
-								        <div role="tabpanel" class="tab-pane" id="tab3"><div id="map"></div>
+								        <div role="tabpanel" class="tab-pane" id="tab3"><h3>${group_openVO.group_address}</h3><div id="map"></div>
 								        </div>
 								    </div><!-- <div class="tab-content"> -->
 								</div><!-- <div role="tabpanel"> -->
@@ -331,6 +338,7 @@
 
 
 					</div><!-- <div class="col-xs-12 col-sm-1"> -->
+					
 						<br>
 						<div class="panel panel-success forum">
 					  <div class="panel-heading">
@@ -395,8 +403,8 @@
 					
 				</div><!-- <div class="row"> -->
 			</div><!-- <div class="container"> -->
-			
-		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
+	
+	
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -418,5 +426,7 @@
  				 }
 
 		</script>
+			
 	</body>
+	<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 </html>
