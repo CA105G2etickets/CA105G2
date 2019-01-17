@@ -94,11 +94,13 @@
 		
 <script>
 $.datetimepicker.setLocale('zh'); // kr ko ja en
+var date = new Date();
 $(function(){
 	 $('#start_dateTime').datetimepicker({
 	  format:'Y-m-d H:i:s',
 	  onShow:function(){
 	   this.setOptions({
+		 /*   minDate:0, */
 	    maxDate:$('#end_dateTime').val()?$('#end_dateTime').val():false
 	   })
 	  },
@@ -110,7 +112,8 @@ $(function(){
 	  format:'Y-m-d H:i:s',
 	  onShow:function(){
 	   this.setOptions({
-	    minDate:$('#start_dateTime').val()?$('#start_dateTime').val():false
+		  minDate:0,
+	  /*   minDate:$('#start_dateTime').val()?$('#start_dateTime').val():false */
 	   })
 	  },
 	  timepicker:true,
@@ -217,8 +220,8 @@ $(function(){
 					商品封面
 				<div>
 				<c:if test="${goodsVO.goods_no==null}">
-<%-- 				<img id="output" height="150" width="300"  src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg1.do?group_no="+group_openVO.getGroup_no()%>"/> --%>
-				<img id="output" height="150" width="300"  src="<%= (url1 == null)? null : url1 %>"/>
+					<img id="output" height="150" width="300"  src="<%= (group_openVO==null)? request.getContextPath()+"/NoData/imageComingSoon.jpg" : request.getContextPath()+"/frontend/group_open/Group_openImg1.do?group_no="+group_openVO.getGroup_no()%>"/>
+				<%-- <img id="output" height="150" width="300"  src="<%= (url1 == null)? null : url1 %>"/> --%>
 				 </c:if>
 				 <c:if test="${goodsVO.goods_no!=null}">
 					 <img id="output1" height="150" width="300" src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}"/>
@@ -230,8 +233,8 @@ $(function(){
 					商品圖片
 			    <div>
 			    <c:if test="${goodsVO.goods_no==null}">
-<%-- 			    <img id="output1" height="200" width="200" src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg2.do?group_no="+group_openVO.getGroup_no()%>"/> --%>
-			    <img id="output1" height="200" width="200" src="<%= (url2 == null)? null : url2 %>"/>
+		    <img id="output1" height="200" width="200" src="<%= (group_openVO==null)? request.getContextPath()+"/NoData/imageComingSoon.jpg" : request.getContextPath()+"/frontend/group_open/Group_openImg2.do?group_no="+group_openVO.getGroup_no()%>"/> 
+			   <!--  <img id="output1" height="200" width="200"/> -->
 			    </c:if>
 			     <c:if test="${goodsVO.goods_no!=null}">
 					 <img id="output1" height="200" width="200" src="<%=request.getContextPath()%>/goods/goodsImg2.do?goods_no=${goodsVO.goods_no}"/>
@@ -242,6 +245,7 @@ $(function(){
 				<br>
 				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1" >
 				<div class="form-group">
+				  <c:if test="${goodsVO.goods_no==null}">
 				 <label for="evetit">活動主題</label>	
 					<select name="evetit" id="evetit" class="form-control">
 					<option value="-1">請選擇</option>
@@ -249,6 +253,7 @@ $(function(){
 						 <option value="${eventtitleVO.evetit_no}"${eventtitleVO.evetit_no==param.evetit?'selected':''}>${eventtitleVO.evetit_name}</option>
 					</c:forEach>
 					</select>
+					</c:if>
 					<input type="hidden" name="url1" id="url1" value="">
 					<input type="hidden" name="url2" id="url2" value="">
 					<input type="hidden" name="action" value="getSelect">
@@ -308,7 +313,7 @@ $(function(){
 				<div class="form-group">
 					<i class="glyphicon glyphicon-time"></i><label for="end_dateTime">開團結束時間</label>
 					<input type="text" name="group_close_date" id="end_dateTime" class="form-control"
-					<%= (group_openVO==null)? "請輸入開團時間" : group_openVO.getGroup_close_date()%>/>
+					 value="<%= (group_openVO==null) ? " " : group_openVO.getGroup_close_date()%>"/>
 				</div>
 				<div class="form-group">
    					 <label for="group_banner_1">開團封面1</label>
@@ -344,19 +349,19 @@ $(function(){
     			</div>
     		<!-- 	<div id="map"></div> -->
 					<!-- <label for="latitude">緯度</label> -->
-					<input name="latitude" type="hidden" id="latitude" value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>" class="form-control"/>
+					<input name="latitude" type="text" id="latitude" value="<%=(group_openVO==null)? " ": group_openVO.getLatitude()%>" class="form-control"/>
 					<%-- <input type="text" name="latitude" id="latitude" class="form-control"
 					value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>"/> --%>
 			<!-- </div> -->
 			<!-- 	<div class="form-group"> -->
 					<!-- <label for="longitude">經度</label> -->
-					<input name="longitude" type="hidden" id="longitude" value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>" class="form-control"/>
+					<input name="longitude" type="text" id="longitude" value="<%=(group_openVO==null)? " ": group_openVO.getLongitude()%>" class="form-control"/>
 					<%-- <input type="text" name="longitude" id="longitude" class="form-control"
 					value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>"/> --%>
 				<!--</div> -->
 			<div class="form-group">
 				<i class="glyphicon glyphicon-time"></i><label for="group_time">面交時間</label>
-				<input type="text" name="group_time" id="group_dateTime" class="form-control"/>
+				<input type="text" name="group_time" id="group_dateTime" class="form-control" value="<%= (group_openVO==null) ? " " : group_openVO.getGroup_time()%>"/>
 			</div>
 			<!-- <div class="form-group">
 				<i class="glyphicon glyphicon-piggy-bank"></i><label for="group_price">商品促銷價格</label>
@@ -377,13 +382,22 @@ $(function(){
         	</div>
 								<!-- 選項結束 -->
 			
-			<input type="hidden" name="action" value="insert2">
+			
+			
+			 <c:if test="${goodsVO.goods_no!=null}">
+					<input type="hidden" name="action" value="insert3">
+					<input type="submit" value="送出新增3">
+			</c:if>
+			 <c:if test="${goodsVO.goods_no==null}">
+					<input type="hidden" name="action" value="insert2">
+					<input type="submit" value="送出新增2">
+			</c:if>	
 			<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
 			<input type="hidden" name="group_member_status" value="grouplead">
 			<input type="hidden" name="url1" id="url1" value="">
 			<input type="hidden" name="url2" id="url2" value="">
 			
-			<input type="submit" value="送出新增">
+		<!-- 	<input type="submit" value="送出新增"> -->
 			</Form>
 				</div><!-- <div class="panel-body"> -->
 			</div><!-- <div class="panel panel-default"> -->

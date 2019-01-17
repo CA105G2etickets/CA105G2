@@ -4,11 +4,14 @@
 <%@ page import="com.group_open.model.*"%>
 <%@ page import="com.group_member.model.*"%>
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.order_history.model.*"%>
 
 <% 
 			 String product =request.getAttribute("producttotal").toString();
 			 String total =request.getAttribute("total").toString();
 			Group_openVO group_openVO = (Group_openVO) request.getAttribute("group_openVO");
+			
+			OrderHistoryVO orderHistoryVO = (OrderHistoryVO)request.getAttribute("orderHistoryVO");
 			
 			MemberService memberSvc = new MemberService();
 			List<MemberVO> list2 =  memberSvc.getAll();
@@ -91,10 +94,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-1">
-					
-
-
-
+										<%-- 錯誤表列 --%>
+							<c:if test="${not empty errorMsgs}">
+								<font style="color:red">請修正以下錯誤:</font>
+									<ul>
+	    							<c:forEach var="message" items="${errorMsgs}">
+									<li style="color:red">${message}</li>
+									</c:forEach>
+									</ul>
+							</c:if>
 
 				</div><!-- <div class="col-xs-12 col-sm-1"> -->
 				<div class="col-xs-12 col-sm-10">

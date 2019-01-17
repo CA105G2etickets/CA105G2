@@ -1,7 +1,10 @@
 package com.group_open.controller;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +20,20 @@ public class Group_openImg2Servlet extends HttpServlet {
 		
 		Group_openService grpSvc = new Group_openService();
 		
-		byte[] pic = grpSvc.getOneGroup_open(groupno).getGroup_banner_2();
+		ServletContext context = getServletContext();
+		
+		InputStream fis = context.getResourceAsStream("/CA105G2/NoData/imageComingSoon.jpg");
+		
+		  byte[] pic =grpSvc.getOneGroup_open(groupno).getGroup_banner_2();
+
+		  if(pic==null) {
+			  System.out.println("xxxxxxxxxx");
+		   pic = new byte[fis.available()];
+		   for(int i=0;i<pic.length;i++) {
+		    pic[i]=(byte) fis.read();
+		   }
+		  }
+		
 
 		
 		ServletOutputStream out = res.getOutputStream();
@@ -28,7 +44,10 @@ public class Group_openImg2Servlet extends HttpServlet {
 		out.close();
 		
 		
+	
 		
+		  
+	
 		
 	}
 

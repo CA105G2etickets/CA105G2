@@ -224,20 +224,20 @@ $(function(){
 			    <div><img src="<%= (group_openVO==null)? null : request.getContextPath()+"/frontend/group_open/Group_openImg2.do?group_no="+group_openVO.getGroup_no()%>"id="output1" height="200" width="200"/></div>
 				</div><!-- <div class="col-xs-12 col-sm-6"> -->	 
 				<br>
-				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1">
+<%-- 				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1">
 				<div class="form-group">
 				 <label for="evetit">活動主題</label>	
-					<select name="evetit" id="evetit" class="form-control">
+					<select  name="evetit" id="evetit" class="form-control">
 					<option value="-1">請選擇</option>
 					<c:forEach var="eventtitleVO" items="${group_openSvc.geteventitle()}">
 						 <option value="${eventtitleVO.evetit_no}"${eventtitleVO.evetit_no==param.evetit?'selected':''}>${eventtitleVO.evetit_name}</option>
 					</c:forEach>
-					</select>
+					</select> 
 					<input type="hidden" name="action" value="getSelect2">
 					<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
 					<input type="hidden" name="group_no" value="<%=group_openVO.getGroup_no()%>">
 					</div><!-- <div class="form-group"> -->
-				</Form>
+				</Form> --%>
 		
 		       <Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" name="form1" enctype="multipart/form-data">
 				<!-- 驗證到這邊 -->

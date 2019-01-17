@@ -6,9 +6,9 @@
 <%@ page import="com.member.model.*"%>
 
 <% 
-			 String product =request.getAttribute("producttotal").toString();
-			 String total =request.getAttribute("total").toString();
-			Group_openVO group_openVO = (Group_openVO) request.getAttribute("group_openVO");
+			 String product =session.getAttribute("producttotal").toString();
+			 String total =session.getAttribute("total").toString();
+			Group_openVO group_openVO = (Group_openVO) session.getAttribute("group_openVOorder");
 			
 			MemberService memberSvc = new MemberService();
 			List<MemberVO> list2 =  memberSvc.getAll();
@@ -29,6 +29,8 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/TWzipcode/jquery.twzipcode.min.js"></script>
 		<title>Title Page</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<!--[if lt IE 9]>
@@ -61,40 +63,21 @@
 		</style>
 	</head>
 	<body>
-			<nav class="navbar navbar-default" role="navigation">
+			<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-						<span class="sr-only">選單切換</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<img src="https://i.imgur.com/T0YnkK9.png"  href="#" alt="LOGO" width="202.25px" height="165.5px">
-				</div>
-				
-				<!-- 手機隱藏選單區 -->
-				
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<!-- 右選單 -->
-					<img src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c53.53.662.662a/s160x160/996812_623306544360262_513913499_n.jpg?_nc_cat=109&_nc_eui2=AeEvi_vj3AZ5wk2s31mtunvrLPbVPtJK2jf7uWRYtFCuPw_M1yTd23yuh2AGeVu5aGSm_1aLOh_81tqazaXh-ECnpuFl77aq8E38y3WIOxRGcA&_nc_ht=scontent-hkg3-1.xx&oh=c8b216f2429b70114bdb941b525f73cf&oe=5CA0CFE7" class="memberphoto" href="#"  alt="LOGO" style="float:right" width="80px" height="80px">
-				
-					<ul class="nav navbar-nav navbar-right membermenu">
-						<li><a href="#">登出</a></li>
-						<li><a href="#">個人設定</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">繁體中文 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">繁體中文</a></li>
-								<li><a href="#">English</a></li>
-								<li><a href="#">日本語</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<!-- 手機隱藏選單區結束 -->
-			</div>
-		</nav>
+								<div class="row">
+									
+										<!-- <%-- 錯誤表列 --%> -->
+							<c:if test="${not empty errorMsgs}">
+								<font style="color:red">請修正以下錯誤:</font>
+									<ul>
+	    							<c:forEach var="message" items="${errorMsgs}">
+									<li style="color:red">${message}</li>
+									</c:forEach>
+									</ul>
+							</c:if>
+							</div><!-- <div class="row"> -->
+							</div><!-- <div class="container"> -->
 
 
 		<div class="container">
@@ -237,10 +220,24 @@
   								<label for="usr">收件人名稱</label>
   								<input type="text" class="form-control" id="usr" name="receiver_name">
 							</div><!-- <div class="form-group"> -->
-						    <div class="form-group">
+					<!-- 	    <div class="form-group">
   								<label for="usr">收件人地址</label>
   								<input type="text" class="form-control" id="usr" name="receiver_add">
-							</div><!-- <div class="form-group"> -->					 
+							</div><div class="form-group"> -->
+							<div class="form-group" id="zipcode2" style="width:100%">
+							<label>收件人地址：</label>
+							<script>
+								$("#zipcode2").twzipcode({
+									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+									districtSel: "大安區", // 地區預設值
+									zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+									css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+									countyName: "city", // 自訂城市 select 標籤的 name 值
+									districtName: "town" // 自訂地區 select 標籤的 name 值
+								});
+							</script>	
+							<input type="text" class="form-control" id="usr" name="receiver_add">
+						</div>							 
 						       <div class="form-group">
   									<label for="usr">收件人電話</label>
   									<input type="text" class="form-control" id="usr" name="receiver_tel">
@@ -267,7 +264,9 @@
 								<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
 								<input type="hidden" name="action" value="insert_Front">		
 								<button type="submit" class="btn btn-primary finish">產生訂單</button>
+							
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
+							<br>
 						<div class="col-xs-12 col-sm-6">
 							
 
@@ -275,22 +274,35 @@
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 					</div>
 					<div class="col-xs-12 col-sm-1">
-								<c:if test="${not empty errorMsgs}">
+				<%-- 				<c:if test="${not empty errorMsgs}">
 					<font style="color:red">請修正以下錯誤：</font>
 					<ul>
 					<c:forEach var="message" items="${errorMsgs}">
 						<li style="color:red">${message}</li>
 					</c:forEach>
 					</ul>
-				</c:if>
+				</c:if> --%>
 
 
 					</div>
 				</div><!-- <div class="row"> -->
 			</div><!-- <div class="container"> -->
 
-
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/>
+		<script type="text/javascript">
+		$(document).ready(function(){
 		
+		$("#completeOrderBtn").click(function(){
+	        	var city = $(".city").val();
+	        	var town = $(".town option:selected").text();
+	        	var street = $("#street").val();
+	        	$("#receiver_add").val(town.substring(0,3) + city + town.substring(4) + street);
+	        	$("#orderForm").submit();
+	        });
+		
+		
+		  });
+		</script>
 		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
