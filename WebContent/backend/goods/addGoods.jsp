@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page import="com.goods.model.*"%>
-
 <!DOCTYPE html>
 <html>
 
@@ -16,13 +15,16 @@
 <!-- Basic -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- datetimepicker -->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.css" />
-
 <style>
-.goods_picture1 img {
+.actionForm {
+	display: inline;
+}
+
+#map {
+	height: 500px;
 	width: 100%;
+	margin-top: 15px;
+	border-radius: 25px;
 }
 
 body {
@@ -58,13 +60,13 @@ body {
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
 						<label for="launchdate">上架日期</label> <input type="text"
-							id="launchdate" name="launchdate" class="form-control"
+							id="f_date1" name="launchdate" class="form-control"
 							value="${param.launchdate}">
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
-						<label for="offdate">下架日期</label> <input type="text" id="offdate"
+						<label for="offdate">下架日期</label> <input type="text" id="f_date2"
 							name="offdate" class="form-control" value="${param.offdate}">
 					</div>
 				</div>
@@ -72,9 +74,16 @@ body {
 
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
+					<jsp:useBean id="EventTitleService" scope="page"
+						class="com.event_title.model.EventTitleService" />
 					<div class="form-group">
-						<label>活動編號</label> <input type="text" name="evetit_no"
-							id="evetit_no" class="form-control" value="${param.evetit_no}">
+						<label>活動編號</label> <select class="form-control" name="evetit_no">
+							<c:forEach var="eventTitleVO" items="${EventTitleService.all}">
+								<option value="${eventTitleVO.evetit_no}"
+									${(eventTitleVO.evetit_no == goodsVO.evetit_no) ? 'selected' : '' }>
+									${eventTitleVO.evetit_name}</option>
+							</c:forEach>
+						</select>
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-3">
@@ -130,36 +139,6 @@ body {
 					value="${(goods_picture3_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
 				<img src="${goods_picture3_path}" id="goods_picture3_preview">
 			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-3">
-					<div class="form-group">
-						<label>喜愛人數</label> <span class="text-danger">${goodsErrorMsgs.favorite_count}</span>
-						<input type="text" name="favorite_count" id="favorite_count"
-							class="form-control" value="${param.favorite_count}">
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-3">
-					<div class="form-group">
-						<label>開團數</label> <span class="text-danger">${goodsErrorMsgs.goods_group_count}</span>
-						<input type="text" name="goods_group_count" id="goods_group_count"
-							class="form-control" value="${param.goods_group_count}">
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-3">
-					<div class="form-group">
-						<label>許願數</label> <span class="text-danger">${goodsErrorMsgs.goods_want_count}</span>
-						<input type="text" name="goods_want_count" id="goods_want_count"
-							class="form-control" value="${param.goods_want_count}">
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-3">
-					<div class="form-group">
-						<label>銷售量</label> <span class="text-danger">${goodsErrorMsgs.goods_sales_count}</span>
-						<input type="text" name="goods_sales_count" id="goods_sales_count"
-							class="form-control" value="${param.goods_sales_count}">
-					</div>
-				</div>
-			</div>
 
 			<div class="tabbable">
 				<!-- 標籤面板：標籤區 -->
@@ -177,8 +156,11 @@ body {
 
 				</div>
 			</div>
-			<input type="hidden" name="action" value="insertGoods"> <input
-				type="submit" value="送出新增">
+			<span class="form-group"> <input type="hidden"
+				name="requestURL" value="<%=request.getServletPath()%>">
+				<button type="submit" class="btn btn-success" name="action"
+					value="insertGoods">新增</button>
+			</span>
 		</form>
 	</div>
 
@@ -191,17 +173,47 @@ body {
 	<!-- ckEditor JS -->
 	<script
 		src="<%=request.getContextPath()%>/vendor/ckeditor_full/ckeditor.js"></script>
-	<!-- datetimepicker -->
-	<script
-		src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
-	<!-- JavaScript in File -->
 	<script
 		src="<%=request.getContextPath()%>/backend/goods/js/goodsCKEditor.js"></script>
+	<!--datetimepicker-->
 	<script
-		src="<%=request.getContextPath()%>/backend/goods/js/addGoods.js"></script>
-	<!-- JavaScript in HTML -->
+		src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
+	<%--     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
+	<!--     JavaScript in File -->
+	<script
+		src="<%=request.getContextPath()%>/backend/goods/js/update_goods_input.js"></script>
+	JavaScript in HTML ink rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css"
+	/>
+	<script
+		src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+	<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
+
+	<script>
+		<script>
+		$('#f_date1').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : true, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d H:i:s', //format:'Y-m-d H:i:s',
+			value : new Date(), // value:   new Date(),
+		});
+		$('#f_date2').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : true, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d H:i:s', //format:'Y-m-d H:i:s',
+			value : new Date(), // value:   new Date(),
+		});
+	</script>
 
 	<script type="text/javascript">
 		$(function() {

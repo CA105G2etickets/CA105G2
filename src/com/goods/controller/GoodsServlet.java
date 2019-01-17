@@ -351,8 +351,13 @@ public class GoodsServlet extends HttpServlet {
 				}
 				
 				
-				
-				Integer goods_price = new Integer (req.getParameter("goods_price"));
+				Integer goods_price = null;
+				try {
+					goods_price = new Integer(req.getParameter("goods_price"));
+				} catch (NumberFormatException e) {
+					goodsErrorMsgs.put("goods_price", "請輸入售價");
+				}
+//				Integer goods_price = new Integer (req.getParameter("goods_price"));
 				
 				 java.sql.Timestamp today = new  java.sql.Timestamp(System.currentTimeMillis());
 				 
@@ -464,11 +469,11 @@ public class GoodsServlet extends HttpServlet {
 					}
 				
 			
-				Integer favorite_count = 0;
-				Integer goods_sales_count = 0;
-				Integer goods_group_count = 0;
-				
-				Integer goods_want_count = 0;
+//				Integer favorite_count = 0;
+//				Integer goods_sales_count = 0;
+//				Integer goods_group_count = 0;
+//				
+//				Integer goods_want_count = 0;
 			
 				if (!goodsErrorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
@@ -517,11 +522,10 @@ public class GoodsServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
-				
 				GoodsVO goodsVO = new GoodsVO();
 				goodsVO = goodsSvc.addGoods( evetit_no, goods_name, goods_price, goods_picture1,
-						goods_picture2, goods_picture3, goods_introduction, forsales_a, favorite_count,goods_status, launchdate,
-						offdate,goods_group_count,goods_want_count,goods_sales_count);
+						goods_picture2, goods_picture3, goods_introduction, forsales_a, goods_status, launchdate,
+						offdate);
 				req.getSession().removeAttribute("goods_picture1_path");
 				req.getSession().removeAttribute("goods_picture2_path");
 				req.getSession().removeAttribute("goods_picture3_path");
