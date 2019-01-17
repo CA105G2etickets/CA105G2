@@ -123,6 +123,15 @@ pageContext.setAttribute("saList",saList);
 		</tr>
 	</table>
 </form>
-<h4><a href="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">SendToWhere</a></h4>
+<h4><a href="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">SnoopTheLink</a></h4>
+
+<form action="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
+	<font>目前此按鈕會轉移到會員編號M000001的持有訂票訂單查詢，M000001是寫死的</font>
+	<font>get 404 but dont know why...別按</font>
+	<input type="hidden" name="action"	value="member_select_ticketorders">
+	<input type="hidden" name="member_no"	value="M000001">
+	<input type="submit" value="send">	
+</form>
+
 </body>
 </html>

@@ -72,6 +72,10 @@ public class TicketService {
 		return tVO;
 	}
 	
+	public void update(TicketVO ticketVO) {
+		dao.update(ticketVO);
+	}
+	
 	public void deleteTicket(String ticket_no) {
 		dao.delete(ticket_no);
 	}
@@ -87,13 +91,5 @@ public class TicketService {
 	public List<TicketVO> getAll_map(Map<String, String[]> map,String strOrderByTargetColumnName){
 		return dao.getAll_map(map, strOrderByTargetColumnName);
 	}
-	
-	
-	//================================================== 與舊版本相容 ==================================================
-	
-	
-	
-	//================================================== 與舊版本相容 ==================================================
-	
 	
 }

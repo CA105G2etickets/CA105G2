@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.seating_area.model.SeatingAreaVO;
+import com.seating_area.model.SeatingArea_H5_VO;
 import com.ticket.model.Old_TicketVO;
 import com.ticket.model.TicketVO;
 import com.ticket.model.TicketVO2;
@@ -18,9 +19,10 @@ public class TicketOrderService {
 		dao = new TicketOrderHibernateDAO();
 		old_dao = new Old_TicketOrderDAO();
 	}
-	public TicketOrderVO addTicketOrder(String member_no, String ticarea_no, Integer total_price, 
-			Integer total_amount,Timestamp ticket_order_time,String payment_method,
-			String ticket_order_status) {
+	
+	public TicketOrderVO addTicketOrderWithSaVO(String member_no, SeatingArea_H5_VO savo, 
+			Integer total_price, Integer total_amount,Timestamp ticket_order_time,
+			String payment_method, String ticket_order_status) {
 		
 		TicketOrderVO toVO = new TicketOrderVO();
 		toVO.setMember_no(member_no);
@@ -29,14 +31,15 @@ public class TicketOrderService {
 		toVO.setTicket_order_time(ticket_order_time);
 		toVO.setPayment_method(payment_method);
 		toVO.setTicket_order_status(ticket_order_status);
-		
+		toVO.setSeatingarea_h5VO(savo);
 		dao.insert(toVO);
 		
 		return toVO;
 	}
-	public TicketOrderVO updateTicketOrder(String ticket_order_no,String member_no, String ticarea_no, 
+	public TicketOrderVO updateTicketOrder(String ticket_order_no,String member_no, SeatingArea_H5_VO savo, 
 			Integer total_price, Integer total_amount,Timestamp ticket_order_time,
 			String payment_method,String ticket_order_status) {
+		
 		TicketOrderVO toVO = new TicketOrderVO();
 		toVO.setTicket_order_no(ticket_order_no);
 		toVO.setMember_no(member_no);
@@ -46,6 +49,8 @@ public class TicketOrderService {
 		toVO.setTicket_order_time(ticket_order_time);
 		toVO.setPayment_method(payment_method);
 		toVO.setTicket_order_status(ticket_order_status);
+		toVO.setSeatingarea_h5VO(savo);
+		
 		dao.update(toVO);
 		
 		return toVO;
@@ -67,11 +72,20 @@ public class TicketOrderService {
 		return dao.insertThenGetLatestToNoWithCondition(ticketorderVO);
 	}
 	
+	public String insert(TicketOrderVO ticketorderVO) {
+		return dao.insertThenGetLatestToNoWithCondition(ticketorderVO);
+	}
+	
 	public List<TicketOrderVO> getTicketOrdersByMemberNo(String member_no){
 		return dao.getTicketOrdersByMemberNo(member_no);
 	}
 	public Set<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no){
 		return dao.getTicketsByTicketOrderNo(ticket_order_no);
+	}
+	
+	//for servlet to update ticketorder to OUTDATE4
+	public void cancelTargetTicketOrderByServletDueToOutDatedWithConditions(String ticket_order_no) {
+		dao.cancelTargetTicketOrderByServletDueToOutDatedWithConditions(ticket_order_no);
 	}
 	
 //	public void insertWithTickets(TicketOrderVO ticketorderVO, List<TicketVO> list) {

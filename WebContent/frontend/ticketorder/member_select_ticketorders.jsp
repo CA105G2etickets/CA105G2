@@ -84,8 +84,9 @@ pageContext.setAttribute("listShow",listShow);
 		<td>${showticketorderVO.address}</td>
 		<td>
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
-			<input type="submit" value="顯示此訂調訂單的票券">
+			<input type="submit" value="顯示此訂票訂單的票券">
 			<input type="hidden" name="ticket_order_no"  value="${showticketorderVO.ticket_order_no}">
+			<input type="hidden" name="member_no"  value="${showticketorderVO.member_no}">
 			<input type="hidden" name="action" value="selected_targetTicketOrder_showTickets"></FORM>
 		</td>
 	</tr>

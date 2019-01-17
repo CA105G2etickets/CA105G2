@@ -95,8 +95,11 @@ pageContext.setAttribute("listShow", listShow);
 					<input type="number" name="ticket_resale_price" value="${showticketVO.tictype_price}">
 					<input type="hidden" name="action" value="member_sell_targetTicket">
 					<input type="hidden" name="ticket_no" value="${showticketVO.ticket_no}"> <!--Member not done yet, only been set as M000001 -->
+					<font>ticket_no=${showticketVO.ticket_no}</font>
 					<input type="hidden" name="member_no" value="${showticketVO.member_no}">
+					<font>member_no=${showticketVO.member_no}</font>
 					<input type="hidden" name="ticket_order_no" value="${showticketVO.ticket_order_no}">
+					<font>ticket_order_no=${showticketVO.ticket_order_no}</font>
 					<input type="submit" value="轉售此票">
 				</form>
 			</td>
@@ -108,7 +111,9 @@ pageContext.setAttribute("listShow", listShow);
 
 <form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
 	<input type="hidden" name="action" value="member_select_ticketorders">
-	<input type="hidden" name="member_no" value="${showticketVO.member_no}"> <!--Member not done yet, only been set as M000001 -->
+	<font>value=${showticketVO.member_no}</font>
+	<font>目前找不到VO的會員編號是因為我傳的是List啽不是單一個VO，故EL為空，先寫死為M000001做測試</font>
+	<input type="hidden" name="member_no" value="M000001"> <!--Member not done yet, only been set as M000001 -->
 	<input type="submit" value="回去會員的訂單查詢">
 </form>
 

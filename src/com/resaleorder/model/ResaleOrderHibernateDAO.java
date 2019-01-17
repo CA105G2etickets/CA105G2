@@ -18,6 +18,9 @@ package com.resaleorder.model;
 
 import org.hibernate.*;
 import org.hibernate.query.Query; //Hibernate 5.2 開始 取代原 org.hibernate.Query 介面
+
+import com.ticket.model.TicketVO;
+
 import hibernate.util.HibernateUtil;
 import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Resale_ord;
 
@@ -46,6 +49,19 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		try {
 			session.beginTransaction();
 			session.saveOrUpdate(resaleorderVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+	}
+	
+	public void updateBothRoAndTo(ResaleOrderVO resaleorderVO, TicketVO ticketVO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(resaleorderVO);
+			session.saveOrUpdate(ticketVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
@@ -145,6 +161,22 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		return list.get(1);
 	}
 	
+	@Override
+	public String insertAndGetReturnPK(ResaleOrderVO resaleorderVO) {
+		String str = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(resaleorderVO);
+			str = resaleorderVO.getResale_ordno();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return str;
+	}
+	
 	public static void main(String[] args) {
 
 		ResaleOrderHibernateDAO dao = new ResaleOrderHibernateDAO();
@@ -162,11 +194,31 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 //		empVO1.setDeptVO(deptVO);
 //		dao.insert(empVO1);
 		
-		com.ticket.model.TicketVO ticketVO = new com.ticket.model.TicketVO();
-		com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
-		ticketVO = tSvc.getOneTicket("T_20181225_000002");
-		ticketVO.setTicket_resale_status("SELLING2");
-		ticketVO.setTicket_resale_price(977);
+//		ResaleOrderVO rvo = dao.findByPrimaryKey("R_20181226_000001");
+		ResaleOrderVO rvo = dao.findByPrimaryKey("asdfasdfasdf");
+		if(rvo == null) {
+			System.out.println(rvo);
+		}else {
+			System.out.println("hsdfasdfjlaisdjflisjeflijselfhjil");
+		}
+		
+		
+		
+//		com.ticket.model.TicketVO ticketVO = new com.ticket.model.TicketVO();
+//		com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
+//		ticketVO = tSvc.getOneTicket("T_20181225_000002");
+//		ticketVO.setTicket_resale_status("updateS");
+//		
+//		ResaleOrderVO rvo = new ResaleOrderVO();
+//		rvo.setMember_buyer_no("M000009");
+//		rvo.setMember_seller_no("M000001");
+//		rvo.setResale_ordprice(777);
+//		rvo.setResale_ordstatus("WAITFORPAY1");
+//		rvo.setResale_ord_createtime(new java.sql.Timestamp(System.currentTimeMillis()));
+//		rvo.setResale_ord_completetime(null);
+//		rvo.setPayment_method("NOTYET");
+//		rvo.setTicketVO(ticketVO);
+//		dao.update(rvo);
 		
 //		com.ticketorder.model.TicketOrderVO tovo = new com.ticketorder.model.TicketOrderVO();
 //		tovo.setTicket_order_no("TO_20181225_000002");
@@ -177,16 +229,16 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 //		ticketVO.setSeatingarea_h5VO(svo);
 //		ticketVO.setTicketorderVO(tovo);
 		
-		ResaleOrderVO resaleorderVO = new ResaleOrderVO();
-		resaleorderVO.setMember_buyer_no("");
-		resaleorderVO.setMember_seller_no("M000001");
-		resaleorderVO.setPayment_method("TEST");
-		resaleorderVO.setResale_ord_completetime(null);
-		resaleorderVO.setResale_ord_createtime(java.sql.Timestamp.valueOf("2005-01-01 01:01:01"));
-		resaleorderVO.setResale_ordprice(0);
-		resaleorderVO.setResale_ordstatus("SELLING1");
-		resaleorderVO.setTicketVO(ticketVO);
-		dao.insert(resaleorderVO); //success
+//		ResaleOrderVO resaleorderVO = new ResaleOrderVO();
+//		resaleorderVO.setMember_buyer_no("");
+//		resaleorderVO.setMember_seller_no("M000001");
+//		resaleorderVO.setPayment_method("TEST");
+//		resaleorderVO.setResale_ord_completetime(null);
+//		resaleorderVO.setResale_ord_createtime(java.sql.Timestamp.valueOf("2005-01-01 01:01:01"));
+//		resaleorderVO.setResale_ordprice(0);
+//		resaleorderVO.setResale_ordstatus("SELLING1");
+//		resaleorderVO.setTicketVO(ticketVO);
+//		dao.insert(resaleorderVO); //success
 		
 
 		//● 修改
@@ -242,6 +294,8 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		//Hibernate: select resaleorde0_.resale_ordno as resale_ordno1_0_, resaleorde0_.ticket_no as ticket_no2_0_, resaleorde0_.member_seller_no as member_seller_no3_0_, resaleorde0_.member_buyer_no as member_buyer_no4_0_,resaleorde0_.resale_ordprice as resale_ordprice5_0_, resaleorde0_.resale_ordstatus as resale_ordstatus6_0_, resaleorde0_.resale_ord_createtime as resale_ord_createt7_0_, resaleorde0_.resale_ord_completetime as resale_ord_complet8_0_, resaleorde0_.payment_method as payment_method9_0_ from resale_ord resaleorde0_ where resaleorde0_.resale_ordstatus like ? order by resaleorde0_.resale_ordno asc
 		
 	}
+
+	
 
 	
 

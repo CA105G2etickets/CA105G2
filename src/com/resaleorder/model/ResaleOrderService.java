@@ -77,7 +77,18 @@ public class ResaleOrderService {
 		dao.insert(resaleorderVO);
 	}
 	
+	public String insertAndGetReturnPK(ResaleOrderVO resaleorderVO) {
+		String strReturn = null;
+		strReturn = dao.insertAndGetReturnPK(resaleorderVO);
+		return strReturn;
+	}
+	
+	
+	
 	public List<ResaleOrderVO> getAll(Map<String, String[]> map, String strOrderByTargetColumnName) {
 		return dao.getAll(map,strOrderByTargetColumnName);
+	}
+	public void updateBothRoAndTo(ResaleOrderVO resaleorderVO, TicketVO ticketVO) {
+		dao.updateBothRoAndTo(resaleorderVO, ticketVO);
 	}
 }

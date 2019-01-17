@@ -6,9 +6,8 @@
 </head>
 <body bgcolor='white'>
 
-<p>it's resaleord's home-page</p>
+<p>這頁是轉讓票券平台的搜尋頁面</p>
 
-<h3>資料查詢:</h3>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font color='red'>請修正以下錯誤:</font>
@@ -29,8 +28,18 @@
 <ul>  
   <li>   
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
-        <b><font color=blue>請根據下列任一條件去，複合查詢後，搜尋出你想要買的轉讓票:</font></b> <br>
+        <b><font color=blue>請選取下列一種條件，再輸入你想搜尋的條件，搜尋出你想要買的轉讓票: 文字為模糊搜尋，數字可選'>' '<' '='</font></b> <br>
         
+        <select name=selectBar_Choice>
+        	<option value="ticket_resale_price" selected="selected">轉售票的價錢</option>
+        	<option value="member_no" >會員編號</option>
+        	<option value="ticarea_name">座位區名稱</option>
+        	<option value="tictype_name">票種名稱</option>
+        	<option value="tictype_price">原價格</option>
+        	<option value="evetit_name">活動主題名稱</option>
+        	<option value="venue_name">場地名稱</option>
+        	<option value="address">場地地址</option>
+        </select>
         <!--  
         <b>輸入活動名稱，找目標活動有幾張轉售票</b>
         <input type="text" name="" value=""><br>
@@ -41,8 +50,8 @@
        <input type="text" name="" value=""><br>
        -->
        
-       <b>輸入轉讓票券的成交賣價(目前僅能查是不是 <= 這個價錢，並列出所有的轉讓票):</b>
-       <input type="text" name="ticket_resale_price" value=""><br>
+       <!-- <b>輸入轉讓票券的成交賣價(目前僅能查是不是 <= 這個價錢，並列出所有的轉讓票):</b>
+       <input type="text" name="ticket_resale_price" value=""><br> -->
        
        <!--  
        <b>選擇票券編號，查詢與這張票券相關的轉售訂單:(理論上是給管理者看)</b>
@@ -60,112 +69,11 @@
 		        
         -->
         <input type="submit" value="送出">
-        <input type="hidden" name="ticket_resale_status" value="SELLING2">
         <input type="hidden" name="action" value="listResaleOrder_ByCompositeQuery">
+        <!-- <input type="hidden" name="resale_ordstatus" value="SELLING1"> -->
      </FORM>
-  </li>
-  <li>
-  	<FORM>
-  		<b>temporarily no content</b>
-  	</FORM>
-  </li>
-</ul>
 
-<!--  
-<h3>員工管理</h3>
-<ul>
-  <li><a href='<%=request.getContextPath()%>/emp/addEmp.jsp'>Add</a> a new Emp.</li>
-</ul>
-
-<h3><font color=orange>部門管理</font></h3>
-
-<ul>
-  <li><a href='<%=request.getContextPath()%>/dept/listAllDept.jsp'>List</a> all Depts. </li>
-</ul>
--->
-<h3><font color=orange>Show Route of 'a href'</font></h3>
-
-<ul>
-  <li><a href='<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do'>Online after delete this</a></li>
-</ul>
+<h3><a href='<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do'>偷看一下FROM表單送到哪裡</a></h3>
 
 </body>
-
-
-
-<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.css"></script>
-<script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.css"></script>
-
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
- 	       theme: '',              //theme: 'dark',
-	       timepicker:true,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-	       
-	       <% 
-	       java.util.Date pickStartDate = new java.sql.Date(System.currentTimeMillis());
-	       %>
-		   value: '<%=pickStartDate%>',              // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
-        
-        
-   
-        // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
-
-        //      1.以下為某一天之前的日期無法選擇
-        //      var somedate1 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-        
-        //      2.以下為某一天之後的日期無法選擇
-        //      var somedate2 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-
-        //      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-        //      var somedate1 = new Date('2017-06-15');
-        //      var somedate2 = new Date('2017-06-25');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //		             ||
-        //		            date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-        
-</script>
 </html>

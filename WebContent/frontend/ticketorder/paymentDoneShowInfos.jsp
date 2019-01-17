@@ -143,8 +143,10 @@ pageContext.setAttribute("stvos", stvos);
 <%-- <h4><a href="<%=request.getContextPath()%>/frontend/ticketorder/select_page.jsp">前往會員的訂單查詢</a></h4> --%>
 <form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
 	<input type="hidden" name="action" value="member_select_ticketorders">
-	<input type="hidden" name="member_no" value="${toVO.member_no}"> <!--Member not done yet, only been set as M000001 -->
-	<input type="submit" value="前往會員的訂單查詢">
+	<font>value=${showticketVO.member_no}</font>
+	<font>目前找不到VO的會員編號是因為我傳的是List啽不是單一個VO，故EL為空，先寫死為M000001做測試</font>
+	<input type="hidden" name="member_no" value="M000001"> <!--Member not done yet, only been set as M000001 -->
+	<input type="submit" value="前往會員的訂單查詢 from paymentDone.jsp">
 </form>
 
 </body>

@@ -56,26 +56,62 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 			throw ex;
 		}
 	}
+//	public String insertThenGetLatestToNoWithCondition(TicketOrderVO ticketorderVO) {
+//		String strtemp = null;
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		try {
+//			session.beginTransaction();
+//			
+//			//check here, not in controller, 
+//			//use ticketorderVO.getSeatingarea_h5VO().getTicarea_no() to find bookednumber and check
+//			SeatingArea_H5_Service saSvc = new SeatingArea_H5_Service();
+//			SeatingArea_H5_VO svo = saSvc.getOneSeatingArea_H5(ticketorderVO.getSeatingarea_h5VO().getTicarea_no());
+//			svo.setTicbookednumber(svo.getTicbookednumber()+ticketorderVO.getTotal_amount());
+//			
+//			//check if bookednum > totalnum
+//			Integer limit = svo.getTictotalnumber();
+//			if(svo.getTicbookednumber() > limit) {
+//				throw new RuntimeException("TicketsNotEnough");
+//			}
+//			ticketorderVO.setSeatingarea_h5VO(svo);
+//			session.saveOrUpdate(ticketorderVO);
+//			strtemp = ticketorderVO.getTicket_order_no();
+//			session.getTransaction().commit();
+//		} catch (RuntimeException ex) {
+//			session.getTransaction().rollback();
+//			throw ex;
+//		}
+//		return strtemp;
+//	}
+	
 	public String insertThenGetLatestToNoWithCondition(TicketOrderVO ticketorderVO) {
-		String temp = null;
+		String strtemp = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			
+			//check here, not in controller, 
+			//use ticketorderVO.getSeatingarea_h5VO().getTicarea_no() to find bookednumber and check
+//			SeatingArea_H5_Service saSvc = new SeatingArea_H5_Service();
+//			SeatingArea_H5_VO svo = saSvc.getOneSeatingArea_H5(ticketorderVO.getSeatingarea_h5VO().getTicarea_no());
+//			svo.setTicbookednumber(svo.getTicbookednumber()+ticketorderVO.getTotal_amount());
+			
 			//check if bookednum > totalnum
-			Integer limit = ticketorderVO.getSeatingarea_h5VO().getTictotalnumber();
+			Integer limit = ticketorderVO.getSeatingarea_h5VO().getTicbookednumber();
 			if(ticketorderVO.getSeatingarea_h5VO().getTicbookednumber() > limit) {
 				throw new RuntimeException("TicketsNotEnough");
 			}
+//			ticketorderVO.setSeatingarea_h5VO(svo);
 			session.saveOrUpdate(ticketorderVO);
-			temp = ticketorderVO.getTicket_order_no();
+			strtemp = ticketorderVO.getTicket_order_no();
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;
 		}
-		return temp;
+		return strtemp;
 	}
+	
 	
 //	public boolean updateTargetTicketOrderAndInsertTickets(String ticket_order_no,List<TicketVO> list) {
 //		TicketOrderVO ticketorderVO = null;
@@ -162,6 +198,43 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 			throw ex;
 		}
 		return list;
+	}
+	
+	@Override
+	public void cancelTargetTicketOrderByServletDueToOutDatedWithConditions(String ticket_order_no) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			
+			System.out.println("11111111111111111111");
+			TicketOrderVO tovo = this.findByPrimaryKey(ticket_order_no);
+			if(tovo == null) {
+				System.out.println("tovo  null");
+				throw new RuntimeException("target ticket_order isn't exist");
+			}
+			
+			System.out.println("not null");
+			
+			if(!tovo.getTicket_order_status().equals("WAITTOPAY1")) {
+				System.out.println("22222222222222");
+				throw new RuntimeException("target ticket_order ISNT WAITFORPAY");
+			}
+			System.out.println("33333333333333333");
+			SeatingArea_H5_Service saSvc = new SeatingArea_H5_Service();
+			SeatingArea_H5_VO svo = saSvc.getOneSeatingArea_H5(tovo.getSeatingarea_h5VO().getTicarea_no());
+			Integer latestSeatingAreaBookedNumber = svo.getTicbookednumber() - tovo.getTotal_amount();
+			svo.setTicbookednumber(latestSeatingAreaBookedNumber);
+			tovo.setTicket_order_status("OUTDATE4");
+			tovo.setSeatingarea_h5VO(svo);
+			System.out.println("44444444444444");
+			session.update(tovo);
+			
+			session.getTransaction().commit();
+			System.out.println("5555555555555");
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
 	}
 
 	public static void main(String[] args) {
@@ -384,6 +457,8 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 //			System.out.println();
 //		}
 	}
+
+	
 
 	
 }

@@ -115,12 +115,15 @@ String noDataWarningMsg = null;
 					</td>
 					<td>
 						<input type="submit" value="購買">
+						<font>tictype_no=${SeatingArea_H5_VO.tickettype_h5VO.tictype_no}</font>
+						<font>ticarea_no=${SeatingArea_H5_VO.ticarea_no}</font>
+						<font>eve_no=${eh5vo.eve_no}</font>
 						<input type="hidden" name="tictype_no"  value="${SeatingArea_H5_VO.tickettype_h5VO.tictype_no}">
 						<input type="hidden" name="ticarea_no"  value="${SeatingArea_H5_VO.ticarea_no}">
 						<input type="hidden" name="eve_no" value="${eh5vo.eve_no}">
 						<input type="hidden" name="action"	value="ticketNumSelected_buyTickets">
 						
-						<%-- 下列傳過去的值都是公開資料，因為用附在parameter上節省下一頁或下下頁要用到顯示的資料，節省資料庫連線--%>
+						<%-- 下列傳過去的值都是公開資料，因為用附在parameter上節省下一頁或下下頁要用到顯示的資料，節省資料庫連線
 						<input type="hidden" name="evetit_nameForShow" value="${eh5vo.eventtitle_h5VO.evetit_name}">
 						<input type="hidden" name="eve_sessionnameForShow" value="${eh5vo.eve_sessionname}">
 						<input type="hidden" name="eve_startdateForShow" value="<fmt:formatDate value="${eh5vo.eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/>">
@@ -128,7 +131,7 @@ String noDataWarningMsg = null;
 						<input type="hidden" name="venue_nameForShow" value="${eh5vo.venue_h5VO.venue_name}">
 						<input type="hidden" name="addressForShow" value="${eh5vo.venue_h5VO.address}">
 						
-						<input type="hidden" name="tictype_nameForShow" value="${SeatingArea_H5_VO.tickettype_h5VO.tictype_name}">
+						<input type="hidden" name="tictype_nameForShow" value="${SeatingArea_H5_VO.tickettype_h5VO.tictype_name}"> --%>
 						
 					</td>
 				</tr>
