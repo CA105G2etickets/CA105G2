@@ -50,6 +50,9 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
+.topnavbtn {
+	border-bottom: 2px solid #f6f6f6;
+}
 .shoppingC {
 	font-family:微軟正黑體!important;
 }
@@ -169,32 +172,32 @@
 	<div class="row">
 		<div class="topnav">
 			<font size="4">
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="/CA105G2/frontend/event_title/selectEventTitle.jsp" class="topnav" align="center">所有活動</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="#" class="topnav" align="center">轉讓票券</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="/CA105G2/frontend/goods/selectGoods.jsp" class="topnav" align="center">周邊商品</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="/CA105G2/frontend/group_open/group_open_index.jsp" class="topnav" align="center">所有團購</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="/CA105G2/frontend/faq/listAllFaq.jsp" class="topnav" align="center">常見問題</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="<%=request.getContextPath()%>/frontend/selectOrder.jsp" class="topnav" align="center">訂單查詢</a>
 				</div>
@@ -213,6 +216,14 @@ $(document).ready(function() {
 		},function() {
 			$(this).css("opacity","1");
 			$(".memberPhotoEdit").css("visibility","hidden");
+		});
+		$(".topnavbtn").hover(function() {
+			$(this).css("border-bottom","2px solid #3399ff");
+		},function() {
+			$(this).css("border","0");
+		});
+		$(".topnav").hover(function() {
+			$(this).css("text-decoration","none");
 		});
 });
 </script>
