@@ -220,7 +220,7 @@ $(document).ready(function() {
 		$(".topnavbtn").hover(function() {
 			$(this).css("border-bottom","2px solid #3399ff");
 		},function() {
-			$(this).css("border","0");
+			$(this).css("border-bottom","2px solid #f6f6f6");
 		});
 		$(".topnav").hover(function() {
 			$(this).css("text-decoration","none");
