@@ -25,7 +25,7 @@
     <!-- Basic -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
-	    @media only screen and (min-width : 481px) {
+	   screen and (min-width : 481px) {
 		    .flex-row.row {
 		        display: flex;
 		        flex-wrap: wrap;
