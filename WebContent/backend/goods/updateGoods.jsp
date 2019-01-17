@@ -65,9 +65,11 @@
 	                     <div class="form-group">
 	                         <label for="launchdate">上架日期</label>
 	                         <span class="text-danger">${goodsErrorMsgs.launchdate}</span>
-	                         <input type="text" id="launchdate" name="launchdate" class="form-control" 
-	                         value="<fmt:formatDate value="${goodsVO.launchdate}" pattern="yyyy-MM-dd"/>">
+	                         <input type="text" id="f_date1" name="launchdate" class="form-control" 
+	                         value="${goodsVO.launchdate}">
 	                     </div>
+	                    
+	                     
 	                </div>
 	                <div class="col-xs-12 col-sm-6">
 	                     <div class="form-group">
@@ -75,8 +77,9 @@
 	                         <span class="text-danger">${goodsErrorMsgs.offdate}</span>
 	                         <span class="text-danger">${goodsErrorMsgs.offdate_BiggerThanToday}</span>
 	                         <span class="text-danger">${goodsTitleErrorMsgs.offdate_BiggerThanLaunchdate}</span>
-	                         <input type="text" id="offdate" name="offdate" class="form-control"
-	                         value="<fmt:formatDate value="${goodsVO.offdate}" pattern="yyyy-MM-dd"/>">
+	                         <input type="text" id="f_date2" name="offdate" class="form-control"
+	                         value="${goodsVO.offdate}">
+	                        
 	                     </div>
 	                </div>
 	            </div>
@@ -175,15 +178,45 @@
     <!-- Basic -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- ckEditor JS -->
+    ckEditor JS
     <script src="<%=request.getContextPath()%>/vendor/ckeditor_full/ckeditor.js"></script>
     <script src="<%=request.getContextPath()%>/backend/goods/js/goodsCKEditor.js"></script>
-    <!-- datetimepicker -->
+    datetimepicker
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
-    <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
-    <!-- JavaScript in File -->
+<%--     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
+    JavaScript in File
     <script src="<%=request.getContextPath()%>/backend/goods/js/update_goods_input.js"></script>
-    <!-- JavaScript in HTML -->
+    JavaScript in HTML
+    ink rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<style>
+  .xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
+</style>
+
+<script>
+		$('#f_date1').datetimepicker({
+		    theme: '',              //theme: 'dark',
+		    timepicker:true,       //timepicker:true,
+		     step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+		     format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+			   value: '<%=goodsVO.getLaunchdate()%>', // value:   new Date(),
+		 });
+        $('#f_date2').datetimepicker({
+           theme: '',              //theme: 'dark',
+           timepicker:true,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+ 		   value: '<%=goodsVO.getOffdate()%>', // value:   new Date(),
+        });
+        
+
+</script>
     <script type="text/javascript">
     $(function() {
         initInfoEditor();
@@ -214,6 +247,7 @@
         });
                
     });
+    
     </script>
 </body>
 

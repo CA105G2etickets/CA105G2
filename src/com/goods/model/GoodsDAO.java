@@ -44,7 +44,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 	public void insert(GoodsVO goodsVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+ 
 		try {
 
 			con = ds.getConnection();
