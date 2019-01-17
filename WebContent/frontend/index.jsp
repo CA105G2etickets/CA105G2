@@ -53,11 +53,6 @@
 	margin-top: 30;
 	z-index:1;
 }
-.memberPhotoEdit {
-	position: absolute;
-	margin-top: 30;
-	visibility: hidden;
-}
 .membermenu {
 	margin-top: 8em;
 	margin-left: 20%;

@@ -12,7 +12,7 @@
 <title>ETIckeTs娛樂</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script> -->
 <!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -104,7 +104,7 @@
 					<a href="<%=request.getContextPath()%>/frontend/member/member_profile.jsp">
 					<div style="float:right; margin-right: 5%">
 					<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" width="80px" height="80px">
-					<img src="<%=request.getContextPath()%>/frontend/member/images/編輯.png" class="memberPhotoEdit" width="80px" height="80px"">
+					<img src="<%=request.getContextPath()%>/frontend/member/images/編輯.png" class="memberPhotoEdit" width="80px" height="80px">
 					</div>
 					</a>
 					<%}%>
