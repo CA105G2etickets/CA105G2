@@ -10,9 +10,11 @@
     List<OrderHistoryVO> listHistory = orderHistorySvc.getAll();
     pageContext.setAttribute("listHistory",listHistory);
     
-    OrderDetailService orderDetailSvc = new OrderDetailService();
-    List<OrderDetailVO> listDetail = orderDetailSvc.getAll();
-    pageContext.setAttribute("listDetail",listDetail);
+    List<OrderDetailVO> detaillist = (List<OrderDetailVO>)request.getAttribute("orderDetailVO");
+    pageContext.setAttribute("detaillist",detaillist);
+    
+    List<OrderHistoryVO> historylist = (List<OrderHistoryVO>)request.getAttribute("orderHistoryVO");
+    pageContext.setAttribute("historylist",historylist);
 %>
 <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
 <html>
@@ -45,10 +47,10 @@
 			<div role="tabpanel">
 			    <!-- 標籤面板：標籤區 -->
 			    <ul class="nav nav-tabs" role="tablist">
-			        <li role="presentation" class="active">
+			        <li role="presentation">
 			            <a href="#history" aria-controls="history" role="tab" data-toggle="tab">訂單紀錄</a>
 			        </li>
-			        <li role="presentation">
+			        <li role="presentation" class="active">
 			            <a href="#detail" aria-controls="detail" role="tab" data-toggle="tab">訂單明細</a>
 			        </li>
 
@@ -57,7 +59,7 @@
 			    <!-- 標籤面板：內容區 -->
 			    <div class="tab-content">
 					<!-- 標籤面板：訂單紀錄 -->
-			        <div role="tabpanel" class="tab-pane active" id="history">
+			        <div role="tabpanel" class="tab-pane" id="history">
 					
 <!-- 						<br><input type="button" class="btn btn-primary" value="查詢全部" onclick="location.href='listAllOrderHistory.jsp'"> -->
 <%-- 						<hr><input type="button" class="btn btn-primary" value="新增一筆訂單" onclick="location.href='<%=request.getContextPath()%>/backend/order_history/addOrderHistoryAndOrderDetail.jsp'"> --%>
@@ -155,55 +157,47 @@
 			        </div>
 					
 					<!-- 標籤面板：訂單明細 -->
-			        <div role="tabpanel" class="tab-pane" id="detail">
-											
-<%-- 						<br><input type="button" class="btn btn-primary" value="查詢全部" onclick="location.href='<%=request.getContextPath()%>/backend/order_detail/listAllOrderDetail.jsp'"> --%>
+			        <div role="tabpanel" class="tab-pane active" id="detail">
 						<hr>
-						
 				        <table id="example2" class="display" style="width:100%; font-size:12px">
-							<thead>
+						<thead>
 								<tr>
 									<th>訂單編號</th>
 									<th>商品編號</th>
 									<th>商品名稱</th>
-									<th>實際交易金額</th>
+									<th>商品圖片</th>
+									<th>實際交易單價</th>
 									<th>商品數量</th>
-<!-- 									<th>修改</th> -->
-<!-- 									<th>刪除</th> -->
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="orderDetailVO" items="${listDetail}">							
+								<c:forEach var="orderDetailVO" items="${detaillist}">
 									<tr>
-										<td>${orderDetailVO.order_no}</td>
+										<td>
+<%-- 											<a href="<%=request.getContextPath()%>/frontend/order_history/oneMemberIsOrder.jsp?member_no=${memberVO.memberNo}">${orderDetailVO.order_no}</a> --%>
+										${orderDetailVO.order_no}
+										</td>
 										<td>
 											<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${orderDetailVO.goods_no}</a>
 										</td>
 										<td>	
 											<c:forEach var="goodsVO" items="${goodsSvc.all}">
 												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">
-													<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">${goodsVO.goods_name}</a>
+													<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${goodsVO.goods_name}</a>
 												</c:if>
 											</c:forEach>
 										</td>
-										
+										<td>	
+											<c:forEach var="goodsVO" items="${goodsSvc.all}">
+												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">
+													<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">
+														<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" width=50px height= auto />
+													</a>
+												</c:if>
+											</c:forEach>
+										</td>
 										<td>${orderDetailVO.goods_bonus}</td>
 										<td>${orderDetailVO.goods_pc}</td>
-										
-<!-- 										<td> -->
-<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" style="margin-bottom: 0px;"> --%>
-<!-- 										     <input type="submit" value="修改" class="btn btn-warning"> -->
-<%-- 										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}"> --%>
-<%-- 										     <input type="hidden" name="goods_no"  value="${orderDetailVO.goods_no}"> --%>
-<!-- 										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
-<!-- 										</td> -->
-<!-- 										<td> -->
-<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_detail/OrderDetail.do" style="margin-bottom: 0px;"> --%>
-<!-- 										     <input type="submit" value="刪除" class="btn btn-danger"> -->
-<%-- 										     <input type="hidden" name="order_no"  value="${orderDetailVO.order_no}"> --%>
-<%-- 										     <input type="hidden" name="goods_no"  value="${orderDetailVO.goods_no}"> --%>
-<!-- 										     <input type="hidden" name="action" value="delete"></FORM> -->
-<!-- 										</td> -->
 									</tr>
 								</c:forEach>
 							</tbody>

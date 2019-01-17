@@ -74,7 +74,7 @@ body{
 	</div>
 	<div class="walletcolumn walletcolumn-2">
 		<div class="wallettabs">
-		<a href="#" class="wallethref">
+		<a href="<%=request.getContextPath()%>/favorite_goods/FavoriteGoods.do?action=getAll_Goods_Of_A_Member_Front" class="wallethref">
 			<div class="walletblock walletblock-m">
 				<img src="<%=request.getContextPath()%>/frontend/favorite/images/最愛商品.png" class="walletimage">
 				<h3 class="heading" align="center">最愛商品</h3>

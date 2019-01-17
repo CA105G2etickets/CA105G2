@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 import com.favorite_goods.model.FavoriteGoodsService;
 import com.favorite_goods.model.FavoriteGoodsVO;
+import com.member.model.MemberVO;
 
 public class FavoriteGoodsServlet extends HttpServlet {
 	
@@ -250,17 +251,15 @@ public class FavoriteGoodsServlet extends HttpServlet {
 			}
 		}
 	
-		
+		//前台_一個會員的所有最愛商品
 		if ("getAll_Goods_Of_A_Member_Front".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+			HttpSession session = req.getSession();
+			MemberVO memberVO = (MemberVO) session.getAttribute("member");
 			try {
-				String str = req.getParameter("member_no");
-				String member_no = null;
-				member_no = new String(str);				
 				FavoriteGoodsService favoriteGoodsSvc = new FavoriteGoodsService();
-				List<FavoriteGoodsVO> favoriteGoodsVO = (List<FavoriteGoodsVO>) favoriteGoodsSvc.findByMemberNo(member_no);
+				List<FavoriteGoodsVO> favoriteGoodsVO = (List<FavoriteGoodsVO>) favoriteGoodsSvc.findByMemberNo(memberVO.getMemberNo());
 				
 				req.setAttribute("favoriteGoodsVO", favoriteGoodsVO);
 				String url = "/frontend/favorite_goods/AllGoodsOfAMember.jsp";
@@ -268,8 +267,8 @@ public class FavoriteGoodsServlet extends HttpServlet {
 				successView.forward(req, res);
 				
 			}  catch (Exception e) {
-				errorMsgs.add("無法取得資料：" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/favorite_goods/selectFavoriteGoods.jsp");
+//				errorMsgs.add("無法取得資料：" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/login_front-end.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -79,11 +79,11 @@
 									</div>
 									<div class="form-group">
 											<label>訂單總金額：</label>
-											<input type="TEXT" name="order_price" id="order_price" placeholder="請輸入訂單總金額" class="form-control" value="<%=orderHistoryVO.getOrder_price()%>" style="width:15%" >
+											<input type="TEXT" name="order_price" id="order_price" placeholder="請輸入訂單總金額" class="form-control" value="<%=orderHistoryVO.getOrder_price()%>" style="width:15%" readonly="readonly">
 									</div>
 									<div class="form-group" style="width:10%">
 										<label>付款方式：</label>
-											<select class="form-control" size="1" name="pay_methods">
+											<select class="form-control" size="1" name="pay_methods" readonly="readonly">
 												<option value="CREDITCARD" selected>電子錢包</option>
 												<option value="EWALLET">信用卡</option>
 											</select>
@@ -91,7 +91,7 @@
 									
 									<div class="form-group" style="width:10%">
 										<label>出貨方式：</label>
-											<select class="form-control" size="1" name="shipping_methods">
+											<select class="form-control" size="1" name="shipping_methods" readonly="readonly">
 												<option value="STOREPICKUP" selected>超商取貨</option>
 												<option value="HOMEDELIVERY">宅配</option>
 											</select>
@@ -99,38 +99,44 @@
 									
 									<div class="form-group">
 										<label>訂購日期：</label>
-										<input name="order_date" id="f_date1" class="form-control" style="width:15%">
+										<input name="order_date" id="f_date1" class="form-control" style="width:15%"  readonly="readonly" >
 									</div>
 									<div class="form-group">
 										<label>出貨日期：</label>
-										<input name="order_etd" id="f_date2" class="form-control" style="width:15%">
+										<input name="order_etd" id="f_date2" class="form-control" style="width:15%" readonly="readonly">
 									</div>
 									<div class="form-group">
 										<label>取貨日期：</label>
-										<input name="pickup_date" id="f_date3" class="form-control" style="width:15%">
-									</div>
+										<input name="pickup_date" id="f_date3" class="form-control" style="width:15%" readonly="readonly">
+									</div> 
 									<div class="form-group">
 										<label>收件人地址：</label>
-										<input type="TEXT" name="receiver_add" id="receiver_add" placeholder="請輸入收件人地址" class="form-control" value="<%=orderHistoryVO.getReceiver_add()%>" style="width:30%" >
+										<input type="TEXT" name="receiver_add" id="receiver_add" placeholder="請輸入收件人地址" class="form-control" value="<%=orderHistoryVO.getReceiver_add()%>" style="width:30%" readonly="readonly">
 									</div>
 									<div class="form-group">
 										<label>收件人名稱：</label>
-										<input type="TEXT" name="receiver_name" id="receiver_name" placeholder="請輸入收件人名稱" class="form-control" value="<%=orderHistoryVO.getReceiver_name()%>" style="width:10%">
+										<input type="TEXT" name="receiver_name" id="receiver_name" placeholder="請輸入收件人名稱" class="form-control" value="<%=orderHistoryVO.getReceiver_name()%>" style="width:10%" readonly="readonly">
 									</div>
 									<div class="form-group">
 										<label>收件人電話：</label>
-										<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人名稱" class="form-control" value="<%=orderHistoryVO.getReceiver_tel()%>" style="width:10%">
+										<input type="TEXT" name="receiver_tel" id="receiver_tel" placeholder="請輸入收件人電話" class="form-control" value="<%=orderHistoryVO.getReceiver_tel()%>" style="width:10%" readonly="readonly">
 									</div>
 									
 									<div class="form-group" style="width:10%">
 										<label>訂單狀態：</label>
-											<select class="form-control" size="1" name="order_status">
-												<option value="PAYMENT1" selected>已付款</option>
-												<option value="SHIPPING2">出貨中</option>
-												<option value="SHIPMENT3">已出貨</option>
-												<option value="COMPLETE4">已完成</option>
-												<option value="CANCEL5">已取消</option>
-											</select>
+											<%if(!"COMPLETE4".equals(orderHistoryVO.getOrder_status())){%>
+												<select class="form-control" size="1" name="order_status">
+													<option value="PAYMENT1" selected>已付款</option>
+													<option value="SHIPPING2">出貨中</option>
+													<option value="SHIPMENT3">已出貨</option>
+													<option value="COMPLETE4">已完成</option>
+													<option value="CANCEL5">已取消</option>
+												</select>
+											<%} else {%>
+												<input class="form-control" value="已完成" readonly="readonly">
+												<input type="hidden" name="order_status" value="COMPLETE4">
+												
+											<%} %>
 									</div>
 								<br>
 								<input type="hidden" name="action" value="update">
@@ -161,12 +167,12 @@
 									<tr>
 										<td>${orderDetailVO.order_no}</td>
 										<td>
-											<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${orderDetailVO.goods_no}</a>
+											<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">${orderDetailVO.goods_no}</a>
 										</td>
 										<td>	
 											<c:forEach var="goodsVO" items="${goodsSvc.all}">
 												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">
-													<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">${goodsVO.goods_name}</a>
+													<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">${goodsVO.goods_name}</a>
 												</c:if>
 											</c:forEach>
 										</td>
@@ -223,15 +229,13 @@
 </style>
 
 <script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-           theme: '',              //theme: 'dark',
-           timepicker:true,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=orderHistoryVO.getOrder_date()%>', // value:   new Date(),
-        });
-
+		$('#f_date1').datetimepicker({
+		    theme: '',              //theme: 'dark',
+		    timepicker:true,       //timepicker:true,
+		     step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+		     format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+			   value: '<%=orderHistoryVO.getOrder_date()%>', // value:   new Date(),
+		 });
         $('#f_date2').datetimepicker({
            theme: '',              //theme: 'dark',
            timepicker:true,       //timepicker:true,
