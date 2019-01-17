@@ -14,7 +14,7 @@ public class TicketOrderWithTicArea_HSB_Listener implements javax.servlet.http.H
     }
 
     public void valueBound(HttpSessionBindingEvent event)  { 
-    	System.out.println(new Date()+"---valueBound()方法-自動啟動---:"+event.getSession().getAttribute("createdTicketOrderNo"));
+    	System.out.println(new Date()+"---valueBound()方法-自動啟動---:"+event.getSession().getId());
     }
     
     public void valueUnbound(HttpSessionBindingEvent event)  { 

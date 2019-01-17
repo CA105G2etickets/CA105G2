@@ -32,6 +32,7 @@ import com.ticketorder.model.ShowTicketOrderVO;
 import com.ticketorder.model.TicketOrderService;
 import com.ticketorder.model.TicketOrderVO;
 import com.ticketorder.model.TicketOrderVO2;
+import com.member.model.*;
 
 /**
  * Servlet implementation class TicketOrderServlet
@@ -39,17 +40,16 @@ import com.ticketorder.model.TicketOrderVO2;
 //@WebServlet("/TicketOrderServlet")
 public class TicketOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public String aho = "asdf";
-	public Map<String, String> mapCheckList = new HashMap<String, String>(){{
-	    put("ticket_resale_status_0", "NONE0"); 
-	    put("ticket_resale_status_1", "SELLING1"); 
-	    put("ticket_resale_status_2", "CHECKING2");
-	    put("d", "dcat");
-	    put("e", "ecat");
-	    put("f", "fcat");
-	    put("g", "gcat");
-	    put("h", "chat");
-	    }};
+//	public Map<String, String> mapCheckList = new HashMap<String, String>(){{
+//	    put("ticket_resale_status_0", "NONE0"); 
+//	    put("ticket_resale_status_1", "SELLING1"); 
+//	    put("ticket_resale_status_2", "CHECKING2");
+//	    put("d", "dcat");
+//	    put("e", "ecat");
+//	    put("f", "fcat");
+//	    put("g", "gcat");
+//	    put("h", "chat");
+//	    }};
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req,res);
@@ -931,8 +931,588 @@ public class TicketOrderServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
         	
+			
+        }
+        
+//        if("buyticket_EVE_NO_picked_phaseOne".equals(action)) {
+//        	System.out.println("bear_controller_phaseone called");
+//        	List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+////			String requestURL = req.getParameter("requestURL");
+//			MemberVO member = (MemberVO)session.getAttribute("member");
+////			System.out.println("bear session.getmember="+member.getMemberNo());
+//			
+//			try {
+//				String eve_no = req.getParameter("eve_no");
+////				if (eve_no == null || (eve_no.trim()).length() == 0) {
+////					errorMsgs.add("請輸入eve_no編號");
+////				}
+////				if (eve_no.length()>7) {
+////					errorMsgs.add("eve_no格式不正確");
+////				}
+////				if (this.containsHanScript(eve_no)) {
+////					errorMsgs.add("eve_no不可包含中文");
+////				}
+//				
+//				String member_no = member.getMemberNo();
+////				System.out.println("bear member.getmemberno="+member);
+//				if (member_no == null || (member_no.trim()).length() == 0) {
+//					errorMsgs.add("購票前請登入");
+//				}
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/frontend/login_front-end.jsp"); 
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+//				
+//				//db contact starts
+//				Event_H5_Service eh5Svc = new Event_H5_Service();
+//				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+//				
+////				if(eh5vo == null) {
+////					errorMsgs.add("No data after searching with this eve_no");
+////				}
+//				
+//				//error return make sure which parameters I should send.
+////				if (!errorMsgs.isEmpty()) {
+////					RequestDispatcher failureView = req
+////							.getRequestDispatcher("/frontend/ticketorder/select_page.jsp"); 
+////					failureView.forward(req, res);
+////					return;//程式中斷
+////				}
+//				
+//				//start query
+////				SeatingArea_H5_Service sah5Svc = new SeatingArea_H5_Service();
+////				List<SeatingArea_H5_VO> list = sah5Svc.get_SeatingArea_H5_VOs_ByEveNo(eve_no);
+//				
+////				System.out.println("bear after login, get member_no="+member_no);
+////				req.setAttribute("slist", list);
+//				req.setAttribute("eh5vo", eh5vo);
+//				req.setAttribute("member_no", member_no);
+//				
+////				System.out.println("Before request.forward, member_no="+member_no);
+//				String url = "/frontend/ticketorder/buyticket_EVE_NO_picked_phaseOne.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); 
+//				successView.forward(req, res);
+//				
+//				
+//			}catch(Exception e) {
+//				errorMsgs.add("errorAtTicketOrderServlet.java HereMsg:"+e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/frontend/index.jsp");
+//				failureView.forward(req, res);
+//			}
+//        }
+//        
+//        if("buyticket_EVE_NO_picked_phaseOne".equals(action)) {
+//        	List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			String member_no = req.getParameter("member_no");
+//			System.out.println("buyticket_EVE_NO_picked_phaseOne_bear_req.getparameter member_no="+member_no);
+//			
+//			try {
+//				String ticarea_no = req.getParameter("ticarea_no");
+//				String ticketsNum = req.getParameter("ticketsNum");
+//				String tictype_no = req.getParameter("tictype_no");
+//				String eve_no = req.getParameter("eve_no");
+//				
+//				//ticarea_no
+//				if (ticarea_no == null || (ticarea_no.trim()).length() == 0) {
+//					errorMsgs.add("請輸入ticarea_no編號");
+//				}
+//				if (ticarea_no.length()>10) {
+//					errorMsgs.add("ticarea_no格式不正確");
+//				}
+//				if (this.containsHanScript(ticarea_no)) {
+//					errorMsgs.add("ticarea_no不可包含中文");
+//				}
+//				
+//				//ticketsNum
+//				if (ticketsNum == null || (ticketsNum.trim()).length() == 0) {
+//					errorMsgs.add("請輸入ticketsNum");
+//				}
+//				if (ticketsNum.length()>11) {
+//					errorMsgs.add("ticketsNum格式不正確");
+//				}
+//				if (this.containsHanScript(ticketsNum)) {
+//					errorMsgs.add("ticketsNum不可包含中文");
+//				}
+//				
+//				//tictype_no
+//				if (tictype_no == null || (tictype_no.trim()).length() == 0) {
+//					errorMsgs.add("請輸入tictype_no編號");
+//				}
+//				if (tictype_no.length()>8) {
+//					errorMsgs.add("tictype_no格式不正確");
+//				}
+//				if (this.containsHanScript(tictype_no)) {
+//					errorMsgs.add("tictype_no不可包含中文");
+//				}
+//				
+//				//these two req.set is used iat buytickets_phaseOne, so add them before errorMsg failview forwarding.
+//				req.setAttribute("member_no", member_no);
+//				
+//				//db contact
+//				Event_H5_Service eh5Svc = new Event_H5_Service();
+//				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+//				req.setAttribute("eh5vo", eh5vo);
+//				
+//				//controller's error-condition happens, forward to buy 
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/frontend/ticketorder/buyticket_EVE_NO_picked_phaseOne.jsp"); 
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+//				
+//				//start to inserTicketOrder and update target seatingarea.
+//				Integer total_amount = null;
+//				try {
+//					total_amount = new Integer(Integer.parseInt(ticketsNum));
+//					if(total_amount > 100100 || total_amount <0) {
+//						errorMsgs.add("總張數請勿亂填數字.");
+//					}
+//				} catch (NumberFormatException e) {
+//					total_amount = 0;
+//					errorMsgs.add("總張數請填數字.");
+//				}
+//				
+//				Integer total_price = null;
+//				try {
+//					TicketType_H5_Service ttyh5Svc = new TicketType_H5_Service();
+//					TicketType_H5_VO ttyh5VO = ttyh5Svc.findByPrimaryKey(tictype_no);
+//					Integer oneTicketPrice = new Integer(ttyh5VO.getTictype_price());
+//					total_price = oneTicketPrice*total_amount;
+//					if(total_amount > 10100100 || total_amount <0) {
+//						errorMsgs.add("總價請勿亂填數字.");
+//					}
+//				} catch (NumberFormatException e) {
+//					total_amount = 0;
+//					errorMsgs.add("總價請填數字.");
+//				}
+//				
+//				java.sql.Timestamp ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
+//				String payment_method = "NOTYET";
+//				String ticket_order_status = "WAITTOPAY1";
+//				
+//				//controller's error-condition happens, forward to buy 
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/frontend/ticketorder/buyticket_EVE_NO_picked_phaseOne.jsp"); 
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+//				
+//				//db contact
+//				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+//				SeatingArea_H5_VO svo = sh5Svc.getOneSeatingArea_H5(ticarea_no);
+//				
+//				//these line use controller to deal tickets chasing
+//				if(total_amount+svo.getTicbookednumber() > svo.getTictotalnumber()) {
+//					errorMsgs.add("選取的目標活動的剩餘票數已不足，請重新購票");
+//				}
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/frontend/ticketorder/buyticket_EVE_NO_picked_phaseOne.jsp"); 
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+//				
+//				System.out.println("dbonce");
+//				
+//				TicketOrderVO toVO = new TicketOrderVO();
+//				toVO.setMember_no(member_no);
+//				toVO.setTotal_price(total_price);
+//				toVO.setTotal_amount(total_amount);
+//				toVO.setTicket_order_time(ticket_order_time);
+//				toVO.setPayment_method(payment_method);
+//				toVO.setTicket_order_status(ticket_order_status);
+//				
+//				System.out.println("dbonce2");
+//				
+//				Integer original_ticbookednumber = svo.getTicbookednumber();
+//				Integer update_ticbookednumber = original_ticbookednumber+total_amount;
+//				svo.setTicbookednumber(update_ticbookednumber);
+//				
+//				System.out.println("dbonce3");
+//				
+//				toVO.setSeatingarea_h5VO(svo);
+//				System.out.println("dbonce4");
+//				TicketOrderService toSvc = new TicketOrderService();
+//				//session.setAttribute("createdTicketOrderNo", createdTicketOrderNo);
+//				String createdTicketOrderNo = toSvc.insertThenGetLatestToNoWithCondition(toVO);
+//				System.out.println("dbonce5");
+//				
+//				TicketOrderWithTicArea_HSB_Listener ticketOrderListener = new TicketOrderWithTicArea_HSB_Listener();
+//				session.setAttribute(createdTicketOrderNo, ticketOrderListener);
+//				System.out.println("dbonce6");
+//				
+//				TicketOrderVO toVO_sendTo_jsp = toSvc.getOneTicketOrder(createdTicketOrderNo);
+//				System.out.println("dbonce7");
+//				req.setAttribute("toVO", toVO_sendTo_jsp);
+//				System.out.println("dbonce8");
+//				
+////				SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(ticarea_no);
+////				req.setAttribute("sh5VO", sh5VO);
+//				
+//				//buyticket_TICKET_ORDER_created_phaseTwo
+//				String url = "/frontend/ticketorder/buyticket_TICKET_ORDER_created_phaseTwo.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+//				
+//			}catch(Exception e) {
+//				errorMsgs.add("errorAtTicketOrderServlet.java:buyticket_EVE_NO_picked_phaseOne,HereMsg:"+e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/frontend/ticketorder/buyticket_EVE_NO_picked_phaseOne.jsp");
+//				failureView.forward(req, res);
+//			}
+//        }
+        
+        //under this line is controller for 20190118 pre-demo
+        if("buyticket_NoImg_EVE_NO_picked_phaseOne".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+        	MemberVO member = (MemberVO)session.getAttribute("member");
+        	System.out.println("buyticket_NoImg_EVE_NO_picked_phaseOne.member="+member);
+        	
+        	try {
+        		String eve_no = req.getParameter("eve_no");
+        		String member_no = member.getMemberNo();
+        		if (member_no == null || (member_no.trim()).length() == 0) {
+					errorMsgs.add("購票前請登入");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/login_front-end.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+        		
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+				
+				Map<String, String[]> map = new TreeMap<String, String[]>();
+				map.put("eve_no", new String[] {eve_no});
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+				List<SeatingArea_H5_VO> list = sh5Svc.getAll(map, "ticarea_no");
+				
+				System.out.println("before.setAttrivute");
+				req.setAttribute("eh5vo", eh5vo);
+				req.setAttribute("slist", list);
+				req.setAttribute("member_no", member_no);
+				
+				System.out.println("before suvvessView.forward");
+        		String url = "/frontend/ticketorder/buyticket_NoImg_EVE_NO_picked_phaseOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+        	} catch(Exception e) {
+        		errorMsgs.add("Failed at c.action.buyticket_NoImg_EVE_NO_picked_phaseOne, Msg:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_EVE_NO_picked_phaseOne.jsp");
+				failureView.forward(req, res);
+        	}
         	
         }
+        
+        if("buyticket_NoImg_TICKET_ORDER_created_phaseTwo".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String eve_no = req.getParameter("eve_no");
+			String ticarea_no = req.getParameter("ticarea_no");
+			String ticketsNum = req.getParameter("ticketsNum");
+			String tictype_no = req.getParameter("tictype_no");
+			String member_no = req.getParameter("member_no");
+			System.out.println("buyticket_NoImg_TICKET_ORDER_created_phaseTwo.getparameter member_no="+member_no);
+			
+        	try {
+        		
+        		//member_no
+				if (member_no == null || (member_no.trim()).length() == 0) {
+					errorMsgs.add("member_no is null");
+				}
+        		req.setAttribute("member_no", member_no); //might cause problem because add null into req?
+        		//db contact
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+				req.setAttribute("eh5vo", eh5vo);
+				
+				//controller's error-condition happens, forward to buy 
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_EVE_NO_picked_phaseOne.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				//start to inserTicketOrder and update target seatingarea.
+				Integer total_amount = null;
+				try {
+					total_amount = new Integer(Integer.parseInt(ticketsNum));
+					if(total_amount > 100100 || total_amount <0) {
+						errorMsgs.add("總張數請勿亂填數字.");
+					}
+				} catch (NumberFormatException e) {
+					total_amount = 0;
+					errorMsgs.add("總張數請填數字.");
+				}
+				
+				Integer total_price = null;
+				try {
+					TicketType_H5_Service ttyh5Svc = new TicketType_H5_Service();
+					TicketType_H5_VO ttyh5VO = ttyh5Svc.findByPrimaryKey(tictype_no);
+					Integer oneTicketPrice = new Integer(ttyh5VO.getTictype_price());
+					total_price = oneTicketPrice*total_amount;
+					if(total_amount > 10100100 || total_amount <0) {
+						errorMsgs.add("總價 請勿亂填數字.");
+					}
+				} catch (NumberFormatException e) {
+					total_amount = 0;
+					errorMsgs.add("總價 請填數字.");
+				}
+				
+				java.sql.Timestamp ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
+				String payment_method = "NOTYET";
+				String ticket_order_status = "WAITTOPAY1";
+				
+				
+				
+				//db contact
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+				SeatingArea_H5_VO svo = sh5Svc.getOneSeatingArea_H5(ticarea_no);
+				
+				//these line use controller to deal tickets chasing
+				if(total_amount+svo.getTicbookednumber() > svo.getTictotalnumber()) {
+					errorMsgs.add("選取的目標活動的剩餘票數已不足，請重新購票");
+				}
+				//controller's error-condition happens, forward to buy 
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_EVE_NO_picked_phaseOne.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				//dbcontact with transaction function
+				TicketOrderVO toVO = new TicketOrderVO();
+				toVO.setMember_no(member_no);
+				toVO.setTotal_price(total_price);
+				toVO.setTotal_amount(total_amount);
+				toVO.setTicket_order_time(ticket_order_time);
+				toVO.setPayment_method(payment_method);
+				toVO.setTicket_order_status(ticket_order_status);
+				
+				Integer original_ticbookednumber = svo.getTicbookednumber();
+				Integer update_ticbookednumber = original_ticbookednumber+total_amount;
+				svo.setTicbookednumber(update_ticbookednumber);
+				
+				toVO.setSeatingarea_h5VO(svo);
+				TicketOrderService toSvc = new TicketOrderService();
+				//session.setAttribute("createdTicketOrderNo", createdTicketOrderNo);
+				String createdTicketOrderNo = toSvc.insertThenGetLatestToNoWithCondition(toVO);
+				
+				TicketOrderWithTicArea_HSB_Listener ticketOrderListener = new TicketOrderWithTicArea_HSB_Listener();
+				session.setAttribute(createdTicketOrderNo, ticketOrderListener);
+				
+				TicketOrderVO tvo = toSvc.getOneTicketOrder(createdTicketOrderNo);
+        		
+				//start fit ShowTicketOrderVO
+				ShowTicketOrderVO shtovo = new ShowTicketOrderVO();
+				shtovo.setTicket_order_no(createdTicketOrderNo);
+				shtovo.setMember_no(member_no);
+				shtovo.setTotal_price(tvo.getTotal_price());
+				shtovo.setTotal_amount(tvo.getTotal_amount());
+				shtovo.setTicket_order_time(tvo.getTicket_order_time());
+				shtovo.setPayment_method(tvo.getPayment_method());
+				shtovo.setTicket_order_status(tvo.getTicket_order_status());
+				
+				shtovo.setTicarea_no(tvo.getSeatingarea_h5VO().getTicarea_no());
+				shtovo.setTicarea_name(tvo.getSeatingarea_h5VO().getTicarea_name());
+				shtovo.setTicarea_color(tvo.getSeatingarea_h5VO().getTicarea_color());
+				
+				SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(tvo.getSeatingarea_h5VO().getTicarea_no());
+				shtovo.setTictype_no(sh5VO.getTickettype_h5VO().getTictype_no());
+				shtovo.setTictype_price(sh5VO.getTickettype_h5VO().getTictype_price());
+				
+				Event_H5_VO eh5VO = eh5Svc.getOneEvent_H5(sh5VO.getEve_h5VO().getEve_no());
+				shtovo.setEve_no(eh5VO.getEve_no());
+				shtovo.setEve_sessionname(eh5VO.getEve_sessionname());
+				
+				shtovo.setEve_startdate(eh5VO.getEve_startdate());
+				shtovo.setEve_enddate(eh5VO.getEve_enddate());
+				shtovo.setEve_offsaledate(eh5VO.getEve_offsaledate());
+				
+				shtovo.setVenue_name(eh5VO.getVenue_h5VO().getVenue_name());
+				shtovo.setAddress(eh5VO.getVenue_h5VO().getAddress());
+				
+				shtovo.setEvetit_name(eh5VO.getEventtitle_h5VO().getEvetit_name());
+				
+				req.setAttribute("shtovo", shtovo);
+				
+        		String url = "/frontend/ticketorder/buyticket_NoImg_TICKET_ORDER_created_phaseTwo.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+        	} catch(Exception e) {
+        		errorMsgs.add("從資料庫複合查詢失敗,at buyticket_NoImg_EVE_NO_picked_phaseOne.jsp:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_EVE_NO_picked_phaseOne.jsp");
+				failureView.forward(req, res);
+        	}
+        	
+        }
+        
+        if("buyticket_NoImg_done_phaseThree".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+        	
+        	try {
+        		String ticket_order_no = req.getParameter("ticket_order_no");
+        		String member_no = req.getParameter("member_no");
+        		
+				String creditCardNumber = req.getParameter("creditCardNumber");
+				String creditCardVerificationNumber = req.getParameter("creditCardVerificationNumber");
+        		
+				//creditCardNumber
+				if (creditCardNumber == null || (creditCardNumber.trim()).length() == 0) {
+					errorMsgs.add("請輸入信用卡編號16碼");
+				}
+				if (creditCardNumber.length()>16) {
+					errorMsgs.add("信用卡格式不正確，應為16碼的數字");
+				}
+				if (this.containsHanScript(creditCardNumber)) {
+					errorMsgs.add("信用卡編號不可包含中文");
+				}
+				//creditCardVerificationNumber
+				if (creditCardVerificationNumber == null || (creditCardVerificationNumber.trim()).length() == 0) {
+					errorMsgs.add("請輸入信用卡驗證碼3碼");
+				}
+				if (creditCardVerificationNumber.length()>3) {
+					errorMsgs.add("信用卡驗證碼格式不正確");
+				}
+				if (this.containsHanScript(creditCardVerificationNumber)) {
+					errorMsgs.add("信用卡驗證碼不可包含中文");
+				}
+				
+				//get ShowTicketOrderVO for controller-error-detect forward
+				TicketOrderService toSvc = new TicketOrderService();
+				TicketOrderVO tvo = toSvc.getOneTicketOrder(ticket_order_no);
+        		
+				//start fit ShowTicketOrderVO
+				ShowTicketOrderVO shtovo = new ShowTicketOrderVO();
+				shtovo.setTicket_order_no(ticket_order_no);
+				shtovo.setMember_no(member_no);
+				shtovo.setTotal_price(tvo.getTotal_price());
+				shtovo.setTotal_amount(tvo.getTotal_amount());
+				shtovo.setTicket_order_time(tvo.getTicket_order_time());
+				shtovo.setPayment_method(tvo.getPayment_method());
+				shtovo.setTicket_order_status(tvo.getTicket_order_status());
+				
+				shtovo.setTicarea_no(tvo.getSeatingarea_h5VO().getTicarea_no());
+				shtovo.setTicarea_name(tvo.getSeatingarea_h5VO().getTicarea_name());
+				shtovo.setTicarea_color(tvo.getSeatingarea_h5VO().getTicarea_color());
+				
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+				SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(tvo.getSeatingarea_h5VO().getTicarea_no());
+				shtovo.setTictype_no(sh5VO.getTickettype_h5VO().getTictype_no());
+				shtovo.setTictype_price(sh5VO.getTickettype_h5VO().getTictype_price());
+				
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				Event_H5_VO eh5VO = eh5Svc.getOneEvent_H5(sh5VO.getEve_h5VO().getEve_no());
+				shtovo.setEve_no(eh5VO.getEve_no());
+				shtovo.setEve_sessionname(eh5VO.getEve_sessionname());
+				
+				shtovo.setEve_startdate(eh5VO.getEve_startdate());
+				shtovo.setEve_enddate(eh5VO.getEve_enddate());
+				shtovo.setEve_offsaledate(eh5VO.getEve_offsaledate());
+				
+				shtovo.setVenue_name(eh5VO.getVenue_h5VO().getVenue_name());
+				shtovo.setAddress(eh5VO.getVenue_h5VO().getAddress());
+				
+				shtovo.setEvetit_name(eh5VO.getEventtitle_h5VO().getEvetit_name());
+				req.setAttribute("shtovo", shtovo);
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_TICKET_ORDER_created_phaseTwo.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				TicketOrderVO toVOForUpdate = toSvc.getOneTicketOrder(ticket_order_no);
+				if (toVOForUpdate == null) {
+					errorMsgs.add("查無資料");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_TICKET_ORDER_created_phaseTwo.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String targetToVoStatus = toVOForUpdate.getTicket_order_status();
+				if("OUTDATE4".equals(targetToVoStatus)) {
+					errorMsgs.add("This TicketOrder is been canceled by server because of payment time-limit.");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_TICKET_ORDER_created_phaseTwo.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				//transfer hibernate tovo into tovo2 for JNDI to use
+				TicketOrderVO2 tovo2 = new TicketOrderVO2();
+				tovo2.setTicket_order_no(ticket_order_no);
+				tovo2.setMember_no(toVOForUpdate.getMember_no());
+				tovo2.setTicarea_no(toVOForUpdate.getSeatingarea_h5VO().getTicarea_no());
+				tovo2.setTotal_price(toVOForUpdate.getTotal_price());
+				tovo2.setTotal_amount(toVOForUpdate.getTotal_amount());
+				tovo2.setTicket_order_time(toVOForUpdate.getTicket_order_time());
+				tovo2.setPayment_method("CREDITCARD");
+				tovo2.setTicket_order_status("COMPLETE2");
+				
+				List<TicketVO2> t2list = new ArrayList<TicketVO2>();
+				for(int i = 1; i<=tovo2.getTotal_amount();i++) {
+					
+					String ticket_status = "ACTIVE1";
+					java.sql.Timestamp ticket_create_time = new java.sql.Timestamp(System.currentTimeMillis());;
+					String ticket_resale_status = "NONE1";
+					Integer ticket_resale_price = 0;
+					String is_from_resale = "NO";
+					
+					TicketVO2 tVO2 = new TicketVO2();
+					tVO2.setTicarea_no(tovo2.getTicarea_no());
+					tVO2.setMember_no(tovo2.getMember_no());
+					tVO2.setTicket_status(ticket_status);
+					tVO2.setTicket_create_time(ticket_create_time);
+					tVO2.setTicket_resale_status(ticket_resale_status);
+					tVO2.setTicket_resale_price(ticket_resale_price);
+					tVO2.setIs_from_resale(is_from_resale);
+					t2list.add(tVO2);
+				}
+				
+				//call transaction function in JNDI.
+				toSvc.updateTicketOrderAndInsertTickets(tovo2, t2list);
+				
+				TicketOrderVO updated_tovo = toSvc.getOneTicketOrder(ticket_order_no);
+				req.setAttribute("updated_tovo", updated_tovo);
+				
+        		String url = "/frontend/ticketorder/buyticket_NoImg_done_phaseThree.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+        	} catch(Exception e) {
+        		errorMsgs.add("failed at buyticket_NoImg_TICKET_ORDER_created_phaseTwo.jsp ErrorMsg:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/ticketorder/buyticket_NoImg_TICKET_ORDER_created_phaseTwo.jsp");
+				failureView.forward(req, res);
+        	}
+        	
+        }
+        
+        
+        
+        
 
 	}
 	public boolean containsHanScript(String s) {

@@ -40,6 +40,7 @@ import javax.persistence.criteria.Root;
 public class SeatingArea_H5_HibernateDAO implements SeatingArea_H5_DAO_interface {
 
 	private static final String GET_ALL_STMT = "from SeatingArea_H5_VO order by ticarea_no";
+	private static final String GET_ALL_BY_EVE_NO_STMT = "from SeatingArea_H5_VO where eve_no=?0 order by ticarea_no";
 
 	@Override
 	public void insert(SeatingArea_H5_VO seatingarea_h5VO) {
@@ -172,6 +173,23 @@ public class SeatingArea_H5_HibernateDAO implements SeatingArea_H5_DAO_interface
 		Set<TicketOrderVO> set = findByPrimaryKey(ticarea_no).getTicketorders();
 		return set;
 	}
+	
+	@Override
+	public List<SeatingArea_H5_VO> get_SeatingArea_H5_VOs_ByEveNo(String eve_no) {
+		List<SeatingArea_H5_VO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query<SeatingArea_H5_VO> query = session.createQuery(GET_ALL_BY_EVE_NO_STMT, SeatingArea_H5_VO.class);
+			query.setParameter("eve_no", eve_no);
+			list = query.getResultList();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	} 
 
 	public static void main(String[] args) {
 
@@ -342,6 +360,8 @@ public class SeatingArea_H5_HibernateDAO implements SeatingArea_H5_DAO_interface
 //			System.out.println();
 //		} //success
 		
-	} 
+	}
+
+	
 	
 }

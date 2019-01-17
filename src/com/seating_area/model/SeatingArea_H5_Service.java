@@ -21,6 +21,10 @@ public class SeatingArea_H5_Service {
 		return dao.getAll();
 	}
 	
+	public List<SeatingArea_H5_VO> get_SeatingArea_H5_VOs_ByEveNo(String eve_no){
+		return dao.get_SeatingArea_H5_VOs_ByEveNo(eve_no);
+	}
+	
 	public List<SeatingArea_H5_VO> getAll(Map<String, String[]> map, String strOrderByTargetColumnName) {
 		return dao.getAll(map, strOrderByTargetColumnName);
 	}

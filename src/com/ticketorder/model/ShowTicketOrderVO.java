@@ -20,11 +20,21 @@ public class ShowTicketOrderVO implements Serializable{
 	private String payment_method;
 	private String ticket_order_status;
 	
+	private String ticarea_no;
+	private String ticarea_name;
+	private String ticarea_color;
+	
+	private String tictype_no;
+	private Integer tictype_price;
+	
+	private String eve_no;
 	private String eve_sessionname;
 	private Timestamp eve_startdate;
 	private Timestamp eve_enddate;
+	private Timestamp eve_offsaledate;
 	
 	private String evetit_name;
+	private String evetit_no;
 	
 	private String venue_name;
 	private String address;
@@ -70,6 +80,42 @@ public class ShowTicketOrderVO implements Serializable{
 	public void setTicket_order_status(String ticket_order_status) {
 		this.ticket_order_status = ticket_order_status;
 	}
+	public String getTicarea_no() {
+		return ticarea_no;
+	}
+	public void setTicarea_no(String ticarea_no) {
+		this.ticarea_no = ticarea_no;
+	}
+	public String getTicarea_name() {
+		return ticarea_name;
+	}
+	public void setTicarea_name(String ticarea_name) {
+		this.ticarea_name = ticarea_name;
+	}
+	public String getTicarea_color() {
+		return ticarea_color;
+	}
+	public void setTicarea_color(String ticarea_color) {
+		this.ticarea_color = ticarea_color;
+	}
+	public String getTictype_no() {
+		return tictype_no;
+	}
+	public void setTictype_no(String tictype_no) {
+		this.tictype_no = tictype_no;
+	}
+	public Integer getTictype_price() {
+		return tictype_price;
+	}
+	public void setTictype_price(Integer tictype_price) {
+		this.tictype_price = tictype_price;
+	}
+	public String getEve_no() {
+		return eve_no;
+	}
+	public void setEve_no(String eve_no) {
+		this.eve_no = eve_no;
+	}
 	public String getEve_sessionname() {
 		return eve_sessionname;
 	}
@@ -88,11 +134,23 @@ public class ShowTicketOrderVO implements Serializable{
 	public void setEve_enddate(Timestamp eve_enddate) {
 		this.eve_enddate = eve_enddate;
 	}
+	public Timestamp getEve_offsaledate() {
+		return eve_offsaledate;
+	}
+	public void setEve_offsaledate(Timestamp eve_offsaledate) {
+		this.eve_offsaledate = eve_offsaledate;
+	}
 	public String getEvetit_name() {
 		return evetit_name;
 	}
 	public void setEvetit_name(String evetit_name) {
 		this.evetit_name = evetit_name;
+	}
+	public String getEvetit_no() {
+		return evetit_no;
+	}
+	public void setEvetit_no(String evetit_no) {
+		this.evetit_no = evetit_no;
 	}
 	public String getVenue_name() {
 		return venue_name;
@@ -106,6 +164,5 @@ public class ShowTicketOrderVO implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
 	
 }

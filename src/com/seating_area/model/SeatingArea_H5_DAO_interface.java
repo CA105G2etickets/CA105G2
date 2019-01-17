@@ -13,6 +13,7 @@ public interface SeatingArea_H5_DAO_interface {
     public SeatingArea_H5_VO findByPrimaryKey(String ticarea_no);
     
     public List<SeatingArea_H5_VO> getAll();
+    public List<SeatingArea_H5_VO> get_SeatingArea_H5_VOs_ByEveNo(String eve_no);
     public List<SeatingArea_H5_VO> getAll(Map<String, String[]> map, String strOrderByTargetColumnName);
     
 //    public Set<TicketVO> getTicketsByTicAreaNo(String ticarea_no);

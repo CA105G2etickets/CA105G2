@@ -128,7 +128,7 @@
 											<form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do" target="_blank">								
 											    <input type="hidden" name="eve_no"         value="${eventVO.eve_no}">
 											    <input type="hidden" name="requestURL"	   value="<%=request.getServletPath()%>">
-											    <input type="hidden" name="action"	       value="select_EVE_NO_toBuyTickets">
+											    <input type="hidden" name="action"	       value="buyticket_NoImg_EVE_NO_picked_phaseOne">
 											    <input type="submit" value="點我購票" class="btn btn-danger"> 							
 											</form>
 											<!-- ---------------END:::接去購票controller, 轉成購票面--------------- -->		
