@@ -53,8 +53,8 @@ body{
 
 <jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/> 
 
-<div class="container">
-<table class="table">
+<div class="container table-responsive">
+<table class="table table-hover">
 	<tr>
 		<td>會員大頭貼</td>
 		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50" class="memberimg"></td>

@@ -171,7 +171,7 @@
 						
 						<li style="padding: 0; margin-top: 0">
 						<%if (session.getAttribute("member") == null) {%>
-						<a href="/CA105G2/frontend/login_front-end.jsp" class="navbarmemberbtn" style="padding-bottom: 0; padding-top: 30"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;登入</font></a>
+						<a href="<%=request.getContextPath()%>/frontend/login_front-end.jsp" class="navbarmemberbtn" style="padding-bottom: 0; padding-top: 30"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;登入</font></a>
 						<% } else {%>
 						<a class="navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">
 						<form  METHOD="post" ACTION="/CA105G2/member/member.do" style="margin: 0">

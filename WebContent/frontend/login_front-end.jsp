@@ -45,7 +45,7 @@
 <!--                                     </label> -->
 <!--                                 </div> -->
                                 <input type="hidden" name="action" value="find_By_Account">
-								<input type="submit" value="Login">
+								<input type="submit" value="登入">
 <!--                                 <a href="index.html" class="btn btn-info btn-block">Login</a> -->
                             </fieldset>
                         </form>

@@ -24,8 +24,18 @@
 	z-index:1;
 }
 .administratormenu {
-	margin-top: 100px;
-	margin-left: 200px;
+	margin-top: 8em;
+	margin-left: 20%;
+}
+.administratorPhotoEdit {
+	position: absolute;
+	margin-top: 30;
+	visibility: hidden;
+}
+.navbaradministratorbtn {
+	position: absolute;
+	margin-bottom: 0;
+	padding: 1px;
 }
 .topnav {
 	list-style-type: none;
@@ -38,6 +48,33 @@
 	padding: 14px 16px;
 	text-decoration: none;
 	cursor: pointer;
+}
+.topnav :hover {
+    text-decoration: none;
+    color: white;
+}
+.topnavbtn a:after {
+    content: ' ';
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    width: 90%;
+    transform: translate(-50%);
+}
+.topnavbtn a:hover:after {
+    height: 4px;
+    animation: ad_width .2s linear forwards;
+    background: #bebebe;
+}
+@keyframes ad_width {
+    from {
+        width: 0
+    }
+    to {
+        width: 90%
+    }
 }
 body{
 	font-family:微軟正黑體!important;
@@ -76,33 +113,11 @@ body{
 				<% } else {%>
 					<a href="<%=request.getContextPath()%>/backend/administrator/administrator_profile.jsp">
 					<div style="float:right; margin-right: 5%">
-					<img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" class="memberphoto" alt="memberphoto" width="80px" height="80px">
-					<img src="<%=request.getContextPath()%>/frontend/member/images/編輯.png" class="memberPhotoEdit" width="80px" height="80px">
+					<img src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" class="administratorphoto" alt="administratorphoto" width="80px" height="80px">
+					<img src="<%=request.getContextPath()%>/frontend/member/images/編輯.png" class="administratorPhotoEdit" width="80px" height="80px">
 					</div>
 					</a>
 				<%}%>
-				
-				
-				
-				
-				
-				
-				<a href="#">
-					<%if (session.getAttribute("administratorVO") == null) {%>
-						<img src="https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" class="administratorphoto" alt="administratorphoto" style="float:right" width="80px" height="80px">
-					<% } else {%>
-						<img src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" class="administratorphoto" alt="administratorphoto" style="float:right" width="80px" height="80px">
-					<%}%>
-<%-- 					<img src="${member eq null ? "https://a.wattpad.com/useravatar/user50478190.256.326933.jpg" : "<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=request.getContextPath()%>"}" class="memberphoto" alt="memberphoto" style="float:right" width="80px" height="80px"> --%>
-				</a>
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				<ul class="nav navbar-nav navbar-right administratormenu">
 <%-- 					<%if (session.getAttribute("member") == null) {%> --%>
@@ -112,12 +127,12 @@ body{
 <%-- 					<%}%> --%>
 						
 						
-						<li>
+						<li style="padding: 0; margin-top: 0">
 						<%if (session.getAttribute("administratorVO") == null) {%>
-						<a href="/CA105G2/backend/login_back-end.jsp"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;管理員登入</font></a>
+						<a href="<%=request.getContextPath()%>/backend/login_back-end.jsp" class="navbaradministratorbtn" style="padding-bottom: 0; padding-top: 30"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;管理員登入</font></a>
 						<% } else {%>
-						<a>
-						<form  METHOD="post" ACTION="/CA105G2/administrator/administrator.do">
+						<a class="navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">
+						<form  METHOD="post" ACTION="/CA105G2/administrator/administrator.do" style="margin: 0">
                                 <input type="hidden" name="action" value="administrator_Logout">
 								<i class="glyphicon glyphicon-log-out"></i>
 								<input type="submit" value="管理員登出" style="border: none ; background: none">
@@ -126,6 +141,7 @@ body{
 						<%}%>
 <%-- 						<a href="${member eq null ? "/CA105G2/frontend/login_front-end.jsp" : "/CA105G2/frontend/index.jsp"}"><input type="hidden" name="action" value="member_Logout"> ${member eq null ? "登入" : "登出"} </a> --%>
 						</li>
+						
 					
 					<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
 					<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
@@ -143,7 +159,7 @@ body{
 		<div class="container">
 		<div class="topnav row">
 		<font size="4">
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div class="dropdown">
 					<a class="dropdown-toggle topnav" id="eventManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" align="center">活動管理
 						<span class="caret"></span>
@@ -156,27 +172,27 @@ body{
 			        </ul>
 				</div>			
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="#" class="topnav" align="center">票券管理</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="<%=request.getContextPath()%>/backend/selectGoodsManagement.jsp" class="topnav" align="center">商品管理</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="#" class="topnav" align="center">團購管理</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="<%=request.getContextPath()%>/backend/faq/select_page.jsp" class="topnav" align="center">常見問題管理</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
 					<a href="<%=request.getContextPath()%>/backend/news/select_page.jsp" class="topnav" align="center">公告管理</a>
 				</div>
@@ -185,6 +201,19 @@ body{
 		</div>
 		</div>
 	</nav>
+
+<script>
+$(document).ready(function() {
+		$(".administratorphoto").hover(function() {
+			$(this).css("opacity","0.4");
+			$(".administratorPhotoEdit").css("visibility","visible");
+		},function() {
+			$(this).css("opacity","1");
+			$(".administratorPhotoEdit").css("visibility","hidden");
+		});
+});
+</script>
+
 <!-- <script src="https://code.jquery.com/jquery.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>	 -->
 </body>

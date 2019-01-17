@@ -62,7 +62,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
 			$(document).ready(function(){
-				$('#administratorlist').prepend(new Option('','', true));
+				$('#administratorlist').prepend(new Option('account,password','', true));
 				$('#administratorlist')[0].selectedIndex = 0;
 				$('#administratorlist').on('change',function(){
 					var str = $(this).val();
