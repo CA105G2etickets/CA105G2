@@ -204,33 +204,44 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 	public void cancelTargetTicketOrderByServletDueToOutDatedWithConditions(String ticket_order_no) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
-			session.beginTransaction();
+//			session.beginTransaction();
 			
-			System.out.println("11111111111111111111");
+			System.out.println("before this.findbypk");
+			
 			TicketOrderVO tovo = this.findByPrimaryKey(ticket_order_no);
+			System.out.println("tovo address="+tovo);
+			
+			System.out.println("after this.findbypk,beore session.begin...");
+
+			session.beginTransaction(); //this method die at this line
+			
+			System.out.println("after session.begin... before if(tovo==null)");
+			
 			if(tovo == null) {
-				System.out.println("tovo  null");
+				System.out.println("tovo = null");
 				throw new RuntimeException("target ticket_order isn't exist");
 			}
 			
-			System.out.println("not null");
+			System.out.println("tovo NOT NULL,before if(status check)");
 			
 			if(!tovo.getTicket_order_status().equals("WAITTOPAY1")) {
-				System.out.println("22222222222222");
+				System.out.println("ticketorder status is NOT waittopay");
 				throw new RuntimeException("target ticket_order ISNT WAITFORPAY");
 			}
-			System.out.println("33333333333333333");
-			SeatingArea_H5_Service saSvc = new SeatingArea_H5_Service();
-			SeatingArea_H5_VO svo = saSvc.getOneSeatingArea_H5(tovo.getSeatingarea_h5VO().getTicarea_no());
+			
+			System.out.println("ticketorder status is waittopay");
+			
+			SeatingArea_H5_VO svo = tovo.getSeatingarea_h5VO();
 			Integer latestSeatingAreaBookedNumber = svo.getTicbookednumber() - tovo.getTotal_amount();
 			svo.setTicbookednumber(latestSeatingAreaBookedNumber);
 			tovo.setTicket_order_status("OUTDATE4");
 			tovo.setSeatingarea_h5VO(svo);
-			System.out.println("44444444444444");
+			session.beginTransaction();
+			
+			System.out.println("before .update()");
 			session.update(tovo);
 			
 			session.getTransaction().commit();
-			System.out.println("5555555555555");
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;
