@@ -29,6 +29,9 @@
   .oneNewsHead {
     width: 100px;
   }
+  body{
+	font-family:微軟正黑體!important;
+}
 </style>
 
 </head>

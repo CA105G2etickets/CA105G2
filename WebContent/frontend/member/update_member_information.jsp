@@ -37,6 +37,9 @@
   	position: fixed;
   	align-content: center;
   }
+  body{
+	font-family:微軟正黑體!important;
+}
 /****************************************** 通知部分 ******************************************/
 .badge-pill {
     padding: 0.2em;

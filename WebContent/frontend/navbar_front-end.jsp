@@ -50,10 +50,34 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
-.topnavbtn {
-	border-bottom: 2px solid #f6f6f6;
+.topnav :hover {
+    text-decoration: none;
 }
-.shoppingC {
+.topnavbtn a:after {
+    content: ' ';
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    width: 165px;
+    height: 2px;
+    transform: translate(-50%);
+}
+.topnavbtn a:hover:after {
+    height: 2px;
+    animation: ad_width .2s linear forwards;
+    background: #3399ff;
+}
+@keyframes ad_width {
+    from {
+        width: 0
+    }
+    to {
+        width: 100%
+    }
+}
+.shoppingAndFavorite {
 	font-family:微軟正黑體!important;
 }
 /****************************************** 通知部分 ******************************************/
@@ -117,7 +141,7 @@
 					<%Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");%>
 					
 						  <li style="padding: 0; margin-top: 0">
-						  	<a href="<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp" class="shoppingC navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">
+						  	<a href="<%=request.getContextPath()%>/frontend/shopping_cart/ShoppingCart.jsp" class="shoppingAndFavorite navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">
 						  		<i class="glyphicon glyphicon-shopping-cart"></i>
 						    	<span class="badge badge-primary badge-pill">
 							    	<%if (buylist != null) {%>
@@ -129,6 +153,15 @@
 						    	結帳
 						    </a>
 						  </li>
+						  
+						<li style="padding: 0; margin-top: 0">
+						<a href="<%=request.getContextPath()%>/frontend/favorite/selectFavorite.jsp" class="shoppingAndFavorite navbarmemberbtn" style="padding-bottom: 0; padding-top: 30">
+						<font color="red">
+						<i class="glyphicon glyphicon-heart"></i>
+						</font>
+						我的最愛
+						</a>
+						</li>
 					
 						<%if (session.getAttribute("member") == null) {%>
 						
@@ -145,7 +178,7 @@
 						<form  METHOD="post" ACTION="/CA105G2/member/member.do" style="margin: 0">
                                 <input type="hidden" name="action" value="member_Logout">
 								<i class="glyphicon glyphicon-log-out"></i>
-								<input type="submit" value="登出" style="border: none ; background: none">
+								<input type="submit" value="登出" style="border: none ; background: none ">
                         </form>
 						</a>
 						<%}%>
@@ -192,7 +225,7 @@
 					<a href="/CA105G2/frontend/group_open/group_open_index.jsp" class="topnav" align="center">所有團購</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn" style="an">
 				<div>
 					<a href="/CA105G2/frontend/faq/listAllFaq.jsp" class="topnav" align="center">常見問題</a>
 				</div>
@@ -216,14 +249,6 @@ $(document).ready(function() {
 		},function() {
 			$(this).css("opacity","1");
 			$(".memberPhotoEdit").css("visibility","hidden");
-		});
-		$(".topnavbtn").hover(function() {
-			$(this).css("border-bottom","2px solid #3399ff");
-		},function() {
-			$(this).css("border-bottom","2px solid #f6f6f6");
-		});
-		$(".topnav").hover(function() {
-			$(this).css("text-decoration","none");
 		});
 });
 </script>
