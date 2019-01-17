@@ -87,7 +87,7 @@
 								  <!--開團進行中 開始  -->
 								<tr>
 										<td>
-										<img src ="<%=request.getContextPath()%>/frontend/group_open/GoodsImgServlet1.do?goods_no=${group_openmap.key}" height="80" width="80"/>
+										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
 										</td>
 										<td>
 										${group_openVO.group_name}
@@ -245,7 +245,7 @@
 									</div><!-- <div id="myModal" class="modal fade" role="dialog"> -->
 										</td>
 										<td>
-						 				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do">
+						 				<Form METHOD="get" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do">
 										<input type="hidden" name="action" value="makeorder">
 										<input type="hidden" name="group_no" value="${group_openVO.group_no}"><%-- ${group_openVO.group_no} --%>
 										<input type="hidden" name="member_no" value="${group_openVO.member_no}"><%-- ${group_openVO.member_no} --%>

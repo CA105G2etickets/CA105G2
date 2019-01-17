@@ -25,9 +25,6 @@
 <jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
 <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
 
-
-
-
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -123,6 +120,7 @@
 							"<img src='<%=request.getContextPath()%>/member/memberImg.do?memberno=<%=memberVOsession.getMemberNo()%>' class='img-circle res' style='text-align:right';>"+
 								"<span style='text-align:right'>"+res.answer+"</span> &nbsp;"+
 								"<span><%=memberVOsession.getMemberFullname()%></span>"+
+								"<h5><span>"+res.time+"</span></h5>"+
 						 "</div>"+"</div>");	
 					},
 					error: function(res){
@@ -186,13 +184,14 @@
                     							</c:if>	
 											</c:forEach>												
 							</div>	
-							<div><span> 售出數量</span>:
+							<div>				<span> 售出數量</span>:
 												<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
 												<c:if test="${group_openVO.group_no==group_membermap.key}">
 	                   							${group_membermap.value}
                     							</c:if>	
                     							</c:forEach>
 							</div>
+							
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 						
 
@@ -326,6 +325,7 @@
 							<input type="hidden" name="group_member_status" value="withgroup">
 							<input type="hidden" name="pay_status" value="COMPLETE2">
 							<input type="hidden" name="action" value="insert2">
+							<input type="hidden" name="goods_no" value="${group_openVO.goods_no}">
 							<input type="submit" value="送出跟團單" class="btn btn-success">
 						</FORM><!-- 表單結束 -->
 						</div><!-- <div class="panel-body"> -->
@@ -382,6 +382,7 @@
 						 	   </c:forEach>
 							</span>
 								<span>${forumVO.forum_content}</span>
+								<h5><span>${forumVO.forum_time}</span></h5>
 						 </div><!-- <div id="responsearea"> -->
 					  </div><!-- <div class="panel-body"> --><!-- foreach結束 -->
 						</c:if> 			 

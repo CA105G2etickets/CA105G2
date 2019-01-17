@@ -4,14 +4,17 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.favorite_goods.model.*"%>
 <%@ page import="com.goods.model.*"%>
+<%@ page import="com.member.model.*"%>
 <%
 List<FavoriteGoodsVO> list = (List<FavoriteGoodsVO>)request.getAttribute("favoriteGoodsVO");
 pageContext.setAttribute("list",list);
+
+MemberVO memberVO = (MemberVO) session.getAttribute("member");
 %>
 <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
 <html>
 	<head>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<title>ETIckeTs - 最愛商品新增</title>
@@ -71,7 +74,7 @@ pageContext.setAttribute("list",list);
 											<td>	
 												<c:forEach var="goodsVO" items="${goodsSvc.all}">
 													<c:if test="${favoriteGoodsVO.goods_no == goodsVO.goods_no}">
-														<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">
+														<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}">
 															<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" width=50px height= auto />
 														</a>
 													</c:if>

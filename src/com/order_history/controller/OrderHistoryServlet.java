@@ -10,6 +10,8 @@ import javax.servlet.http.*;
 import com.order_detail.model.*;
 import com.order_history.model.*;
 import com.shopping_cart.model.ShoppingCart;
+import com.goods.model.GoodsDAO;
+import com.goods.model.GoodsVO;
 import com.member.model.*;
 
 
@@ -78,7 +80,6 @@ public class OrderHistoryServlet extends HttpServlet {
 			}
 		}
 		
-				
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -99,7 +100,6 @@ public class OrderHistoryServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("訂單編號格式不正確");
 				}
-				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_history/selectOrder.jsp");
 					failureView.forward(req, res);
@@ -343,7 +343,7 @@ public class OrderHistoryServlet extends HttpServlet {
 				String goodsno[] = req.getParameterValues("goods_no");
 				String goodsbonus[] = req.getParameterValues("goods_bonus");
 				String goodspc[] = req.getParameterValues("goods_pc");
-				
+
 				List<OrderDetailVO> list = new ArrayList<OrderDetailVO>(); 			
 				if (goodsno != null) { 
 					
@@ -461,17 +461,11 @@ public class OrderHistoryServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = req.getSession();
 			MemberVO memberVO = (MemberVO) session.getAttribute("member");
+			Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");
+					
 			try {
 				String member_no = new String(req.getParameter("member_no").trim());
-				
-				Double order_price = null;
-				try {
-					order_price = new Double(req.getParameter("order_price").trim());
-				} catch (NumberFormatException e) {
-					order_price = 0.0;
-					errorMsgs.add("訂單總金額請填金額。");
-				}
-				
+				Double order_price = new Double(req.getParameter("order_price").trim());
 				String pay_methods = new String(req.getParameter("pay_methods").trim());
 				String shipping_methods = new String(req.getParameter("shipping_methods").trim());
 				
@@ -481,6 +475,10 @@ public class OrderHistoryServlet extends HttpServlet {
 				
 				String receiver_add = req.getParameter("receiver_add");
 				if (receiver_add == null || receiver_add.trim().length() == 0) {
+					errorMsgs.add("送貨地址請勿空白。");
+				}
+				String street = req.getParameter("street");
+				if (street == null || street.trim().length() == 0) {
 					errorMsgs.add("送貨地址請勿空白。");
 				}
 				
@@ -495,19 +493,21 @@ public class OrderHistoryServlet extends HttpServlet {
 				}
 				String order_status = new String(req.getParameter("order_status").trim());
 				String goods_no = new String(req.getParameter("goods_no").trim());
-				Double goods_bonus = null;
-				try {
-					goods_bonus = new Double(req.getParameter("goods_bonus").trim());
-				} catch (NumberFormatException e) {
-					goods_bonus = 0.0;
-					errorMsgs.add("請填入實際交易金額。");
-				}
-				Double goods_pc = null;
-				try {
-					goods_pc = new Double(req.getParameter("goods_pc").trim());
-				} catch (NumberFormatException e) {
-					goods_pc = 0.0;
-					errorMsgs.add("請填入商品數量。");
+				Double goods_bonus = new Double(req.getParameter("goods_bonus").trim());
+				Double goods_pc = new Double(req.getParameter("goods_pc").trim());
+				if ("CREDITCARD".equals(pay_methods)) {
+					String creditcard_no = req.getParameter("creditcard_no");
+					if (creditcard_no == null || creditcard_no.trim().length() == 0) {
+						errorMsgs.add("信用卡卡號請勿空白。");
+					}else if(creditcard_no.trim().length() < 16){
+						errorMsgs.add("請填入正確信用卡卡號16碼。");
+					}
+					String creditcard_no_safe = req.getParameter("creditcard_no_safe");
+					if (creditcard_no_safe == null || creditcard_no_safe.trim().length() == 0) {
+						errorMsgs.add("信用卡安全碼請勿空白。");
+					}else if(creditcard_no_safe.trim().length() < 3){
+						errorMsgs.add("請填入正確信用卡安全碼3碼。");
+					}
 				}
 				
 				OrderHistoryVO orderHistoryVO = new OrderHistoryVO();
@@ -527,7 +527,8 @@ public class OrderHistoryServlet extends HttpServlet {
 				String goodsbonus[] = req.getParameterValues("goods_bonus");
 				String goodspc[] = req.getParameterValues("goods_pc");
 				
-				List<OrderDetailVO> list = new ArrayList<OrderDetailVO>(); 			
+				List<OrderDetailVO> list = new ArrayList<OrderDetailVO>(); 	
+
 				if (goodsno != null) { 
 					
 					for (int i=0; i<goodsno.length; i++) { 
@@ -537,7 +538,7 @@ public class OrderHistoryServlet extends HttpServlet {
 						orderDetailVO.setGoods_pc(new Double(goodspc[i]));
 						list.add(orderDetailVO);
 					} 
-				} 
+				}
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderHistoryVO", orderHistoryVO); 
@@ -603,14 +604,17 @@ public class OrderHistoryServlet extends HttpServlet {
 					MemberService memberSvc = new MemberService();
 					memberSvc.memberWithdrawal(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, newEwalletBalance, creationDate, profilePicture, memberStatus, thirduid);
 				}
+				
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
+				//新增商品累計銷售量開始
+				GoodsDAO goodsVO = new GoodsDAO();
+				goodsVO.updateGOODS_SALES_COUNT(list);
 				
 				session.setAttribute("member", memberVO);
 				req.setAttribute("orderHistoryVO", orderHistoryVO);
 				session.removeAttribute("shoppingcart");
 				String url = "/frontend/shopping_cart/CheckoutCompleted.jsp";
-				
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.goods.model.GoodsService;
+import com.goods.model.GoodsVO;
 import com.group_member.model.Group_memberService;
 import com.group_member.model.Group_memberVO;
 import com.group_open.model.Group_openService;
@@ -435,7 +437,10 @@ public class Group_memberServlet extends HttpServlet {
 				if (pay_method == null || pay_method.trim().length() == 0) {
 					errorMsgs.add("付款方法請勿空白");
 				}
-				
+				String goods_no = req.getParameter("goods_no");
+				if (goods_no == null || goods_no.trim().length() == 0) {
+					errorMsgs.add("取不到商品編號");
+				}
 				
 
 				Group_memberVO group_memberVO = new Group_memberVO();
@@ -450,10 +455,16 @@ public class Group_memberServlet extends HttpServlet {
 				group_memberVO.setLog_out_reason(log_out_reason);
 				group_memberVO.setOrder_phone(order_phone);
 				group_memberVO.setPay_method(pay_method);
-				
-				
+			
 				Group_openService group_openSvc = new Group_openService();
 				Group_openVO group_openVO = group_openSvc.getOneGroup_open(group_no);
+				
+				
+				
+				
+				
+				
+				
 				
 				
 				if (!errorMsgs.isEmpty()) {
@@ -468,6 +479,47 @@ public class Group_memberServlet extends HttpServlet {
 //				************************錯誤驗證2**************************
 				Group_memberService group_memberSvc = new Group_memberService();
 //				Group_openService group_openSvc = new Group_openService();
+				GoodsVO goodsVO = new GoodsVO();
+				GoodsService goodsSvc = new GoodsService();
+				
+				/*************************** 3.開始扣款資料 **********************/
+
+				//取的購買人購買數量	
+//				group_quatity  
+				//取得開團折扣
+				goodsVO = goodsSvc.getOneGoods(goods_no);
+				Integer group_price = goodsVO.getForsales_a();			
+				//退款總數
+				Integer total = product_quantity*group_price;
+				System.out.println("group_memberServlet扣款總數"+total);
+				if("EWALLET".equals(pay_method)) {
+//				//呼叫會員電子錢包
+				Integer ewallet = group_memberSvc.getewallet(member_no);
+				System.out.println("group_memberServlet電子錢包"+ewallet);
+//				//扣款
+				ewallet-=total;
+
+				System.out.println("group_memberServlet扣款後電子錢包"+ewallet);
+				
+				if(ewallet<=0) {
+					errorMsgs.add("你的錢不夠喔");
+				}
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("group_openVO", group_openVO); //
+					String url1 = req.getParameter("url1");
+					String url2 = req.getParameter("url2");
+					req.setAttribute("url1", url1);
+					req.setAttribute("url2", url2);
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_member/addgroup_member.jsp");
+					failureView.forward(req, res);
+					System.out.println("金額不足");
+					return;
+				}	
+//				//更改
+				group_memberSvc.updateewallet(ewallet, member_no);
+		
+				System.out.println("扣款款完成");
+				}
 				
 				
 				

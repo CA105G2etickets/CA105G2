@@ -301,10 +301,17 @@ public class ForumServlet extends HttpServlet {
 				ForumService forumSvc = new ForumService();
 				ForumVO forumVO = forumSvc.addForum(group_no, member_no, forum_content, forum_time);
 				
+				java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String formatDate = df.format(forum_time);
+				System.out.println("時間格式"+formatDate);
+				
+				
+				
 		/*************************** 3.開始轉交資料 ***************************************/		
 //				JsonObject objs = new JsonObject(); 
 //				objs.addProperty(group_no, member_no);
 				obj.put("answer", forum_content);
+				obj.put("time",formatDate);
 				res.setCharacterEncoding("UTF-8");
 				System.out.println(forum_content);
 				System.out.println(action);
