@@ -95,9 +95,12 @@ function readURL(input){
 		<td>會員編號:<font color=red></font></td>
 		<td><%=member.getMemberNo()%></td>
 	</tr>
-	<tr>
-		<td>會員大頭貼</td>
-		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50" class="memberimg"></td>
+	<tr height="145">
+		<td>會員大頭貼:</td>
+		<td>
+		<input type="file" accept="image/jpeg, image/png" name="picture" onchange="readURL(this)" targetID="previewImg">
+		<img id="previewImg" src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="100" width="100">
+		</td>
 	</tr>
 	<tr>
 		<td>會員姓名:</td>

@@ -60,12 +60,11 @@
     bottom: 0;
     left: 50%;
     display: block;
-    width: 165px;
-    height: 2px;
+    width: 90%;
     transform: translate(-50%);
 }
 .topnavbtn a:hover:after {
-    height: 2px;
+    height: 4px;
     animation: ad_width .2s linear forwards;
     background: #3399ff;
 }
@@ -74,7 +73,7 @@
         width: 0
     }
     to {
-        width: 100%
+        width: 90%
     }
 }
 .shoppingAndFavorite {

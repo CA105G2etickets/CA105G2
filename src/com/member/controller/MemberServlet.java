@@ -389,6 +389,21 @@ public class MemberServlet extends HttpServlet {
 				Timestamp creationDate = Timestamp.valueOf(req.getParameter("creationDate").trim());
 				
 				byte[] profilePicture = motomember.getProfilePicture();
+				Part part = req.getPart("picture");
+				
+				if (part.getSize() != 0) {
+					try {
+						String uploadFileName = part.getSubmittedFileName();
+						if (uploadFileName != null && part.getContentType() != null) {
+							InputStream in = part.getInputStream();
+							profilePicture = new byte[in.available()];
+							in.read(profilePicture);
+							in.close();
+						}
+					} catch (FileNotFoundException e) {
+						errorMsgs.add("找不到檔案");
+					}
+				}
 				
 				String memberStatus = req.getParameter("memberStatus").trim();
 
