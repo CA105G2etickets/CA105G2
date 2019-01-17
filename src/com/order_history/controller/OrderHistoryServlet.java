@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import com.order_detail.model.*;
 import com.order_history.model.*;
 import com.shopping_cart.model.ShoppingCart;
+import com.goods.model.GoodsDAO;
 import com.goods.model.GoodsVO;
 import com.member.model.*;
 
@@ -79,7 +80,6 @@ public class OrderHistoryServlet extends HttpServlet {
 			}
 		}
 		
-				
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -100,7 +100,6 @@ public class OrderHistoryServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("訂單編號格式不正確");
 				}
-				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/backend/order_history/selectOrder.jsp");
 					failureView.forward(req, res);
@@ -344,7 +343,7 @@ public class OrderHistoryServlet extends HttpServlet {
 				String goodsno[] = req.getParameterValues("goods_no");
 				String goodsbonus[] = req.getParameterValues("goods_bonus");
 				String goodspc[] = req.getParameterValues("goods_pc");
-				
+
 				List<OrderDetailVO> list = new ArrayList<OrderDetailVO>(); 			
 				if (goodsno != null) { 
 					
@@ -462,6 +461,8 @@ public class OrderHistoryServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = req.getSession();
 			MemberVO memberVO = (MemberVO) session.getAttribute("member");
+			Vector<ShoppingCart> buylist = (Vector<ShoppingCart>) session.getAttribute("shoppingcart");
+					
 			try {
 				String member_no = new String(req.getParameter("member_no").trim());
 				Double order_price = new Double(req.getParameter("order_price").trim());
@@ -539,7 +540,6 @@ public class OrderHistoryServlet extends HttpServlet {
 					} 
 				}
 				
-				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderHistoryVO", orderHistoryVO); 
 					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/shopping_cart/Checkout.jsp");
@@ -604,16 +604,17 @@ public class OrderHistoryServlet extends HttpServlet {
 					MemberService memberSvc = new MemberService();
 					memberSvc.memberWithdrawal(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, newEwalletBalance, creationDate, profilePicture, memberStatus, thirduid);
 				}
-
 				
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
+				//新增商品累計銷售量開始
+				GoodsDAO goodsVO = new GoodsDAO();
+				goodsVO.updateGOODS_SALES_COUNT(list);
 				
 				session.setAttribute("member", memberVO);
 				req.setAttribute("orderHistoryVO", orderHistoryVO);
 				session.removeAttribute("shoppingcart");
 				String url = "/frontend/shopping_cart/CheckoutCompleted.jsp";
-				
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
