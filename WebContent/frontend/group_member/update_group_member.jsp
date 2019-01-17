@@ -8,6 +8,9 @@
 	Group_openVO group_openVO = (Group_openVO) request.getAttribute("group_openVO");
 
 %>
+<jsp:useBean id="group_memberSvc" scope="page" class="com.group_member.model.Group_memberService" />
+<jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
+<jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
 
 
 
@@ -85,11 +88,36 @@
 								<br>
 								<br>
 								<br>
-							<div><span> 商品名稱</span></div>	
-							<div><span> 商品價格</span></div>	
-							<div><span> 折扣後商品價格</span></div>	
-							<div><span> 目前跟團數量</span></div>	
-							<div><span> 售出數量</span></div>
+								<div><span> 開團名稱</span>:${group_openVO.group_name}</div>	
+							<div><span> 商品名稱</span>
+											<c:forEach var="goodsVO" items="${goodsSvc.getAll()}">
+												<c:if test="${group_openVO.goods_no==goodsVO.goods_no}">
+	                   									${goodsVO.goods_name}
+                    							</c:if>	
+											</c:forEach>				
+							</div>	
+							<div><span> 商品價格</span>
+											<c:forEach var="goodsVO" items="${goodsSvc.getAll()}">		
+												<c:if test="${group_openVO.goods_no==goodsVO.goods_no}">
+	                   									${goodsVO.goods_price}
+                    							</c:if>	
+											</c:forEach>	
+							</div>	
+							<div><span> 折扣後商品價格</span>:${group_openVO.group_price}</div>	
+							<div><span> 目前跟團人數</span>:
+											<c:forEach var="group_openmap" items="${group_openSvc.member_count}">
+												<c:if test="${group_openVO.group_no==group_openmap.key}">
+	                   							${group_openmap.value}
+                    							</c:if>	
+											</c:forEach>												
+							</div>	
+							<div>				<span> 售出數量</span>:
+												<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
+												<c:if test="${group_openVO.group_no==group_membermap.key}">
+	                   							${group_membermap.value}
+                    							</c:if>	
+                    							</c:forEach>
+							</div>
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 						
 

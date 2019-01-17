@@ -25,9 +25,6 @@
 <jsp:useBean id="group_openSvc" scope="page" class="com.group_open.model.Group_openService" />
 <jsp:useBean id="goodsSvc" scope="page" class="com.goods.model.GoodsService" />
 
-
-
-
 <!DOCTYPE html>
 <html lang="">
 	<head>
@@ -187,13 +184,14 @@
                     							</c:if>	
 											</c:forEach>												
 							</div>	
-							<div><span> 售出數量</span>:
+							<div>				<span> 售出數量</span>:
 												<c:forEach var="group_membermap" items="${group_memberSvc.group_quantity}">
 												<c:if test="${group_openVO.group_no==group_membermap.key}">
 	                   							${group_membermap.value}
                     							</c:if>	
                     							</c:forEach>
 							</div>
+							
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 						
 
