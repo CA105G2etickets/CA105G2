@@ -17,6 +17,7 @@ public class FavoriteGoodsServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=utf-8");
 		String action = req.getParameter("action");
 		PrintWriter out = res.getWriter();
 		
@@ -276,17 +277,20 @@ public class FavoriteGoodsServlet extends HttpServlet {
 		if ("delete_Front".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+			HttpSession session = req.getSession();
+			MemberVO memberVO = (MemberVO) session.getAttribute("member");
 			try {
 				String member_no = new String(req.getParameter("member_no"));
 				String goods_no = new String(req.getParameter("goods_no"));
 				FavoriteGoodsService favoriteGoodsSvc = new FavoriteGoodsService();
 				favoriteGoodsSvc.deleteFavoriteGoods(member_no, goods_no);
-				
+				List<FavoriteGoodsVO> favoriteGoodsVO = (List<FavoriteGoodsVO>) favoriteGoodsSvc.findByMemberNo(memberVO.getMemberNo());
+				req.setAttribute("favoriteGoodsVO", favoriteGoodsVO);
 				String url = "/frontend/favorite_goods/AllGoodsOfAMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
+//				res.sendRedirect(req.getContextPath()+"/frontend/favorite_goods/AllGoodsOfAMember.jsp");
+//				return;
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/favorite_goods/AllGoodsOfAMember.jsp");

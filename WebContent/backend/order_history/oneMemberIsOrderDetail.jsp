@@ -190,7 +190,7 @@
 										<td>	
 											<c:forEach var="goodsVO" items="${goodsSvc.all}">
 												<c:if test="${orderDetailVO.goods_no == goodsVO.goods_no}">
-													<a href="<%=request.getContextPath()%>/frontend/goods2/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">
+													<a href="<%=request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${orderDetailVO.goods_no}">
 														<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" width=50px height= auto />
 													</a>
 												</c:if>

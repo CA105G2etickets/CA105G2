@@ -133,22 +133,48 @@
 							<input type="hidden" name="order_price" value="<%=total_amount%>" >
 							
 						</div>
-						<input name="pay_methods" type="radio" value="CREDITCARD" checked="checked"><b>信用卡</b>
-						<input name="pay_methods" type="radio" value="EWALLET"><b>電子錢包</b><br>
-						<!-- 如果開始要顯示要加入 style="display:block;" 不顯示則加入  style="display:none;"-->
-						<div class="creditcard pay_methods bBW" style="display:block;">
-							<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16"><font color="#fff">-</font><input type="TEXT" name="creditcard_no" placeholder="安全碼" class="form-control" value="" style="width:8%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
-						</div>
-						<div class="ewallet pay_methods bBW">
-							<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
-						</div><br>	
-						<div class="form-group" style="width:20%">
-							<label>出貨方式：</label>
-							<select class="form-control" size="1" name="shipping_methods">
-								<option value="STOREPICKUP" selected>超商取貨</option>
-								<option value="HOMEDELIVERY">宅配</option>
-							</select>
-						</div>
+						
+						<%if(total_amount < memberVO.getEwalletBalance()) { %>
+							<input name="pay_methods" type="radio" value="CREDITCARD" checked="checked"><b>信用卡</b>
+							<input name="pay_methods" type="radio" value="EWALLET"><b>電子錢包</b><br>
+							<!-- 如果開始要顯示要加入 style="display:block;" 不顯示則加入  style="display:none;"-->
+							<div class="creditcard pay_methods bBW" style="display:block;">
+								<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16"><font color="#fff">-
+								</font><input type="TEXT" name="creditcard_no_safe" placeholder="安全碼" class="form-control" value="" style="width:8%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
+							</div>
+							<div class="ewallet pay_methods bBW">
+								<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
+							</div><br>	
+							<div class="form-group" style="width:20%">
+								<label>出貨方式：</label>
+								<select class="form-control" size="1" name="shipping_methods">
+									<option value="STOREPICKUP" selected>超商取貨</option>
+									<option value="HOMEDELIVERY">宅配</option>
+								</select>
+							</div>
+						<%} else {%>
+							<label>信用卡　</label>
+							<font color="red">電子錢包餘額不足　</font><a href="<%=request.getContextPath()%>/frontend/ewallet/deposit.jsp">儲值</a>
+							<input type="hidden" name="pay_methods" value="CREDITCARD" >
+<!-- 							<input name="pay_methods" type="radio" value="CREDITCARD" checked="checked"><b>信用卡</b> -->
+<!-- 							<input name="pay_methods" type="radio" value="EWALLET"><b><font color="red">電子錢包餘額不足</font></b><br> -->
+							<!-- 如果開始要顯示要加入 style="display:block;" 不顯示則加入  style="display:none;"-->
+<!-- 							<div class="creditcard pay_methods bBW" style="display:block;"> -->
+								<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" style="width:20%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16"><font color="#fff">-</font>
+								<input type="TEXT" name="creditcard_no_safe" placeholder="安全碼" class="form-control" value="" style="width:8%" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
+<!-- 							</div> -->
+<!-- 							<div class="ewallet pay_methods bBW"> -->
+<%-- 								<a href="<%=request.getContextPath()%>/frontend/ewallet/deposit.jsp" class="btn btn-default">前往儲值</a> --%>
+<!-- 							</div><br>	 -->
+							<div class="form-group" style="width:20%">
+								<label>出貨方式：</label>
+								<select class="form-control" size="1" name="shipping_methods">
+									<option value="STOREPICKUP" selected>超商取貨</option>
+									<option value="HOMEDELIVERY">宅配</option>
+								</select>
+							</div>
+						<%}%>
+						
 						<!--訂購日期 -->
 						<input type="hidden" name="order_date" id="f_date1" class="form-control" style="width:30%">
 						<!--出貨日期 -->
