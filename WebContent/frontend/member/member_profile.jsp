@@ -11,6 +11,7 @@
 <head>
 <title>ETIckeTs - 會員個人資料</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <style>
   table {
 	width: 450px;
