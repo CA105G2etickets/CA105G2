@@ -1236,7 +1236,12 @@ public class TicketOrderServlet extends HttpServlet {
         		//db contact
 				Event_H5_Service eh5Svc = new Event_H5_Service();
 				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+				Map<String, String[]> map = new TreeMap<String, String[]>();
+				map.put("eve_no", new String[] {eve_no});
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+				List<SeatingArea_H5_VO> list = sh5Svc.getAll(map, "ticarea_no");
 				req.setAttribute("eh5vo", eh5vo);
+				req.setAttribute("slist", list);
 				
 				//controller's error-condition happens, forward to buy 
 				if (!errorMsgs.isEmpty()) {
@@ -1279,7 +1284,6 @@ public class TicketOrderServlet extends HttpServlet {
 				
 				
 				//db contact
-				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
 				SeatingArea_H5_VO svo = sh5Svc.getOneSeatingArea_H5(ticarea_no);
 				
 				//these line use controller to deal tickets chasing
