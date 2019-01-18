@@ -66,7 +66,7 @@
 .topnavbtn a:hover:after {
     height: 4px;
     animation: ad_width .2s linear forwards;
-    background: #bebebe;
+    background: #d0d0d0;
 }
 @keyframes ad_width {
     from {
