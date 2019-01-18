@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>ETIckeTs Member</title>
+<title>ETIckeTs後台 - 會員</title>
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
@@ -24,7 +24,6 @@
 	<div class="col-xs-12 col-sm-12">
 		<font size="5px">會員查詢</font>
 
-		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}">
 			<br>
 			<font style="color: red">請修正以下錯誤:</font>

@@ -50,13 +50,15 @@
 		<td><%=faqVO.getFaq_classification()%></td>
 		<td>
 			<FORM METHOD="post" ACTION="faq.do" style="margin-bottom: 0px;">
-				<input type="submit" value="修改"> <input type="hidden" name="faq_no" value="${faqVO.faq_no}">
+				<input type="submit" value="修改">
+				<input type="hidden" name="faq_no" value="${faqVO.faq_no}">
 				<input type="hidden" name="action" value="getOne_For_Update">
 			</FORM>
 		</td>
 		<td>
 			<FORM METHOD="post" ACTION="faq.do" style="margin-bottom: 0px;">
-				<input type="submit" value="刪除"> <input type="hidden" name="faq_no" value="${faqVO.faq_no}"> 
+				<input type="submit" value="刪除">
+				<input type="hidden" name="faq_no" value="${faqVO.faq_no}"> 
 				<input type="hidden" name="action" value="delete">
 			</FORM>
 		</td>

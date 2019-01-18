@@ -12,7 +12,7 @@
 
 <html>
 <head>
-<title>ETIckeTs後台 - 常見問題管理</title>
+<title>ETIckeTs後台 - 查詢常見問題</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -40,7 +40,9 @@ th, td {
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/>  
 
-<%-- 錯誤表列 --%>
+<div class="container table-responsive-md">
+<div class="row">
+
 <c:if test="${not empty errorMsgs}">
 	<font style="color: red">請修正以下錯誤:</font>
 	<ul>
@@ -50,23 +52,15 @@ th, td {
 	</ul>
 </c:if>
 
-<div class="container table-responsive-md">
-<div class="row">
-
-<li>
-	<font size="4px"> <a href='addFaq.jsp'>新增常見問題</a>
-	</font>
-</li>
-
 <jsp:useBean id="faqservice" scope="page" class="com.faq.model.FaqService" />	
 <font size="4px">
 	<FORM METHOD="post" ACTION="faq.do">選擇常見問題編號
 		<select name="faq_no" id="faqlist">
-			   <c:forEach var="faq" items="${faqservice.all}" > 
-			        <option value="${faq.faq_no}">${faq.faq_no}
-			   </c:forEach>
-			</select>
-			<input type="hidden" name="action" value="getOne_For_Display">
+			<c:forEach var="faq" items="${faqservice.all}" > 
+				<option value="${faq.faq_no}">${faq.faq_no}
+			</c:forEach>
+		</select>
+		<input type="hidden" name="action" value="getOne_For_Display">
 		<input type="submit" value="送出">
 	</FORM>
 </font>
@@ -88,28 +82,25 @@ th, td {
 			<td>${faq.answer}</td>
 			<td>${faq.faq_classification}</td>
 			<td>
-				<FORM METHOD="post"
-					ACTION="faq.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="修改"> <input type="hidden"
-						name="faq_no" value="${faq.faq_no}"> <input
-						type="hidden" name="action" value="getOne_For_Update">
-				</FORM>
-			</td>
-			<td>
-				<FORM METHOD="post"
-					ACTION="faq.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="刪除"> <input type="hidden"
-						name="faq_no" value="${faq.faq_no}"> 
-						<input type="hidden" name="action" value="delete">
-				</FORM>
-			</td>
+			<FORM METHOD="post" ACTION="faq.do" style="margin-bottom: 0px;">
+				<input type="submit" value="修改">
+				<input type="hidden" name="faq_no" value="${faq.faq_no}">
+				<input type="hidden" name="action" value="getOne_For_Update">
+			</FORM>
+		</td>
+		<td>
+			<FORM METHOD="post" ACTION="faq.do" style="margin-bottom: 0px;">
+				<input type="submit" value="刪除">
+				<input type="hidden" name="faq_no" value="${faq.faq_no}"> 
+				<input type="hidden" name="action" value="delete">
+			</FORM>
+		</td>
 		</tr>
 	</c:forEach>
 </table>
-</div>
 <%@ include file="page2.file"%>
+
+</div>
 
 </div>
 </body>

@@ -41,6 +41,7 @@ body{
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <div class="container table-responsive">
+<div class="row">
 <table class="table table-hover">
 	<tr>
 		<td>管理員編號</td>
@@ -81,5 +82,6 @@ body{
 
 </div>
 
+</div>
 </body>
 </html>

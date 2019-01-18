@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.news.model.*"%>
+<%@ page import="com.news.model.*"%>
 
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
@@ -35,9 +35,9 @@
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <div class="container table-responsive-md">
+<div class="row">
 <h3 align="center">修改公告</h3>
 
-<%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -80,8 +80,9 @@
 <input type="hidden" name="news_no" value="<%=newsVO.getNews_no()%>">
 <input type="submit" value="送出修改"></FORM>
 <div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<a href="<%=request.getContextPath()%>/backend/news/allNews.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
+</div>
 </div>
 </div>
 </body>

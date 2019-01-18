@@ -12,7 +12,7 @@
 
 <html>
 <head>
-<title>ETIckeTs後台 - 所有公告</title>
+<title>ETIckeTs後台 - 查詢公告</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -40,7 +40,6 @@ th, td {
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color: red">請修正以下錯誤:</font>
 	<ul>
@@ -51,6 +50,21 @@ th, td {
 </c:if>
 
 <div class="container table-responsive-md">
+<div class="row">
+
+<jsp:useBean id="newsservice" scope="page" class="com.news.model.NewsService" />
+<font size="4px">
+	<FORM METHOD="post" ACTION="news.do">選擇公告編號
+		<select name="news_no" id="newslist">
+			<c:forEach var="news" items="${newsservice.all}" > 
+				<option value="${news.news_no}">${news.news_no}
+			</c:forEach>
+		</select>
+		<input type="hidden" name="action" value="getOne_For_Display">
+		<input type="submit" value="送出">
+	</FORM>
+</font>
+
 <table class="table">
 	<tr>
 		<th>公告編號</th>
@@ -72,31 +86,26 @@ th, td {
 			<td>${news.announce_date}</td>
 			<td>${news.administrator_no}</td>
 			<td>
-				<FORM METHOD="post"
-					ACTION="news.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="修改"> <input type="hidden"
-						name="news_no" value="${news.news_no}"> <input
-						type="hidden" name="action" value="getOne_For_Update">
+				<FORM METHOD="post" ACTION="news.do" style="margin-bottom: 0px;">
+					<input type="submit" value="修改">
+					<input type="hidden" name="news_no" value="${news.news_no}">
+					<input type="hidden" name="action" value="getOne_For_Update">
 				</FORM>
 			</td>
 			<td>
-				<FORM METHOD="post"
-					ACTION="news.do"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="刪除"> <input type="hidden"
-						name="news_no" value="${news.news_no}"> 
-						<input type="hidden" name="action" value="delete">
+				<FORM METHOD="post" ACTION="news.do" style="margin-bottom: 0px;">
+					<input type="submit" value="刪除">
+					<input type="hidden" name="news_no" value="${news.news_no}">
+					<input type="hidden" name="action" value="delete">
 				</FORM>
 			</td>
 		</tr>
 	</c:forEach>
 </table>
 <%@ include file="page2.file"%>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
+
 </div>
+
 </div>
 </body>
 </html>

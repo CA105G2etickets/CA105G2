@@ -34,6 +34,7 @@
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <div class="container table-responsive-md">
+<div class="row">
 
 <table class="table">
 	<tr>
@@ -51,13 +52,29 @@
 		<td><%=newsVO.getNews_content()%></td>
 		<td><%=newsVO.getAnnounce_date()%></td>
 		<td><%=newsVO.getAdministrator_no()%></td>
+		<td>
+			<FORM METHOD="post" ACTION="news.do" style="margin-bottom: 0px;">
+				<input type="submit" value="修改">
+				<input type="hidden" name="news_no" value="${news.news_no}">
+				<input type="hidden" name="action" value="getOne_For_Update">
+			</FORM>
+		</td>
+		<td>
+			<FORM METHOD="post" ACTION="news.do" style="margin-bottom: 0px;">
+				<input type="submit" value="刪除">
+				<input type="hidden" name="news_no" value="${news.news_no}">
+				<input type="hidden" name="action" value="delete">
+			</FORM>
+		</td>
 	</tr>
 </table>
-
 <div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<a href="<%=request.getContextPath()%>/backend/news/allNews.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
+
 </div>
+</div>
+
 </body>
 </html>

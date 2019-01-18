@@ -1,104 +1,44 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.member.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-  MemberVO member = (MemberVO) request.getAttribute("member"); //EmpServlet.java(Concroller), 存入req的empVO物件
+  MemberVO member = (MemberVO) request.getAttribute("member");
 %>
 
 <html>
 <head>
-<title>會員資料 - listOneMember.jsp</title>
+
+<title>ETIckeTs後台 - 會員資料</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-</style>
-<style>
-.memberphoto {
-	border-radius: 50px;
-	margin-top: 20px;
-}
-
-.membermenu {
-	margin-top: 100px;
-	margin-left: 200px;
-}
-
-.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-.topnav {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-
-</style>
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-  img {
-  border-radius: 90%;
-}
-</style>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
-  table {
-	width: 450px;
+table {
+	width: 800px;
 	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	padding: 5px;
+	text-align: center;
+}
 </style>
+
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
+<div class="container table-responsive-md">
+<div class="row">
 
 <table class="table">
 	<tr>
@@ -125,14 +65,31 @@
 		<td><%=member.getMemberPassword()%></td>
 		<td><%=member.getEwalletBalance()%></td>
 		<td><%=member.getCreationDate()%></td>
-		<td><img src="<%=request.getContextPath()%>/backend/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
+		<td><img src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="50" width="50"></td>
 		<td><%=member.getMemberStatus()%></td>
 		<td><%=member.getThirduid()%></td>
+		<td>
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
+				<input type="submit" value="修改">
+				<input type="hidden" name="memberno" value="${member.memberNo}">
+				<input type="hidden" name="action" value="getOne_For_Update">
+			</FORM>
+		</td>
+		<td>
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/member.do" style="margin-bottom: 0px;">
+				<input type="submit" value="刪除">
+				<input type="hidden" name="memberno" value="${member.memberNo}">
+				<input type="hidden" name="action" value="delete">
+			</FORM>
+		</td>
 	</tr>
 </table>
 <div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<a href="allMember.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
+</div>
+
+</div>
 </div>
 </body>
 </html>

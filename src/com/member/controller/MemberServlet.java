@@ -113,7 +113,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/member/select_page.jsp");
+							.getRequestDispatcher("/backend/member/allMember.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -127,7 +127,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/member/select_page.jsp");
+							.getRequestDispatcher("/backend/member/allMember.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -141,7 +141,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/member/select_page.jsp");
+							.getRequestDispatcher("/backend/member/allMember.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -156,7 +156,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/member/select_page.jsp");
+						.getRequestDispatcher("/backend/member/allMember.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -187,7 +187,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/member/listAllMember.jsp");
+						.getRequestDispatcher("/backend/member/allMember.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -798,7 +798,7 @@ public class MemberServlet extends HttpServlet {
 				member = memberService.addMember(memberFullname, email, phone, idcard, account, password, ewalletBalance, profilePicture, states, thirduid);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/backend/member/listAllMember.jsp";
+				String url = "/backend/member/allMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -828,7 +828,7 @@ public class MemberServlet extends HttpServlet {
 				memberService.deleteMember(memberNo);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/backend/member/listAllMember.jsp";
+				String url = "/backend/member/allMember.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -836,7 +836,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/member/listAllMember.jsp");
+						.getRequestDispatcher("/backend/member/allMember.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.news.model.*"%>
-<%@page import="com.administrator.model.AdministratorVO"%>
+<%@ page import="com.news.model.*"%>
+<%@ page import="com.administrator.model.AdministratorVO"%>
  
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
@@ -18,20 +18,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
-  table {
+table {
 	width: 450px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
-  img {
-  border-radius: 90%;
+}
+table, th, td {
+	border: 0px solid #CCCCFF;
+}
+th, td {
+	padding: 1px;
+}
+img {
+	border-radius: 90%;
 }
 </style>
 
@@ -40,9 +40,9 @@
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
 <div class="container table-responsive-md">
+<div class="row">
 <h3 align="center">新增公告</h3>
 
-<%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -76,9 +76,7 @@
 <input type="hidden" name="administrator_no" value="<%=administratorVO.getAdministrator_no()%>">
 <input type="submit" value="送出新增" >
 </FORM>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
+
 </div>
 </div>
 </body>

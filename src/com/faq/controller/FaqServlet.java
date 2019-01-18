@@ -40,7 +40,7 @@ public class FaqServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/faq/select_page.jsp");
+							.getRequestDispatcher("/backend/faq/allFaq.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -54,7 +54,7 @@ public class FaqServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/faq/select_page.jsp");
+							.getRequestDispatcher("/backend/faq/allFaq.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -68,7 +68,7 @@ public class FaqServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/faq/select_page.jsp");
+							.getRequestDispatcher("/backend/faq/allFaq.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -83,7 +83,7 @@ public class FaqServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/faq/select_page.jsp");
+						.getRequestDispatcher("/backend/faq/allFaq.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -114,7 +114,7 @@ public class FaqServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/faq/listAllFaq.jsp");
+						.getRequestDispatcher("/backend/faq/allFaq.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -225,7 +225,7 @@ public class FaqServlet extends HttpServlet {
 				faqVO = faqService.addFaq(question, answer, faq_classification);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/backend/faq/listAllFaq.jsp";
+				String url = "/backend/faq/allFaq.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -239,11 +239,9 @@ public class FaqServlet extends HttpServlet {
 		}
 		
 		
-		if ("delete".equals(action)) { // 來自listAllEmp.jsp
+		if ("delete".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 	
 			try {
@@ -255,7 +253,7 @@ public class FaqServlet extends HttpServlet {
 				faqService.deleteFaq(faq_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/backend/faq/listAllFaq.jsp";
+				String url = "/backend/faq/allFaq.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -263,7 +261,7 @@ public class FaqServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/faq/listAllFaq.jsp");
+						.getRequestDispatcher("/backend/faq/allFaq.jsp");
 				failureView.forward(req, res);
 			}
 		}

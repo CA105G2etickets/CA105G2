@@ -9,86 +9,29 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>新增會員 - addMember.jsp</title>
+
+<title>ETIckeTs後台 - 新增會員</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-</style>
-<style>
-.memberphoto {
-	border-radius: 50px;
-	margin-top: 20px;
-}
-
-.membermenu {
-	margin-top: 100px;
-	margin-left: 200px;
-}
-
-.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-.topnav {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-
-</style>
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
-  table {
-	width: 450px;
+table {
+	width: 800px;
 	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
-  img {
-  border-radius: 90%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+img {
+	border-radius: 90%;
 }
 </style>
+
 <script>
 function readURL(input){
   if(input.files && input.files[0]){
@@ -103,23 +46,17 @@ function readURL(input){
     reader.readAsDataURL(input.files[0]);
   }
 }
-
 </script>
+
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
+<div class="container table-responsive-md">
+<div class="row">
 
-<div class="container">
-<h3>新增會員資料:</h3>
+<h3 align="center">新增會員資料:</h3>
 
-<%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -196,9 +133,7 @@ function readURL(input){
 
 <input type="submit" value="送出新增" >
 </FORM>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
+
 </div>
 </div>
 </body>
