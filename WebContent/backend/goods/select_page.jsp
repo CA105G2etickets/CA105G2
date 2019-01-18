@@ -14,7 +14,7 @@
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>活動管理</title>
+<title>商品管理</title>
 <!-- Basic -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- dataTables -->
@@ -57,12 +57,12 @@
 	<!-- </table> -->
 	<div class="container">
 	<div class="col-xs-12 col-sm-12">
-		<p>ETIckeTs Member管理頁面</p>
+		<p>ETIckeTs 商品管理頁面</p>
 	</div>
 	</div>
 	<div class="container">
 	<div class="col-xs-12 col-sm-12">
-		會員查詢
+		商品查詢
 
 		<%-- 錯誤表列 --%>
 		<c:if test="${not empty errorMsgs}"><br>

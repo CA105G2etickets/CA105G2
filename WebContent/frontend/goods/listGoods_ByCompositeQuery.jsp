@@ -57,45 +57,56 @@
 
 
     <div class="container">
-        <div class="row flex-row">
-            <c:forEach var="goodsVO" items="${listGoods_ByCompositeQuery}">
-                <div class="col-xs-12 col-sm-4">
-                    <div class="thumbnail">
-                        <a href="<%= request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}" target="_blank">
-                            <img src="<%= request.getContextPath()%>/goods/GoodsGifReader?scaleSize=425&goods_no=${goodsVO.goods_no}" alt="">
-                        </a>                       
-                        <div class="caption">
-                            <p class="flex-text">${goodsVO.launchdate}
-                                ${(goodsVO.launchdate == goodsVO.offdate) ? '' : ' ~ '}
-                                ${(goodsVO.launchdate == goodsVO.offdate) ? '' : goodsVO.offdate}
-                            </p>
-                        <h4><a href="<%= request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}" target="_blank">
-                            	${goodsVO.goods_name}                   
-                            </a></h4>
-                              <h4> 售價：  ${goodsVO.goods_price}</h4>
-                         <h4> 促銷價：<font color="red">    ${goodsVO.forsales_a}</font></h4>
-                         
-                        <form name="shoppingForm" action="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do" method="POST">
-							數量：<input class="min" name="min" type="button" value="-" />  
-							<input type="text" class="ordernum" name="goods_quantity" size="2" value=1>
-							<input class="add" name="add" type="button" value="+" /> 
-						    <input type="submit" name="Submit" value="放入購物車">
-							<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
-							<input type="hidden" name="evetit_no" value="${goodsVO.evetit_no}">
-							<input type="hidden" name="goods_name" value="${goodsVO.goods_name}">
-							<input type="hidden" name="goods_price" value="${goodsVO.goods_price}">
-							<input type="hidden" name="forsales_a" value="${goodsVO.forsales_a}">
-							<input type="hidden" name="goods_status" value="${goodsVO.goods_status}">
-							<input type="hidden" name="old_price" value="${goodsVO.goods_price}">
-							<input type="hidden" name="action" value="ADD">	
-						</form>
-                           
-                        </div>                   
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
+		<div class="row flex-row">
+			<c:forEach var="goodsVO" items="${listGoods_ByCompositeQuery}">
+				<div class="col-xs-12 col-sm-4">
+					<div class="thumbnail">
+						<a
+							href="<%= request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}"
+							target="_blank"> <img
+							src="<%= request.getContextPath()%>/goods/GoodsGifReader?scaleSize=425&goods_no=${goodsVO.goods_no}"
+							alt="">
+						</a>
+						<div class="caption">
+							<p class="flex-text">${goodsVO.launchdate}
+								${(goodsVO.launchdate == goodsVO.offdate) ? '' : ' ~ '}
+								${(goodsVO.launchdate == goodsVO.offdate) ? '' : goodsVO.offdate}
+							</p>
+							<h4>
+								<a
+									href="<%= request.getContextPath()%>/frontend/goods/listOneGoods.jsp?goods_no=${goodsVO.goods_no}"
+									target="_blank"> ${goodsVO.goods_name} </a>
+							</h4>
+							<h4>售價： ${goodsVO.goods_price}</h4>
+							<h4>
+								促銷價：<font color="red"> ${goodsVO.forsales_a}</font>
+							</h4>
+
+							<form name="shoppingForm"
+								action="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do"
+								method="POST">
+								數量：<input class="min" name="min" type="button" value="-" /> <input
+									type="text" class="ordernum" name="goods_quantity" size="2"
+									value=1> <input class="add" name="add" type="button"
+									value="+" /> <input type="submit" name="Submit" value="放入購物車">
+								<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
+								<input type="hidden" name="evetit_no"
+									value="${goodsVO.evetit_no}"> <input type="hidden"
+									name="goods_name" value="${goodsVO.goods_name}"> <input
+									type="hidden" name="goods_price" value="${goodsVO.goods_price}">
+								<input type="hidden" name="forsales_a"
+									value="${goodsVO.forsales_a}"> <input type="hidden"
+									name="goods_status" value="${goodsVO.goods_status}"> <input
+									type="hidden" name="old_price" value="${goodsVO.goods_price}">
+								<input type="hidden" name="action" value="ADD">
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
     
                                
                             

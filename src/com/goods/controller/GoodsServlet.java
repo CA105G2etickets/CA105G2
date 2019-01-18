@@ -10,9 +10,8 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.event_title.model.EventTitleService;
-import com.event_title.model.EventTitleVO;
 import com.goods.model.*;
+import com.group_open.model.Group_openVO;
 
 
 
@@ -76,7 +75,7 @@ public class GoodsServlet extends HttpServlet {
 		
 		
 
-		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+		if ("getOne_For_Update".equals(action)) { // 來自listAllGoods.jsp的請求
 			
 			String requestURL = req.getParameter("requestURL");
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
@@ -117,7 +116,7 @@ public class GoodsServlet extends HttpServlet {
 		
 		
 		
-			else if ("updateGoods".equals(action)) { 
+			else if ("updateGoods".equals(action)) { //來自backend/updateGoods.jsp
 
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
@@ -336,7 +335,7 @@ public class GoodsServlet extends HttpServlet {
 			}
 		}
  
-		if ("insertGoods".equals(action)) { 
+		if ("insertGoods".equals(action)) { //來自backend/addGoods.jsp
 
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
@@ -344,7 +343,9 @@ public class GoodsServlet extends HttpServlet {
 			
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String evetit_no = req.getParameter("evetit_no");
-				
+				if (evetit_no == null || evetit_no.trim().length() == 0) {
+					goodsErrorMsgs.put("goods_name","請輸入活動編號");
+				}
 				String goods_name = req.getParameter("goods_name");
 				if (goods_name == null || goods_name.trim().length() == 0) {
 					goodsErrorMsgs.put("goods_name", "請輸入商品名稱");
@@ -448,7 +449,14 @@ public class GoodsServlet extends HttpServlet {
 					req.setAttribute("goods_picture3_status", "alreadyUpload");	
 				}
 				String goods_introduction = req.getParameter("goods_introduction");
-				Integer forsales_a = new Integer (req.getParameter("forsales_a"));
+				Integer forsales_a = null;
+				try {
+					forsales_a = new Integer(req.getParameter("forsales_a"));
+				} catch (NumberFormatException e) {
+					goodsErrorMsgs.put("forsales_a", "請輸入折扣價");
+				}
+				
+				
 				String goods_status = req.getParameter("goods_status");
 				
 
@@ -474,8 +482,24 @@ public class GoodsServlet extends HttpServlet {
 //				Integer goods_group_count = 0;
 //				
 //				Integer goods_want_count = 0;
+					
+					GoodsVO goodsvo = new GoodsVO();
+					goodsvo.setEvetit_no(evetit_no);
+					goodsvo.setGoods_name(goods_name);
+					goodsvo.setGoods_price(goods_price);
+					goodsvo.setGoods_picture1(goods_picture1);
+					goodsvo.setGoods_picture2(goods_picture2);
+					goodsvo.setGoods_picture3(goods_picture3);
+					goodsvo.setGoods_introduction(goods_introduction);
+					goodsvo.setForsales_a(forsales_a);
+					goodsvo.setGoods_status(goods_status);
+					goodsvo.setLaunchdate(launchdate);
+					goodsvo.setOffdate(offdate);
+		
+					System.out.println("加入成功");
 			
 				if (!goodsErrorMsgs.isEmpty()) {
+					req.setAttribute("goodsvo", goodsvo);
 					RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
@@ -501,10 +525,10 @@ public class GoodsServlet extends HttpServlet {
 				InputStream in2 = new FileInputStream(realPath2);
 				ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
 				int x;
-				while ((x = in.read()) != -1)
+				while ((x = in2.read()) != -1)
 					baos2.write(x);
 				goods_picture2 = baos2.toByteArray();
-				in.close();
+				in2.close();
 				baos2.close();
 				
 				String goods_picture3_path = (String) req.getSession().getAttribute("goods_picture3_path");				
@@ -514,13 +538,13 @@ public class GoodsServlet extends HttpServlet {
 				InputStream in3 = new FileInputStream(realPath3);
 				ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
 				int z;
-				while ((z = in.read()) != -1)
+				while ((z = in3.read()) != -1)
 					baos3.write(z);
 				goods_picture3 = baos3.toByteArray();
-				in.close();
+				in3.close();
 				baos3.close();
 
-				/*************************** 2.開始修改資料 *****************************************/
+				/*************************** 2.開始新增資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
 				GoodsVO goodsVO = new GoodsVO();
 				goodsVO = goodsSvc.addGoods( evetit_no, goods_name, goods_price, goods_picture1,
@@ -531,8 +555,7 @@ public class GoodsServlet extends HttpServlet {
 				req.getSession().removeAttribute("goods_picture3_path");
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("goodsVO", goodsVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp"); // 修改成功後,轉交listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp"); 
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
