@@ -123,14 +123,14 @@
 									<td>
 										<div>
 											<a href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventTitleVO.evetit_no}" class="btn btn-default btn-sm scrollToBottomStatus">查看</a>
-											<form method="post" action="<%=request.getContextPath()%>/event_title/EventTitleServlet.do" class="actionForm" target="_blank">								
+											<form method="post" action="<%=request.getContextPath()%>/event_title/EventTitleServlet.do" class="actionForm">								
 											    <input type="hidden" name="evetit_no"         value="${eventTitleVO.evetit_no}">
 											    <input type="hidden" name="requestURL"	      value="<%=request.getServletPath()%>">
 											    <input type="hidden" name="return_evetit_no"  value="${param.evetit_no}">
 											    <input type="hidden" name="action"	          value="getOneEventTitle_For_Display">
 											    <input type="submit" value="瀏覽" class="btn btn-info btn-sm"> 							
 											</form>
-											<form method="post" action="<%=request.getContextPath()%>/event_title/EventTitleServlet.do" class="actionForm" target="_blank">								
+											<form method="post" action="<%=request.getContextPath()%>/event_title/EventTitleServlet.do" class="actionForm">								
 											    <input type="hidden" name="evetit_no"         value="${eventTitleVO.evetit_no}">
 											    <input type="hidden" name="requestURL"	      value="<%=request.getServletPath()%>">
 											    <input type="hidden" name="return_evetit_no"  value="${param.evetit_no}">

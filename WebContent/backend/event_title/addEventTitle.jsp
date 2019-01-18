@@ -51,7 +51,7 @@
 	            <jsp:useBean id="ticketRefundPolicyService" scope="page" class="com.ticket_refund_policy.model.TicketRefundPolicyService" />            
 	            <div class="form-group">
 	                <label>退款政策</label>
-	                <select class="form-control" name="ticrefpolicy_no">
+	                <select class="form-control" name="ticrefpolicy_no" id="ticrefpolicy_no">
 	                    <c:forEach var="ticketRefundPolicyVO" items="${ticketRefundPolicyService.all}">
 	                        <option value="${ticketRefundPolicyVO.ticRefPolicy_no}" ${(ticketRefundPolicyVO.ticRefPolicy_no == param.ticrefpolicy_no) ? 'selected' : '' }>
 	                            ${ticketRefundPolicyVO.ticRefPolicy_name} : ${ticketRefundPolicyVO.ticRefPolicy_content}
@@ -104,7 +104,7 @@
 	                    <jsp:useBean id="eventClassificationService" scope="page" class="com.event_classification.model.EventClassificationService" />              
 	                    <div class="form-group">
 	                        <label>分類</label>
-	                        <select class="form-control" name="eveclass_no">
+	                        <select class="form-control" name="eveclass_no" id="eveclass_no">
 	                            <c:forEach var="eventClassificationVO" items="${eventClassificationService.all}">
 	                                <option value="${eventClassificationVO.eveclass_no}" ${(eventClassificationVO.eveclass_no == param.eveclass_no) ? 'selected' : '' }>
 	                                    ${eventClassificationVO.eveclass_name}
@@ -116,7 +116,7 @@
 	                <div class="col-xs-12 col-sm-3">
 	                     <div class="form-group">
 	                         <label>推銷熱度</label>                         
-	                         <select class="form-control" name="promotionranking">
+	                         <select class="form-control" name="promotionranking" id="promotionranking">
 	                         	<option value="1" ${(param.promotionranking == "1") ? 'selected' : '' }>1</option>
 	                         	<option value="2" ${(param.promotionranking == "2") ? 'selected' : '' }>2</option>
 	                         	<option value="3" ${(param.promotionranking == "3") ? 'selected' : '' }>3</option>
@@ -190,6 +190,7 @@
 				<span class="form-group">
 					<button type="submit" class="btn btn-success" name="action" value="insertEventTitle" style="margin-top:15px;">新增</button>
 					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp" style="margin-top:15px;">回活動總覽</a>
+					<button type="button" class="btn btn-default" id="magicButton" style="margin-top:15px;">Magic!</button>
 				</span>			
 			</form>
         </div>
@@ -228,7 +229,19 @@
         	}        	
         });
                
-    	localStorage.removeItem("DataTables_eventTitleListTable");     
+    	localStorage.removeItem("DataTables_eventTitleListTable");  
+    	
+    	$("#magicButton").click(function(){
+    		console.log("123");
+    		$("#evetit_name").val("BLACKPINK 2019 WORLD TOUR TAIPEI with KIA");
+    		$('#ticrefpolicy_no').val("TRP2").change();
+    		$("#evetit_startdate").val("2019-03-03");
+    		$("#evetit_enddate").val("2019-03-03");
+    		$("#launchdate").val("2019-01-18");
+    		$("#offdate").val("2019-03-04");
+    		$("#eveclass_no").val("A").change();
+    		$("#promotionranking").val("5").change();
+    	});
     });
     
     

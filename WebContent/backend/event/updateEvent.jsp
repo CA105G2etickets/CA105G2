@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>${eventVO.eve_sessionname}</title>
+    <title>活動場次 : ${eventVO.eve_sessionname}</title>
     <!-- Basic -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- datetimepicker -->
@@ -141,7 +141,7 @@
 	    			            
 	            <div class="form-group">
 	                <label>場地</label>
-	                <select class="form-control" name="venue_no">
+	                <select class="form-control" name="venue_no" id="venue_no">
 	                    <c:forEach var="venueVO" items="${venueService.all}">
 	                        <option value="${venueVO.venue_no}" ${(venueVO.venue_no == eventVO.venue_no) ? 'selected' : '' }>
 	                            ${venueVO.venue_name} ( ${venueVO.address} ) 
@@ -196,7 +196,7 @@
 	                <div class="col-xs-12 col-sm-3">
 	                     <div class="form-group">
 	                         <label>購買張數限制</label>                             
-	                         <select class="form-control" name="ticlimit">
+	                         <select class="form-control" name="ticlimit" id="ticlimit">
 	                         	<option value="1" ${(eventVO.ticlimit == '1') ? 'selected' : '' }>1 張 / 人</option>
 	                         	<option value="2" ${(eventVO.ticlimit == '2') ? 'selected' : '' }>2 張 / 人</option>
 	                         	<option value="3" ${(eventVO.ticlimit == '3') ? 'selected' : '' }>3 張 / 人</option>
@@ -310,6 +310,7 @@
 					<button type="submit" class="btn btn-success" name="action" value="updateEvent" style="margin-top:15px;">儲存</button>
 <%-- 					<a class="btn btn-danger" href="<%=request.getContextPath()%>/event/EventServlet.do?action=deleteEvent&evetit_no=${eventVO.evetit_no}&eve_no=${eventVO.eve_no}&requestURL=/backend/event_title/listAllEventTitleRelatives.jsp" style="margin-top:15px;">刪除</a> --%>
 					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventVO.evetit_no}&eve_no=${eventVO.eve_no}" style="margin-top:15px;">回活動總覽</a>
+					<button type="button" class="btn btn-default" id="magicButton" style="margin-top:15px;">Magic!</button>
 				</span>			
 			</form>
         </div>
@@ -411,8 +412,22 @@
         		$(this).prepend("<i class='glyphicon glyphicon-triangle-left'></i>");
         	}        	
         });
-     
         
+        
+        
+        
+        $("#magicButton").click(function(){
+    		console.log("123");
+    		$("#eve_sessionname").val("2019/03/03 第一場");
+    		$('#venue_no').val("V009").change();
+    		$("#eve_startdate").val("2019-03-03 18:00");
+    		$("#eve_enddate").val("2019-03-03 23:00");
+    		$("#eve_onsaledate").val("2019-01-18 14:00");
+    		$("#eve_offsaledate").val("2019-03-03 17:00");
+    		$("#ticlimit").val("4").change();
+    		$("#eve_status").val("normal").change();
+    	});
+     
         
         
         

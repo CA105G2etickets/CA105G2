@@ -115,6 +115,7 @@
 	  				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 					<button type="submit" class="btn btn-success" name="action" value="addVenue">新增</button>
 					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/venue/listAllVenue.jsp?venue_no=${venueVO.venue_no}">回場地總覽</a>
+					<button type="button" class="btn btn-default" id="magicButton">Magic!</button>
 				</span>	
 			</div>
 		</form>               
@@ -145,6 +146,11 @@
         		$(this).prepend("<i class='glyphicon glyphicon-triangle-left'></i>");
         	}        	
         });
+        
+        $("#magicButton").click(function(){
+    		console.log("123");
+    		$("#venue_name").val("國立體育大學綜合體育館");
+    	});
     });
     
     function initMap() {

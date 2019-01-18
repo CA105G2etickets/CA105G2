@@ -65,7 +65,7 @@
             <c:forEach var="eventTitleVO" items="${listEventTitle_ByCompositeQuery}">
                 <div class="col-xs-12 col-sm-4">
                     <div class="thumbnail loadMoreDivs" style="display:none;">
-                        <a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${eventTitleVO.evetit_no}" target="_blank">
+                        <a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${eventTitleVO.evetit_no}">
                             <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=425&evetit_no=${eventTitleVO.evetit_no}" alt="">
                         </a>                       
                         <div class="caption">
