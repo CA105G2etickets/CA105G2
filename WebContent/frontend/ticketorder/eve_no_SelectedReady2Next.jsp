@@ -16,6 +16,8 @@
 
 String member_no = (String)request.getAttribute("member_no");
 pageContext.setAttribute("member_no",member_no);
+String eve_no = (String)request.getAttribute("eve_no");
+pageContext.setAttribute("eve_no",eve_no);
 %>
 
 <!-- ======================================== DAI:::begin ================================================== -->
@@ -29,6 +31,7 @@ pageContext.setAttribute("member_no",member_no);
 <jsp:useBean id="eventTitleService" scope="page" class="com.event_title.model.EventTitleService" />
 <jsp:useBean id="eventService" scope="page" class="com.event.model.EventService" />
 <jsp:useBean id="ticketTypeService" scope="page" class="com.ticket_type.model.TicketTypeService" />
+<jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
 <!-- ======================================== DAI:::end ================================================== -->
 
 
@@ -158,19 +161,19 @@ h4{
 	<div class="container" style="margin-bottom:30px;margin-top:15px;">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-3">
-				<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=850&evetit_no=${eh5vo.eventtitle_h5VO.evetit_no}" style="width:100%;">
+				<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=850&evetit_no=${Event_H5_Service.getOneEvent_H5(eve_no).eventtitle_h5VO.evetit_no}" style="width:100%;">
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-9">
-				<h3 class="text-danger" style="margin-top:0px;">${eh5vo.eventtitle_h5VO.evetit_name}</h3>
+				<h3 class="text-danger" style="margin-top:0px;">${Event_H5_Service.getOneEvent_H5(eve_no).eventtitle_h5VO.evetit_name}</h3>
 				<h3 style="margin-top:15px;">
 					活動時間 : 
-					<fmt:formatDate value="${eh5vo.eve_startdate}" pattern="yyyy-MM-dd HH:mm"/>
+					<fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm"/>
 					 至 
-					<fmt:formatDate value="${eh5vo.eve_enddate}" pattern="yyyy-MM-dd HH:mm"/>
+					<fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(eve_no).eve_enddate}" pattern="yyyy-MM-dd HH:mm"/>
 				</h3>
 				<h3 style="margin-top:15px;">
 					活動地點 : 
-					${eh5vo.venue_h5VO.venue_name}
+					${Event_H5_Service.getOneEvent_H5(eve_no).venue_h5VO.venue_name}
 				</h3>
 			</div>
 		</div>
@@ -185,13 +188,13 @@ h4{
 		<div class="row">
 			<div class="col-xs-12 col-sm-6">
 				<div class="form-group eve_seatmap_area">
-                 	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=850&eve_no=${eh5vo.eve_no}" id="seatmap">
+                 	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=850&eve_no=${eve_no}" id="seatmap">
              	</div>
 			</div>                	
 			<div class="col-xs-12 col-sm-6">
 				<div class="form-group"> 
 				<h3 class="text-primary" style="margin-top:0px;">請選擇區域(點擊剩餘張數)</h3>
-				<c:forEach var="ticketTypeVO" items="${eventService.getTicketTypesByEvent(eh5vo.eve_no)}">
+				<c:forEach var="ticketTypeVO" items="${eventService.getTicketTypesByEvent(eve_no)}">
 				<div class="panel-group">
 		            <div class="panel panel-info">
 		                <div class="panel-heading" data-toggle="collapse" aria-expanded="false" href="#${ticketTypeVO.tictype_no}">
@@ -215,7 +218,7 @@ h4{
 		                           			<input type="hidden" class="hidden_tictype_no" value="${SeatingAreaVO.tictype_no}">
 		                           			<input type="hidden" class="hidden_ticarea_no" value="${SeatingAreaVO.ticarea_no}">
 		                           			<input type="hidden" class="hidden_ticketsLeft" value="${SeatingAreaVO.tictotalnumber - SeatingAreaVO.ticbookednumber}">
-		                           			<input type="hidden" class="hidden_ticketsLimit" value="${eh5vo.ticlimit}">
+		                           			<input type="hidden" class="hidden_ticketsLimit" value="${Event_H5_Service.getOneEvent_H5(eve_no).ticlimit}">
 											<h4 class="ticketsLeft text-danger">剩餘 : ${SeatingAreaVO.tictotalnumber - SeatingAreaVO.ticbookednumber} 張</h4>
 										</c:if>
 										<c:if test="${(SeatingAreaVO.tictotalnumber - SeatingAreaVO.ticbookednumber) == 0 }">
@@ -266,11 +269,11 @@ h4{
 			
 			<input type="hidden" name="tictype_no" id="tictype_no" value="">
 			<input type="hidden" name="ticarea_no" id="ticarea_no" value="">
-			<input type="hidden" name="eve_no" value="${eh5vo.eve_no}">
-			<input type="hidden" name="member_no" value="${member_no}">
+			<input type="hidden" name="eve_no" value="${eve_no}"> <!-- from above line pageContext.set -->
+			<input type="hidden" name="member_no" value="${member_no}"> <!-- from above line pageContext.set -->
 			<input type="hidden" name="action"	value="ticketNumSelected_buyTickets">
 			
-			<%-- 下列傳過去的值都是公開資料，因為用附在parameter上節省下一頁或下下頁要用到顯示的資料，節省資料庫連線  --%>
+			<%-- 下列傳過去的值都是公開資料，因為用附在parameter上節省下一頁或下下頁要用到顯示的資料，節省資料庫連線 
 			<input type="hidden" name="evetit_nameForShow" value="${eh5vo.eventtitle_h5VO.evetit_name}">
 			<input type="hidden" name="eve_sessionnameForShow" value="${eh5vo.eve_sessionname}">
 			<input type="hidden" name="eve_startdateForShow" value="<fmt:formatDate value="${eh5vo.eve_startdate}" pattern="yyyy-MM-dd HH:mm"/>">
@@ -279,7 +282,7 @@ h4{
 			<input type="hidden" name="addressForShow" value="${eh5vo.venue_h5VO.address}">
 			
 			<input type="hidden" name="tictype_nameForShow" value="${SeatingArea_H5_VO.tickettype_h5VO.tictype_name}">
-			
+			 --%>
 				
 		</FORM>
 	</div>

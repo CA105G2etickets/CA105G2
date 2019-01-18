@@ -22,7 +22,7 @@
 	color: black;
 	font-weight: bold;
 }
-.walletcolumn {
+.walletcolumn {0
     display: inline-block;
     margin-right: 15px;
     margin-bottom: 5px;
@@ -64,7 +64,7 @@ body{
 <div class="container">
 	<div class="walletcolumn walletcolumn-2">
 		<div class="wallettabs">
-		<a href="#" class="wallethref">
+		<a href="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do?action=member_select_ticketorders" class="wallethref">
 			<div class="walletblock walletblock-m">
 				<img src="<%=request.getContextPath()%>/frontend/orderImages/訂票訂單.png" class="walletimage">
 				<h3 class="heading" align="center">訂票訂單查詢</h3>

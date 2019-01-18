@@ -12,15 +12,17 @@ Integer sessionLiveTime = session.getMaxInactiveInterval();
 TicketOrderVO toVO = (TicketOrderVO)request.getAttribute("toVO");
 pageContext.setAttribute("toVO",toVO);
 
-/* List<String> list4PassValue = (List<String>)request.getAttribute("list4PassValue");
-pageContext.setAttribute("list4PassValue",list4PassValue); */
 String eve_no = (String)request.getAttribute("eve_no");
+String member_no = (String)request.getAttribute("member_no");
+pageContext.setAttribute("eve_no",eve_no);
+pageContext.setAttribute("member_no",member_no);
 %>
 
 <!-- ======================================== DAI:::begin ================================================== -->
 <jsp:useBean id="eventService" scope="page" class="com.event.model.EventService" />
 <jsp:useBean id="seatingAreaService" scope="page" class="com.seating_area.model.SeatingAreaService" />
 <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
+<jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
 <!-- ======================================== DAI:::end ================================================== -->
 
 
@@ -141,19 +143,19 @@ body {
 	<div class="container" style="margin-bottom:30px;margin-top:15px;">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-3">
-				<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=850&evetit_no=${eh5vo.eventtitle_h5VO.evetit_no}" style="width:100%;">
+				<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=850&evetit_no=${Event_H5_Service.getOneEvent_H5(eve_no).eventtitle_h5VO.evetit_no}" style="width:100%;">
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-9">
-				<h3 class="text-danger" style="margin-top:0px;">${eh5vo.eventtitle_h5VO.evetit_name}</h3>
+				<h3 class="text-danger" style="margin-top:0px;">${Event_H5_Service.getOneEvent_H5(eve_no).eventtitle_h5VO.evetit_name}</h3>
 				<h3 style="margin-top:15px;">
 					活動時間 : 
-					<fmt:formatDate value="${eh5vo.eve_startdate}" pattern="yyyy-MM-dd HH:mm"/>
+					<fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm"/>
 					 至 
-					<fmt:formatDate value="${eh5vo.eve_enddate}" pattern="yyyy-MM-dd HH:mm"/>
+					<fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(eve_no).eve_enddate}" pattern="yyyy-MM-dd HH:mm"/>
 				</h3>
 				<h3 style="margin-top:15px;">
 					活動地點 : 
-					${eh5vo.venue_h5VO.venue_name}
+					${Event_H5_Service.getOneEvent_H5(eve_no).venue_h5VO.venue_name}
 				</h3>
 			</div>
 		</div>
@@ -298,7 +300,7 @@ body {
 			</table>
 			<input type="hidden" name="action" value="userPaying">
 			<input type="hidden" name="ticket_order_no"  value="${toVO.ticket_order_no}">
-			<input type="hidden" name="eve_no"  value="<%=eve_no%>">
+			<input type="hidden" name="eve_no"  value="${eve_no}">
 			<input type="button" value="進行付款" class="btn btn-primary" id="wannaPay">
 		</FORM>
 	</div>
