@@ -8,7 +8,11 @@
 Integer sessionLiveTime = session.getMaxInactiveInterval();
 ShowResaleTicketVO svo = (ShowResaleTicketVO)request.getAttribute("svo");
 pageContext.setAttribute("svo",svo);
+String member_no = (String)request.getAttribute("member_no");
+pageContext.setAttribute("member_no",member_no);
+
 %>
+<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -46,7 +50,7 @@ pageContext.setAttribute("svo",svo);
 	<tr>
 		<th>票券編號</th>
 		<th>轉讓訂單編號</th>
-		<th>賣家會員編號</th>
+		<th>賣家會員姓名</th>
 		<th>賣價</th>
 		<!-- <th>座位區名稱</th> -->
 		<th>票種名稱</th>
@@ -64,7 +68,7 @@ pageContext.setAttribute("svo",svo);
 	<tr>
 		<td>${svo.ticket_no}</td>
 		<td>${svo.resale_ordno}</td>
-		<td>${svo.member_seller_no}</td>
+		<td>${memberService.getOneMember(svo.member_seller_no).memberFullname}</td>
 		<td>${svo.ticket_resale_price}</td>
 		
 		<td>${svo.tictype_name}</td>
@@ -91,7 +95,7 @@ try {
 	 resale_order_payment_deadline = new java.sql.Timestamp(System.currentTimeMillis());
  }
 %>
-		<td><fmt:formatDate value="<%=resale_order_payment_deadline%>" pattern="yyyy-MM-dd HH:mm:ss"/><b><%=strError%></b></td>
+		<td><fmt:formatDate value="<%=resale_order_payment_deadline%>" pattern="yyyy-MM-dd HH:mm:ss"/><b>這裡的繳費期限到了會被取消的監聽器還沒做</b></td>
 		
 		<%-- <td>
 			<FORM METHOD="post" ACTION="ticketorder.do">
@@ -111,13 +115,13 @@ try {
 		</tr>
 		<tr>
 			<td>信用卡驗證碼:</td> <!-- teperorilly use post form to send -->
-			<td><input type="TEXT" name="creditCardVerificationNumber" size="3" value=""/></td>
+			<td><input type="TEXT" name="creditCardVerificationNumber" size="9" value=""/></td>
 		</tr>
 	</table>
 	<br>
 <input type="hidden" name="action" value="userPaying_from_resaleorder_phase3">
-<font>resale_ordno=${svo.resale_ordno}</font>
-<font>member_buyer_no=${svo.member_buyer_no}</font>
+<%-- <font>resale_ordno=${svo.resale_ordno}</font>
+<font>member_buyer_no=${svo.member_buyer_no}</font> --%>
 <input type="hidden" name="resale_ordno"  value="${svo.resale_ordno}">
 <input type="hidden" name="member_buyer_no"  value="${svo.member_buyer_no}">
 <input type="submit" value="進行付款">

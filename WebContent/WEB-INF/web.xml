@@ -343,5 +343,13 @@
         <servlet-name>ResaleOrderServlet</servlet-name>
         <url-pattern>/frontend/resaleorder/resaleorder.do</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>TicketBackendServlet</servlet-name>
+        <servlet-class>com.ticket.controller.TicketBackendServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TicketBackendServlet</servlet-name>
+        <url-pattern>/backend/ticket/ticket.do</url-pattern>
+    </servlet-mapping>
     
 </web-app> 

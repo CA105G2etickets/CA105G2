@@ -3,14 +3,9 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>resaleorder_home</title>
+<title>購票狀況查詢</title>
 </head>
 <body bgcolor='white'>
-<%
-String member_no = (String)request.getAttribute("member_no");
-pageContext.setAttribute("member_no",member_no);
-%>
-<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 
 <style>
   table {
@@ -26,7 +21,6 @@ pageContext.setAttribute("member_no",member_no);
     padding: 1px;
   }
 </style>
-<p>這頁是轉讓票券平台的搜尋頁面</p>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -38,19 +32,16 @@ pageContext.setAttribute("member_no",member_no);
 	</ul>
 </c:if>
 
-<h3>${memberService.getOneMember(toVO.member_no).memberFullname}</h3>
-
-
 
 <%-- 萬用複合查詢-以下欄位-可隨意增減 --%>
 <ul>  
   <li>   
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
-        <b><font color=blue>請選取下列一種條件，再輸入你想搜尋的條件，搜尋出你想要買的轉讓票: 文字為模糊搜尋，數字可再選大於、小於、或等於</font></b> <br>
-        <b><font color=red>判斷map加入的條件還沒做完，目前只能查全部</font></b> <br>
-        <b><font color=red>有bug還不能用</font></b> <br>
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backend/ticket/ticket.do">
+        <b><font color=blue>請選取下列一種條件，再輸入你想搜尋的條件，搜尋出你想要買的轉讓票: 文字為模糊搜尋，數字可選'>' '<' '='</font></b> <br>
+        
         <select name=selectBar_Choice>
-        	<option value="ticket_resale_price" selected="selected">低於此價錢的轉售票</option>
+        	<option value="ticket_resale_price" selected="selected">轉售票的價錢</option>
+        	<option value="member_no" >會員編號</option>
         	<option value="ticarea_name">座位區名稱</option>
         	<option value="tictype_name">票種名稱</option>
         	<option value="tictype_price">原價格</option>
@@ -88,8 +79,6 @@ pageContext.setAttribute("member_no",member_no);
         -->
         <input type="submit" value="送出">
         <input type="hidden" name="action" value="listResaleOrder_ByCompositeQuery">
-        <input type="hidden" name="member_no" value="${member_no}">
-        <font>${member_no}</font>
         <!-- <input type="hidden" name="resale_ordstatus" value="SELLING1"> -->
      </FORM>
 

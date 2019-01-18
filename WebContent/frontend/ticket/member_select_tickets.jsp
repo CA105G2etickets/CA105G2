@@ -13,7 +13,7 @@ pageContext.setAttribute("listShow", listShow);
 <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <html>
 <head>
-<title>member_select_ticketorders.jsp</title>
+<title>member_select_tickets.jsp</title>
 
 <style>
   table {
@@ -33,6 +33,7 @@ pageContext.setAttribute("listShow", listShow);
 
 </head>
 <body bgcolor='white'>
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -117,6 +118,6 @@ pageContext.setAttribute("listShow", listShow);
 	<input type="hidden" name="member_no" value="M000001"> <!--Member not done yet, only been set as M000001 -->
 	<input type="submit" value="回去會員的訂單查詢">
 </form> --%>
-
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 </body>
 </html>

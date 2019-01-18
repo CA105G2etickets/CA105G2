@@ -94,7 +94,7 @@ pageContext.setAttribute("toVO",toVO);
 	</table>
 	<br>
 <input type="hidden" name="action" value="ticketorder_select_by_member_no">
-<input type="hidden" name="member_no" value="${toVO.member_no}">
+<input type="hidden" name="member_no" value="${toVO.member_no}"><b>Bug here.dont touch</b>
 <input type="submit" value="查詢訂票訂單">
 </FORM>
 <br>
@@ -117,7 +117,7 @@ pageContext.setAttribute("toVO",toVO);
 		</tr>
 	</table>
 	<br>
-<input type="hidden" name="action" value="resaleorder_select_by_member_no">
+<input type="hidden" name="action" value="resaleorder_select_by_member_no"><b>Bug here.dont touch</b>
 <input type="hidden" name="member_no" value="${toVO.member_no}">
 <input type="submit" value="查詢轉售訂單">
 </FORM>

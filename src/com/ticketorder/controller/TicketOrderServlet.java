@@ -1508,13 +1508,93 @@ public class TicketOrderServlet extends HttpServlet {
 				failureView.forward(req, res);
         	}
         	
+        	//ticketorder_select_by_member_no
+        	
+        	
         }
+        if("member_select_ticketorders".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				String member_no = req.getParameter("member_no");
+				if (member_no == null || (member_no.trim()).length() == 0) {
+					errorMsgs.add("請輸入member_no編號");
+				}
+				if (member_no.length()>18) {
+					errorMsgs.add("member_no格式不正確");
+				}
+				if (this.containsHanScript(member_no)) {
+					errorMsgs.add("member_no不可包含中文");
+				}
+				
+				//驗證錯誤結束，準備開始call service
+				TicketOrderService toSvc = new TicketOrderService();
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				List<TicketOrderVO> tolist = toSvc.getTicketOrdersByMemberNo(member_no);
+				if(tolist.size()==0) {
+					errorMsgs.add("查無資料");
+				}
+				// this time maybe forward back to login.jsp or sendRedirect to it.
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/index.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				List<ShowTicketOrderVO> listShow = new LinkedList<ShowTicketOrderVO>();
+				for(TicketOrderVO atovo:tolist) {
+					ShowTicketOrderVO stovo = new ShowTicketOrderVO();
+					stovo.setTicket_order_no(atovo.getTicket_order_no());
+					stovo.setMember_no(atovo.getMember_no());
+					stovo.setTotal_price(atovo.getTotal_price());
+					stovo.setTotal_amount(atovo.getTotal_amount());
+					stovo.setTicket_order_time(atovo.getTicket_order_time());
+					stovo.setPayment_method(atovo.getPayment_method());
+					stovo.setTicket_order_status(atovo.getTicket_order_status());
+					
+					SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(atovo.getSeatingarea_h5VO().getTicarea_no());
+					Event_H5_VO eh5VO = eh5Svc.getOneEvent_H5(sh5VO.getEve_h5VO().getEve_no());
+					stovo.setEve_sessionname(eh5VO.getEve_sessionname());
+					stovo.setEve_startdate(eh5VO.getEve_startdate());
+					stovo.setEve_enddate(eh5VO.getEve_enddate());
+					stovo.setEvetit_name(eh5VO.getEventtitle_h5VO().getEvetit_name());
+					stovo.setVenue_name(eh5VO.getVenue_h5VO().getVenue_name());
+					stovo.setAddress(eh5VO.getVenue_h5VO().getAddress());
+					listShow.add(stovo);
+				}
+				req.setAttribute("listShow", listShow);
+				
+//				List<TicketVO> tlist = new LinkedList<TicketVO>();
+//				Set<TicketVO> tset = new HashSet<TicketVO>();
+////				Set<TicketVO> tset = toSvc.getTicketsByTicketOrderNo(ticket_order_no);
+//				for(TicketOrderVO atovo:tolist) {
+//					tset.add(toSvc.getTicketsByTicketOrderNo(atovo.getTicket_order_no()));
+//				}
+				
+//				req.setAttribute("tolist", tolist);
+				
+				String url = "/frontend/ticketorder/member_select_ticketorders.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+				
+			}catch(Exception e) {
+				//this time maybe forward back to login.jsp or sendRedirect to it.
+				errorMsgs.add("從資料庫查詢失敗,at controller:action=member_select_ticketorders:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/index.jsp");
+				failureView.forward(req, res);
+			}
+		}
         
         
         
         
 
 	}
+	
 	public boolean containsHanScript(String s) {
 	    for (int i = 0; i < s.length(); ) {
 	        int codepoint = s.codePointAt(i);

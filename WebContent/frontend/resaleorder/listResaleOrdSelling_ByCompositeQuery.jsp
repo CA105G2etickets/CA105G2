@@ -18,9 +18,9 @@
 List<ShowResaleTicketVO> listShow = (List<ShowResaleTicketVO>)request.getAttribute("listShow");
 pageContext.setAttribute("listShow", listShow);
 %>
-
+<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <html>
-<head><title>複合查詢的結果: - listSellingTickets_ByCompositeQuery.jsp</title>
+<head><title>複合查詢的結果: - listResaleOrdSelling_ByCompositeQuery.jsp</title>
 
 
 <style>
@@ -41,11 +41,11 @@ pageContext.setAttribute("listShow", listShow);
 
 </head>
 <body bgcolor='white'>
-<h3>此購買轉售票的流程中，按下購買轉售票，會先寫死買家是M000002，於控制器內，去買M00001在他的列出票券頁面所賣出的票，因此這個購買流程每一次購買成功後，用當前的"瀏覽我的票券"去看就會少一張</h3>
+<!-- <h3>此購買轉售票的流程中，按下購買轉售票，會先寫死買家是M000002，於控制器內，去買M00001在他的列出票券頁面所賣出的票，因此這個購買流程每一次購買成功後，用當前的"瀏覽我的票券"去看就會少一張</h3> -->
 <table>
 	<tr>
 		<th>票券編號</th>
-		<!-- <th>販賣的會員編號</th> -->
+		<th>販賣的會員姓名</th>
 		<th>賣價</th>
 		<!-- <th>此轉讓單的創建時間</th> -->
 		<th>座位區名稱</th>
@@ -67,7 +67,7 @@ pageContext.setAttribute("listShow", listShow);
 		
 	<tr>
 		<td>${ShowResaleTicketVO.ticket_no}</td>
-		
+		<td>${memberService.getOneMember(ShowResaleTicketVO.member_no).memberFullname}</td>
 		<td>${ShowResaleTicketVO.ticket_resale_price}</td>
 		<td>${ShowResaleTicketVO.ticarea_name}</td>
 		<td>${ShowResaleTicketVO.tictype_name}</td>
@@ -84,6 +84,7 @@ pageContext.setAttribute("listShow", listShow);
 			
 			<input type="hidden" name="ticket_no"  value="${ShowResaleTicketVO.ticket_no}">
 			<input type="hidden" name="ticket_resale_price"  value="${ShowResaleTicketVO.ticket_resale_price}">
+			<input type="hidden" name="member_no"  value="${ShowResaleTicketVO.member_no}">
 			<input type="hidden" name="action" value="selected_targetResaleTicketToBuy"></FORM>
 		</td>
 	</tr>
