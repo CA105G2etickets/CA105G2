@@ -55,7 +55,7 @@ function readURL(input){
 <div class="container table-responsive-md">
 <div class="row">
 
-<h3 align="center">新增會員資料:</h3>
+<h3 align="center">新增會員</h3>
 
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -112,7 +112,7 @@ function readURL(input){
 		<td>normal</td>
 	</tr>
 	<tr>
-		<td>會員第三方登入ID</td>
+		<td>會員第三方登入UID</td>
 		<td>625549954</td>
 	</tr>
 
@@ -137,8 +137,6 @@ function readURL(input){
 </div>
 </div>
 </body>
-
-
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 

@@ -50,7 +50,7 @@ function readURL(input){
 <div class="container table-responsive-md">
 <div class="row">
 
-<h3 align="center">資料修改:</h3>
+<h3 align="center">會員資料修改</h3>
 
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -64,50 +64,50 @@ function readURL(input){
 <FORM METHOD="post" ACTION="member.do" name="form1" enctype="multipart/form-data">
 <table class="table">
 	<tr>
-		<td>會員編號:<font color=red></font></td>
+		<td>會員編號<font color=red></font></td>
 		<td><%=member.getMemberNo()%></td>
 	</tr>
 	<tr>
-		<td>會員姓名:</td>
+		<td>會員姓名</td>
 		<td><input type="TEXT" name="name" size="45" value="<%=member.getMemberFullname()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員電子郵件:</td>
+		<td>會員電子郵件</td>
 		<td><input type="email" name="email" size="45"	value="<%=member.getEmail()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員手機號碼:</td>
+		<td>會員手機號碼</td>
 		<td><input type="TEXT" name="phone" size="45"	value="<%=member.getPhone()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員身分證字號:</td>
+		<td>會員身分證字號</td>
 		<td><%=member.getIdcard()%></td>
 	</tr>
 	<tr>
-		<td>會員帳號:</td>
+		<td>會員帳號</td>
 		<td><input type="TEXT" name="account" size="45"	value="<%=member.getMemberAccount()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員密碼:</td>
+		<td>會員密碼</td>
 		<td><input type="TEXT" name="password" size="45" value="<%=member.getMemberPassword()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員電子錢包餘額:</td>
+		<td>會員電子錢包餘額</td>
 		<td><%=member.getEwalletBalance()%></td>
 	</tr>
 	<tr>
-		<td>帳號建立日期:</td>
+		<td>帳號建立日期時間</td>
 		<td><%=member.getCreationDate()%></td>
 	</tr>
 	<tr height="145">
-		<td>會員大頭貼:</td>
+		<td>會員大頭貼</td>
 		<td>
 		<input type="file" accept="image/jpeg, image/png" name="picture" onchange="readURL(this)" targetID="previewImg">
 		<img id="previewImg" src="<%=request.getContextPath()%>/member/memberImg.do?memberno=${member.memberNo}" height="100" width="100">
 		</td>
 	</tr>
 	<tr>
-		<td>會員狀態:</td>
+		<td>會員狀態</td>
 		<td>
 			<select name="states">
 				<option value="normal" ${(member.memberStatus eq "normal")? 'selected':'' }>正常</option>
@@ -135,7 +135,7 @@ function readURL(input){
 <!-- 		</td> -->
 <!-- 	</tr> -->
 	<tr>
-		<td>會員第三方登入UID:</td>
+		<td>會員第三方登入UID</td>
 		<td><%=member.getThirduid()%></td>
 <%-- 		<td><%=(member.getThirduid().isEmpty() ? "" : member.getThirduid())%></td> --%>
 	</tr>
