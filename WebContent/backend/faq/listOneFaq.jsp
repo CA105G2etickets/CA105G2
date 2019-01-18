@@ -33,6 +33,9 @@
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
+<div class="container table-responsive-md">
+<div class="row">
+
 <table class="table">
 	<tr>
 		<th>常見問題編號</th>
@@ -45,11 +48,27 @@
 		<td><%=faqVO.getQuestion()%></td>
 		<td><%=faqVO.getAnswer()%></td>
 		<td><%=faqVO.getFaq_classification()%></td>
+		<td>
+			<FORM METHOD="post" ACTION="faq.do" style="margin-bottom: 0px;">
+				<input type="submit" value="修改"> <input type="hidden" name="faq_no" value="${faqVO.faq_no}">
+				<input type="hidden" name="action" value="getOne_For_Update">
+			</FORM>
+		</td>
+		<td>
+			<FORM METHOD="post" ACTION="faq.do" style="margin-bottom: 0px;">
+				<input type="submit" value="刪除"> <input type="hidden" name="faq_no" value="${faqVO.faq_no}"> 
+				<input type="hidden" name="action" value="delete">
+			</FORM>
+		</td>
 	</tr>
 </table>
 <div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<a href="<%=request.getContextPath()%>/backend/faq/allFaq.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
+
+</div>
+</div>
+
 </body>
 </html>

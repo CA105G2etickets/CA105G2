@@ -12,7 +12,7 @@
 
 <html>
 <head>
-<title>ETIckeTs後台 - 所有常見問題</title>
+<title>ETIckeTs後台 - 常見問題管理</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -51,6 +51,26 @@ th, td {
 </c:if>
 
 <div class="container table-responsive-md">
+<div class="row">
+
+<li>
+	<font size="4px"> <a href='addFaq.jsp'>新增常見問題</a>
+	</font>
+</li>
+
+<jsp:useBean id="faqservice" scope="page" class="com.faq.model.FaqService" />	
+<font size="4px">
+	<FORM METHOD="post" ACTION="faq.do">選擇常見問題編號
+		<select name="faq_no" id="faqlist">
+			   <c:forEach var="faq" items="${faqservice.all}" > 
+			        <option value="${faq.faq_no}">${faq.faq_no}
+			   </c:forEach>
+			</select>
+			<input type="hidden" name="action" value="getOne_For_Display">
+		<input type="submit" value="送出">
+	</FORM>
+</font>
+
 <table class="table">
 	<tr>
 		<th>常見問題編號</th>
@@ -88,11 +108,9 @@ th, td {
 		</tr>
 	</c:forEach>
 </table>
-<%@ include file="page2.file"%>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
 </div>
+<%@ include file="page2.file"%>
+
 </div>
 </body>
 </html>

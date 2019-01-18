@@ -187,10 +187,26 @@ body{
 					<a href="#" class="topnav" align="center">團購管理</a>
 				</div>
 			</div>
+<!-- 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn"> -->
+<!-- 				<div> -->
+<%-- 					<a href="<%=request.getContextPath()%>/backend/faq/allFaq.jsp" class="topnav" align="center">常見問題管理</a> --%>
+<!-- 				</div> -->
+<!-- 			</div> -->
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
-				<div>
-					<a href="<%=request.getContextPath()%>/backend/faq/select_page.jsp" class="topnav" align="center">常見問題管理</a>
-				</div>
+				<div class="dropdown">
+    				<a class="btn dropdown-toggle" type="button" data-toggle="dropdown">其他
+    				<span class="caret"></span>
+    				</a>
+    					<ul class="dropdown-menu">
+      						<li class="dropdown-header">公告管理</li>
+      						<li><a href="#">HTML</a></li>
+     						<li><a href="#">CSS</a></li>
+      						<li class="divider"></li>
+      						<li class="dropdown-header">常見問題管理</li>
+      						<li><a href="#">JavaScript</a></li>
+      						<li><a href="#">About Us</a></li>
+    					</ul>
+ 	 			</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
