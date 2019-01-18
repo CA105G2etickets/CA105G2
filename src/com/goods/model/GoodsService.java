@@ -38,9 +38,12 @@ public class GoodsService {
 //		goodsVO.setGoods_want_count(goods_want_count);
 //		goodsVO.setGoods_sales_count(goods_sales_count);
 
-		goodsDao.insert(goodsVO);
+		String goods_no = goodsDao.insert(goodsVO);
+		goodsVO.setGoods_no(goods_no);
 
 		return goodsVO;
+	
+	
 	}
 
 	public GoodsVO updateGoods(String goods_no, String evetit_no, String goods_name, Integer goods_price,

@@ -59,16 +59,19 @@ body {
 			<div class="row">
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
-						<label for="launchdate">上架日期</label> <input type="text"
-							id="f_date1" name="launchdate" class="form-control"
-							value="${param.launchdate}">
-					</div>
+						 <label for="launchdate">上架日期</label>
+	                         <span class="text-danger">${goodsErrorMsgs.launchdate}</span>
+	                         <input type="text" id="launchdate" name="launchdate" class="form-control" value="${param.launchdate}">
+	                   </div>
 				</div>
 				<div class="col-xs-12 col-sm-6">
 					<div class="form-group">
-						<label for="offdate">下架日期</label> <input type="text" id="f_date2"
-							name="offdate" class="form-control" value="${param.offdate}">
-					</div>
+	                         <label for="offdate">下架日期</label>
+	                         <span class="text-danger">${goodsErrorMsgs.offdate}</span>
+	                         <span class="text-danger">${goodsErrorMsgs.offdate_BiggerThanToday}</span>
+	                         <span class="text-danger">${goodsErrorMsgs.offdate_BiggerThanLaunchdate}</span>
+	                         <input type="text" id="offdate" name="offdate" class="form-control" value="${param.offdate}">
+	                    </div>
 				</div>
 			</div>
 
@@ -149,15 +152,14 @@ body {
 				<!-- 標籤面板：內容區 -->
 				<div class="tab-content">
 					<div class="tab-pane active" id="infoTab">
-						<textarea name="info" id="infoEditor">
+						<textarea name="goods_introduction" id="infoEditor">
 		                		${param.goods_introduction}
 		               		</textarea>
 					</div>
 
 				</div>
 			</div>
-			<span class="form-group"> <input type="hidden"
-				name="requestURL" value="<%=request.getServletPath()%>">
+			<span class="form-group"> 
 				<button type="submit" class="btn btn-success" name="action"
 					value="insertGoods">新增</button>
 			</span>
@@ -166,39 +168,19 @@ body {
 
 
 
-	<!-- Basic -->
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!-- ckEditor JS -->
-	<script
-		src="<%=request.getContextPath()%>/vendor/ckeditor_full/ckeditor.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/backend/goods/js/goodsCKEditor.js"></script>
-	<!--datetimepicker-->
-	<script
-		src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
-	<%--     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
-	<!--     JavaScript in File -->
-	<script
-		src="<%=request.getContextPath()%>/backend/goods/js/update_goods_input.js"></script>
-	JavaScript in HTML ink rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css"
-	/>
-	<script
-		src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-	<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
+   <!-- Basic -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- ckEditor JS -->
+    <script src="<%=request.getContextPath()%>/vendor/ckeditor_easyImage_final/ckeditor.js"></script>
+    <!-- datetimepicker -->
+    <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
+    <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
+    <!-- JavaScript in File -->
+    <script type="text/javascript">
 
 	<script>
-		<script>
+	
 		$('#f_date1').datetimepicker({
 			theme : '', //theme: 'dark',
 			timepicker : true, //timepicker:true,

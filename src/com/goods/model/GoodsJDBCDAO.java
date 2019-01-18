@@ -22,9 +22,11 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 	private static final String UPDATE_STMT = "UPDATE GOODS SET EVETIT_NO=?, GOODS_NAME=?, GOODS_PRICE=?,  GOODS_PICTURE1=?, GOODS_PICTURE2=?, GOODS_PICTURE3=?, GOODS_INTRODUCTION=?, FORSALES_A=?, GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=? WHERE GOODS_NO=?";
 
 	@Override
-	public void insert(GoodsVO goodsVO) {
+	public String insert(GoodsVO goodsVO) {
 		Connection con = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt = null;	
+		ResultSet rs = null;
+		String goods_no = null;
 
 		try {
 
@@ -72,6 +74,8 @@ public class GoodsJDBCDAO implements GoodsDAO_interface {
 				}
 			}
 		}
+		
+		return goods_no;
 
 	}
 

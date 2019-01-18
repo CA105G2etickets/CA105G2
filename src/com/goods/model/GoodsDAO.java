@@ -11,9 +11,8 @@ import javax.sql.DataSource;
 import com.order_detail.model.OrderDetailVO;
 import com.shopping_cart.model.ShoppingCart;
 
-
 public class GoodsDAO implements GoodsDAO_interface {
- 
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -23,11 +22,10 @@ public class GoodsDAO implements GoodsDAO_interface {
 			e.printStackTrace();
 		}
 	}
-  
-	private static final String INSERT_STMT = "INSERT INTO GOODS (goods_no, evetit_no, goods_name, goods_price, goods_picture1,"+ 
-			"goods_picture2, goods_picture3, goods_introduction,forsales_a," + 
-			"favorite_count, goods_status, launchdate, offdate," + 
-			"goods_group_count, goods_want_count, goods_sales_count) VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
+
+	private static final String INSERT_STMT = "INSERT INTO GOODS (goods_no, evetit_no, goods_name, goods_price, goods_picture1,"
+			+ "goods_picture2, goods_picture3, goods_introduction,forsales_a," + "goods_status, launchdate, offdate)"
+			+ " VALUES('P'||LPAD(TO_CHAR(GOODS_SEQ.NEXTVAL),7,'0'),? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
 
 	private static final String GET_ALL_STMT = "SELECT * FROM GOODS ORDER BY GOODS_NO";
 
@@ -39,16 +37,19 @@ public class GoodsDAO implements GoodsDAO_interface {
 			+ ", GOODS_INTRODUCTION=?, FORSALES_A=?, FAVORITE_COUNT=?, GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?"
 			+ ", GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=? WHERE GOODS_NO=?";
 
-	private static final String GET_ALL_STMT_LAUNCHED= "SELECT * FROM GOODS WHERE (GOODS_STATUS = 'confirmed') AND (CURRENT_DATE BETWEEN LAUNCHDATE and OFFDATE) ORDER BY GOODS_NO DESC, LAUNCHDATE";
+	private static final String GET_ALL_STMT_LAUNCHED = "SELECT * FROM GOODS WHERE (GOODS_STATUS = 'confirmed') AND (CURRENT_DATE BETWEEN LAUNCHDATE and OFFDATE) ORDER BY GOODS_NO DESC, LAUNCHDATE";
+
 	@Override
-	public void insert(GoodsVO goodsVO) {
+	public String insert(GoodsVO goodsVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
- 
+		ResultSet rs = null;
+		String goods_no = null;
 		try {
-
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+
+			String[] cols = { "goods_no" };
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
 
 			pstmt.setString(1, goodsVO.getEvetit_no());
 			pstmt.setString(2, goodsVO.getGoods_name());
@@ -58,15 +59,19 @@ public class GoodsDAO implements GoodsDAO_interface {
 			pstmt.setBytes(6, goodsVO.getGoods_picture3());
 			pstmt.setString(7, goodsVO.getGoods_introduction());
 			pstmt.setInt(8, goodsVO.getForsales_a());
-			pstmt.setInt(9, goodsVO.getFavorite_count());
-			pstmt.setString(10, goodsVO.getGoods_status());
-			pstmt.setTimestamp(11, goodsVO.getLaunchdate());
-			pstmt.setTimestamp(12, goodsVO.getOffdate());
-			pstmt.setInt(13, goodsVO.getGoods_group_count());
-			pstmt.setInt(14, goodsVO.getGoods_want_count());
-			pstmt.setInt(15, goodsVO.getGoods_sales_count());
+//			pstmt.setInt(9, goodsVO.getFavorite_count());
+			pstmt.setString(9, goodsVO.getGoods_status());
+			pstmt.setTimestamp(10, goodsVO.getLaunchdate());
+			pstmt.setTimestamp(11, goodsVO.getOffdate());
+//			pstmt.setInt(13, goodsVO.getGoods_group_count());
+//			pstmt.setInt(14, goodsVO.getGoods_want_count());
+//			pstmt.setInt(15, goodsVO.getGoods_sales_count());
 
 			pstmt.executeUpdate();
+			rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				goods_no = rs.getString(1);
+			}
 
 			System.out.println("----------Inserted----------");
 		} catch (SQLException se) {
@@ -88,6 +93,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 				}
 			}
 		}
+		return goods_no;
 
 	}
 
@@ -187,7 +193,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-  
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
@@ -316,7 +322,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 	@Override
 	public List<GoodsVO> getAllLaunched(Map<String, String[]> map) {
-		
+
 		List<GoodsVO> list = new ArrayList<GoodsVO>();
 		GoodsVO goodsVO = null;
 
@@ -325,18 +331,17 @@ public class GoodsDAO implements GoodsDAO_interface {
 		ResultSet rs = null;
 		BufferedReader br = null;
 
-
 		try {
 
 			con = ds.getConnection();
 			String finalSQL = "SELECT * FROM GOODS WHERE (goods_status = 'confirmed') and (CURRENT_DATE BETWEEN launchdate AND offdate) "
-			          + CompositeQuery_Goods_Launched.get_WhereCondition(map)+ "ORDER BY GOODS_NO DESC, launchdate";
+					+ CompositeQuery_Goods_Launched.get_WhereCondition(map) + "ORDER BY GOODS_NO DESC, launchdate";
 			System.out.println("CompositeQuery_Goods_Launched : ");
 			System.out.println(finalSQL);
-			
+
 			pstmt = con.prepareStatement(finalSQL);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				goodsVO = new GoodsVO();
 				goodsVO.setGoods_no(rs.getString("goods_no"));
@@ -369,7 +374,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 				} catch (IOException ioe) {
 					ioe.printStackTrace(System.err);
 				}
-			}		
+			}
 			if (rs != null) {
 				try {
 					rs.close();
@@ -410,7 +415,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT_LAUNCHED);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				goodsVO = new GoodsVO();
 				goodsVO.setGoods_no(rs.getString("goods_no"));
@@ -468,14 +473,14 @@ public class GoodsDAO implements GoodsDAO_interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	//訂單完成後將購買商品增加購買數量
+
+	// 訂單完成後將購買商品增加購買數量
 	public void updateGOODS_SALES_COUNT(List<OrderDetailVO> list) {
 		GoodsVO goodsVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			con.setAutoCommit(false);

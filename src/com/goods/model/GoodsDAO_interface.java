@@ -7,7 +7,7 @@ import java.util.Set;
  
 public interface GoodsDAO_interface {
 
-	public void insert(GoodsVO goodsVO);
+	public String insert(GoodsVO goodsVO);
 
 	public void update(GoodsVO goodsVO);
 
