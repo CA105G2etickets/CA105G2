@@ -177,6 +177,7 @@
 										<!--開團成功  -->
 										<tr>
 										<td>
+										${group_openVO.group_no}
 										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
 										</td>
 										<td>

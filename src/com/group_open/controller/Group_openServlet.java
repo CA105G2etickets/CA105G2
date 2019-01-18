@@ -1362,11 +1362,7 @@ public class Group_openServlet extends HttpServlet {
 				String member_no = req.getParameter("member_no");
 				if (member_no == null || (member_no.trim().length() == 0)) {
 					errorMsgs.add("請輸入會員編號");
-				}
-				
-				
-				
-				
+				}	
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -1376,7 +1372,10 @@ public class Group_openServlet extends HttpServlet {
 					return;// 程式中斷 這裡沒有寫輸入格式錯誤
 				}
 				/************************ 開始取得資料 *****************************/
-
+				System.out.println("Group_open1376"+group_no);
+				System.out.println("Group_open1376"+member_no);
+				
+				
 				Group_memberService group_memberSvc = new Group_memberService();
 
 				Group_openService group_openSvc = new Group_openService();
@@ -1400,7 +1399,9 @@ public class Group_openServlet extends HttpServlet {
 				String total = String.valueOf(totali);
 
 				System.out.println(total);
-
+				
+				HttpSession session = req.getSession();
+				
 				// 寫到這裡 每個跟團人的明細 包括開團人
 				// 要去取得開團總數量 折扣價格
 				// 要確定豐森的表格 我都有 然後在jsp呈現
@@ -1412,7 +1413,9 @@ public class Group_openServlet extends HttpServlet {
 				
 				req.getSession().setAttribute("producttotal", producttotal);
 				req.getSession().setAttribute("total", total);
-				req.getSession().setAttribute("group_openVOorder", group_openVO);
+				req.getSession().setAttribute("group_openVO", group_openVO);
+				System.out.println("---------" + group_openVO.getMember_no());
+				System.out.println("---------" + group_openVO.getGroup_no());
 
 				String url = "/frontend/group_open/order.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -1451,6 +1454,8 @@ public class Group_openServlet extends HttpServlet {
 				req.setAttribute("group_openVO", group_openVO);
 				req.setAttribute("group_memberVO", group_memberVO);
 				req.setAttribute("evetitle_goods", map);
+				
+	
 		
 				String url1 = req.getParameter("url1");
 				String url2 = req.getParameter("url2");
@@ -1472,13 +1477,15 @@ public class Group_openServlet extends HttpServlet {
 			
 		}
 		
+
 		if ("insert_Front".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+	
 			
 			
 			
-//			try {
+			try {
 				String member_no = new String(req.getParameter("member_no").trim());
 				
 				String group_no = req.getParameter("group_no");
@@ -1633,12 +1640,17 @@ public class Group_openServlet extends HttpServlet {
 				successView.forward(req, res);
 				
 				
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_noYYYYY.jsp");
-//				failureView.forward(req, res);
-//			}		
-		
+			} catch (Exception e) {
+			for(String st:errorMsgs) {
+				System.out.println(st);
+			}
+				
+				
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_open/listGroup_memberBygroup_noYYYYY.jsp");
+				failureView.forward(req, res);
+			}		
+//		
 			}
 		System.out.println(action);
 		if ("getOnefordisplay_goods".equals(action)) {

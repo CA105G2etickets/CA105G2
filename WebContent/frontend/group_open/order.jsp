@@ -8,7 +8,10 @@
 <% 
 			 String product =session.getAttribute("producttotal").toString();
 			 String total =session.getAttribute("total").toString();
-			Group_openVO group_openVO = (Group_openVO) session.getAttribute("group_openVOorder");
+			/* Group_openVO group_openVO = (Group_openVO) session.getAttribute("group_openVOorder"); */
+			 
+			
+			
 			
 			MemberService memberSvc = new MemberService();
 			List<MemberVO> list2 =  memberSvc.getAll();
@@ -88,9 +91,8 @@
 				</div>
 				<div class="col-xs-12 col-sm-10">
 					<div class="col-xs-12 col-sm-6">
-						
 						<img src="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" class="img-thumbnail">
-
+						
 
 
 					</div><!-- <div class="col-xs-12 col-sm-6"> -->
@@ -141,7 +143,7 @@
 								<th>總計</th>
 							</tr>
 						</thead>			
-						<tbody>
+						<tbody><% %>
 						<c:forEach var="group_memberVO" items="${groupsucesslist}" >
 							<tr>
 								<td>
@@ -244,7 +246,7 @@
 								</div><!-- <div class="form-group"> -->
 \		
 						   <div class="form-group">
- 							 <label for="sel1">出貨方式</label>
+ 							 <label for="sel1">出貨方式</label>${group_openVO.group_price}
   								<select class="form-control" id="sel1" name="shipping_methods">
    									 <option>超商取貨</option>
     								 <option>宅配</option>
@@ -264,7 +266,7 @@
 								<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
 								<input type="hidden" name="action" value="insert_Front">		
 								<button type="submit" class="btn btn-primary finish">產生訂單</button>
-							
+							</FORM>
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 							<br>
 						<div class="col-xs-12 col-sm-6">
