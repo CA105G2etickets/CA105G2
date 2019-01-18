@@ -20,12 +20,8 @@ String eve_noFromPage = request.getParameter("eve_no");
 %> --%>
 
 <%
-
-TicketOrderVO toVO = (TicketOrderVO)request.getAttribute("updated_tovo");
-List<ShowTicketVO> stvos = (List<ShowTicketVO>)request.getAttribute("listShow");
-
+TicketOrderVO toVO = (TicketOrderVO)request.getAttribute("toVO");
 pageContext.setAttribute("toVO",toVO);
-pageContext.setAttribute("stvos", stvos);
 %>
 
 <!-- ======================================== DAI:::begin ================================================== -->
@@ -211,7 +207,7 @@ body {
 			<tbody>
 				<tr>
 					<td style="width:20%;">${toVO.ticket_order_no}</td>
-					<td>${seatingAreaService.getOneSeatingArea(param.ticarea_no).ticarea_name}</td>
+					<td>${seatingAreaService.getOneSeatingArea(toVO.seatingarea_h5VO.ticarea_no).ticarea_name}</td>
 					<td>
 						<fmt:formatNumber type="number" value="${toVO.total_price / toVO.total_amount}" /> 元
 					</td>

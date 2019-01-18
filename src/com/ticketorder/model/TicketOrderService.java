@@ -104,7 +104,9 @@ public class TicketOrderService {
 //	public String cancelTicketOrderByServlet(String ticket_order_no) {
 //		return dao.cancelTicketOrderByServlet(ticket_order_no);
 //	}
-	
+	public String cancelTicketOrderByUser(String ticket_order_no) {
+		return old_dao.cancelTicketOrderByUser(ticket_order_no);
+	}
 	
 	
 	//================================================== 與舊版本相容 ==================================================

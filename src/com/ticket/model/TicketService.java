@@ -92,4 +92,8 @@ public class TicketService {
 		return dao.getAll_map(map, strOrderByTargetColumnName);
 	}
 	
+	public List<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no){
+		return dao.getTicketsByTicketOrderNo(ticket_order_no);
+	}
+	
 }

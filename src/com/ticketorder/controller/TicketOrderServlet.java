@@ -418,12 +418,12 @@ public class TicketOrderServlet extends HttpServlet {
 				//check toVO's status to let user cant update the status when it's OUTDATE4
 				String targetToVoStatus = toVO.getTicket_order_status();
 				if("OUTDATE4".equals(targetToVoStatus)) {
-					errorMsgs.add("此訂票訂單已逾期，被系統取消並釋放座位區的位置，請重新購票");
+					errorMsgs.add("此訂票訂單已逾期，因超過繳費期限而被系統取消，請重新購票");
 				}
 				// Send the user back to the former page, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/ticketorder/selectPaymentAndPay.jsp");
+							.getRequestDispatcher("/frontend/index.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -464,60 +464,60 @@ public class TicketOrderServlet extends HttpServlet {
 				
 				//after transaction success, set lastest tovo into req
 				TicketOrderVO updated_tovo = toSvc.getOneTicketOrder(ticket_order_no);
-				req.setAttribute("updated_tovo", updated_tovo);
+				req.setAttribute("toVO", updated_tovo);
 				
 				//try add tickets after this transaction into req
-				TicketService tSvc = new TicketService();
-				Map<String, String[]> map = new TreeMap<String, String[]>();
-				map.put("ticket_order_no", new String[] {ticket_order_no});
-				map.put("member_no", new String[] {updated_tovo.getMember_no()});
-				List<TicketVO> memberListTVO = tSvc.getAll_map(map, "ticket_create_time");
-//				req.setAttribute("memberListTVO", memberListTVO); //maybe useless while listShow work on
-				
-//				String[] strasdfasdef = memberListTVO.toArray(new String[memberListTVO.size()]);
-//				System.out.println(strasdfasdef);
-				
-//				map.clear();
-//				map.put("eve_no", new String[] {eve_no});
-				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
-//				List<SeatingArea_H5_VO> slist = sh5Svc.getAll(map, "ticarea_no");
-//				Event_H5_Service eh5Svc = new Event_H5_Service();
-//				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+//				TicketService tSvc = new TicketService();
+//				Map<String, String[]> map = new TreeMap<String, String[]>();
+//				map.put("ticket_order_no", new String[] {ticket_order_no});
+//				map.put("member_no", new String[] {updated_tovo.getMember_no()});
+//				List<TicketVO> memberListTVO = tSvc.getAll_map(map, "ticket_create_time");
+////				req.setAttribute("memberListTVO", memberListTVO); //maybe useless while listShow work on
 //				
-//				req.setAttribute("slist", slist);
-//				req.setAttribute("eh5vo", eh5vo);
-				
-				Event_H5_Service eh5Svc = new Event_H5_Service();
-				Event_H5_VO eh5VO = eh5Svc.getOneEvent_H5(eve_no);
-				req.setAttribute("eh5VO", eh5VO);
-				List<ShowTicketVO> listShow = new LinkedList<ShowTicketVO>();
-				
-				for(TicketVO at:memberListTVO) {
-					ShowTicketVO stvo = new ShowTicketVO();
-					stvo.setTicket_no(at.getTicket_no());
-					stvo.setMember_no(at.getMember_no());
-					stvo.setTicket_status(at.getTicket_status());
-					
-//					System.out.println("at="+at.getSeatingarea_h5VO().getTicarea_no());
-					SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(at.getSeatingarea_h5VO().getTicarea_no());
-					stvo.setTicarea_name(sh5VO.getTicarea_name());
-					stvo.setTicarea_color(sh5VO.getTicarea_color());
-					stvo.setTictype_name(sh5VO.getTickettype_h5VO().getTictype_name());
-					stvo.setTictype_price(sh5VO.getTickettype_h5VO().getTictype_price());
-					
-//					System.out.println("sh5VO.get="+sh5VO.getEve_h5VO().getEve_no());
-					Event_H5_VO eh5VO2 = eh5Svc.getOneEvent_H5(sh5VO.getEve_h5VO().getEve_no());
-//					System.out.println("eh5VO.get="+eh5VO.getVenue_h5VO().getAddress());
-					stvo.setEve_sessionname(eh5VO2.getEve_sessionname());
-					stvo.setEve_startdate(eh5VO2.getEve_startdate());
-					stvo.setEve_enddate(eh5VO2.getEve_enddate());
-					stvo.setEve_offsaledate(eh5VO2.getEve_offsaledate());
-					stvo.setEvetit_name(eh5VO2.getEventtitle_h5VO().getEvetit_name());
-					stvo.setVenue_name(eh5VO2.getVenue_h5VO().getVenue_name());
-					stvo.setAddress(eh5VO2.getVenue_h5VO().getAddress());
-					listShow.add(stvo);
-				}
-				req.setAttribute("listShow", listShow);
+////				String[] strasdfasdef = memberListTVO.toArray(new String[memberListTVO.size()]);
+////				System.out.println(strasdfasdef);
+//				
+////				map.clear();
+////				map.put("eve_no", new String[] {eve_no});
+//				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+////				List<SeatingArea_H5_VO> slist = sh5Svc.getAll(map, "ticarea_no");
+////				Event_H5_Service eh5Svc = new Event_H5_Service();
+////				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
+////				
+////				req.setAttribute("slist", slist);
+////				req.setAttribute("eh5vo", eh5vo);
+//				
+//				Event_H5_Service eh5Svc = new Event_H5_Service();
+//				Event_H5_VO eh5VO = eh5Svc.getOneEvent_H5(eve_no);
+//				req.setAttribute("eh5VO", eh5VO);
+//				List<ShowTicketVO> listShow = new LinkedList<ShowTicketVO>();
+//				
+//				for(TicketVO at:memberListTVO) {
+//					ShowTicketVO stvo = new ShowTicketVO();
+//					stvo.setTicket_no(at.getTicket_no());
+//					stvo.setMember_no(at.getMember_no());
+//					stvo.setTicket_status(at.getTicket_status());
+//					
+////					System.out.println("at="+at.getSeatingarea_h5VO().getTicarea_no());
+//					SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(at.getSeatingarea_h5VO().getTicarea_no());
+//					stvo.setTicarea_name(sh5VO.getTicarea_name());
+//					stvo.setTicarea_color(sh5VO.getTicarea_color());
+//					stvo.setTictype_name(sh5VO.getTickettype_h5VO().getTictype_name());
+//					stvo.setTictype_price(sh5VO.getTickettype_h5VO().getTictype_price());
+//					
+////					System.out.println("sh5VO.get="+sh5VO.getEve_h5VO().getEve_no());
+//					Event_H5_VO eh5VO2 = eh5Svc.getOneEvent_H5(sh5VO.getEve_h5VO().getEve_no());
+////					System.out.println("eh5VO.get="+eh5VO.getVenue_h5VO().getAddress());
+//					stvo.setEve_sessionname(eh5VO2.getEve_sessionname());
+//					stvo.setEve_startdate(eh5VO2.getEve_startdate());
+//					stvo.setEve_enddate(eh5VO2.getEve_enddate());
+//					stvo.setEve_offsaledate(eh5VO2.getEve_offsaledate());
+//					stvo.setEvetit_name(eh5VO2.getEventtitle_h5VO().getEvetit_name());
+//					stvo.setVenue_name(eh5VO2.getVenue_h5VO().getVenue_name());
+//					stvo.setAddress(eh5VO2.getVenue_h5VO().getAddress());
+//					listShow.add(stvo);
+//				}
+//				req.setAttribute("listShow", listShow);
 				
 				String url = "/frontend/ticketorder/paymentDoneShowInfos.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -1490,7 +1490,7 @@ public class TicketOrderServlet extends HttpServlet {
         	
         	try {
             	TicketOrderService toSvc = new TicketOrderService();
-            	String str = toSvc.cancelTicketOrderByServlet(ticket_order_no);
+            	String str = toSvc.cancelTicketOrderByUser(ticket_order_no);
             	System.out.println("the target of cancel success, the ticket_order_no="+str);
             	
             	String url = "/frontend/ticketorder/listAllTicketOrderBymember_no.jsp";

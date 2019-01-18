@@ -538,4 +538,10 @@ public class Old_TicketOrderDAOJDBC implements Old_TicketOrderDAO_interface{
 		return null;
 	}
 
+	@Override
+	public String cancelTicketOrderByUser(String ticket_order_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

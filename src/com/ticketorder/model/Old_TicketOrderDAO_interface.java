@@ -18,4 +18,5 @@ public interface Old_TicketOrderDAO_interface {
     public String insertTicketOrderAndUpdateTicArea(Old_TicketOrderVO ticketorderVO, SeatingAreaVO seatingareaVO);
     public String cancelTicketOrderByServlet(String ticket_order_no);
     public void updateTicketOrderAndInsertTickets(Old_TicketOrderVO ticketorderVO, List<Old_TicketVO> list);
+    public String cancelTicketOrderByUser(String ticket_order_no);
 }

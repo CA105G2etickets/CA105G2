@@ -208,7 +208,7 @@ body {
 			<tbody>
 				<tr>
 					<td>${toVO.ticket_order_no}</td>
-					<td>${seatingAreaService.getOneSeatingArea(param.ticarea_no).ticarea_name}</td>
+					<td>${seatingAreaService.getOneSeatingArea(toVO.seatingarea_h5VO.ticarea_no).ticarea_name}</td>
 					<td>
 						<fmt:formatNumber type="number" value="${toVO.total_price / toVO.total_amount}" /> 元
 					</td>

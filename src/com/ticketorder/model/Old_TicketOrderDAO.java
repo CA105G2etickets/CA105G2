@@ -718,4 +718,142 @@ public class Old_TicketOrderDAO implements Old_TicketOrderDAO_interface{
 		}
 		
 	}
+	
+	public void cancelOneTicketOrderByUser(Old_TicketOrderVO ticketorderVO, Connection con) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(UPDATE);
+			pstmt.setString(1, ticketorderVO.getMember_no());
+			pstmt.setString(2, ticketorderVO.getTicarea_no());
+			pstmt.setInt(3, ticketorderVO.getTotal_price());
+			pstmt.setInt(4, ticketorderVO.getTotal_amount());
+			pstmt.setTimestamp(5, ticketorderVO.getTicket_order_time());
+			pstmt.setString(6, ticketorderVO.getPayment_method());
+			pstmt.setString(7, "CANCEL3");
+			pstmt.setString(8, ticketorderVO.getTicket_order_no());
+
+			pstmt.executeUpdate();
+			
+			System.out.println("----------Updated----------");
+
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-cancelOneTicketOrderByServlet at TicketOrderDAO.java");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public String cancelTicketOrderByUser(String ticket_order_no) {
+		Old_TicketOrderVO ticketorderVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+			
+    		// 先get TicketOrderVO
+    		pstmt = con.prepareStatement(GET_ONE_STMT);
+    		pstmt.setString(1, ticket_order_no);
+    		
+    		rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo �]�٬� Domain objects
+				ticketorderVO = new Old_TicketOrderVO();
+				ticketorderVO.setTicket_order_no(rs.getString("ticket_order_no"));
+				ticketorderVO.setMember_no(rs.getString("member_no"));
+				ticketorderVO.setTicarea_no(rs.getString("ticarea_no"));
+				ticketorderVO.setTotal_price(rs.getInt("total_price"));
+				ticketorderVO.setTotal_amount(rs.getInt("total_amount"));
+				ticketorderVO.setTicket_order_time(rs.getTimestamp("ticket_order_time"));
+				ticketorderVO.setPayment_method(rs.getString("payment_method"));
+				ticketorderVO.setTicket_order_status(rs.getString("ticket_order_status"));
+			}
+			//check out the status , only cancel the 'WAITTOPAY'
+			String toStatus = ticketorderVO.getTicket_order_status();
+			if(!toStatus.contains("WAIT")) {
+				throw new SQLException("status isnt WAITTOPAY1,USer cant cancel it");
+			}
+			
+    		this.cancelOneTicketOrderByUser(ticketorderVO, con);
+    		
+    		//after update TicketOrderStatus to outdate4, then update the seatingarea's bookednumber
+    		String ticarea_no = ticketorderVO.getTicarea_no();
+    		Integer total_amount_thisTicketOrder = ticketorderVO.getTotal_amount();
+    		
+			//同時delete tic_area's bookednumber
+			SeatingAreaDAO seatingareaDAO = new SeatingAreaDAO();
+			SeatingAreaVO sVO = seatingareaDAO.findByPrimaryKeyWithCon(ticarea_no, con);
+			Integer currentBookedNum = sVO.getTicbookednumber();
+			sVO.setTicbookednumber(currentBookedNum-total_amount_thisTicketOrder);
+			seatingareaDAO.updateSeatingAreaVOBecauseTicketOrderCancelledByServlet(sVO, con);
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-TicketOrderDAO cancelTicketOrderByServlet");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return ticket_order_no;
+	}
 }

@@ -15,6 +15,8 @@ public interface TicketDAO_interface {
     public Set<ResaleOrderVO> getResaleOrderByTicketsNo(String ticket_no);
     
     public List<TicketVO> getAll_map(Map<String, String[]> map,String strOrderByTargetColumnName);
+    
+    public List<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no);
 //    public void InsertTicketsAndUpdateTargetTO(List<TicketVO> list, String ticket_order_no);
 //    public void insertTickets (TicketVO ticketVO , java.sql.Connection con);
 }
