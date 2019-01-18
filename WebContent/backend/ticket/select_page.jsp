@@ -21,7 +21,7 @@
     padding: 1px;
   }
 </style>
-
+<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font color='red'>請修正以下錯誤:</font>
@@ -38,7 +38,7 @@
   <li>   
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backend/ticket/ticket.do">
         <b><font color=blue>請選取下列一種條件，再輸入你想搜尋的條件，搜尋出你想要買的轉讓票: 文字為模糊搜尋，數字可選'>' '<' '='</font></b> <br>
-        
+        <b><font color=blue>選取條件的map put判斷條件還沒有做，只能查全部</font></b> <br>
         <select name=selectBar_Choice>
         	<option value="ticket_resale_price" selected="selected">轉售票的價錢</option>
         	<option value="member_no" >會員編號</option>

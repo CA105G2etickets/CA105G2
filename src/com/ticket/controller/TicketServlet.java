@@ -32,8 +32,10 @@ public class TicketServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
 //		if("getOne_For_Display".equals(action)) {
 //			List<String> errorMsgs = new LinkedList<String>();
 //			// Store this set in the request scope, in case we need to
@@ -394,7 +396,6 @@ public class TicketServlet extends HttpServlet {
 		
 		if ("ticket_select_by_member_no".equals(action)) { 
 			
-			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 				
@@ -403,17 +404,16 @@ public class TicketServlet extends HttpServlet {
 				
 				TicketService tSvc = new TicketService();
 				Map<String, String[]> map = new TreeMap<String, String[]>();
-				map.put("member_no", new String[] {member_no});
-							
-							
+				map.put("member_no", new String[] {member_no});						
 				List<TicketVO> memberListTVO = tSvc.getAll_map(map, "ticket_create_time");
 				
-				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();			
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
 				Event_H5_Service eh5Svc = new Event_H5_Service();
 				List<ShowTicketVO> listShow = new LinkedList<ShowTicketVO>();
-				
+				 
 				for(TicketVO at:memberListTVO) {
 					ShowTicketVO stvo = new ShowTicketVO();
+					
 					stvo.setTicket_no(at.getTicket_no());
 					stvo.setMember_no(at.getMember_no());
 					stvo.setTicket_status(at.getTicket_status());
@@ -435,18 +435,17 @@ public class TicketServlet extends HttpServlet {
 					stvo.setEve_enddate(eh5VO.getEve_enddate());
 					stvo.setEve_offsaledate(eh5VO.getEve_offsaledate());
 					stvo.setEvetit_name(eh5VO.getEventtitle_h5VO().getEvetit_name());
+					
 					stvo.setVenue_name(eh5VO.getVenue_h5VO().getVenue_name());
 					stvo.setAddress(eh5VO.getVenue_h5VO().getAddress());
 					listShow.add(stvo);
 				}
 				req.setAttribute("listShow", listShow);
-							
-															
+				
 				String url = "/frontend/ticket/member_select_tickets.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-							
-							
+				
 			} catch (Exception e) {
 				errorMsgs.add("failed ticket_select_by_member_no:"+e.getMessage());
 				RequestDispatcher failureView = req
@@ -454,6 +453,78 @@ public class TicketServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if("member_sell_targetTicket".equals(action)) {
+			
+			String ticket_resale_price = req.getParameter("ticket_resale_price");
+			String ticket_no = req.getParameter("ticket_no");
+			String member_no = req.getParameter("member_no");
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				TicketService tSvc = new TicketService();
+				TicketVO tvoFromDB = tSvc.getOneTicket(ticket_no);
+				if(tvoFromDB == null) {
+					errorMsgs.add("不存在此票券");
+				}
+				if("SELLING1".equals(tvoFromDB.getTicket_resale_status()) || "CHECKING2".equals(tvoFromDB.getTicket_resale_status())) {
+					errorMsgs.add("此票已販賣中或是正在等待結帳，不可再度販賣或更動狀態");
+				}
+				//create listShow for error-forward
+				Map<String, String[]> map = new TreeMap<String, String[]>();
+				map.put("member_no", new String[] {member_no});						
+				List<TicketVO> memberListTVO = tSvc.getAll_map(map, "ticket_create_time");
+				
+				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				List<ShowTicketVO> listShow = new LinkedList<ShowTicketVO>();
+				 
+				for(TicketVO at:memberListTVO) {
+					ShowTicketVO stvo = new ShowTicketVO();
+					
+					stvo.setTicket_no(at.getTicket_no());
+					stvo.setMember_no(at.getMember_no());
+					stvo.setTicket_status(at.getTicket_status());
+					
+					stvo.setTicket_resale_status(at.getTicket_resale_status());
+					stvo.setTicket_resale_price(at.getTicket_resale_price());
+					stvo.setIs_from_resale(at.getIs_from_resale());
+					stvo.setTicket_order_no(at.getTicketorderVO().getTicket_order_no());
+					
+					SeatingArea_H5_VO sh5VO = sh5Svc.getOneSeatingArea_H5(at.getSeatingarea_h5VO().getTicarea_no());
+					stvo.setTicarea_name(sh5VO.getTicarea_name());
+					stvo.setTicarea_color(sh5VO.getTicarea_color());
+					stvo.setTictype_name(sh5VO.getTickettype_h5VO().getTictype_name());
+					stvo.setTictype_price(sh5VO.getTickettype_h5VO().getTictype_price());
+					
+					Event_H5_VO eh5VO = eh5Svc.getOneEvent_H5(sh5VO.getEve_h5VO().getEve_no());
+					stvo.setEve_sessionname(eh5VO.getEve_sessionname());
+					stvo.setEve_startdate(eh5VO.getEve_startdate());
+					stvo.setEve_enddate(eh5VO.getEve_enddate());
+					stvo.setEve_offsaledate(eh5VO.getEve_offsaledate());
+					stvo.setEvetit_name(eh5VO.getEventtitle_h5VO().getEvetit_name());
+					
+					stvo.setVenue_name(eh5VO.getVenue_h5VO().getVenue_name());
+					stvo.setAddress(eh5VO.getVenue_h5VO().getAddress());
+					listShow.add(stvo);
+				}
+				req.setAttribute("listShow", listShow);
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ticketorder/member_select_tickets.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				
+				
+			}catch(Exception e) {
+				
+			}
+			
+		} 
 		
 		
 	}

@@ -98,6 +98,7 @@ pageContext.setAttribute("toVO",toVO);
 <input type="submit" value="查詢訂票訂單">
 </FORM>
 <br>
+
 <FORM METHOD="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
 	<table>
 		<tr>
@@ -110,6 +111,7 @@ pageContext.setAttribute("toVO",toVO);
 <input type="submit" value="查詢票券">
 </FORM>
 <br>
+
 <FORM METHOD="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
 	<table>
 		<tr>

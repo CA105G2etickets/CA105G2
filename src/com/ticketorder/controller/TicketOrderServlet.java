@@ -67,41 +67,33 @@ public class TicketOrderServlet extends HttpServlet {
 //		res.setDateHeader("Expires", 0);
 		
 		//get eve_no to next buyticket.jsp ,after this line,co-operate with event programmer
+		//try to catch TAI's support view,
         if("select_EVE_NO_toBuyTickets".equals(action)) {
         	
         	List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			MemberVO member = (MemberVO)session.getAttribute("member");
 			
 			try {
 				String eve_no = req.getParameter("eve_no");
-				if (eve_no == null || (eve_no.trim()).length() == 0) {
-					errorMsgs.add("請輸入eve_no編號");
+				String member_no = member.getMemberNo();
+        		if (member_no == null || (member_no.trim()).length() == 0) {
+					errorMsgs.add("購票前請登入");
 				}
-				if (eve_no.length()>18) {
-					errorMsgs.add("eve_no格式不正確");
-				}
-				if (this.containsHanScript(eve_no)) {
-					errorMsgs.add("eve_no不可包含中文");
-				}
-				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/ticketorder/evetit_no_SelectedReady2Next.jsp"); //set back to event.jsp
+							.getRequestDispatcher("/frontend/login_front-end.jsp"); 
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
-//				String strRequestFrom = req.getParameter("requestURL");
-//				System.out.println("strRequestFrom="+strRequestFrom);
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
 				
-				//驗證錯誤結束，準備開始call service
 				Map<String, String[]> map = new TreeMap<String, String[]>();
 				map.put("eve_no", new String[] {eve_no});
 				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
 				List<SeatingArea_H5_VO> list = sh5Svc.getAll(map, "ticarea_no");
-				
-				Event_H5_Service eh5Svc = new Event_H5_Service();
-				Event_H5_VO eh5vo = eh5Svc.getOneEvent_H5(eve_no);
 				
 				if (list == null) {
 					errorMsgs.add("查無資料");
@@ -109,26 +101,22 @@ public class TicketOrderServlet extends HttpServlet {
 				// Send the user back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/ticketorder/evetit_no_SelectedReady2Next.jsp");
+							.getRequestDispatcher("/frontend/index.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				req.setAttribute("slist", list);
-				req.setAttribute("eh5vo", eh5vo); 
-				
-//				session.setAttribute("slist", list);
-//				session.setAttribute("eh5vo", eh5vo);
-				
-//				String url = "/frontend/ticketorder/buyTicketsSimTwo.jsp";
+				req.setAttribute("eh5vo", eh5vo);
+				req.setAttribute("member_no", member_no);
 				
 				String url = "/frontend/ticketorder/eve_no_SelectedReady2Next.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 				
 			}catch(Exception e) {
-				errorMsgs.add("從資料庫複合查詢失敗,at evetit_no_SelectedReady2Next.jsp:"+e.getMessage());
+				errorMsgs.add("controller.select_EVE_NO_toBuyTickets:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/ticketorder/evetit_no_SelectedReady2Next.jsp");
+						.getRequestDispatcher("/frontend/index.jsp");
 				failureView.forward(req, res);
 			}
         }
@@ -145,13 +133,15 @@ public class TicketOrderServlet extends HttpServlet {
 			Event_H5_VO eh5vo = new Event_H5_VO();
 //			List<String> list4PassValue = new LinkedList<String>();
 			
-			//set eve_no to req to get data user want to see.
-			String eve_no = req.getParameter("eve_no");
-			
 			try {
+				//set eve_no to req to get data user want to see.
+				String eve_no = req.getParameter("eve_no");
 				String ticarea_no = req.getParameter("ticarea_no");
 				String ticketsNum = req.getParameter("ticketsNum");
 				String tictype_no = req.getParameter("tictype_no");
+				String member_no = req.getParameter("member_no");
+				System.out.println("controller.ticketnumselected_buytickets="+eve_no
+						+ticarea_no+ticketsNum+tictype_no+member_no);
 				
 				
 //				list4PassValue.add(req.getParameter("evetit_nameForShow"));
@@ -172,6 +162,7 @@ public class TicketOrderServlet extends HttpServlet {
 				req.setAttribute("slist", list);
 				req.setAttribute("eh5vo", eh5vo);
 				req.setAttribute("eve_no", eve_no);
+				
 //				req.setAttribute("list4PassValue", list4PassValue);
 //				req.setAttribute("list4PassValue", list4PassValue);
 				
@@ -202,52 +193,17 @@ public class TicketOrderServlet extends HttpServlet {
 //        			}
 //        		} //fail
 				
-				//ticarea_no
-				if (ticarea_no == null || (ticarea_no.trim()).length() == 0) {
-					errorMsgs.add("請輸入ticarea_no編號");
-				}
-				if (ticarea_no.length()>18) {
-					errorMsgs.add("ticarea_no格式不正確");
-				}
-				if (this.containsHanScript(ticarea_no)) {
-					errorMsgs.add("ticarea_no不可包含中文");
-				}
-				
-				//ticketsNum
-				if (ticketsNum == null || (ticketsNum.trim()).length() == 0) {
-					errorMsgs.add("請輸入ticketsNum");
-				}
-				if (ticketsNum.length()>18) {
-					errorMsgs.add("ticketsNum格式不正確");
-				}
-				if (this.containsHanScript(ticketsNum)) {
-					errorMsgs.add("ticketsNum不可包含中文");
-				}
-				
-				//tictype_no
-				if (tictype_no == null || (tictype_no.trim()).length() == 0) {
-					errorMsgs.add("請輸入tictype_no編號");
-				}
-				if (tictype_no.length()>18) {
-					errorMsgs.add("tictype_no格式不正確");
-				}
-				if (this.containsHanScript(tictype_no)) {
-					errorMsgs.add("tictype_no不可包含中文");
-				}
-				
-				//start to create ticket_order
-				String member_no = "M000001"; //member still NOT implemented yet
-				
+				//start to create ticket_order //temperarily disable errorMsg
 				Integer total_amount = null;
 				try {
 					total_amount = new Integer(Integer.parseInt(ticketsNum));
 					
 					if(total_amount > 100100 || total_amount <0) {
-						errorMsgs.add("總張數請勿亂填數字.");
+//						errorMsgs.add("總張數請勿亂填數字.");
 					}
 				} catch (NumberFormatException e) {
 					total_amount = 0;
-					errorMsgs.add("總張數請填數字.");
+//					errorMsgs.add("總張數請填數字.");
 				}
 				
 				Integer total_price = null;
@@ -258,11 +214,11 @@ public class TicketOrderServlet extends HttpServlet {
 					total_price = oneTicketPrice*total_amount;
 					
 					if(total_amount > 10100100 || total_amount <0) {
-						errorMsgs.add("總張數請勿亂填數字.");
+//						errorMsgs.add("總張數請勿亂填數字.");
 					}
 				} catch (NumberFormatException e) {
 					total_amount = 0;
-					errorMsgs.add("總張數請填數字.");
+//					errorMsgs.add("總張數請填數字.");
 				}
 				
 				java.sql.Timestamp ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
@@ -282,8 +238,10 @@ public class TicketOrderServlet extends HttpServlet {
 				
 				//these line use controller to deal tickets chasing
 				if(total_amount+svo.getTicbookednumber() > svo.getTictotalnumber()) {
-					errorMsgs.add("選取的目標活動的剩餘票數不足，請重新購票");
+					errorMsgs.add("選取的目標活動的剩餘票數不足，請重新購票");	
 				}
+				
+				req.setAttribute("member_no", member_no);
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
@@ -347,7 +305,7 @@ public class TicketOrderServlet extends HttpServlet {
 //				req.setAttribute("createdTicketOrderNo", createdTicketOrderNo);
 				
 				//set sessionLiveTime for payment deadline 
-				session.setMaxInactiveInterval(60);
+//				session.setMaxInactiveInterval(60);
 				TicketOrderVO toVO_sendTo_selectPaymentjsp = toSvc.getOneTicketOrder(createdTicketOrderNo);
 				req.setAttribute("toVO", toVO_sendTo_selectPaymentjsp);
 				
@@ -360,9 +318,9 @@ public class TicketOrderServlet extends HttpServlet {
 			} catch(NullPointerException ne) {
 				System.out.println("nullporinter");
 				errorMsgs.add("錯誤訊息如下:"+ne.getMessage());
-				req.setAttribute("slist", list);
-				req.setAttribute("eh5vo", eh5vo);
-				req.setAttribute("eve_no", eve_no);
+//				req.setAttribute("slist", list);
+//				req.setAttribute("eh5vo", eh5vo);
+//				req.setAttribute("eve_no", eve_no);
 //				req.setAttribute("list4PassValue", list4PassValue);
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
@@ -380,9 +338,9 @@ public class TicketOrderServlet extends HttpServlet {
 //				req.setAttribute("eve_no", eve_no);
 //				System.out.println("從資料庫失敗 eve_no="+eve_no);
 				
-				req.setAttribute("slist", list);
-				req.setAttribute("eh5vo", eh5vo);
-				req.setAttribute("eve_no", eve_no);
+//				req.setAttribute("slist", list);
+//				req.setAttribute("eh5vo", eh5vo);
+//				req.setAttribute("eve_no", eve_no);
 //				req.setAttribute("list4PassValue", list4PassValue);
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
@@ -455,12 +413,12 @@ public class TicketOrderServlet extends HttpServlet {
 				//check toVO's status to let user cant update the status when it's OUTDATE4
 				String targetToVoStatus = toVO.getTicket_order_status();
 				if("OUTDATE4".equals(targetToVoStatus)) {
-					errorMsgs.add("This TicketOrder is been canceled by server because of payment time-limit.");
+					errorMsgs.add("此訂票訂單已逾期，被系統取消並釋放座位區的位置，請重新購票");
 				}
 				// Send the user back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/ticketorder/selectPaymentAndPay.jsp");
+							.getRequestDispatcher("/frontend/index.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -559,9 +517,9 @@ public class TicketOrderServlet extends HttpServlet {
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				errorMsgs.add("databaseError:from selectPaymentAndPay.jsp, might be rollback" + e.getMessage());
+				errorMsgs.add("controller.userPaying" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/ticketorder/selectPaymentAndPay.jsp");
+						.getRequestDispatcher("/frontend/index.jsp");
 				failureView.forward(req, res);
 			}
         }

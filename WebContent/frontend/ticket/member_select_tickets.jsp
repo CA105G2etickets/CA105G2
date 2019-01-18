@@ -53,12 +53,13 @@ pageContext.setAttribute("listShow", listShow);
 		<th>活動座位區名稱</th>
 		<th>活動座位區顏色代碼</th>
 		
-		<th>票種名稱</th>
+		<!-- <th>票種名稱</th> -->
 		<th>票種價格</th>
+		
 		<th>場次名稱</th>
 		<th>活動開始日期</th>
-		<th>活動結束日期</th>
-		<th>售票結束日期</th>
+		<!-- <th>活動結束日期</th>
+		<th>售票結束日期</th> -->
 		
 		<th>活動主題名稱</th>
 		<th>場地名稱</th>
@@ -73,16 +74,22 @@ pageContext.setAttribute("listShow", listShow);
 			<td>${showticketVO.ticket_no}</td>
 			<td>${memberService.getOneMember(showticketVO.member_no).memberFullname}</td>
 			
-			<td>${showticketVO.ticket_status}</td>
+			<td>
+			${(showticketVO.ticket_order_status == 'ACTIVE1') ? '尚未付款' : ''}
+			${(showticketVO.ticket_order_status == 'USED2') ? '完成付款' : ''}
+			${(showticketVO.ticket_order_status == 'OUTDATE3') ? '已取消' : ''}
+			${(showticketVO.ticket_order_status == 'REFUND4') ? '逾時未付' : ''}
+			</td>
 			<td>${showticketVO.ticarea_name}</td>
 			<td>${showticketVO.ticarea_color}</td>
 			
-			<td>${showticketVO.tictype_name}</td>
+			<%-- <td>${showticketVO.tictype_name}</td> --%>
 			<td>${showticketVO.tictype_price}</td>
+			
 			<td>${showticketVO.eve_sessionname}</td>
-			<td>${showticketVO.eve_startdate}</td>
-			<td>${showticketVO.eve_enddate}</td>
-			<td>${showticketVO.eve_offsaledate}</td>
+			<td><fmt:formatDate value="${showticketVO.eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<%-- <td>${showticketVO.eve_enddate}</td>
+			<td>${showticketVO.eve_offsaledate}</td> --%>
 			
 			<td>${showticketVO.evetit_name}</td>
 			<td>${showticketVO.venue_name}</td>
@@ -93,20 +100,18 @@ pageContext.setAttribute("listShow", listShow);
 			
 			
 			<td>
-				<%-- <form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
-					<input type="number" name="ticket_resale_price" value="${showticketVO.tictype_price}">
+				<form method="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
 					<input type="hidden" name="action" value="member_sell_targetTicket">
-					<input type="hidden" name="ticket_no" value="${showticketVO.ticket_no}"> <!--Member not done yet, only been set as M000001 -->
+					<input type="number" name="ticket_resale_price" value="${showticketVO.tictype_price}">
+					<input type="hidden" name="ticket_no" value="${showticketVO.ticket_no}"> 
 					<input type="hidden" name="member_no" value="${showticketVO.member_no}">
-					<input type="hidden" name="ticket_order_no" value="${showticketVO.ticket_order_no}">
-					<font>member_no=${showticketVO.member_no}</font>
+					<%-- <input type="hidden" name="ticket_order_no" value="${showticketVO.ticket_order_no}"> --%>
+					<%-- <font>member_no=${showticketVO.member_no}</font>
 					<font>ticket_no=${showticketVO.ticket_no}</font>
-					<font>ticket_order_no=${showticketVO.ticket_order_no}</font>
+					<font>ticket_order_no=${showticketVO.ticket_order_no}</font> --%>
 					<input type="submit" value="轉售此票">
-				</form> --%>
+				</form>
 			</td>
-			
-			
 		</tr>
 	</c:forEach>
 </table>
