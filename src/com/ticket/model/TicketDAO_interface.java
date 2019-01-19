@@ -20,4 +20,5 @@ public interface TicketDAO_interface {
     public List<TicketVO> getTicketsByTicketOrderNoAndMemberNo(String ticket_order_no,String member_no);
 //    public void InsertTicketsAndUpdateTargetTO(List<TicketVO> list, String ticket_order_no);
 //    public void insertTickets (TicketVO ticketVO , java.sql.Connection con);
+    public void updateTargetTicketResaleStatusWithTicketNo(String ticket_no,String ticket_resale_status, Integer ticket_resale_price);
 }

@@ -153,6 +153,81 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 	}
 
 
+	@Override
+	synchronized public void updateTargetTicketResaleStatusWithTicketNo(String ticket_no, String ticket_resale_status, Integer ticket_resale_price) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			
+			TicketVO tvo = this.findByPrimaryKey(ticket_no);
+			session.beginTransaction();
+			
+			if("NONE1".equals(ticket_resale_status)) {
+				//user want to set this ticket back to no-selling
+				if("NONE1".equals(tvo.getTicket_resale_status()))
+				{
+					//這個操作代表使用者想把他某張票券改為非轉讓但原本就已經非轉讓了
+					throw new RuntimeException("此票券已非轉讓狀態，因此您該次的操作失敗");
+				}
+				if("SELLING2".equals(tvo.getTicket_resale_status())) {
+					//set target ticket to no-sell from selling 
+					//這個操作代表使用者想把它某張轉讓中的票券收回不賣了
+					tvo.setTicket_resale_status("NONE1");
+					tvo.setTicket_resale_price(ticket_resale_price);
+				}
+				if("CHECKING3".equals(tvo.getTicket_resale_status())) {
+//					throw new RuntimeException("CHECKING TO NONE fail");
+//					throw new RuntimeException("有人正在購買此票，因此您的該次操作失敗");
+					//from checking to none, means someone bought it
+					//這個操作代表有人購買了轉讓票並且付費完成因此已改變持有人會員與更新了一筆轉讓訂單
+					tvo.setTicket_resale_status("NONE1");
+					tvo.setTicket_resale_price(ticket_resale_price);
+				}
+			}else if("SELLING2".equals(ticket_resale_status)) {
+				//user want to set this ticket to selling
+				if("NONE1".equals(tvo.getTicket_resale_status()))
+				{
+					//set target to selling from no-selling
+					//這個操作代表使用者將他持有的某張票券拿出來轉讓
+					tvo.setTicket_resale_status("SELLING2");
+					tvo.setTicket_resale_price(ticket_resale_price);
+				}
+				if("SELLING2".equals(tvo.getTicket_resale_status())) {
+//					throw new RuntimeException("SELLING TO SELLING fail");
+					//這個操作代表使用者將他已經轉讓中的票再轉讓一次
+					throw new RuntimeException("重複販賣此票導致操作失敗，請取消該轉讓再重新操作");
+				}
+				if("CHECKING3".equals(tvo.getTicket_resale_status())) {
+//					throw new RuntimeException("CHECKING TO SELLING fail");
+					//這個操作代表使用者想把某張票券拿出來轉讓但該票券已經是等待付款中
+					throw new RuntimeException("有人正在購買此票，因此您的該次操作失敗");
+				}	
+			}else if("CHECKING3".equals(ticket_resale_status)) {
+				//user want to set this ticket to payment, and he's ready to pay
+				if("NONE1".equals(tvo.getTicket_resale_status()))
+				{
+//					throw new RuntimeException("NONE TO CHECKING fail");
+					//這個操作代表使用者想把某張票券轉為等待付款中但該票券並沒有被設定成轉讓中
+					throw new RuntimeException("此票券目前沒有轉售，您的該次操作失敗");
+				}
+				if("SELLING2".equals(tvo.getTicket_resale_status())) {
+					//這個操作代表使用者想把某張票券轉為等待付款中且該票券為轉讓中因此就是要買一張轉讓票並進入付款因此也會產生一筆轉讓訂單
+					tvo.setTicket_resale_status("CHECKING");
+					tvo.setTicket_resale_price(ticket_resale_price);//might be: tvo.setTicket_resale_price(tvo.getTicket_resale_price()); 
+				}
+				if("CHECKING3".equals(tvo.getTicket_resale_status())) {
+//					throw new RuntimeException("CHECKING TO SELLING fail");
+					//這個操作代表使用者想把某張票券轉為等待付款中但該票券已經在等待付款中了
+					throw new RuntimeException("有人正在購買此票，因此您的該次操作失敗");
+				}	
+			}
+			session.saveOrUpdate(tvo);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		
+	}
 	
 //	public TicketVO findOneAndUpdateItsStatusToUsed(String ticket_no) {
 //		TicketVO ticketVO = null;
@@ -263,27 +338,42 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 
 		TicketHibernateDAO dao = new TicketHibernateDAO();
 		
+//		String ticket_no = "T_20181225_000001";
+//		String ticket_resale_status = "SELLING2";
+//		Integer ticket_resale_price = 9000;
+//		dao.updateTargetTicketResaleStatusWithTicketNo(ticket_no, ticket_resale_status, ticket_resale_price);
+		//fail above code, don't know why
+		
+		
 //		dao.InsertTicketsAndUpdateTargetTOVO(3, "TO_20181225_000003");
 		
-		com.ticketorder.model.TicketOrderVO tovo = new com.ticketorder.model.TicketOrderVO();
-		com.ticketorder.model.TicketOrderService toSvc = new com.ticketorder.model.TicketOrderService();
-		tovo = toSvc.getOneTicketOrder("TO_20181225_000003");
-		tovo.setTicket_order_status("up_sta");
+//		com.ticketorder.model.TicketOrderVO tovo = new com.ticketorder.model.TicketOrderVO();
+//		com.ticketorder.model.TicketOrderService toSvc = new com.ticketorder.model.TicketOrderService();
+//		tovo = toSvc.getOneTicketOrder("TO_20181225_000003");
+//		tovo.setTicket_order_status("up_sta");
+//		
+//		com.seating_area.model.SeatingArea_H5_VO svo = new com.seating_area.model.SeatingArea_H5_VO();
+//		svo.setTicarea_no(tovo.getSeatingarea_h5VO().getTicarea_no());
+//		
+//		TicketVO tvo = new TicketVO();
+//		tvo.setMember_no(tovo.getMember_no());
+//		tvo.setTicket_status("T1");
+//		tvo.setTicket_create_time(java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0"));
+//		tvo.setTicket_resale_status("rSta");
+//		tvo.setTicket_resale_price(10);
+//		tvo.setIs_from_resale("no");
+//		tvo.setTicketorderVO(tovo);
+//		tvo.setSeatingarea_h5VO(svo);
+//		
+//		dao.insert(tvo); //success
 		
-		com.seating_area.model.SeatingArea_H5_VO svo = new com.seating_area.model.SeatingArea_H5_VO();
-		svo.setTicarea_no(tovo.getSeatingarea_h5VO().getTicarea_no());
+		TicketVO tvou = dao.findByPrimaryKey("T_20181225_000001");
+//		tvou.setTicket_no(tvou.getTicket_no());
+//		tvou.setMember_no(tvou.getMember_no());
+		tvou.setTicket_resale_price(6999);
+		tvou.setTicket_resale_status("SELLING2");
+		dao.update(tvou);
 		
-		TicketVO tvo = new TicketVO();
-		tvo.setMember_no(tovo.getMember_no());
-		tvo.setTicket_status("T1");
-		tvo.setTicket_create_time(java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0"));
-		tvo.setTicket_resale_status("rSta");
-		tvo.setTicket_resale_price(10);
-		tvo.setIs_from_resale("no");
-		tvo.setTicketorderVO(tovo);
-		tvo.setSeatingarea_h5VO(svo);
-		
-		dao.insert(tvo); //success
 		
 //		TicketVO tvo2 = new TicketVO();
 //		tvo2.setMember_no("M000007");
@@ -363,6 +453,8 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 //		}
 		
 	}
+
+	
 
 	
 	

@@ -101,5 +101,17 @@ public class TicketService {
     public List<TicketVO> getTicketsByTicketOrderNoAndMemberNo(String ticket_order_no,String member_no){
     	return dao.getTicketsByTicketOrderNoAndMemberNo(ticket_order_no, member_no);
     }
+    
+    //maybe need sychronized
+    synchronized public void getOneTicketAndUpdateItsResaleValues(String ticket_no, String ticket_resale_status, Integer ticket_resale_price, String is_from_resale,String member_no) 
+//    public void getOneTicketAndUpdateItsResaleValues(String ticket_no, String ticket_resale_status, Integer ticket_resale_price, String is_from_resale)
+    {
+    	TicketVO tvo = dao.findByPrimaryKey(ticket_no);
+    	tvo.setTicket_resale_status(ticket_resale_status);
+    	tvo.setTicket_resale_price(ticket_resale_price);
+    	tvo.setIs_from_resale(is_from_resale);
+    	tvo.setMember_no(member_no);
+    	dao.update(tvo);
+    }
 	
 }

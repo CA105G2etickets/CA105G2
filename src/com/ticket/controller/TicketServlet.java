@@ -578,15 +578,107 @@ public class TicketServlet extends HttpServlet {
 					return;//程式中斷
 				}
 				
-				String ticket_order_no = req.getParameter("ticket_no");
-				String ticket_resale_price = req.getParameter("ticket_resale_price");
+				String ticket_no = req.getParameter("ticket_no");
+				String ticket_order_no = req.getParameter("ticket_order_no");
+				String str_ticket_resale_price = req.getParameter("ticket_resale_price");
+				
+				Integer ticket_resale_price = null;
+				try {
+					ticket_resale_price = new Integer(str_ticket_resale_price.trim());
+					if(ticket_resale_price <1 || ticket_resale_price>65530) {
+						errorMsgs.add("轉售價錢不正確");
+					}
+				} catch (NumberFormatException e) {
+					errorMsgs.add("轉售價錢不正確");
+				}
 				
 				req.setAttribute("member_no", member_no);
-				req.setAttribute("ticket_order_no", ticket_order_no);
+//				req.setAttribute("ticket_no", ticket_no);
 				req.setAttribute("ticket_resale_price", ticket_resale_price);
+				req.setAttribute("ticket_order_no", ticket_order_no);
+				
+				// Send the user back to the former page, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					String url = "/frontend/ticket/listAllTicketsBymember_noAndticket_order_no.jsp";
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(url);
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String ticket_resale_status = "SELLING2";
+				String is_from_resale = "NO";
 				
 				//prepare to update target ticket with two attribute: .ticket_resale_status to SELLING2 and .ticket_resale_price to ticket_resale_price
 				TicketService tSvc = new TicketService();
+				tSvc.getOneTicketAndUpdateItsResaleValues(ticket_no, ticket_resale_status, ticket_resale_price, is_from_resale, member_no);
+				
+				
+				String url = "/frontend/ticket/listAllTicketsBymember_noAndticket_order_no.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errorMsgs.add("failed listTicketsByTicketOrderNoAndMemberNo:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/index.jsp");
+				failureView.forward(req, res);
+			}
+		}//member_cancel_One_resale_ticket
+		
+		if ("member_cancel_One_resale_ticket".equals(action)) { 
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				
+				String member_no = req.getParameter("member_no");
+				//block when member_no == null
+				if (member_no == null || (member_no.trim()).length() == 0) {
+					errorMsgs.add("請先登入");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/login_front-end.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String ticket_no = req.getParameter("ticket_no");
+				String ticket_order_no = req.getParameter("ticket_order_no");
+//				String str_ticket_resale_price = req.getParameter("ticket_resale_price");
+				
+//				Integer ticket_resale_price = null;
+//				try {
+//					ticket_resale_price = new Integer(str_ticket_resale_price.trim());
+//					if(ticket_resale_price <1 || ticket_resale_price>65530) {
+//						errorMsgs.add("轉售價錢不正確");
+//					}
+//				} catch (NumberFormatException e) {
+//					errorMsgs.add("轉售價錢不正確");
+//				}
+				
+				req.setAttribute("member_no", member_no);
+//				req.setAttribute("ticket_no", ticket_no);
+//				req.setAttribute("ticket_resale_price", ticket_resale_price);
+				req.setAttribute("ticket_order_no", ticket_order_no);
+				
+				// Send the user back to the former page, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					String url = "/frontend/ticket/listAllTicketsBymember_noAndticket_order_no.jsp";
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(url);
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String ticket_resale_status = "NONE1";
+				String is_from_resale = "NO";
+				
+				//prepare to update target ticket with two attribute: .ticket_resale_status to SELLING2 and .ticket_resale_price to ticket_resale_price
+				TicketService tSvc = new TicketService();
+				tSvc.getOneTicketAndUpdateItsResaleValues(ticket_no, ticket_resale_status, 0, is_from_resale, member_no);
 				
 				
 				String url = "/frontend/ticket/listAllTicketsBymember_noAndticket_order_no.jsp";

@@ -5,9 +5,17 @@
 <hibernate-configuration>
 
 	<session-factory>
-
- 		<!-- JNDI連線池 (Apache Tomcat 連線池DBCP)設定 -->
-		<property name="hibernate.connection.datasource">java:/comp/env/jdbc/ETIckeTsDB</property>
+        
+        <!-- 連線池c3p0設定-->
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
+		<property name="hibernate.connection.username">CA105G2</property>
+		<property name="hibernate.connection.password">123456</property>       
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
         
 		<!--SQL方言,以下使用Oracle -->
 		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
@@ -24,6 +32,10 @@
         <!-- Enable Hibernate's automatic session context management -->
 		<property name="hibernate.current_session_context_class">thread</property>
 
+        <!-- 告訴Hibernate不是使用預設的單純JDBC連線池 (這是Hibernate4開始有的新設定) -->
+        <!-- 目前因為是使用c3p0連線池，才需要加入此設定 -->
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+
 		<!--Java物件與資料庫表格的映射檔 -->
 		<mapping resource="com/ticket/model/ticket.hbm.xml" />
 		<mapping resource="com/ticketorder/model/ticket_order.hbm.xml" />
@@ -34,7 +46,7 @@
 		<mapping resource="com/event/model/event.hbm.xml" />
 		<mapping resource="com/event_title/model/event_title.hbm.xml" />
 		<mapping resource="com/venue/model/venue.hbm.xml" />
-
+						
 	</session-factory>
 	
 </hibernate-configuration>

@@ -16,7 +16,7 @@ pageContext.setAttribute("member_no",member_no);
 
 String ticket_order_no = (String)request.getAttribute("ticket_order_no");
 if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
-	pageContext.setAttribute("ticket_order_no","");
+	pageContext.setAttribute("ticket_order_no","T_20181225_000001");
 }else{
 	pageContext.setAttribute("ticket_order_no",ticket_order_no);
 	//pageContext.setAttribute("ticket_order_no","TO_20181225_000001");
@@ -38,7 +38,7 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
 <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <body>
-
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 <%-- 錯誤表列 --%>
 	<div class="container">
 		<c:if test="${not empty errorMsgs}">
@@ -51,7 +51,6 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 		</c:if>
 	</div>
 
-<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
@@ -95,6 +94,7 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 								<input type="hidden" name="action" value="member_sell_One_ticket">
 								<input type="hidden" name="member_no" value="${member_no}">
 								<input type="hidden" name="ticket_no" value="${TicketVO.ticket_no}">
+								<input type="hidden" name="ticket_order_no" value="${ticket_order_no}">
 								我要賣<input type="number" name="ticket_resale_price" value="${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price}">元
 								<input type="submit" value="轉售此票" class="btn btn-primary" style="float:right;">
 							</form>
@@ -104,6 +104,7 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 								<input type="hidden" name="action" value="member_cancel_One_resale_ticket">
 								<input type="hidden" name="member_no" value="${member_no}">
 								<input type="hidden" name="ticket_no" value="${TicketVO.ticket_no}">
+								<input type="hidden" name="ticket_order_no" value="${ticket_order_no}">
 								<input type="submit" value="取消轉售" class="btn btn-primary" style="float:right;">
 							</form>
 						</c:if>
