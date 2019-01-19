@@ -78,7 +78,7 @@ pageContext.setAttribute("member_no",member_no);
         </tbody>
         <tfoot>
             <tr>
-            	<th>訂票訂單編號</th>
+                <th>訂票訂單編號</th>
                 <!-- <th>會員姓名</th> -->
                 <th>總價與張數</th>
                 <th>訂票訂單成立時間</th>
@@ -86,6 +86,7 @@ pageContext.setAttribute("member_no",member_no);
                 <th>狀態</th>
                 <th>活動主題名稱</th>
                 <th>舉辦場地名稱</th>
+                <th>取消訂單</th>
             </tr>
         </tfoot>
     </table>

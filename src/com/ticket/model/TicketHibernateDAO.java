@@ -29,8 +29,9 @@ import java.util.*;
 public class TicketHibernateDAO implements TicketDAO_interface {
 
 	private static final String GET_ALL_STMT = "from TicketVO order by ticket_no";
-	private static final String GET_ALL_BY_TONO_STMT = "from TicketVO where ticket_order_no=?0 order by ticket_no";
-
+	private static final String GET_ALL_BY_MEMBERNO_STMT = "from TicketVO where member_no=?0 order by ticket_no";
+	private static final String GET_ALL_BY_TONO_AND_MEMBERNO_STMT = "from TicketVO where ticket_order_no=?0 and member_no=?1 order by ticket_no";
+	
 	@Override
 	public void insert(TicketVO ticketVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -117,12 +118,13 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 	}
 	
 	@Override
-	public List<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no) {
+	public List<TicketVO> getTicketsByMemberNo(String member_no) {
 		List<TicketVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Query<TicketVO> query = session.createQuery(GET_ALL_BY_TONO_STMT, TicketVO.class);
+			Query<TicketVO> query = session.createQuery(GET_ALL_BY_MEMBERNO_STMT, TicketVO.class);
+			query.setParameter(0, member_no);
 			list = query.getResultList();
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -131,6 +133,25 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<TicketVO> getTicketsByTicketOrderNoAndMemberNo(String ticket_order_no, String member_no) {
+		List<TicketVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query<TicketVO> query = session.createQuery(GET_ALL_BY_TONO_AND_MEMBERNO_STMT, TicketVO.class);
+			query.setParameter(0, ticket_order_no);
+			query.setParameter(1, member_no);
+			list = query.getResultList();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
+
 
 	
 //	public TicketVO findOneAndUpdateItsStatusToUsed(String ticket_no) {
@@ -343,6 +364,7 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 		
 	}
 
+	
 	
 	
 }

@@ -189,6 +189,7 @@ body {
 
 
 	<!-- It's better to use 'toVO.ticket_order_no' than 'param.ticarea_no' -->
+	<!-- agree and thanks sincerely -->
 	<!-- ------------------------------ comfirmTickets ::: start ------------------------------ -->
 	<div class="container" style="margin-bottom:15px;">
 		<table class="table table-hover table-bordered" id="comfirmTicketsForm">
@@ -238,7 +239,8 @@ body {
 
 
 	<!-- ------------------------------ showTicketsDetails ::: begin ------------------------------ -->
-	<div class="container" style="margin-bottom:15px;">
+	<!-- temperarily block it because this might block information below. -->
+	<%-- <div class="container" style="margin-bottom:15px;">
 		<table class="table table-hover table-bordered" id="comfirmTicketsForm">
 			<tr class="info">
 				<th>票券編號</th>
@@ -261,7 +263,7 @@ body {
 				</tr>
 			</c:forEach>
 		</table>
-	</div>
+	</div> --%>
 	<!-- ------------------------------ showTicketsDetails ::: end ------------------------------ -->
 	
 	
@@ -270,10 +272,11 @@ body {
 		<form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
 			<input type="hidden" name="action" value="member_select_ticketorders">
 			<input type="hidden" name="member_no" value="${toVO.member_no}"> 
-			<input type="submit" value="前往會員的訂單查詢" class="btn btn-primary" style="float:right;">
+			<input type="submit" value="前往會員的訂票訂單查詢" class="btn btn-primary" style="float:right;">
 		</form>
 	</div>
 	<!-- ------------------------------ toListTicketsByMember ::: end ------------------------------ -->
+
 	
 	
 	<!-- Basic -->

@@ -92,8 +92,14 @@ public class TicketService {
 		return dao.getAll_map(map, strOrderByTargetColumnName);
 	}
 	
-	public List<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no){
-		return dao.getTicketsByTicketOrderNo(ticket_order_no);
+//	public List<TicketVO> getTicketsByTicketOrderNo(String ticket_order_no){
+//		return dao.getTicketsByTicketOrderNo(ticket_order_no);
+//	}
+	public List<TicketVO> getTicketsByMemberNo(String member_no){
+		return dao.getTicketsByMemberNo(member_no);
 	}
+    public List<TicketVO> getTicketsByTicketOrderNoAndMemberNo(String ticket_order_no,String member_no){
+    	return dao.getTicketsByTicketOrderNoAndMemberNo(ticket_order_no, member_no);
+    }
 	
 }

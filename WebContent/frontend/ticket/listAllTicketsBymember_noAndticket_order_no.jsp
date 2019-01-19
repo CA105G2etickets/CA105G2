@@ -12,6 +12,16 @@ if(member_no == null || (member_no.trim()).length() == 0){
 	member_no = member.getMemberNo();
 }
 pageContext.setAttribute("member_no",member_no);
+//pageContext.setAttribute("member_no","M000001");
+
+String ticket_order_no = (String)request.getAttribute("ticket_order_no");
+if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
+	
+}else{
+	pageContext.setAttribute("ticket_order_no",ticket_order_no);
+	//pageContext.setAttribute("ticket_order_no","TO_20181225_000001");
+}
+
 %>
 
 <html>
@@ -36,45 +46,47 @@ pageContext.setAttribute("member_no",member_no);
                 <th>持票人</th>
                 <th>票券成立時間</th>
                 <th>狀態</th>
-                <th>活動的地址</th>
                 <th>活動開始時間</th>
+                <th>活動的地址</th>
                 <th>活動主題名稱</th>
                 <th>票種名稱與票價</th>
+                <th>轉售狀態</th>
             </tr>
         </thead>
         <tbody>
-        	<c:forEach var="TicketOrderVO" items="${ticketorderService.getTicketOrdersByMemberNo(member_no)}">
+        	<c:forEach var="TicketVO" items="${ticketService.getTicketsByTicketOrderNoAndMemberNo(ticket_order_no,member_no)}">
         		<tr>
-        			<td>${TicketOrderVO.ticket_order_no}</td>
-        			<%-- <td>${memberService.getOneMember(TicketOrderVO.member_no).memberFullname}</td> --%>
-        			<td>${TicketOrderVO.total_price}元, ${TicketOrderVO.total_amount} 張</td>
-        			<td><fmt:formatDate value="${TicketOrderVO.ticket_order_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+        			<td>${TicketVO.ticket_no}</td>
+        			<td>${memberService.getOneMember(member_no).memberFullname}</td>
+        			<td><fmt:formatDate value="${TicketVO.ticket_create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         			<td>
-        				${(TicketOrderVO.payment_method == 'NOTYET') ? '尚未選擇' : ''}
-						${(TicketOrderVO.payment_method == 'CREDITCARD') ? '信用卡' : ''}
-						${(TicketOrderVO.payment_method == 'EWALLET') ? '電子錢包' : ''}
+        				${(TicketVO.ticket_status == 'ACTIVE1') ? '未使用' : ''}
+						${(TicketVO.ticket_status == 'USED2') ? '已使用' : ''}
+						${(TicketVO.ticket_status == 'OUTDATE3') ? '已過期' : ''}
+						${(TicketVO.ticket_status == 'REFUND4') ? '已退票' : ''}
         			</td>
-        			<td>
-        				${(TicketOrderVO.ticket_order_status == 'WAITTOPAY1') ? '尚未付款' : ''}
-						${(TicketOrderVO.ticket_order_status == 'COMPLETE2') ? '完成付款' : ''}
-						${(TicketOrderVO.ticket_order_status == 'CANCEL3') ? '已取消' : ''}
-						${(TicketOrderVO.ticket_order_status == 'OUTDATE4') ? '逾時未付' : ''}
-					</td>
-					<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketOrderVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eventtitle_h5VO.evetit_name}</td>
-					<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketOrderVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).venue_h5VO.venue_name}</td>
+        			<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+        			<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).venue_h5VO.address}</td>
+					<td>${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_name}, ${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price} 元</td>
+					<td>
+        				${(TicketVO.ticket_resale_status == 'NONE1') ? '無' : ''}
+						${(TicketVO.ticket_resale_status == 'SELLING2') ? '欲轉讓' : ''}
+						${(TicketVO.ticket_resale_status == 'CHECKING3') ? '有人想要' : ''}
+        			</td>
         		</tr>
         	</c:forEach>
         </tbody>
         <tfoot>
             <tr>
-            	<th>訂票訂單編號</th>
-                <!-- <th>會員姓名</th> -->
-                <th>總價與張數</th>
-                <th>訂票訂單成立時間</th>
-                <th>付款方式</th>
+                <th>票券編號</th>
+                <th>持票人</th>
+                <th>票券成立時間</th>
                 <th>狀態</th>
+                <th>活動的地址</th>
+                <th>活動開始時間</th>
                 <th>活動主題名稱</th>
-                <th>舉辦場地名稱</th>
+                <th>票種名稱與票價</th>
+                <th>轉售狀態</th>
             </tr>
         </tfoot>
     </table>
