@@ -8,11 +8,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ETIckeTs - 會員登入</title>
+<title>ETIckeTs - 會員註冊</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery.js"></script>
-<link rel="stylesheet" media="screen" href="<%=request.getContextPath()%>/frontend/member/Login.css" />
+<link rel="stylesheet" media="screen" href="<%=request.getContextPath()%>/frontend/member/Signup.css" />
 <!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -61,8 +61,8 @@ body{
     <div class="tab-block">
         <nav>
     <ul>
-    <a href="<%=request.getContextPath()%>/frontend/login_front-end.jsp"><li class="first active" style="width: 10%; height: 100%; text-align: center;"><font color="white">登入</font></li></a>
-    <a href="<%=request.getContextPath()%>/frontend/signup_front-end.jsp" class="signupforsigninpage"><li class="last" style="width: 10%; height: 100%; text-align: center; background-color: #f8f8f8;"><font color="black" class="signupforsigninpage">註冊</font></li></a>
+    <a href="<%=request.getContextPath()%>/frontend/login_front-end.jsp"><li class="last" style="width: 10%; height: 100%; text-align: center; background-color: #f8f8f8;"><font color="black">登入</font></li></a>
+    <a href="<%=request.getContextPath()%>/frontend/signup_front-end.jsp" class="signupforsigninpage"><li class="first active" style="width: 10%; height: 100%; text-align: center;"><font color="white" class="signupforsigninpage">註冊</font></li></a>
     </ul>
 </nav>
 
@@ -78,16 +78,21 @@ body{
 
 
 <div class="normal">
-<p>或使用ETIckeTs帳號登入</p>
+<p>或註冊新的ETIckeTs帳號</p>
 <form method="post" action="<%=request.getContextPath()%>/member/member.do" role="form">
      <div class="control-group">
      <div class="controls">
-     	<input style="text-transform:lowercase;" id="account" class="string required" placeholder="註冊帳號或是Email" type="text" name="member_account" size="30"/>
+     	<input style="text-transform:lowercase;" id="account" class="string required" placeholder="Email" type="text" name="member_account" size="30"/>
      	</div>
      	</div>
      <div class="control-group">
      <div class="controls">
      	<input placeholder="密碼" type="password" id="password" name="member_password" size="30"/>
+     	</div>
+     	</div>
+     <div class="control-group">
+     <div class="controls">
+     	<input placeholder="再次輸入密碼" type="password" id="password" name="member_password" size="30"/>
      	</div>
      	</div>
      <input type="hidden" name="action" value="find_By_Account">
@@ -98,19 +103,8 @@ body{
 			</c:forEach>
 		</ul>
 	</c:if>
-     <input type="submit" value="登入" class="btn btn-block" style="border-color: #f2f2f2; text-align: center; background-color: #f8f8f8;">
+     <input type="submit" value="註冊" class="btn btn-block" style="border-color: #f2f2f2; text-align: center; background-color: #f8f8f8;" disabled>
 </form>
-
-<jsp:useBean id="memberservice" scope="page" class="com.member.model.MemberService" />
-			  <li>
-			       選擇會員帳號
-			       <select size="1" name="memberA" onchange="changeA" id="userlist" autofocus>
-			         <c:forEach var="member" items="${memberservice.all}" > 
-			          <option value="${member.memberAccount},${member.memberPassword}">${member.memberAccount},${member.memberPassword}
-			         </c:forEach>
-			       </select>
-			  </li>
-
 
             </div>
         </div>
