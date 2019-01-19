@@ -41,6 +41,7 @@ pageContext.setAttribute("member_no",member_no);
                 <th>活動主題名稱</th>
                 <th>舉辦場地名稱</th>
                 <th>取消訂單</th>
+                <th>關聯的票券明細</th>
             </tr>
         </thead>
         <tbody>
@@ -67,9 +68,19 @@ pageContext.setAttribute("member_no",member_no);
 						<c:if test="${TicketOrderVO.ticket_order_status == 'WAITTOPAY1'}">
 							<form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
 								<input type="hidden" name="action" value="member_cancel_target_ticketorder">
-								<input type="hidden" name="memer_no" value="${TicketOrderVO.member_no}">
+								<input type="hidden" name="member_no" value="${TicketOrderVO.member_no}">
 								<input type="hidden" name="ticket_order_no" value="${TicketOrderVO.ticket_order_no}">
-								<input type="submit" value="前往會員的訂單查詢" class="btn btn-primary" style="float:right;">
+								<input type="submit" value="取消此訂單" class="btn btn-primary" style="float:right;">
+							</form>
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${TicketOrderVO.ticket_order_status == 'COMPLETE2'}">
+							<form method="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
+								<input type="hidden" name="action" value="listTicketsByTicketOrderNoAndMemberNo">
+								<input type="hidden" name="member_no" value="${TicketOrderVO.member_no}">
+								<input type="hidden" name="ticket_order_no" value="${TicketOrderVO.ticket_order_no}">
+								<input type="submit" value="票券明細" class="btn btn-primary" style="float:right;">
 							</form>
 						</c:if>
 					</td>
@@ -87,6 +98,7 @@ pageContext.setAttribute("member_no",member_no);
                 <th>活動主題名稱</th>
                 <th>舉辦場地名稱</th>
                 <th>取消訂單</th>
+                <th>關聯的票券明細</th>
             </tr>
         </tfoot>
     </table>

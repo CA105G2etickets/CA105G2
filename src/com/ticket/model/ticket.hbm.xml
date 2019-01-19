@@ -13,7 +13,7 @@
             <column name="ticarea_no" />
         </many-to-one>
         
-        <many-to-one name="ticketorderVO" class="com.ticketorder.model.TicketOrderVO" lazy="false" cascade="save-update">
+        <many-to-one name="ticketorderVO" class="com.ticketorder.model.TicketOrderVO" lazy="false" cascade="none">
             <column name="ticket_order_no" />
         </many-to-one>
         <property name="member_no" column="member_no" />

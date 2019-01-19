@@ -353,54 +353,56 @@ public class TicketOrderServlet extends HttpServlet {
         if("userPaying".equals(action)) {
         	List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-//			List<String> list4PassValue = new LinkedList<String>();
 			String eve_no = req.getParameter("eve_no");
 			
 			try {
 				String ticket_order_no = req.getParameter("ticket_order_no");
 				String creditCardNumber = req.getParameter("creditCardNumber");
 				String creditCardVerificationNumber = req.getParameter("creditCardVerificationNumber");
+				//watch out the different on month and year.
+				String creditCardYear = req.getParameter("creditCardMonth");
+				String creditCardMonth = req.getParameter("creditCardYear");
 				
-//				//lsit4showInfo
-//				list4PassValue.add(req.getParameter("evetit_nameForShow"));
-//				list4PassValue.add(req.getParameter("eve_sessionnameForShow"));
-//				list4PassValue.add(req.getParameter("eve_startdateForShow"));
-//				list4PassValue.add(req.getParameter("eve_enddateForShow"));
-//				list4PassValue.add(req.getParameter("venue_nameForShow"));
-//				list4PassValue.add(req.getParameter("addressForShow"));
-//				list4PassValue.add(req.getParameter("tictype_nameForShow"));
+				if(creditCardNumber.length() !=16 ) {
+					errorMsgs.add("信用卡卡號不正確，應為16碼數字");
+				}
+				if(creditCardVerificationNumber.length()!=3) {
+					errorMsgs.add("信用卡卡片背面後三碼不正確");
+				}
+//				if(this.containsHanScript(creditCardNumber)) {
+//					errorMsgs.add("信用卡卡號不正確，應為16碼數字");
+//				}
+//				if(this.containsHanScript(creditCardVerificationNumber)) {
+//					errorMsgs.add("信用卡卡片背面後三碼不正確");
+//				}
 				
-				//not checking these data in Controller because .jsp check it already.
-				//ticket_order_no
-//				if (ticket_order_no == null || (ticket_order_no.trim()).length() == 0) {
-//					errorMsgs.add("請輸入ticket_order_no編號");
+//				if(creditCardMonth.length()>2 || creditCardMonth.length()<1) {
+//					errorMsgs.add("卡片到期月份不正確");
 //				}
-//				if (ticket_order_no.length()>18) {
-//					errorMsgs.add("ticket_order_no格式不正確");
+//				if(creditCardYear.length()>4 || creditCardYear.length()<3) {
+//					errorMsgs.add("卡片到期年份不正確");
 //				}
-//				if (this.containsHanScript(ticket_order_no)) {
-//					errorMsgs.add("ticket_order_no不可包含中文");
-//				}
-//				//creditCardNumber
-//				if (creditCardNumber == null || (creditCardNumber.trim()).length() == 0) {
-//					errorMsgs.add("請輸入creditCardNumber編號");
-//				}
-//				if (creditCardNumber.length()>16) {
-//					errorMsgs.add("creditCardNumber格式不正確  <=16");
-//				}
-//				if (this.containsHanScript(creditCardNumber)) {
-//					errorMsgs.add("creditCardNumber不可包含中文");
-//				}
-//				//creditCardVerificationNumber
-//				if (creditCardVerificationNumber == null || (creditCardVerificationNumber.trim()).length() == 0) {
-//					errorMsgs.add("請輸入creditCardVerificationNumber編號");
-//				}
-//				if (creditCardVerificationNumber.length()>3) {
-//					errorMsgs.add("creditCardVerificationNumber格式不正確 <=3");
-//				}
-//				if (this.containsHanScript(creditCardVerificationNumber)) {
-//					errorMsgs.add("creditCardVerificationNumber不可包含中文");
-//				}
+				
+				Integer cardmonth = null;
+				try {
+					cardmonth = new Integer(creditCardMonth.trim());
+					if(cardmonth <1 || cardmonth>12) {
+						errorMsgs.add("卡片到期月份不正確");
+					}
+				} catch (NumberFormatException e) {
+					errorMsgs.add("卡片到期月份不正確.");
+				}
+				
+				Integer cardyear = null;
+				try {
+					cardyear = new Integer(creditCardYear.trim());
+					if(cardyear <2019 || cardyear>2030) {
+						errorMsgs.add("卡片到期年份不正確");
+					}
+				} catch (NumberFormatException e) {
+					errorMsgs.add("卡片到期年份不正確.");
+				}
+				
 				
 				//基本錯誤驗證完成，開始呼叫service
 				TicketOrderService toSvc = new TicketOrderService();
@@ -422,8 +424,9 @@ public class TicketOrderServlet extends HttpServlet {
 				}
 				// Send the user back to the former page, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					String url = "/frontend/ticketorder/selectPaymentAndPay.jsp";
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/frontend/index.jsp");
+							.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -748,7 +751,7 @@ public class TicketOrderServlet extends HttpServlet {
 				if(tvoFromDB == null) {
 					errorMsgs.add("ticket_no不存在");
 				}
-				if("SELLING1".equals(tvoFromDB.getTicket_resale_status()) || "CHECKING2".equals(tvoFromDB.getTicket_resale_status())) {
+				if("SELLING2".equals(tvoFromDB.getTicket_resale_status()) || "CHECKING3".equals(tvoFromDB.getTicket_resale_status())) {
 					errorMsgs.add("此票已販賣中或是正在等待結帳，不可再度販賣或更動狀態");
 				}else {
 					
@@ -829,7 +832,7 @@ public class TicketOrderServlet extends HttpServlet {
 				TicketVO tvo4update = new TicketVO();
 				tvo4update = tSvc.getOneTicket(ticket_no);
 				tvo4update.setTicket_resale_price(ticket_resale_price);
-				tvo4update.setTicket_resale_status("SELLING1");
+				tvo4update.setTicket_resale_status("SELLING2");
 				tSvc.update(tvo4update);
 				
 //				ResaleOrderService rSvc = new ResaleOrderService();

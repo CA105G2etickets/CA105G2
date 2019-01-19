@@ -468,7 +468,7 @@ public class TicketServlet extends HttpServlet {
 				if(tvoFromDB == null) {
 					errorMsgs.add("不存在此票券");
 				}
-				if("SELLING1".equals(tvoFromDB.getTicket_resale_status()) || "CHECKING2".equals(tvoFromDB.getTicket_resale_status())) {
+				if("SELLING2".equals(tvoFromDB.getTicket_resale_status()) || "CHECKING3".equals(tvoFromDB.getTicket_resale_status())) {
 					errorMsgs.add("此票已販賣中或是正在等待結帳，不可再度販賣或更動狀態");
 				}
 				//create listShow for error-forward
@@ -518,13 +518,88 @@ public class TicketServlet extends HttpServlet {
 					return;//程式中斷
 				}
 				
-				
-				
 			}catch(Exception e) {
 				
 			}
 			
 		} 
+		
+		if ("listTicketsByTicketOrderNoAndMemberNo".equals(action)) { 
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				String member_no = req.getParameter("member_no");
+				String ticket_order_no = req.getParameter("ticket_order_no");
+				
+				req.setAttribute("member_no", member_no);
+				req.setAttribute("ticket_order_no", ticket_order_no);
+				
+				//block when member_no == null
+				if (member_no == null || (member_no.trim()).length() == 0) {
+					errorMsgs.add("請先登入");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/login_front-end.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String url = "/frontend/ticket/listAllTicketsBymember_noAndticket_order_no.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errorMsgs.add("failed listTicketsByTicketOrderNoAndMemberNo:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/index.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("member_sell_One_ticket".equals(action)) { 
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				
+				String member_no = req.getParameter("member_no");
+				//block when member_no == null
+				if (member_no == null || (member_no.trim()).length() == 0) {
+					errorMsgs.add("請先登入");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/login_front-end.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String ticket_order_no = req.getParameter("ticket_no");
+				String ticket_resale_price = req.getParameter("ticket_resale_price");
+				
+				req.setAttribute("member_no", member_no);
+				req.setAttribute("ticket_order_no", ticket_order_no);
+				req.setAttribute("ticket_resale_price", ticket_resale_price);
+				
+				//prepare to update target ticket with two attribute: .ticket_resale_status to SELLING2 and .ticket_resale_price to ticket_resale_price
+				TicketService tSvc = new TicketService();
+				
+				
+				String url = "/frontend/ticket/listAllTicketsBymember_noAndticket_order_no.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errorMsgs.add("failed listTicketsByTicketOrderNoAndMemberNo:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/index.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		
 		
 	}

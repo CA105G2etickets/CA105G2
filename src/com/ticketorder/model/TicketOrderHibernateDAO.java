@@ -30,6 +30,8 @@ import java.util.*;
 public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 
 	private static final String GET_ALL_STMT = "from TicketOrderVO order by ticket_order_no";
+	private static final String GET_ALL_BY_MEMBERNO_STMT = "from TicketOrderVO where member_no=?0 order by ticket_order_time desc";
+	
 
 	@Override
 	public void insert(TicketOrderVO ticketorderVO) {
@@ -189,7 +191,7 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Query<TicketOrderVO> query = session.createQuery("from TicketOrderVO where member_no=?0 order by ticket_order_time", TicketOrderVO.class);
+			Query<TicketOrderVO> query = session.createQuery(GET_ALL_BY_MEMBERNO_STMT, TicketOrderVO.class);
 			query.setParameter(0, member_no);
 			list = query.getResultList();
 			session.getTransaction().commit();

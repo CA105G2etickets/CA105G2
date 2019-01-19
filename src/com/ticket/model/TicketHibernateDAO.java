@@ -29,8 +29,8 @@ import java.util.*;
 public class TicketHibernateDAO implements TicketDAO_interface {
 
 	private static final String GET_ALL_STMT = "from TicketVO order by ticket_no";
-	private static final String GET_ALL_BY_MEMBERNO_STMT = "from TicketVO where member_no=?0 order by ticket_no";
-	private static final String GET_ALL_BY_TONO_AND_MEMBERNO_STMT = "from TicketVO where ticket_order_no=?0 and member_no=?1 order by ticket_no";
+	private static final String GET_ALL_BY_MEMBERNO_STMT = "from TicketVO where member_no=?0 order by TICKET_CREATE_TIME desc";
+	private static final String GET_ALL_BY_TONO_AND_MEMBERNO_STMT = "from TicketVO where ticket_order_no=?0 and member_no=?1 order by TICKET_CREATE_TIME desc";
 	
 	@Override
 	public void insert(TicketVO ticketVO) {

@@ -16,7 +16,7 @@ pageContext.setAttribute("member_no",member_no);
 
 String ticket_order_no = (String)request.getAttribute("ticket_order_no");
 if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
-	
+	pageContext.setAttribute("ticket_order_no","");
 }else{
 	pageContext.setAttribute("ticket_order_no",ticket_order_no);
 	//pageContext.setAttribute("ticket_order_no","TO_20181225_000001");
@@ -36,8 +36,21 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 <jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
 <jsp:useBean id="SeatingArea_H5_Service" scope="page" class="com.seating_area.model.SeatingArea_H5_Service" />
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
-<%-- <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" /> --%>
+<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <body>
+
+<%-- 錯誤表列 --%>
+	<div class="container">
+		<c:if test="${not empty errorMsgs}">
+			<font style="color:red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color:red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+	</div>
+
 <jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
     <table id="example" class="display" style="width:100%">
         <thead>
@@ -50,7 +63,9 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
                 <th>活動的地址</th>
                 <th>活動主題名稱</th>
                 <th>票種名稱與票價</th>
-                <th>轉售狀態</th>
+                <%-- <th>轉售狀態</th>--%>
+                <th>是否要轉售</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -67,11 +82,34 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
         			</td>
         			<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         			<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).venue_h5VO.address}</td>
+        			<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eventtitle_h5VO.evetit_name}</td>
 					<td>${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_name}, ${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price} 元</td>
-					<td>
+					<%-- <td>
         				${(TicketVO.ticket_resale_status == 'NONE1') ? '無' : ''}
 						${(TicketVO.ticket_resale_status == 'SELLING2') ? '欲轉讓' : ''}
 						${(TicketVO.ticket_resale_status == 'CHECKING3') ? '有人想要' : ''}
+        			</td> --%>
+        			<td>
+        				<c:if test="${TicketVO.ticket_resale_status == 'NONE1'}">
+							<form method="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
+								<input type="hidden" name="action" value="member_sell_One_ticket">
+								<input type="hidden" name="member_no" value="${member_no}">
+								<input type="hidden" name="ticket_no" value="${TicketVO.ticket_no}">
+								我要賣<input type="number" name="ticket_resale_price" value="${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price}">元
+								<input type="submit" value="轉售此票" class="btn btn-primary" style="float:right;">
+							</form>
+						</c:if>
+						<c:if test="${TicketVO.ticket_resale_status == 'SELLING2'}">
+							<form method="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
+								<input type="hidden" name="action" value="member_cancel_One_resale_ticket">
+								<input type="hidden" name="member_no" value="${member_no}">
+								<input type="hidden" name="ticket_no" value="${TicketVO.ticket_no}">
+								<input type="submit" value="取消轉售" class="btn btn-primary" style="float:right;">
+							</form>
+						</c:if>
+						<c:if test="${TicketVO.ticket_resale_status == 'CHECKING3'}">
+							有人想要，等待付款中
+						</c:if>
         			</td>
         		</tr>
         	</c:forEach>
