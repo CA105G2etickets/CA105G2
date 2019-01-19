@@ -4,51 +4,103 @@
 <%@ page import="com.member.model.*"%>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ETIckeTs - 會員登入</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <!--[if lt IE 9]>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-</head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>ETIckeTs - 會員登入</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery.js"></script>
+<link rel="stylesheet" media="screen" href="<%=request.getContextPath()%>/frontend/member/Login.css" />
+<!--[if lt IE 9]>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<style>
+.wrapper.login-wrapper {
+    background: none;
+    position: relative;
+    min-height: 30%;
+}
+.btn-login {
+    display: block;
+    width: 220px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    border-radius: 2px;
+    background: white;
+    box-shadow: white 0 0 0 inset;
+    text-decoration: none;
+}
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+body{
+	font-family:微軟正黑體!important;
+}
+</style>
+
+</head>
+    
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
+    
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
-                    </div>
-                    <div class="panel-body">
-						<c:if test="${not empty errorMsgs}">
-							<ul>
-								<c:forEach var="message" items="${errorMsgs}">
-									<p style="color: red">${message}</p>
-								</c:forEach>
-							</ul>
-						</c:if>
-						<form  METHOD="post" ACTION="/CA105G2/member/member.do" role="form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" id="account" placeholder="account" name="member_account" type="text">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" id="password" placeholder="password" name="member_password" type="text">
-                                </div>
-<!--                                 <div class="checkbox"> -->
-<!--                                     <label> -->
-<!--                                         <input name="remember" type="checkbox" value="Remember Me">Remember Me -->
-<!--                                     </label> -->
-<!--                                 </div> -->
-                                <input type="hidden" name="action" value="find_By_Account">
-								<input type="submit" value="登入">
-<!--                                 <a href="index.html" class="btn btn-info btn-block">Login</a> -->
-                            </fieldset>
-                        </form>
+	<div class="wrapper login-wrapper">
+            
+    <div class="tab-block">
+        <nav>
+    <ul>
+    <a href="/users/sign_in"><li class="first active" style="width: 10%; height: 100%; text-align: center;"><font color="white">登入</font></li></a>
+    <a href="/users/sign_up" class="signupforsigninpage"><li class="last" style="width: 10%; height: 100%; text-align: center; background-color: #f8f8f8;"><font color="black" class="signupforsigninpage">註冊</font></li></a>
+    </ul>
+</nav>
+
+
+<!-- 第三方登入區 -->
+<div class="tab-block-content">
+<div class="oauth">
+<p>您可以直接透過以下帳號登入</p>
+<div class="fb btn-login" style="background-color: #3b5998;"><font color="white">Facebook</font></div>
+<div class="fb btn-login" style="background-color: #e9644a;"><font color="white">Google</font></div>
+</div>
+
+
+
+<div class="normal">
+<p>或使用ETIckeTs帳號登入</p>
+<form method="post" action="<%=request.getContextPath()%>/member/member.do" role="form">
+     <div class="control-group">
+     <div class="controls">
+     	<input style="text-transform:lowercase;" id="account" class="string required" placeholder="註冊帳號或是Email" type="text" name="member_account" size="30"/>
+     	</div>
+     	</div>
+     <div class="control-group">
+     <div class="controls">
+     	<input placeholder="密碼" type="password" id="password" name="member_password" size="30"/>
+     	</div>
+     	</div>
+     <input type="hidden" name="action" value="find_By_Account">
+     <c:if test="${not empty errorMsgs}">
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<p style="color: red">${message}</p>
+			</c:forEach>
+		</ul>
+	</c:if>
+     <input type="submit" value="登入"/ class="btn btn-block" style="border-color: #f2f2f2; text-align: center; background-color: #f8f8f8;">
+</form>
+
 <jsp:useBean id="memberservice" scope="page" class="com.member.model.MemberService" />
 			  <li>
 			       選擇會員帳號
@@ -58,14 +110,16 @@
 			         </c:forEach>
 			       </select>
 			  </li>
-					</div>
-                </div>
+
+
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
+</div>
+
+<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
+
+<script>
 			$(document).ready(function(){
 				$('#userlist').prepend(new Option('account,password','', true));
 				$('#userlist')[0].selectedIndex = 0;
@@ -74,8 +128,15 @@
 					$('#account').val(str.substring(0,str.indexOf(',',1)));
 					$('#password').val(str.substring(str.indexOf(',',1)+1,str.lastIndexOf('')));
 				});
+				$('li.last').hover(function() {
+					$(this).css("background-color","#3399ff");
+					$('.signupforsigninpage').css("color","white");
+				},function() {
+					$(this).css("background-color","#f8f8f8");
+					$('.signupforsigninpage').css("color","black");
+				});
 			})
-	</script>
-</body>
+</script>
 
+</body>
 </html>
