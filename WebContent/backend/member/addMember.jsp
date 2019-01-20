@@ -116,21 +116,10 @@ function readURL(input){
 		<td>625549954</td>
 	</tr>
 
-<%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
-<!-- 	<tr> -->
-<!-- 		<td>部門:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="deptno"> -->
-<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%-- 				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname} --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="hidden" name="thirduid" value="625549954">
-
 <input type="submit" value="送出新增" >
 </FORM>
 

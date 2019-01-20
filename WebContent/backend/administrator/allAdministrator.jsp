@@ -1,9 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.administrator.model.*"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
 	AdministratorService administratorService = new AdministratorService();
@@ -11,29 +10,15 @@
 	pageContext.setAttribute("list", list);
 %>
 
-
 <html>
 <head>
-<title>所有管理員資料 - listAllAdministrator.jsp</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
-	text-align: center;
-}
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-</style>
+<title>ETIckeTs後台 - 所有管理員</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <style>
 .Administratorphoto {
 	border-radius: 50px;
@@ -62,25 +47,6 @@ table#table-1 h4 {
 }
 </style>
 <style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
 table {
 	width: 800px;
 	background-color: white;
@@ -96,24 +62,15 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-
-/* img { */
-/*   border-radius: 90%; */
-/* } */
 </style>
 
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/>  
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
+<div class="container table-responsive-md">
+<div class="row">
 
-<%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color: red">請修正以下錯誤:</font>
 	<ul>
@@ -168,9 +125,9 @@ th, td {
 	</c:forEach>
 </table>
 <%@ include file="page2.file"%>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
+
+</div>
+
 </div>
 </body>
 </html>

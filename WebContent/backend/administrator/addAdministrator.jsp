@@ -9,24 +9,13 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>新增管理員 - addAdministrator.jsp</title>
+
+<title>ETIckeTs後台 - 新增管理員</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-</style>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <style>
 .Administratorphoto {
 	border-radius: 50px;
@@ -56,23 +45,6 @@
 
 </style>
 <style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
-<style>
   table {
 	width: 450px;
 	background-color: white;
@@ -89,6 +61,7 @@
   border-radius: 90%;
 }
 </style>
+
 <script>
 function readURL(input){
   if(input.files && input.files[0]){
@@ -103,23 +76,17 @@ function readURL(input){
     reader.readAsDataURL(input.files[0]);
   }
 }
-
 </script>
+
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
+<div class="container table-responsive-md">
+<div class="row">
 
-<div class="container">
-<h3>新增管理員資料:</h3>
+<h3 align="center">新增管理員</h3>
 
-<%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -159,29 +126,15 @@ function readURL(input){
 		<td>normal</td>
 	</tr>
 
-<%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
-<!-- 	<tr> -->
-<!-- 		<td>部門:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="deptno"> -->
-<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%-- 				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname} --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增" >
 </FORM>
-<div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
-<br>
+
 </div>
 </div>
 </body>
-
-
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 

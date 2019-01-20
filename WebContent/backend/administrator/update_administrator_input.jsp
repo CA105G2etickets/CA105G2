@@ -9,24 +9,13 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>管理員資料修改</title>
+
+<title>ETIckeTs後台 - 管理員資料修改</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-</style>
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <style>
 .administratorphoto {
 	border-radius: 50px;
@@ -53,25 +42,7 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
-
 </style>
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
 <style>
   table {
 	width: 450px;
@@ -86,6 +57,7 @@
     padding: 1px;
   }
 </style>
+
 <script>
 function readURL(input){
   if(input.files && input.files[0]){
@@ -99,21 +71,16 @@ function readURL(input){
   }
 }
 </script>
+
 </head>
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
-<%-- import進導覽列 --%>
-<!-- <div>                    -->
-<%-- 	<c:import url="/navbar_back-end.html" charEncoding="UTF-8"> --%>
-<%-- 	</c:import> --%>
-<!-- </div> -->
-<%----%>
-
 <div class="container table-responsive-md">
-<h3>資料修改:</h3>
+<div class="row">
 
-<%-- 錯誤表列 --%>
+<h3>管理員資料修改</h3>
+
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -168,12 +135,13 @@ function readURL(input){
 <input type="hidden" name="administrator_no" value="<%=administratorVO.getAdministrator_no()%>">
 <input type="submit" value="送出修改"></FORM>
 <div class="col-xs-12 col-sm-12">
-<a href="select_page.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<a href="<%=request.getContextPath()%>/backend/administrator/allAdministrator.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
+</div>
+
 </div>
 </div>
 </body>
-
 
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->

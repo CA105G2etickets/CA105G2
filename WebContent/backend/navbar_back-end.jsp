@@ -215,8 +215,8 @@ body{
     				<span class="caret"></span>
     				</a>
     					<ul class="dropdown-menu" style="text-align: center;">
-      						<li><a href="#">查詢/修改管理員資料</a></li>
-     						<li><a href="#">新增管理員</a></li>
+      						<li><a href="<%=request.getContextPath()%>/backend/administrator/allAdministrator.jsp">查詢/修改管理員資料</a></li>
+     						<li><a href="<%=request.getContextPath()%>/backend/administrator/addAdministrator.jsp">新增管理員</a></li>
     					</ul>
  	 			</div>
 			</div>
