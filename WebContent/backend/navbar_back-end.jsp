@@ -211,7 +211,7 @@ body{
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div class="dropdown">
-    				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">會員管理
+    				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">管理員管理
     				<span class="caret"></span>
     				</a>
     					<ul class="dropdown-menu" style="text-align: center;">
