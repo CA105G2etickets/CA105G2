@@ -22,7 +22,7 @@
 	color: black;
 	font-weight: bold;
 }
-.walletcolumn {0
+.walletcolumn {
     display: inline-block;
     margin-right: 15px;
     margin-bottom: 5px;
