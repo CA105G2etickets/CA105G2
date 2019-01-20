@@ -144,7 +144,7 @@
 			<h3>${eventTitleVO.evetit_name}</h3>
 
              
-            <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=850&evetit_no=${eventTitleVO.evetit_no}" class="evetit_poster_area">
+            <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=450&evetit_no=${eventTitleVO.evetit_no}" class="evetit_poster_area">
             
             <div class="tabbable" style="margin-top:15px;">
                 <!-- 標籤面板：標籤區 -->

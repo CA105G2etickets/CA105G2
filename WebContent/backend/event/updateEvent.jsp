@@ -236,7 +236,7 @@
 			         			<input type="hidden" id="eve_seatmap_init" name="eve_seatmap_init" value="init">
 		        			</c:if>
 							<c:if test="${eve_seatmap_status != 'alreadyUpload'}">
-			                	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=850&eve_no=${eventVO.eve_no}" id="eve_seatmap_preview">
+			                	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=600&eve_no=${eventVO.eve_no}" id="eve_seatmap_preview">
 		                    </c:if>					
 							<c:if test="${eve_seatmap_status == 'alreadyUpload'}">
 			                	<img src="${eve_seatmap_path}" id="eve_seatmap_preview">

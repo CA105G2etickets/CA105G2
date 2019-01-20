@@ -157,7 +157,7 @@
 					<input type="file" id="evetit_poster" name="evetit_poster" class="form-control" accept="image/*">
 					<input type="hidden" id="evetit_poster_status" name="evetit_poster_status" value="${(evetit_poster_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
 					<c:if test="${evetit_poster_status != 'alreadyUpload'}">
-	                	<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?action=add&scaleSize=850&evetit_no=${eventTitleVO.evetit_no}" id="evetit_poster_preview">
+	                	<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?action=add&scaleSize=450&evetit_no=${eventTitleVO.evetit_no}" id="evetit_poster_preview">
                     </c:if>
 					
 					<c:if test="${evetit_poster_status == 'alreadyUpload'}">
