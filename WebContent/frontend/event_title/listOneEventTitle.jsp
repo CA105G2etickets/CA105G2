@@ -76,7 +76,7 @@
              </div>
             </div>
         </div>
-        <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=850&evetit_no=${aEventTitle.evetit_no}" id="poster">
+        <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=450&evetit_no=${aEventTitle.evetit_no}" id="poster">
         <div>
             <input id="flip" type="button" value="查看活動場次" class="btn btn-primary" style="margin-top:15px;margin-bottom:15px;">
             <div id="panel" style="display:none;">

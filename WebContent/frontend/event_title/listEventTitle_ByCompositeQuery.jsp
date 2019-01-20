@@ -66,7 +66,7 @@
                 <div class="col-xs-12 col-sm-4">
                     <div class="thumbnail loadMoreDivs" style="display:none;">
                         <a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${eventTitleVO.evetit_no}">
-                            <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=425&evetit_no=${eventTitleVO.evetit_no}" alt="">
+                            <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=300&evetit_no=${eventTitleVO.evetit_no}" alt="">
                         </a>                       
                         <div class="caption">
                             <p class="flex-text">${eventTitleVO.evetit_startdate}
