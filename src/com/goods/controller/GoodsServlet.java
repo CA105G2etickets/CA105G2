@@ -13,16 +13,14 @@ import javax.servlet.http.*;
 import com.goods.model.GoodsService;
 import com.goods.model.GoodsVO;
 
-
-
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class GoodsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 
+
 	public GoodsServlet() {
 		super();
 	}
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -34,17 +32,17 @@ public class GoodsServlet extends HttpServlet {
 		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
 
-		if ("getOne_For_Display".equals(action)) { 
+		if ("getOne_For_Display".equals(action)) {
 
 			String requestURL = req.getParameter("requestURL");
-			
+
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String goods_no = req.getParameter("goods_no");
-			
+
 				/*************************** 2.開始查詢資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
 				GoodsVO goodsVO = goodsSvc.getOneGoods(goods_no);
@@ -58,25 +56,21 @@ public class GoodsServlet extends HttpServlet {
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("goodsVO", goodsVO); 
+				req.setAttribute("goodsVO", goodsVO);
 				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listOneGoods.jsp");
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				goodsErrorMsgs.put("Exception","無法取得資料:" + e.getMessage());
+				goodsErrorMsgs.put("Exception", "無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
 			return;
 		}
-		
-		
-		
-		
 
 		if ("getOne_For_Update".equals(action)) { // 來自listAllGoods.jsp的請求
-			
+
 			String requestURL = req.getParameter("requestURL");
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
@@ -88,11 +82,11 @@ public class GoodsServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				GoodsService goodsSvc = new GoodsService();
 				GoodsVO goodsVO = goodsSvc.getOneGoods(goods_no);
-				
+
 				if (goodsVO == null) {
 					goodsErrorMsgs.put("goods_no", "查無資料");
 				}
-				
+
 				if (!goodsErrorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 					failureView.forward(req, res);
@@ -101,22 +95,20 @@ public class GoodsServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("goodsVO", goodsVO); // 資料庫取出的empVO物件,存入req
-				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/updateGoods.jsp");// 成功轉交 update_emp_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/updateGoods.jsp");// 成功轉交
+																											// update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				goodsErrorMsgs.put("Exception","無法取得要修改的資料:" + e.getMessage());
+				goodsErrorMsgs.put("Exception", "無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
 			return;
 		}
 
-		
-		
-		
-			else if ("updateGoods".equals(action)) { //來自backend/updateGoods.jsp
+		else if ("updateGoods".equals(action)) { // 來自backend/updateGoods.jsp
 
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
@@ -129,9 +121,9 @@ public class GoodsServlet extends HttpServlet {
 					goodsErrorMsgs.put("goods_name", "請輸入商品名稱");
 				}
 				String evetit_no = req.getParameter("evetit_no");
-				Integer goods_price = new Integer (req.getParameter("goods_price"));
-				Integer forsales_a = new Integer (req.getParameter("forsales_a"));
-				
+				Integer goods_price = new Integer(req.getParameter("goods_price"));
+				Integer forsales_a = new Integer(req.getParameter("forsales_a"));
+
 				java.sql.Timestamp today = new java.sql.Timestamp(System.currentTimeMillis());
 				java.sql.Timestamp launchdate = null;
 				try {
@@ -139,7 +131,7 @@ public class GoodsServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					goodsErrorMsgs.put("launchdate", "請輸入上架日期。");
 				}
-				
+
 				java.sql.Timestamp offdate = null;
 				try {
 					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
@@ -148,7 +140,7 @@ public class GoodsServlet extends HttpServlet {
 				}
 				String goods_status = req.getParameter("goods_status");
 				String goods_introduction = req.getParameter("goods_introduction");
-				
+
 //				byte[] goods_picture1 = null;
 //				String goods_picture1_status = req.getParameter("goods_picture1_status");
 //				if("noUpload".equals(goods_picture1_status)) {
@@ -177,7 +169,7 @@ public class GoodsServlet extends HttpServlet {
 //					req.setAttribute("goods_picture1_status", "alreadyUpload");	
 //				}
 //			
-			
+
 				byte[] goods_picture1 = null;
 				Part part = req.getPart("goods_picture1");
 				try {
@@ -189,48 +181,43 @@ public class GoodsServlet extends HttpServlet {
 						in.close();
 					}
 				} catch (FileNotFoundException e) {
-					goodsErrorMsgs.put("goods_picture1","請上傳商品圖片");
+					goodsErrorMsgs.put("goods_picture1", "請上傳商品圖片");
 				}
 				if (part.getSize() == 0) {
-					
+
 				}
-					byte[] goods_picture2 = null;
-					Part part2 = req.getPart("goods_picture2");
-					try {
-						String uploadFileName = part2.getSubmittedFileName();
-						if (uploadFileName != null && part2.getContentType() != null) {
-							InputStream in = part2.getInputStream();
-							goods_picture2 = new byte[in.available()];
-							in.read(goods_picture2);
-							in.close();
-						}
-					} catch (FileNotFoundException e) {
-						goodsErrorMsgs.put("goods_picture2","請上傳商品圖片");
+				byte[] goods_picture2 = null;
+				Part part2 = req.getPart("goods_picture2");
+				try {
+					String uploadFileName = part2.getSubmittedFileName();
+					if (uploadFileName != null && part2.getContentType() != null) {
+						InputStream in = part2.getInputStream();
+						goods_picture2 = new byte[in.available()];
+						in.read(goods_picture2);
+						in.close();
 					}
-					if (part2.getSize() == 0) {
-						
-					}
-						byte[] goods_picture3 = null;
-						Part part3 = req.getPart("goods_picture1");
-						try {
-							String uploadFileName = part3.getSubmittedFileName();
-							if (uploadFileName != null && part3.getContentType() != null) {
-								InputStream in = part3.getInputStream();
-								goods_picture3 = new byte[in.available()];
-								in.read(goods_picture3);
-								in.close();
-							}
-						} catch (FileNotFoundException e) {
-							goodsErrorMsgs.put("goods_picture3","請上傳商品圖片");
-						}
-						if (part3.getSize() == 0) {
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
+				} catch (FileNotFoundException e) {
+					goodsErrorMsgs.put("goods_picture2", "請上傳商品圖片");
 				}
-				
+				if (part2.getSize() == 0) {
+
+				}
+				byte[] goods_picture3 = null;
+				Part part3 = req.getPart("goods_picture3");
+				try {
+					String uploadFileName = part3.getSubmittedFileName();
+					if (uploadFileName != null && part3.getContentType() != null) {
+						InputStream in = part3.getInputStream();
+						goods_picture3 = new byte[in.available()];
+						in.read(goods_picture3);
+						in.close();
+					}
+				} catch (FileNotFoundException e) {
+					goodsErrorMsgs.put("goods_picture3", "請上傳商品圖片");
+				}
+				if (part3.getSize() == 0) {
+				}
+
 //				
 //				byte[] goods_picture2 = null;
 //				String goods_picture2_status = req.getParameter("goods_picture2_status");
@@ -368,14 +355,13 @@ public class GoodsServlet extends HttpServlet {
 //					
 //				}
 //				goodsVO.setGoods_picture3(goods_picture3);
-				
-				
+
 				GoodsService goodsSvc = new GoodsService();
 				goodsVO = goodsSvc.updateGoods(goods_no, evetit_no, goods_name, goods_price, goods_picture1,
-						goods_picture2, goods_picture3, goods_introduction, forsales_a, favorite_count, goods_status, launchdate,
-						offdate,goods_group_count,goods_group_count,goods_group_count); 
-				req.setAttribute("goodsVO", goodsVO); 
-				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp"); 
+						goods_picture2, goods_picture3, goods_introduction, forsales_a, favorite_count, goods_status,
+						launchdate, offdate, goods_group_count, goods_group_count, goods_group_count);
+				req.setAttribute("goodsVO", goodsVO);
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp");
 				successView.forward(req, res);
 
 //				req.getSession().removeAttribute("goods_picture1_path");
@@ -383,13 +369,13 @@ public class GoodsServlet extends HttpServlet {
 //				req.getSession().removeAttribute("goods_picture3_path");
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				goodsErrorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
+				goodsErrorMsgs.put("Exception", "修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/updateGoods.jsp");
 				failureView.forward(req, res);
 			}
 		}
- 
-		if ("insertGoods".equals(action)) { //來自backend/addGoods.jsp
+
+		if ("insertGoods".equals(action)) { // 來自backend/addGoods.jsp
 
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
@@ -398,25 +384,23 @@ public class GoodsServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String evetit_no = req.getParameter("evetit_no");
 				if (evetit_no == null || evetit_no.trim().length() == 0) {
-					goodsErrorMsgs.put("goods_name","請輸入活動編號");
+					goodsErrorMsgs.put("goods_name", "請輸入活動編號");
 				}
 				String goods_name = req.getParameter("goods_name");
 				if (goods_name == null || goods_name.trim().length() == 0) {
 					goodsErrorMsgs.put("goods_name", "請輸入商品名稱");
 				}
-				
-				
+
 //				Integer goods_price = null;
 //				try {
 //					goods_price = new Integer(req.getParameter("goods_price"));
 //				} catch (NumberFormatException e) {
 //					goodsErrorMsgs.put("goods_price", "請輸入售價");
 //				}
-				Integer goods_price = new Integer (req.getParameter("goods_price"));
-				
-				 java.sql.Timestamp today = new  java.sql.Timestamp(System.currentTimeMillis());
-				 
-				
+				Integer goods_price = new Integer(req.getParameter("goods_price"));
+
+				java.sql.Timestamp today = new java.sql.Timestamp(System.currentTimeMillis());
+
 //				 byte[] goods_picture1 = null;
 //					String goods_picture1_status = req.getParameter("goods_picture1_status");
 //					if("noUpload".equals(goods_picture1_status)) {
@@ -444,64 +428,58 @@ public class GoodsServlet extends HttpServlet {
 //					} else if ("alreadyUpload".equals(goods_picture1_status)){
 //						req.setAttribute("goods_picture1_status", "alreadyUpload");	
 //					}
-				 
-				 
-				 byte[] goods_picture1 = null;
-					Part part1 = req.getPart("goods_picture1");
-					try {
-						String uploadFileName1 = part1.getSubmittedFileName();
-						if (uploadFileName1 != null && part1.getContentType() != null) {
-							InputStream in = part1.getInputStream();
-							goods_picture1 = new byte[in.available()];
-							in.read(goods_picture1);
-							in.close();
-						}
-					} catch (FileNotFoundException e) {
-						goodsErrorMsgs.put("goods_picture1","找不到檔案");
+
+				byte[] goods_picture1 = null;
+				Part part1 = req.getPart("goods_picture1");
+				try {
+					String uploadFileName1 = part1.getSubmittedFileName();
+					if (uploadFileName1 != null && part1.getContentType() != null) {
+						InputStream in = part1.getInputStream();
+						goods_picture1 = new byte[in.available()];
+						in.read(goods_picture1);
+						in.close();
 					}
-					if (part1.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture1","請上傳商品圖片1");
+				} catch (FileNotFoundException e) {
+					goodsErrorMsgs.put("goods_picture1", "找不到檔案");
+				}
+				if (part1.getSize() == 0) {
+					goodsErrorMsgs.put("goods_picture1", "請上傳商品圖片1");
+				}
+
+				byte[] goods_picture2 = null;
+				Part part2 = req.getPart("goods_picture2");
+				try {
+					String uploadFileName2 = part2.getSubmittedFileName();
+					if (uploadFileName2 != null && part2.getContentType() != null) {
+						InputStream in2 = part2.getInputStream();
+						goods_picture2 = new byte[in2.available()];
+						in2.read(goods_picture2);
+						in2.close();
 					}
-					
-					
-					
-					byte[] goods_picture2 = null;
-					Part part2 = req.getPart("goods_picture2");
-					try {
-						String uploadFileName2 = part2.getSubmittedFileName();
-						if (uploadFileName2 != null && part2.getContentType() != null) {
-							InputStream in2 = part2.getInputStream();
-							goods_picture2 = new byte[in2.available()];
-							in2.read(goods_picture2);
-							in2.close();
-						}
-					} catch (FileNotFoundException e) {
-						goodsErrorMsgs.put("goods_picture2","找不到檔案");
+				} catch (FileNotFoundException e) {
+					goodsErrorMsgs.put("goods_picture2", "找不到檔案");
+				}
+				if (part2.getSize() == 0) {
+					goodsErrorMsgs.put("goods_picture2", "請上傳商品圖片2");
+				}
+
+				byte[] goods_picture3 = null;
+				Part part3 = req.getPart("goods_picture3");
+				try {
+					String uploadFileName3 = part3.getSubmittedFileName();
+					if (uploadFileName3 != null && part3.getContentType() != null) {
+						InputStream in3 = part3.getInputStream();
+						goods_picture3 = new byte[in3.available()];
+						in3.read(goods_picture3);
+						in3.close();
 					}
-					if (part2.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture2","請上傳商品圖片2");
-					}
-					
-					
-					
-					
-					byte[] goods_picture3 = null;
-					Part part3 = req.getPart("goods_picture3");
-					try {
-						String uploadFileName3 = part3.getSubmittedFileName();
-						if (uploadFileName3 != null && part3.getContentType() != null) {
-							InputStream in3 = part3.getInputStream();
-							goods_picture3 = new byte[in3.available()];
-							in3.read(goods_picture3);
-							in3.close();
-						}
-					} catch (FileNotFoundException e) {
-						goodsErrorMsgs.put("goods_picture3","找不到檔案");
-					}
-					if (part3.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture3","請上傳商品圖片3");
-					}
-				
+				} catch (FileNotFoundException e) {
+					goodsErrorMsgs.put("goods_picture3", "找不到檔案");
+				}
+				if (part3.getSize() == 0) {
+					goodsErrorMsgs.put("goods_picture3", "請上傳商品圖片3");
+				}
+
 //				byte[] goods_picture2 = null;
 //				String goods_picture2_status = req.getParameter("goods_picture2_status");
 //				if("noUpload".equals(goods_picture2_status)) {
@@ -565,29 +543,25 @@ public class GoodsServlet extends HttpServlet {
 //				} catch (NumberFormatException e) {
 //					goodsErrorMsgs.put("forsales_a", "請輸入折扣價");
 //				}
-				
-				
+
 				String goods_status = req.getParameter("goods_status");
-				
+
 				java.sql.Timestamp launchdate = null;
 				try {
-					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());	
+					launchdate = java.sql.Timestamp.valueOf(req.getParameter("launchdate").trim());
 				} catch (IllegalArgumentException e) {
 					goodsErrorMsgs.put("launchdate", "請輸入上架日期");
 				}
 				java.sql.Timestamp offdate = null;
 				try {
 					offdate = java.sql.Timestamp.valueOf(req.getParameter("offdate").trim());
-//					if (today.compareTo(offdate) > 0) {
-//						eventTitleErrorMsgs.put("offdate_BiggerThanToday", "下架日期不得早於今天");
-//					} 				
 					if (launchdate.compareTo(offdate) > 0) {
 						goodsErrorMsgs.put("offdate_BiggerThanLaunchdate", "下架日期不得早於上架日期");
-					} 
+					}
 				} catch (IllegalArgumentException e) {
 					goodsErrorMsgs.put("offdate", "請輸入下架日期");
-				} catch (NullPointerException e){
-					
+				} catch (NullPointerException e) {
+
 				}
 //				java.sql.Timestamp launchdate = null;
 //				try {
@@ -605,13 +579,13 @@ public class GoodsServlet extends HttpServlet {
 //						goodsErrorMsgs.put("offdate", "請輸入下架日期");
 //					}
 //				
-			
+
 //				Integer favorite_count = 0;
 //				Integer goods_sales_count = 0;
 //				Integer goods_group_count = 0;
 //				
 //				Integer goods_want_count = 0;
-	
+
 //				
 //				String goods_picture1_path = (String) req.getSession().getAttribute("goods_picture1_path");				
 //				String goods_picture1_path_forUse = goods_picture1_path.replace(req.getContextPath(), "").replace("/", "\\");
@@ -655,30 +629,26 @@ public class GoodsServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 *****************************************/
 				GoodsService goodsSvc = new GoodsService();
 				GoodsVO goodsVO = new GoodsVO();
-				goodsVO = goodsSvc.addGoods(evetit_no, goods_name, goods_price, goods_picture1,
-						goods_picture2, goods_picture3, goods_introduction, forsales_a, goods_status, launchdate,
-						offdate);
-				req.getSession().removeAttribute("goods_picture1_path");
-				req.getSession().removeAttribute("goods_picture2_path");
-				req.getSession().removeAttribute("goods_picture3_path");
+				goodsVO = goodsSvc.addGoods(evetit_no, goods_name, goods_price, goods_picture1, goods_picture2,
+						goods_picture3, goods_introduction, forsales_a, goods_status, launchdate, offdate);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("goodsVO", goodsVO);
-				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listOneGoods.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp");
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-		
+
 			} catch (Exception e) {
 				goodsErrorMsgs.put("Exception", "新增資料失敗 : " + e.getMessage());
-			}
+
 				RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
 				failureView.forward(req, res);
-
+			}
 		}
 
-		if ("deleteGoods".equals(action)) { 
-			
+		if ("deleteGoods".equals(action)) {
+
 			String requestURL = req.getParameter("requestURL");
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
@@ -695,49 +665,54 @@ public class GoodsServlet extends HttpServlet {
 				goodsSvc.deleteGoods(goods_no);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				
+
 				List<GoodsVO> goodsList = goodsSvc.getAll();
 				req.setAttribute("goodsList", goodsList);
 				RequestDispatcher successView = req.getRequestDispatcher(requestURL);
 				successView.forward(req, res);
-				
-				
+
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				goodsErrorMsgs.put("Exception","刪除資料失敗:" + e.getMessage());
+				goodsErrorMsgs.put("Exception", "刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
 			return;
 		}
-		
+
 		if ("listGoods_ByCompositeQuery".equals(action)) {
-			
+
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
-			
-			try {				
-				/****************************** 1.將輸入資料轉為Map **************************************************/ 
+
+			try {
+				/******************************
+				 * 1.將輸入資料轉為Map
+				 **************************************************/
 				Map<String, String[]> map = req.getParameterMap();
-				
-				/****************************** 2.開始複合查詢 **************************************************/
+
+				/******************************
+				 * 2.開始複合查詢
+				 **************************************************/
 				GoodsService goodsService = new GoodsService();
-				List<GoodsVO> list  = goodsService.getAllLaunched(map);
-				
-				/****************************** 3.查詢完成,準備轉交 **************************************************/
+				List<GoodsVO> list = goodsService.getAllLaunched(map);
+
+				/******************************
+				 * 3.查詢完成,準備轉交
+				 **************************************************/
 				req.setAttribute("listGoods_ByCompositeQuery", list);
-				
+
 				RequestDispatcher successView = req.getRequestDispatcher("/frontend/goods/selectGoods.jsp");
 				successView.forward(req, res);
-				
-				/***************************其他可能的錯誤處理**********************************/
+
+				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				goodsErrorMsgs.put("Exception", "無法取得資料 : " + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/goods/selectGoods.jsp");
 				failureView.forward(req, res);
 			}
-			
+
 		}
-	
+
 	}
 }

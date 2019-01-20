@@ -7,37 +7,45 @@
 <html>
 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>新增商品</title>
-<!-- Basic -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-.actionForm {
-	display: inline;
-}
-
-#map {
-	height: 500px;
-	width: 100%;
-	margin-top: 15px;
-	border-radius: 25px;
-}
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>新增活動主題</title>
+    <!-- Basic -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- datetimepicker -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.css" />
+    
+    <style>
+        .evetit_poster_area img {
+	        width: 100%;
+	    }
+    	body{
 body {
 	font-family: 微軟正黑體 !important;
 }
 </style>
+<script>
+function readURL(input){
+  if(input.files && input.files[0]){
+    var imageID = input.getAttribute("targetID");
+    var reader = new FileReader();
+    reader.onload = function (e) {
+       var img = document.getElementById(imageID);
+       img.setAttribute("src", e.target.result)
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
 </head>
 
 <body>
 
 
-	<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
 
+		<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
 
 
 
@@ -56,24 +64,24 @@ body {
 			</div>
 
 
-			<div class="row">
-				<div class="col-xs-12 col-sm-6">
-					<div class="form-group">
-						 <label for="launchdate">上架日期</label>
+	            <div class="row">
+	                <div class="col-xs-12 col-sm-6">
+	                     <div class="form-group">
+	                         <label for="launchdate">上架日期</label>
 	                         <span class="text-danger">${goodsErrorMsgs.launchdate}</span>
 	                         <input type="text" id="launchdate" name="launchdate" class="form-control" value="${param.launchdate}">
-	                   </div>
-				</div>
-				<div class="col-xs-12 col-sm-6">
-					<div class="form-group">
+	                     </div>
+	                </div>
+	                <div class="col-xs-12 col-sm-6">
+	                     <div class="form-group">
 	                         <label for="offdate">下架日期</label>
 	                         <span class="text-danger">${goodsErrorMsgs.offdate}</span>
 	                         <span class="text-danger">${goodsErrorMsgs.offdate_BiggerThanToday}</span>
 	                         <span class="text-danger">${goodsErrorMsgs.offdate_BiggerThanLaunchdate}</span>
 	                         <input type="text" id="offdate" name="offdate" class="form-control" value="${param.offdate}">
-	                    </div>
-				</div>
-			</div>
+	                     </div>
+	                </div>
+	            </div>
 
 			<div class="row">
 				<div class="col-xs-12 col-sm-3">
@@ -117,31 +125,18 @@ body {
 				</div>
 
 			</div>
-
-			<div class="form-group goods_picture">
-				<label for="goods_picture1">圖片1</label> <span class="text-danger">${goodsErrorMsgs.goods_picture1}</span>
-				<input type="file" id="goods_picture1" name="goods_picture1"
-					class="form-control" accept="image/*"> <input type="hidden"
-					id="goods_picture1_status" name="goods_picture1_status"
-					value="${(goods_picture1_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				<img src="${goods_picture1_path}" id="goods_picture1_preview">
-
-
-				<label for="goods_picture2">圖片2</label> <span class="text-danger">${goodsErrorMsgs.goods_picture2}</span>
-				<input type="file" id="goods_picture2" name="goods_picture2"
-					class="form-control" accept="image/*"> <input type="hidden"
-					id="goods_picture2_status" name="goods_picture2_status"
-					value="${(goods_picture2_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				<img src="${goods_picture2_path}" id="goods_picture2_preview">
-
-
-				<label for="goods_picture3">圖片3</label> <span class="text-danger">${goodsErrorMsgs.goods_picture3}</span>
-				<input type="file" id="goods_picture3" name="goods_picture3"
-					class="form-control" accept="image/*"> <input type="hidden"
-					id="goods_picture3_status" name="goods_picture3_status"
-					value="${(goods_picture3_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				<img src="${goods_picture3_path}" id="goods_picture3_preview">
-			</div>
+	
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture1" onchange="readURL(this)" targetID="goods_picture1preview">
+		<img id="goods_picture1preview" src="<%=request.getContextPath()%>/goods/goodsImg1.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
+	
+		
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture2" onchange="readURL(this)" targetID="goods_picture2preview">
+		<img id="goods_picture2preview" src="<%=request.getContextPath()%>/goods/goodsImg2.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
+	
+		
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture3" onchange="readURL(this)" targetID="goods_picture3preview">
+		<img id="goods_picture3preview" src="<%=request.getContextPath()%>/goods/goodsImg3.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
+	
 
 			<div class="tabbable">
 				<!-- 標籤面板：標籤區 -->
@@ -159,16 +154,15 @@ body {
 
 				</div>
 			</div>
-			<span class="form-group"> 
-				<button type="submit" class="btn btn-success" name="action"
-					value="insertGoods">新增</button>
-			</span>
-		</form>
+	<span class="form-group">
+					<button type="submit" class="btn btn-success" name="action" value="insertGoods" style="margin-top:15px;">新增</button>
+					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/goods/listAllGoods.jsp" style="margin-top:15px;">回商品總攬</a>
+				</span>			
+			</form>
 	</div>
 
 
-
-   <!-- Basic -->
+    <!-- Basic -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- ckEditor JS -->
@@ -177,27 +171,12 @@ body {
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
     <!-- JavaScript in File -->
-    <script type="text/javascript">
-
-	<script>
+    <script src="<%=request.getContextPath()%>/backend/event_title/js/eventTitleCKEditor.js"></script>
+    <script src="<%=request.getContextPath()%>/backend/event_title/js/addEventTitle.js"></script>
+    <!-- JavaScript in HTML -->
 	
-		$('#f_date1').datetimepicker({
-			theme : '', //theme: 'dark',
-			timepicker : true, //timepicker:true,
-			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
-			format : 'Y-m-d H:i:s', //format:'Y-m-d H:i:s',
-			value : new Date(), // value:   new Date(),
-		});
-		$('#f_date2').datetimepicker({
-			theme : '', //theme: 'dark',
-			timepicker : true, //timepicker:true,
-			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
-			format : 'Y-m-d H:i:s', //format:'Y-m-d H:i:s',
-			value : new Date(), // value:   new Date(),
-		});
-	</script>
-
 	<script type="text/javascript">
+	
 		$(function() {
 			initInfoEditor();
 			//         initNoticesEditor();
