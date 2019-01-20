@@ -162,7 +162,7 @@ body{
 			<c:forEach var="advertisementVO" items="${advertisementList}">
 				<div class="item">
 					<a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${advertisementVO.evetit_no}" target="_blank">
-						<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=1200&evetit_no=${advertisementVO.evetit_no}">
+						<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=450&evetit_no=${advertisementVO.evetit_no}">
 					</a>
 				</div>
 			</c:forEach>
@@ -278,7 +278,7 @@ body{
 					<a
 						href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${theOneAdvertisementVO.getEvetit_no()}"
 						target="_blank"> <img
-						src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=1000&evetit_no=${theOneAdvertisementVO.getEvetit_no()}">
+						src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=450&evetit_no=${theOneAdvertisementVO.getEvetit_no()}">
 					</a>
 				</div>
 				<div class="modal-footer adImgModalFooter">
