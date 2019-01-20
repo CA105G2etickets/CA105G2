@@ -32,7 +32,7 @@
 				</c:forEach>
 			</ul>
 		</c:if>
-		<div class="container-fluid" style="margin-bottom: 400px">
+		<div class="container-fluid" style="margin-bottom: 200px">
 			<div class="row">
 				<div class="col-xs-12 col-sm-2"></div>
 				<div class="col-xs-12 col-sm-8">
@@ -53,15 +53,13 @@
 									<th>收件人名稱</th>
 									<th>收件人電話</th>
 									<th>訂單狀態</th>
-	<!-- 								<th>修改</th> -->
-	<!-- 								<th>刪除</th> -->
+									<th>操作</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="orderHistoryVO" items="${list}">
 									<tr>
 										<td><a href="<%=request.getContextPath()%>/order_detail/OrderDetail.do?action=getAll_OrderDetail_For_A_OrderNo_Frontend&order_no=${orderHistoryVO.order_no}">${orderHistoryVO.order_no}</a></td>
-	<%-- 									<td>${orderHistoryVO.member_no}</td> --%>
 										<td>${orderHistoryVO.order_price}</td>
 										<td>
 											${(orderHistoryVO.pay_methods == "CREDITCARD") ? '信用卡' : '' }
@@ -84,18 +82,28 @@
 											${(orderHistoryVO.order_status == "COMPLETE4") ? '已完成' : '' }
 											${(orderHistoryVO.order_status == "CANCEL5") ? '已取消' : '' }
 										</td>
-	<!-- 										<td> -->
-	<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" style="margin-bottom: 0px;"> --%>
-	<!-- 										     <input type="submit" value="修改" class="btn btn-warning"> -->
-	<%-- 										     <input type="hidden" name="order_no" value="${orderHistoryVO.order_no}"> --%>
-	<!-- 										     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
-	<!-- 										</td> -->
-	<!-- 										<td> -->
-	<%-- 										  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" style="margin-bottom: 0px;"> --%>
-	<!-- 										     <input type="submit" value="刪除" class="btn btn-danger"> -->
-	<%-- 										     <input type="hidden" name="order_no" value="${orderHistoryVO.order_no}"> --%>
-	<!-- 										     <input type="hidden" name="action" value="delete_OrderHistory"></FORM> -->
-	<!-- 										</td> -->
+										<c:if test="${(orderHistoryVO.order_status == 'PAYMENT1') || (orderHistoryVO.order_status == 'SHIPPING2')}">
+											<td>
+											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order_history/OrderHistory.do" style="margin-bottom: 0px;">
+												<input type="hidden" name="order_no" value="${orderHistoryVO.order_no}">
+												<input type="hidden" name="member_no" value="${orderHistoryVO.member_no}">
+												<input type="hidden" name="order_price" value="${orderHistoryVO.order_price}">
+												<input type="hidden" name="pay_methods" value="${orderHistoryVO.pay_methods}">
+												<input type="hidden" name="shipping_methods" value="${orderHistoryVO.shipping_methods}">
+												<input type="hidden" name="order_date" value="${orderHistoryVO.order_date}">
+												<input type="hidden" name="order_etd" value="${orderHistoryVO.order_etd}">
+												<input type="hidden" name="pickup_date" value="${orderHistoryVO.pickup_date}">
+												<input type="hidden" name="receiver_add" value="${orderHistoryVO.receiver_add}">
+												<input type="hidden" name="receiver_name" value="${orderHistoryVO.receiver_name}">
+												<input type="hidden" name="receiver_tel" value="${orderHistoryVO.receiver_tel}">
+												<input type="hidden" name="order_status" value="${orderHistoryVO.order_status}">
+												<input type="hidden" name="action" value="update_Front">
+												<input type="submit" value="取消訂單" class="btn btn-danger">
+											  </FORM>
+											</td>
+										</c:if>
+										<c:if test="${orderHistoryVO.order_status != 'CANCEL5'}">
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -114,7 +122,6 @@
 						</div>
 					</div>
 					<%}%>
-<%-- 						<div><jsp:include page="<%=request.getContextPath()%>/order_history/AllOrderDetailOfAOrderNo.jsp" flush="true"></div> --%>
 				</div>
 			</div>
 		</div>

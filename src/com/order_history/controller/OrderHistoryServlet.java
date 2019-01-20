@@ -436,6 +436,79 @@ public class OrderHistoryServlet extends HttpServlet {
 			}
 		}
 		
+		if ("update_Front".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				String order_no = new String(req.getParameter("order_no").trim());
+				String member_no = new String(req.getParameter("member_no").trim());
+				Double order_price = new Double(req.getParameter("order_price").trim());
+				String pay_methods = new String(req.getParameter("pay_methods").trim());
+				String shipping_methods = new String(req.getParameter("shipping_methods").trim());
+				
+				java.sql.Timestamp order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
+				java.sql.Timestamp order_etd = null;
+				java.sql.Timestamp pickup_date = null;
+				String order_status = new String(req.getParameter("order_status").trim());
+				if("SHIPMENT3".equals(order_status)) {
+					order_etd = new java.sql.Timestamp(System.currentTimeMillis());
+					pickup_date = null;
+				}else if("COMPLETE4".equals(order_status)){
+					try {
+						order_etd = java.sql.Timestamp.valueOf(req.getParameter("order_etd").trim());
+					} catch (IllegalArgumentException e) {
+						order_etd = new java.sql.Timestamp(System.currentTimeMillis());
+					}
+					pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
+				}else {
+					order_etd = null;
+					pickup_date = null;
+				}
+				
+				String receiver_add = req.getParameter("receiver_add");
+				String receiver_name = req.getParameter("receiver_name");
+				String receiver_tel = req.getParameter("receiver_tel");
+				
+				
+				OrderHistoryVO orderHistoryVO = new OrderHistoryVO();
+				orderHistoryVO.setOrder_no(order_no);
+				orderHistoryVO.setMember_no(member_no);
+				orderHistoryVO.setOrder_price(order_price);
+				orderHistoryVO.setPay_methods(pay_methods);;
+				orderHistoryVO.setShipping_methods(shipping_methods);
+				orderHistoryVO.setOrder_date(order_date);
+				orderHistoryVO.setOrder_etd(order_etd);
+				orderHistoryVO.setPickup_date(pickup_date);
+				orderHistoryVO.setReceiver_add(receiver_add);
+				orderHistoryVO.setReceiver_name(receiver_name);
+				orderHistoryVO.setReceiver_tel(receiver_tel);
+				orderHistoryVO.setOrder_status(order_status);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("orderHistoryVO", orderHistoryVO); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/order_history/oneMemberIsOrderDetail.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				OrderHistoryService orderHistorySvc = new OrderHistoryService();
+				orderHistoryVO = orderHistorySvc.updateOrderHistory(member_no, order_price, 
+						pay_methods, shipping_methods, order_date, order_etd, pickup_date, receiver_add, 
+						receiver_name, receiver_tel, order_status, order_no);
+			
+				req.setAttribute("orderHistoryVO", orderHistoryVO); 
+				String url = "/frontend/order_history/oneMemberIsOrderDetail.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗："+e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/order_history/oneMemberIsOrderDetail.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
 		if ("insert_Front".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
