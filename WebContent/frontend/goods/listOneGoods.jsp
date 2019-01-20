@@ -221,11 +221,8 @@ body {
 	
 		    $(document).ready(function() {
 		    	
-		    	console.log('${member.memberNo}');
-		    	
 				$("#toggleFavoriteGoods").click(function(){
 		        	console.log("in the toggleFavoriteGoods");
-		        	// checkFavoriteGoodsData
 		        	var member_no = $("#member_no").val();
 		        	console.log($("#member_no").val());
 		        	if(member_no == null || member_no.trim().length != 7){
@@ -237,7 +234,7 @@ body {
 		        		window.alert("找不到商品編號");
 		        		return;
 		        	}
-		        	// deleteFavoriteGoods
+		        	// 取消最愛
 		        	if($("#favoriteGoodsStatus").val() == "inTheFavoriteGoods"){
 		        		console.log("in the inTheFavoriteGoods");
 		        		var url = $("#projectName").val();
@@ -255,20 +252,13 @@ body {
 		                    url: url,
 		                    data: data,
 		                    success: function(data) {    
-// 			                   	if(data.indexOf("成") != -1){
-// 			                		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
-// 			                		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
-// 			                		$("#clickFavoriteGoods").html("加入最愛");
-// 			                	} else {
-// 			                		window.alert(data);
-// 			                	}
 			                   		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
 			                   		$("#favoriteGoodsStatus").val("outTheFavoriteGoods");
 			                   		$("#clickFavoriteGoods").html("加入最愛");
 		                    }
 		                });	
 		        	}
-		        	// addFavoriteGoods
+		        	// 加入最愛
 		        	if($("#favoriteGoodsStatus").val() == "outTheFavoriteGoods"){
 		        		console.log("in the outTheFavoriteGoods");
 		        		var url = $("#projectName").val();
@@ -286,13 +276,6 @@ body {
 		                    url: url,
 		                    data: data,
 		                    success: function(data) {              	
-// 	                    	if(data.indexOf("成") != -1){
-// 	                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
-// 	                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
-// 	                    		$("#clickFavoriteGoods").html("取消最愛");
-// 	                    	} else {
-// 	                    		window.alert(data);
-// 	                    	}
 	                    		$("#clickFavoriteGoods").toggleClass("glyphicon-heart glyphicon-heart-empty");
 	                    		$("#favoriteGoodsStatus").val("inTheFavoriteGoods");
 	                    		$("#clickFavoriteGoods").html("取消最愛");
@@ -300,10 +283,7 @@ body {
 	                	});
 		        	}
 		        });
-			        
-			        console.log($("#member_no").val());
-			        console.log("in the init favorite goods state");
-			     	// the init favorite event state
+			     	// 進入頁面時判斷是否已加入最愛
 			     	if($("#member_no").val() != null && $("#member_no").val().trim().length == 7 && $("#goods_no").val().trim().length == 8){
 			        	var member_no = $("#member_no").val();
 			        	var goods_no = $("#goods_no").val();
@@ -328,7 +308,6 @@ body {
 			                		$("#clickFavoriteGoods").html("取消最愛");
 			                	}
 			                	else if(data.indexOf("false") != -1){
-									//do nothing if not in the record
 			                	} else {
 			                		window.alert(data);
 			                	}
