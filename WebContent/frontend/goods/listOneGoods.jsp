@@ -106,7 +106,7 @@ body {
 			<div class="col-xs-12 col-sm-6">
 				<h3 style="margin-top: 0px;" class="alert alert-info" role="alert">${goodsVO.goods_name}</h3>
 				<div id="toggleFavoriteGoods" style="color:red;text-align:right">
-					<h3><i class="glyphicon glyphicon-heart-empty " id="clickFavoriteGoods">加入最愛</i></h3>
+					<h3><i class="glyphicon glyphicon-heart-empty" id="clickFavoriteGoods">加入最愛</i></h3>
 					<input type="hidden" id="favoriteGoodsStatus" value="outTheFavoriteGoods">
 				</div>
 				<h3>原價 : ${goodsVO.goods_price} 元 / 個</h3>
@@ -193,12 +193,9 @@ body {
 
 		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 
-
-
 		<!-- Basic -->
 		<script src="https://code.jquery.com/jquery.js"></script>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
 			$(function() {
 				$(".add").click(function() {
@@ -301,7 +298,6 @@ body {
 	                    		$("#clickFavoriteGoods").html("取消最愛");
 	                    	}
 	                	});
-		                <i class="glyphicon glyphicon-heart" id="clickFavoriteGoods">加入最愛</i>
 		        	}
 		        });
 			        
