@@ -57,8 +57,7 @@ public class ResaleOrderService {
 		Integer original_ticket_resale_price = ticketVO.getTicket_resale_price();
 		String original_is_from_resale = ticketVO.getIs_from_resale();
 		
-		//get a latest ticketvo as I could and set in resaleorder for dao to compare.
-		//要改的票券物件要放在轉讓訂單物件內然後用傳值的方式來比較因此上面那行註解應該是錯的
+		//要改的票券物件要放在轉讓訂單物件內然後用傳值的方式來比較
 		ticketVO.setMember_no(ticketOwnerMember_no);
 		ticketVO.setTicket_resale_status(changeTo_ticket_resale_status);
 		ticketVO.setTicket_resale_price(changeTo_ticket_resale_price);
@@ -77,6 +76,24 @@ public class ResaleOrderService {
 		String resale_ordno = dao.insertResaleOrderWithCondition(resaleorderVO, original_ticket_resale_status , original_ticket_resale_price, original_is_from_resale, ticketOwnerMember_no);
 
 		return resale_ordno;
+	}
+	
+	public void updateResaleOrderWithTicketResaleAttributesAndMemberOwnerChanged
+	(String resale_ordno, String new_member_no, 
+			String ticket_resale_status, Integer ticket_resale_price, String is_from_resale) 
+	{
+		ResaleOrderVO resaleorderVO = new ResaleOrderVO();
+		
+		//得到包著票券物件的轉售訂單物件用這個當標準去呼叫永續層的更新方法
+		ResaleOrderService reSvc = new ResaleOrderService();
+		resaleorderVO = reSvc.getOneResaleOrd(resale_ordno);
+		if(!resaleorderVO.getTicketVO().getTicket_resale_status().equals("CHECKING3")) {
+			throw new RuntimeException("此票已非結帳中或付款中的轉讓票，可能被取消轉讓"); 
+		}
+		//這方法比較沒有用因為理論上來說已經被購買中的票狀態跟屬性早就被上一步產生轉讓訂單給更新過了因此應該只能被結帳完成或買家取消或是伺服器取消此訂單
+		
+		
+		
 	}
 	
 

@@ -630,7 +630,7 @@ public class TicketServlet extends HttpServlet {
 						.getRequestDispatcher("/frontend/index.jsp");
 				failureView.forward(req, res);
 			}
-		}//member_cancel_One_resale_ticket
+		}
 		
 		if ("member_cancel_One_resale_ticket".equals(action)) { 
 			

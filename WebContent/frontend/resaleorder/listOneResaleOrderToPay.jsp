@@ -25,10 +25,11 @@ pageContext.setAttribute("resale_ordno",resale_ordno);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
-<jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
+<%-- <jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
 <jsp:useBean id="SeatingArea_H5_Service" scope="page" class="com.seating_area.model.SeatingArea_H5_Service" />
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
-<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
+ --%>
+ <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="resaleorderService" scope="page" class="com.resaleorder.model.ResaleOrderService" />
 <body>
 <jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
@@ -52,12 +53,16 @@ pageContext.setAttribute("resale_ordno",resale_ordno);
                 <th>價格</th>
                 <th>票券逼號</th>
                 
-                <th>主題名稱</th>
+                <th>轉讓訂單狀態</th>
+                <th>轉讓訂單成立日期</th>
+                <!-- <th>付款方式</th> -->
+                
+                <!-- <th>主題名稱</th>
                 <th>開始日期</th>
                 <th>場地名稱</th>
                 
                 <th>付款方式</th>
-                <th>訂單狀態</th>
+                <th>訂單狀態</th> -->
                 
             </tr>
         </thead>
@@ -69,32 +74,22 @@ pageContext.setAttribute("resale_ordno",resale_ordno);
         		<td>${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordprice}</td>
         		<td>${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordno}</td>
         		
-        		<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eventtitle_h5VO.evetit_name}</td>
+        		<td>${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordstatus}</td>
+        		<td>${resaleorderService.getOneResaleOrd(resale_ordno).resale_ord_createtime}</td>
+        		
+        		<%-- <td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eventtitle_h5VO.evetit_name}</td>
         		<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-        		<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).venue_h5VO.venue_name}</td>
-        		
-        		<td>
-        			
-					
-        		</td>
-        		
+        		<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).venue_h5VO.venue_name}</td> --%>
         	</tr>
-        	
         </tbody>
         <tfoot>
-           <tr>
-                <th>輸入信用卡卡號</th>
-                <th>卡片背面後三碼</th>
-                <th>卡片到期年份</th>
-                <th>卡片到期月份</th>
-                
-            </tr>
-            <tr>
-            	<td>creditCardNumber</td>
-            	<td>creditCardVerificationNumber</td>
-            	<td>creditCardYear</td>
-            	<td>creditCardMonth</td>
-            	
+        	<tr>
+          		<th>買家姓名</th>
+            	<th>賣票者姓名</th>
+                <th>價格</th>
+                <th>票券逼號</th>
+                <th>轉讓訂單狀態</th>
+                <th>轉讓訂單成立日期</th>
             </tr>
         </tfoot>
     </table>

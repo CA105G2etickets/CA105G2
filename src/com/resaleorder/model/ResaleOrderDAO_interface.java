@@ -17,5 +17,5 @@ public interface ResaleOrderDAO_interface {
     public String insertAndGetReturnPK(ResaleOrderVO resaleorderVO);
     public String insertOneResaleOrderAndUpdateTargetTicketToBuying(ResaleOrderVO resaleorderVO, String ticket_no);
     public String insertResaleOrderWithCondition(ResaleOrderVO resaleorderVO, String original_ticket_resale_status,Integer original_ticket_resale_price, String original_is_from_resale, String wantToChangeTo_member_no);
-    public String updateResaleOrderWithCondition(ResaleOrderVO resaleorderVO, String original_ticket_resale_status,Integer original_ticket_resale_price, String original_is_from_resale, String wantToChangeTo_member_no);
+    public String updateResaleOrderWithCondition(ResaleOrderVO resaleorderVO, String changeTo_ticket_resale_status,Integer changeTo_ticket_resale_price, String changeTo_is_from_resale, String wantToChangeTo_member_no);
 }

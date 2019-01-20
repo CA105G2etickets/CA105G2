@@ -506,6 +506,7 @@ public class ResaleOrderServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
         	} catch(Exception e) {
+        		System.out.println("failed at resaleorder_select_by_member_no.jsp");
         		errorMsgs.add("failed at resaleorder_select_by_member_no.jsp ErrorMsg:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/frontend/index.jsp");
@@ -513,6 +514,7 @@ public class ResaleOrderServlet extends HttpServlet {
         	}
         }
 		
+		//20190114 new way of coding starts.
 		if("member_select_resaleorders".equals(action)) {
         	List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -594,12 +596,12 @@ public class ResaleOrderServlet extends HttpServlet {
 				String ticket_no = req.getParameter("ticket_no");
 				
 				//get ticketvo for insert resaleorder
-				TicketService tSvc = new TicketService();
+//				TicketService tSvc = new TicketService();
 				
 				String member_seller_no = req.getParameter("member_seller_no");
 				
 				//decide resaleorderVO
-				String resale_ordstatus = "WAITOPAY1";
+				String resale_ordstatus = "WAITTOPAY1";
 				Timestamp resale_ord_createtime = new java.sql.Timestamp(System.currentTimeMillis());
 				Timestamp resale_ord_completetime = null;
 				String payment_method = "NOTYET";
@@ -611,7 +613,11 @@ public class ResaleOrderServlet extends HttpServlet {
 				
 				//prepare to add new resaleorder and update target ticket with two attribute: .ticket_resale_status to SELLING2 and .ticket_resale_price to ticket_resale_price
 				ResaleOrderService roSvc = new ResaleOrderService();
-				String resale_ordno = roSvc.addResaleOrdAndUpdateTicketVOResaleAttributes(ticket_no, member_seller_no, member_buyer_no, resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, member_seller_no, ticket_resale_status, ticket_resale_price, is_from_resale);
+				String resale_ordno = roSvc.addResaleOrdAndUpdateTicketVOResaleAttributes(
+						ticket_no, member_seller_no, member_buyer_no, 
+						resale_ordprice, resale_ordstatus, resale_ord_createtime, 
+						resale_ord_completetime, payment_method, member_seller_no, 
+						ticket_resale_status, ticket_resale_price, is_from_resale);
 				
 				
 //				String resale_ordno = roSvc.updateTargetTicketResaleAttributesAndMaybeInsertOneResaleOrder("", member_seller_no, member_buyer_no, 
@@ -622,8 +628,13 @@ public class ResaleOrderServlet extends HttpServlet {
 //						resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, ticket_no);
 				
 				req.setAttribute("resale_ordno", resale_ordno);
+				ResaleOrderVO rvoToSend = roSvc.getOneResaleOrd(resale_ordno);
+				TicketService tSvc = new TicketService();
+				TicketVO tvoForSelectPaymentAndPay = tSvc.getOneTicket(rvoToSend.getTicketVO().getTicket_no());
+				req.setAttribute("ticketVO", tvoForSelectPaymentAndPay);
 				
-				String url = "/frontend/resaleorder/listOneResaleOrderToPay.jsp";
+//				String url = "/frontend/resaleorder/listOneResaleOrderToPay.jsp";
+				String url = "/frontend/resaleorder/selectPaymentAndPay.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
@@ -637,6 +648,100 @@ public class ResaleOrderServlet extends HttpServlet {
 			}
         	
         }
+		
+		//update_One_resaleorder_by_member
+		if("update_One_resaleorder_by_member".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			//only missing payment and completetime.
+			
+        	try {
+        		String member_no = req.getParameter("member_no");
+        		String resale_ordno = req.getParameter("resale_ordno");
+        		
+        		String creditCardNumber = req.getParameter("creditCardNumber");
+				String creditCardVerificationNumber = req.getParameter("creditCardVerificationNumber");
+				String creditCardYear = req.getParameter("creditCardMonth");
+				String creditCardMonth = req.getParameter("creditCardYear");
+				if(creditCardNumber.length() !=16 ) {
+					errorMsgs.add("信用卡卡號不正確，應為16碼數字");
+				}
+				if(creditCardVerificationNumber.length()!=3) {
+					errorMsgs.add("信用卡卡片背面後三碼不正確");
+				}
+				Integer cardmonth = null;
+				try {
+					cardmonth = new Integer(creditCardMonth.trim());
+					if(cardmonth <1 || cardmonth>12) {
+						errorMsgs.add("卡片到期月份不正確");
+					}
+				} catch (NumberFormatException e) {
+					errorMsgs.add("卡片到期月份不正確.");
+				}
+				
+				Integer cardyear = null;
+				try {
+					cardyear = new Integer(creditCardYear.trim());
+					if(cardyear <2019 || cardyear>2030) {
+						errorMsgs.add("卡片到期年份不正確");
+					}
+				} catch (NumberFormatException e) {
+					errorMsgs.add("卡片到期年份不正確.");
+				}
+				
+				req.setAttribute("member_no", member_no);
+        		req.setAttribute("resale_ordno", resale_ordno);
+        		
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/resaleorder/selectPaymentAndPay.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				//debug done, start to contact db
+				ResaleOrderService roSvc = new ResaleOrderService();
+				ResaleOrderVO revo = roSvc.getOneResaleOrd(resale_ordno);
+				revo.setPayment_method("CREDITCARD");
+				revo.setResale_ord_completetime(new java.sql.Timestamp(System.currentTimeMillis()));
+				
+				//disable these codes because want to do it in service or dao.
+//				TicketService tSvc = new TicketService();
+//				TicketVO tvo_getOneToSeeinfo = tSvc.getOneTicket(revo.getTicketVO().getTicket_no());
+				
+				//set TicketVO for update resaleordervo
+//				String ticket_no = revo.getTicketVO().getTicket_no();
+				TicketVO tvoToUpdate = revo.getTicketVO();
+				String new_member_no = member_no;
+				String ticket_resale_status = "NONE1";
+				Integer ticket_resale_price = 0;
+				String is_from_resale = "YES"; 
+				
+				tvoToUpdate.setMember_no(new_member_no);
+				tvoToUpdate.setTicket_resale_status(ticket_resale_status);
+				tvoToUpdate.setTicket_resale_price(ticket_resale_price);
+				tvoToUpdate.setIs_from_resale(is_from_resale);
+				revo.setTicketVO(tvoToUpdate);
+				
+				//revo has pk so it become update and also update target ticketvo too.
+				roSvc.insert(revo);
+				
+				req.setAttribute("revo", revo);
+				
+				
+        		String url = "/frontend/resaleorder/paymentDoneShowInfos.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+        	} catch(Exception e) {
+        		errorMsgs.add(e.getMessage());
+        		System.out.println("error at ResaleOrderServlet.java action=update_One_resaleorder_by_member");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/resaleorder/listOneResaleOrderToPay.jsp");
+				failureView.forward(req, res);
+        	}
+        }
+		
 		
 	}
 	

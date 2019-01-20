@@ -83,13 +83,19 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 
 	@Override
 	public String updateResaleOrderWithCondition(ResaleOrderVO resaleorderVO, 
-			String original_ticket_resale_status,Integer original_ticket_resale_price, String original_is_from_resale, 
+			String changeTo_ticket_resale_status,Integer changeTo_ticket_resale_price, String changeTo_is_from_resale, 
 			String wantToChangeTo_member_no)
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			
 			session.beginTransaction();
+			
+			if(resaleorderVO.getTicketVO().getTicket_resale_status()!="CHECKING3") {
+				throw new RuntimeException("結帳失敗，此票已非轉讓票，可能被取消轉讓，或是其他使用者已購買付款中");
+			}
+			
+			
 			session.saveOrUpdate(resaleorderVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
