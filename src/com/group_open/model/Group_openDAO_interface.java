@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.event_title.model.EventTitleVO;
+import com.goods.model.GoodsVO;
 import com.group_member.model.Group_memberVO;
 
 public interface Group_openDAO_interface {
@@ -48,6 +49,8 @@ public interface Group_openDAO_interface {
 	  public void group_complete(String group_no);
 	  //人氣商品前三
 	  public Map<String, Integer> getfavorite();
+	  //需開團商品(二階層式選單)
+	  public List<GoodsVO> getgroup_goods(String evetit_no);
 	  
 		
 }

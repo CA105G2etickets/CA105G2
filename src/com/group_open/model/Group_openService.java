@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.event_title.model.EventTitleVO;
+import com.goods.model.GoodsVO;
 import com.group_member.model.Group_memberDAO;
 import com.group_member.model.Group_memberDAO_interface;
 import com.group_member.model.Group_memberVO;
@@ -159,6 +160,10 @@ public class Group_openService {
 	 //人氣商品前三
 	 public Map<String, Integer> getfavorite(){
 		return dao.getfavorite();
+	 }
+	 //需要開團商品(二階層選單)
+	 public List<GoodsVO> getgroup_goods(String evetit_no){
+		 return dao.getgroup_goods(evetit_no);
 	 }
 	 	
 }

@@ -8,7 +8,7 @@
 <% 
 			 String product =session.getAttribute("producttotal").toString();
 			 String total =session.getAttribute("total").toString();
-			/* Group_openVO group_openVO = (Group_openVO) session.getAttribute("group_openVOorder"); */
+		 /* Group_openVO group_openVO = (Group_openVO) session.getAttribute("group_openVOorder");  */
 			 
 			
 			

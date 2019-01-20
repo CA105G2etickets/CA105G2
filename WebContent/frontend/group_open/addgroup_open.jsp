@@ -182,7 +182,60 @@ $(function(){
 								}
 			
 </script>	
-		
+		<script type="text/javascript">
+	$(document).ready(function(){
+		 $('#evetit').change(function(){
+			 $.ajax({
+				 type: "POST",
+				 url: "group_open.do",
+				 data: creatQueryString($(this).val()),
+				 dataType: "json",
+				 success: function (data){
+					clearSelect();
+					$.each(data, function(i,item){
+						$('#goods').append("<option value='"+item.goods_no+"'>"+item.goods_name+"</option>");
+						/* console.log(item);/* object */ 
+						console.log(item.goods_no);
+						console.log(item.goods_name);
+					});
+			     },
+	             error: function(){alert("AJAX-goods發生錯誤囉!")}
+	         })
+		 })
+		 //設定預覽照片
+		  $('#goods').change(function(){
+			 $.ajax({
+				 type: "POST",
+				 url: "group_open.do",
+				 data:{action:"getimages",
+					  goods_no:$('#goods').val()
+					 	},
+				 dataType: 'json',
+				 success: function (data){
+					$.each(data, function(i,item){
+					/* 	$('#goods').append("<option value='"+item.goods_no+"'>"+item.goods_name+"</option>"); */
+						$('#output').attr("src","<%=request.getContextPath()%>"+"/goods/goodsImg1.do?goods_no="+item.goods_no);
+						$('#output1').attr("src","<%=request.getContextPath()%>"+"/goods/goodsImg2.do?goods_no="+item.goods_no);
+						/* console.log(item);/* object */ 
+						console.log(item.goods_no);
+					});
+			     },
+	             error: function(){alert("AJAX-goods發生錯誤囉!")}
+	         })
+		 })
+	})
+	
+	function creatQueryString(paramEvetit){
+		console.log("paramEvetit:"+paramEvetit);/* 三年級 */
+		var queryString= {"action":"getSelectajax", "evetit":paramEvetit};
+		return queryString;
+	}
+ 	function clearSelect(){
+		$('#goods').empty();
+		$('#goods').append("<option value='-1'>請選擇</option>");
+
+	} 
+</script>
 
 
 
@@ -243,7 +296,7 @@ $(function(){
 			    </div>
 				</div><!-- <div class="col-xs-12 col-sm-6"> -->	 
 				<br>
-				<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1" >
+				<%-- <Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" id="form1" > --%>
 				<div class="form-group">
 				  <c:if test="${goodsVO.goods_no==null}">
 				 <label for="evetit">活動主題</label>	
@@ -251,37 +304,37 @@ $(function(){
 					<option value="-1">請選擇</option>
 					<c:forEach var="eventtitleVO" items="${group_openSvc.geteventitle()}">
 						 <option value="${eventtitleVO.evetit_no}"${eventtitleVO.evetit_no==param.evetit?'selected':''}>${eventtitleVO.evetit_name}</option>
-					</c:forEach>
+					</c:forEach>  
 					</select>
 					</c:if>
 					<input type="hidden" name="url1" id="url1" value="">
 					<input type="hidden" name="url2" id="url2" value="">
 					<input type="hidden" name="action" value="getSelect">
 					</div><!-- <div class="form-group"> -->
-				</Form>
+				<!--</Form> -->
 		
 		       <Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" name="form1" enctype="multipart/form-data">
 				<!-- 驗證到這邊 -->
-			<%-- 	<div class="form-group">
-					<i class="glyphicon glyphicon-user"></i><label for="member_no">會員編號</label>
-					<input type="text" name="member_no" id="member_no" class="form-control"
-					value="<%= (group_openVO==null)? "M000004" : group_openVO.getMember_no()%>"/>
-				</div> --%>
-				<%-- <div class="form-group">
-					<i class="glyphicon glyphicon-gift"></i><label for="goods_no">商品編號</label>
-					<input type="text" name="goods_no" id="goods_no" class="form-control"
-					value="<%= (group_openVO==null)? "P0000006" : group_openVO.getGoods_no()%>"/>
-				</div> --%>
+				<div class="form-group">
+   					 <label for="group_banner_1">開團封面1</label>
+    					<input type="file" name="group_banner_1" class="form-control-file" id="group_banner_1"  onchange="loadFile(event)"/>
+  				</div>
+  				<div class="form-group">
+   					 <label for="group_banner_2">開團封面2</label>
+    					<input type="file" name="group_banner_2" class="form-control-file" id="group_banner_2"  onchange="loadFile2(event)"/>
+  				</div>
+  				<!-- 商品 -->
 				<div class="form-group">			
 				 <label for="evetit">商品名稱</label>	
 			
 			<select id="goods" class="form-control" name="goods_no">
-				<c:forEach var="eventtitlemap" items="${evetitle_goods}">
+						<option value="-1">請選擇</option>
+<%-- 				<c:forEach var="eventtitlemap" items="${evetitle_goods}">
 				<option value="${eventtitlemap.key}">${eventtitlemap.value}${eventtitlemap.key}</option>${eventtitlemap.key}
 				</c:forEach>
 					 <c:if test="${goodsVO.goods_no!=null}">
 					<option value="${goodsVO.goods_no}">${goodsVO.goods_name}</option>
-					 </c:if>
+					 </c:if> --%>
 			</select>			
 				</div><!-- <div class="form-group"> -->	
 				<div class="form-group">
@@ -315,14 +368,6 @@ $(function(){
 					<input type="text" name="group_close_date" id="end_dateTime" class="form-control"
 					 value="<%= (group_openVO==null) ? " " : group_openVO.getGroup_close_date()%>"/>
 				</div>
-				<div class="form-group">
-   					 <label for="group_banner_1">開團封面1</label>
-    					<input type="file" name="group_banner_1" class="form-control-file" id="group_banner_1"  onchange="loadFile(event)"/>
-  				</div>
-  				<div class="form-group">
-   					 <label for="group_banner_2">開團封面2</label>
-    					<input type="file" name="group_banner_2" class="form-control-file" id="group_banner_2"  onchange="loadFile2(event)"/>
-  				</div>
   				<div class="form-group">
    					<!--  <label for="group_status">開團狀態</label> -->
     					<input type="hidden" name="group_status" class="form-control-file" id="group_status" value="process1"/>
@@ -337,7 +382,7 @@ $(function(){
 					<label for="group_address">面交地址</label>
 					<input id="address"  name="group_address" type="textbox"  size="50" maxlength="50" onchange="codeAddress()"class="form-control" value="<%= (group_openVO==null) ? "請輸入面交地址" : group_openVO.getGroup_address()%>"/>
 					<!-- <input type="text" name="group_address" id="group_address" class="form-control"/>  -->
-					<input id="submit" type="button" value="Geocode">
+					<input id="submit" type="button" value="預視面交地點">
 			</div>
 			<!-- <div class="form-group"> -->
 			<div class="form-group">
@@ -349,13 +394,13 @@ $(function(){
     			</div>
     		<!-- 	<div id="map"></div> -->
 					<!-- <label for="latitude">緯度</label> -->
-					<input name="latitude" type="text" id="latitude" value="<%=(group_openVO==null)? " ": group_openVO.getLatitude()%>" class="form-control"/>
+					<input name="latitude" type="hidden" id="latitude" value="<%=(group_openVO==null)? " ": group_openVO.getLatitude()%>" class="form-control"/>
 					<%-- <input type="text" name="latitude" id="latitude" class="form-control"
 					value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>"/> --%>
 			<!-- </div> -->
 			<!-- 	<div class="form-group"> -->
 					<!-- <label for="longitude">經度</label> -->
-					<input name="longitude" type="text" id="longitude" value="<%=(group_openVO==null)? " ": group_openVO.getLongitude()%>" class="form-control"/>
+					<input name="longitude" type="hidden" id="longitude" value="<%=(group_openVO==null)? " ": group_openVO.getLongitude()%>" class="form-control"/>
 					<%-- <input type="text" name="longitude" id="longitude" class="form-control"
 					value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>"/> --%>
 				<!--</div> -->

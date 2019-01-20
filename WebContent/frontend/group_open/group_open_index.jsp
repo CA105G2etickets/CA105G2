@@ -99,6 +99,29 @@
 	width: 100%;
 	height: 100%;
 }
+.imgBigger img{ 
+ 	position: absolute; 
+	left: 50%;
+	top: 50%;
+	height: 100%;
+	width: auto;
+	-webkit-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+} 
+.imgBigger{
+	position: relative;
+	width: 100%;
+	height: 300px;
+	overflow: hidden;
+	margin-left: auto;
+    margin-right: auto;
+}
+#clickFavoriteGoods{
+	color:red;
+
+
+}
 </style>
 
 
@@ -108,7 +131,8 @@
 	<div class="container-fluid">
 		<div class="row">
 
-			<div class="col-xs-12 col-sm-4"></div>
+			<div class="col-xs-12 col-sm-4">
+			</div>
 			<!-- <div class="col-xs-12 col-sm-2"> -->
 			<div class="col-xs-12 col-sm-6">
 				<form class="navbar-form navbar-left" role="search" METHOD="post"
@@ -132,19 +156,27 @@
 					  <a href="<%=request.getContextPath()%>/frontend/group_member/group_member.do?action=getOne_For_Display&member_no=<%=memberVOsession.getMemberNo()%>"><button type="button" class="btn btn-info .btn-success">我的跟團管理</button></a> --%>
 			</div>
 			<!-- <div class="col-xs-12 col-sm-8"> -->
-			<div class="col-xs-12 col-sm-2"></div>
+			<div class="col-xs-12 col-sm-2">
+			</div>
 			<!-- <div class="col-xs-12 col-sm-2"> -->
-		</div>
-		<!-- <div class="row"> -->
-	</div>
-	<!-- <div class="container"> -->
+		</div><!-- <div class="row"> -->
+	</div><!-- <div class="container"> -->
+	
 
-
-	<div class="container-fluid">
-		<div class="row"></div>
-	</div>
 	<div class="container-fluid">
 		<div class="row">
+		</div>
+	</div>
+	
+	
+	
+	<div class="container-fluid">
+		<div class="row">
+		
+		
+		
+		
+		
 			<div class="col-xs-12 col-sm-3">
 				<br>
 				<div class="panel panel-info" id='example'>
@@ -175,6 +207,10 @@
 					</div>
 					<!-- <div class="panel-body"> -->
 				</div>
+				<div class="panel-body">	
+				</div>
+					<!-- <div class="panel-body">xe		
+				</div>
 				<!-- <div class="panel panel-info" id='example'> -->
 			</div>
 			<!-- <div class="col-xs-12 col-sm-3"> -->
@@ -183,7 +219,7 @@
 
 				<div class="owl-carousel owl-theme">
 					<c:forEach var="group_openVO" items="${list}">
-						<div class="item flash">
+						<div class="item flash imgBigger">
 							<h4>
 								<img src="Group_openImg1.do?group_no=${group_openVO.group_no}">
 							</h4>
@@ -198,6 +234,9 @@
 
 			</div>
 			<!-- <div class="col-xs-12 col-sm-6"> -->
+			
+			
+			
 			<div class="col-xs-12 col-sm-3">
 				<table class="table table-hover">
 					<div class="title" style="text-align: center">
@@ -205,9 +244,9 @@
 					</div>
 					<thead>
 						<tr>
-							<th>圖片</th>
+							<th></th>
 							<th>商品名稱</th>
-							<th>最愛商品</th>
+							<th><i class="glyphicon glyphicon-heart" id="clickFavoriteGoods"></i></th>
 							<th>我要開團</th>
 						</tr>
 					</thead>
@@ -238,6 +277,13 @@
 				</table>
 			</div>
 			<!-- <div class="col-xs-12 col-sm-3"> -->
+			
+			
+			
+			
+			
+			
+			
 		</div>
 		<!-- <div class="row"> -->
 	</div>
@@ -341,13 +387,14 @@
 												</c:if>
 											</c:forEach>
 											<FORM METHOD="post" ACTION="group_open.do">
-												<c:if test="${group_memberSvc.findByPrimaryKey(member.memberNo, group_openVO.group_no) != null}">
+												<input type="submit" value="我要跟團" class="btn btn-primary"> 
+												<%-- <c:if test="${group_memberSvc.findByPrimaryKey(member.memberNo, group_openVO.group_no) != null}">
 													<input type="submit" value="你已經跟團了" class="btn btn-primary" disabled>   
 										 		</c:if>	 
 
 										 		<c:if test="${group_memberSvc.findByPrimaryKey(member.memberNo, group_openVO.group_no) == null}">
 													<input type="submit" value="我要跟團" class="btn btn-primary">   
-										 		</c:if>	
+										 		</c:if>	 --%>
 												<input type="hidden" name="action"
 													value="getgroup_for_display"> <input type="hidden"
 													name="group_no" value="${group_openVO.group_no}"

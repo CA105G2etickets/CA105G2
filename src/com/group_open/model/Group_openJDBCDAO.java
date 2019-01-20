@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.event_title.model.EventTitleVO;
+import com.goods.model.GoodsVO;
 import com.group_member.model.Group_memberJDBCDAO;
 import com.group_member.model.Group_memberVO;
 
@@ -944,6 +945,12 @@ public class Group_openJDBCDAO implements Group_openDAO_interface {
 
 	@Override
 	public Map<String, Integer> getfavorite() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<GoodsVO> getgroup_goods(String evetit_no) {
 		// TODO Auto-generated method stub
 		return null;
 	}

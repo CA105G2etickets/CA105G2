@@ -301,6 +301,7 @@ body {
 	                    		$("#clickFavoriteGoods").html("取消最愛");
 	                    	}
 	                	});
+		                <i class="glyphicon glyphicon-heart" id="clickFavoriteGoods">加入最愛</i>
 		        	}
 		        });
 			        

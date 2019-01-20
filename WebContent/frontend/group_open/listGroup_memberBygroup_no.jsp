@@ -36,7 +36,7 @@
 			<div class="row">
 				
 					<div class="col-xs-12 col-sm-2">
-					
+				<%-- 	<a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=G0001"><button type="button" class="btn btn-info .btn-success">瀏覽團購詳細資訊</button></a> --%>
 					
 					
 						<c:forEach var="memberVO" items="${list2}">
@@ -47,8 +47,8 @@
 										</c:if>	
 									</c:forEach>
 					
-					
-					
+				
+	
 						<div class="panel panel-default">
 					 		 <div class="panel-heading">
 					 		   <h3 class="panel-title">我的團購管理</h3>
@@ -66,7 +66,7 @@
 								<caption>我的開團紀錄</caption>
 									<thead>
 										<tr>
-											<th>開團封面</th>
+											<th>團購詳情</th>
 											<th>開團名稱</th>
 											<th>目前人數</th>
 											<th>現有數量</th>
@@ -87,7 +87,8 @@
 								  <!--開團進行中 開始  -->
 								<tr>
 										<td>
-										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+										<a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=${group_openVO.group_no}">
+										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/></a>
 										</td>
 										<td>
 										${group_openVO.group_name}
@@ -177,8 +178,9 @@
 										<!--開團成功  -->
 										<tr>
 										<td>
-										${group_openVO.group_no}
-										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+										
+										<a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=${group_openVO.group_no}">
+										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/></a>
 										</td>
 										<td>
 										${group_openVO.group_name}
@@ -260,6 +262,7 @@
 								  <!--開團進行中 開始  -->
 								<tr>
 										<td>
+								
 										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
 										</td>
 										<td>
@@ -337,29 +340,15 @@
 										</td>
 										</tr>
 									</c:if>
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
+
 								<!--開團失敗   --> 	
 								
 								 <c:if test="${group_openVO.group_status=='fail2'}">
 										<!--開團成功  -->
 										<tr>
 										<td>
-										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+										<a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=${group_openVO.group_no}">
+										<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/></a>
 										</td>
 										<td>
 										${group_openVO.group_name}

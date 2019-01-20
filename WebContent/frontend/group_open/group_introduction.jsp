@@ -7,11 +7,9 @@
 <%@ page import="com.group_open.model.*"%>  
 <%@ page import="com.forum.model.*"%>
 <%@ page import="com.member.model.*"%>
-
 <%
 
-	
-	 Group_memberVO group_memberVO = (Group_memberVO) request.getAttribute("group_memberVO");
+	Group_memberVO group_memberVO = (Group_memberVO) request.getAttribute("group_memberVO");
 	Group_openVO group_openVO = (Group_openVO) request.getAttribute("group_openVO");
 	ForumService forumSvc = new ForumService();
 	
@@ -275,83 +273,6 @@
 
 					</div><!-- <div class="col-xs-12 col-sm-2"> -->
 					<div class="col-xs-12 col-sm-9">
-						<div class="panel panel-default">
-						  	<div class="panel-heading">
-						    <h3 class="panel-title">跟團訂購單</h3>
-						  	</div><!-- <div class="panel-heading"> -->
-						<div class="panel-body">						
-<%-- 						<%request.getContextPath();%>/frontend/group_member/ --%>
-						<Form METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_member/group_member.do" name="form1"><!-- 表單開始 -->
-								<!-- 選項開始 -->
-							<div class="form-group">
-  								<!-- <label for="member_no">
-  									會員編號
-  								</label> -->
-  									<input name="member_no" type="hidden" class="form-control" id="member_no"
-  									value="<%=memberVOsession.getMemberNo()%>"/>
-							</div><!-- <div class="form-group"> -->	
-								<!-- 選項結束 -->
-								<!-- 選項開始 -->
-							<div class="form-group">
-  							<!-- 	<label for="usr">
-  									開團編號
-  								</label> -->
-  									<input name="group_no" type="hidden" class="form-control" id="group_no"
-  									value="${group_openVO.group_no}">
-							</div><!-- <div class="form-group"> -->	
-								<!-- 選項結束 -->
-								<!-- 選項開始 -->
-							<div class="form-group">
-  								<label for="product_quantity">
-  									購買數量
-  								</label>
-  									<input name="product_quantity" type="text" class="form-control" id="product_quantity"
-  									value="<%= (group_memberVO==null) ? "請輸入購買數量" : group_memberVO.getProduct_quantity()%>">
-							</div><!-- <div class="form-group"> -->	
-								<!-- 選項結束 -->
-
-								<!-- 選項開始 -->
-							<div class="form-group">
-  								<label for="usr">
-  									聯絡電話
-  								</label>
-  									<input name="order_phone" type="text" class="form-control" id="usr"
-  									value="<%= (group_memberVO==null) ? "請輸入聯絡電話" : group_memberVO.getOrder_phone()%>">
-							</div><!-- <div class="form-group"> -->	
-								<!-- 選項結束 -->
-
-								<!-- 選項開始 -->
-						 <div class="form-group">
-     						 <label for="sel1">Select list (select one):</label>
-      							<select name="pay_method" class="form-control" id="sel1">
-       							  <option value="EWALLET">EWALLET電子錢包</option>
-      							  <option value="CREDITCARD">CREDITCARD信用卡</option>   							 
-        						</select>
-        						<br>
-								<!-- 選項結束 -->
-							<input type="hidden" name="group_member_status" value="withgroup">
-							<input type="hidden" name="pay_status" value="COMPLETE2">
-							<input type="hidden" name="action" value="insert2">
-							<input type="hidden" name="goods_no" value="${group_openVO.goods_no}">
-						<!-- 	<input type="submit" value="送出跟團單" class="btn btn-success"> -->
-							 <c:if test="${group_memberSvc.findByPrimaryKey(member.memberNo, group_openVO.group_no) != null}">
-										<input type="submit" value="你已經跟團了" class="btn btn-success" disabled>   
-								 </c:if>	 
-								<c:if test="${group_memberSvc.findByPrimaryKey(member.memberNo, group_openVO.group_no) == null}">
-									<input type="submit" value="我要跟團" class="btn btn-success">   
-								</c:if>	 	
-						</FORM><!-- 表單結束 -->
-						</div><!-- <div class="panel-body"> -->
-					</div><!-- <div class="panel panel-default"> -->
-					
-					</div><!-- <div class="col-xs-12 col-sm-9"> -->
-					
-					<div class="col-xs-12 col-sm-1">
-						
-
-
-					</div><!-- <div class="col-xs-12 col-sm-1"> -->
-					
 						<br>
 						<div class="panel panel-success forum"  style="background-color:#e8e8d0">
 					  <div class="panel-heading">
@@ -417,13 +338,11 @@
 						<input type="hidden" class="form-control" id="member_noms" value="<%=memberVOsession.getMemberNo()%>">
 						<button type="button" class="btn btn-info" id="btn">留言</button>
 					</div><!-- <div id="messageform"> -->
-
-					
+				</div><!-- <div class="col-xs-12 col-sm-9"> -->			
+					<div class="col-xs-12 col-sm-1">
+					</div><!-- <div class="col-xs-12 col-sm-1"> -->		
 				</div><!-- <div class="row"> -->
 			</div><!-- <div class="container"> -->
-	
-	
-		
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap" async defer></script>

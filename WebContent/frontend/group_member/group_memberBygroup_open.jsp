@@ -21,7 +21,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-		<title>Title Page</title>
+		<title>我的跟團紀錄</title>
 			<script src="https://code.jquery.com/jquery.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><!-- bootstrapjavascript -->
@@ -62,7 +62,7 @@
 						<caption>我的跟團記錄</caption>
 						<thead>
 							<tr>
-								<th>開團封面(開)</th>
+								<th>瀏覽開團</th>
 								<th>開團名稱(開)</th>
 								<th>跟團人購買數量(跟)</th>
 								<th>商品折扣後價格(開)</th>
@@ -91,7 +91,8 @@
 								<td>
 									<c:forEach var="group_openVO" items="${group_openSvc.all}">
                    						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
-	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+                   						 <a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=${group_openVO.group_no}">
+	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/></a>
                     					</c:if>
                						</c:forEach>
 								</td>
@@ -106,6 +107,11 @@
 							    	${group_memberVO.product_quantity}
 							    </td>
 								<td>
+									<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						${group_openVO.group_price}
+                    					</c:if>
+               						</c:forEach>
 				
 								</td>
 								<td>
@@ -208,7 +214,8 @@
 								<td>
 									<c:forEach var="group_openVO" items="${group_openSvc.all}">
                    						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
-	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+                   						 <a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=${group_openVO.group_no}">
+	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/></a>
                     					</c:if>
                						</c:forEach>
 								</td>
@@ -223,6 +230,11 @@
 							    	${group_memberVO.product_quantity}
 							    </td>
 								<td>
+								<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						${group_openVO.group_price}
+                    					</c:if>
+               						</c:forEach>
 				
 								</td>
 								<td>
@@ -332,7 +344,8 @@
 								<td>
 									<c:forEach var="group_openVO" items="${group_openSvc.all}">
                    						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
-	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+                   						 <a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=${group_openVO.group_no}">
+	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/></a>
                     					</c:if>
                						</c:forEach>
 								</td>
@@ -347,6 +360,11 @@
 							    	${group_memberVO.product_quantity}
 							    </td>
 								<td>
+								<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						${group_openVO.group_price}
+                    					</c:if>
+               						</c:forEach>
 				
 								</td>
 								<td>
@@ -445,7 +463,8 @@
 								<td>
 									<c:forEach var="group_openVO" items="${group_openSvc.all}">
                    						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
-	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/>
+                   						 <a href="<%=request.getContextPath()%>/frontend/group_open/group_open.do?action=getgroup_for_display2&member_no=<%=memberVOsession.getMemberNo()%>&group_no=${group_openVO.group_no}">
+	                   					<img src ="<%=request.getContextPath()%>/frontend/group_open/Group_openImg1.do?group_no=${group_openVO.group_no}" height="80" width="80"/></a>
                     					</c:if>
                						</c:forEach>
 								</td>
@@ -460,7 +479,11 @@
 							    	${group_memberVO.product_quantity}
 							    </td>
 								<td>
-				
+								<c:forEach var="group_openVO" items="${group_openSvc.all}">
+                   						 <c:if test="${group_memberVO.group_no==group_openVO.group_no}">
+	                   						${group_openVO.group_price}
+                    					</c:if>
+               						</c:forEach>
 								</td>
 								<td>
 									${group_memberVO.group_member_status=='withgroup'?"跟團中":"退團"}

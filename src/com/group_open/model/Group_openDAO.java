@@ -29,6 +29,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.event_title.model.EventTitleVO;
+import com.goods.model.GoodsVO;
 import com.group_member.model.Group_memberDAO;
 import com.group_member.model.Group_memberVO;
 
@@ -66,6 +67,7 @@ public class Group_openDAO implements Group_openDAO_interface {
 	private static final String GETEVENTITLE = "select DISTINCT event_title.evetit_no,event_title.evetit_name from event_title right join goods on event_title.evetit_no = goods.evetit_no ";
 	private static final String GROUP_OPEN_COMPLETE = "UPDATE GROUP_OPEN set GROUP_STATUS = 'finish4' where GROUP_NO = ? ";
 	private static final String FAVORITE = "select * from (select goods_no,count(*) as goods_count from favorite_goods group by goods_no order by goods_count desc) where rownum<=3";
+	private static final String GROUP_GOODS = "select * from event_title right join goods on event_title.evetit_no = goods.evetit_no where goods.evetit_no = ?";
 //	@Override
 	// 新增
 	public void add(Group_openVO group_openVO) {
@@ -1136,6 +1138,71 @@ public class Group_openDAO implements Group_openDAO_interface {
 
 			return map;
 
+		}
+	  public List<GoodsVO> getgroup_goods(String evetit_no) {
+			
+			List<GoodsVO> list = new ArrayList<GoodsVO>();
+			
+			GoodsVO goodsVO = null;
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GROUP_GOODS);
+				pstmt.setString(1,evetit_no);
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					goodsVO = new GoodsVO();
+					goodsVO.setGoods_no(rs.getString("Goods_no"));
+					goodsVO.setEvetit_no(rs.getString("Evetit_no"));
+					goodsVO.setGoods_name(rs.getString("Goods_name"));
+					goodsVO.setGoods_price(rs.getInt("Goods_price"));
+					goodsVO.setGoods_picture1(rs.getBytes("Goods_picture1"));
+					goodsVO.setGoods_picture2(rs.getBytes("Goods_picture2"));
+					goodsVO.setGoods_picture3(rs.getBytes("Goods_picture3"));
+					goodsVO.setGoods_introduction(rs.getString("Goods_introduction"));
+					goodsVO.setForsales_a(rs.getInt("Forsales_a"));
+					goodsVO.setFavorite_count(rs.getInt("Favorite_count"));
+					goodsVO.setGoods_status(rs.getString("Goods_status"));
+					goodsVO.setLaunchdate(rs.getTimestamp("Launchdate"));
+					goodsVO.setOffdate(rs.getTimestamp("Offdate"));
+					goodsVO.setGoods_group_count(rs.getInt("Goods_group_count"));
+					goodsVO.setGoods_want_count(rs.getInt("Goods_want_count"));
+					goodsVO.setGoods_sales_count(rs.getInt("Goods_sales_count"));
+					list.add(goodsVO);				
+				}	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
 		}
 	  
 	  

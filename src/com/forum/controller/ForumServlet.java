@@ -301,7 +301,7 @@ public class ForumServlet extends HttpServlet {
 				ForumService forumSvc = new ForumService();
 				ForumVO forumVO = forumSvc.addForum(group_no, member_no, forum_content, forum_time);
 				
-				java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
 				String formatDate = df.format(forum_time);
 				System.out.println("時間格式"+formatDate);
 				
