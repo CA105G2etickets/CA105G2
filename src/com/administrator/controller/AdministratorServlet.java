@@ -9,6 +9,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.administrator.model.*;
+import com.permission.model.PermissionVO;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AdministratorServlet extends HttpServlet {
@@ -334,8 +335,6 @@ public class AdministratorServlet extends HttpServlet {
 
 				/****************************接收權限請求參數******************************/
 				String[] permission = req.getParameterValues("permission");
-				for(int i = 0; i < permission.length; i++) 
-		            System.out.print(permission[i] + " "); 
 				
 				
 				// Send the use back to the form, if there were errors
@@ -354,7 +353,13 @@ public class AdministratorServlet extends HttpServlet {
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/backend/administrator/allAdministrator.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);				
+				successView.forward(req, res);
+				for(int i = 0; i < permission.length; i++) {
+		            System.out.print(permission[i] + " "); 
+				PermissionVO permissionVO = new PermissionVO();
+				permissionVO.setAdministrator_no(administratorVO.getAdministrator_no());
+				permissionVO.setPermission_list_no(permission[i]);
+				}
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {

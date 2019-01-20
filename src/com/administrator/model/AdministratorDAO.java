@@ -8,6 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.permission.model.PermissionService;
+
 public class AdministratorDAO implements AdministratorDAO_interface {
 
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
@@ -52,10 +54,6 @@ public class AdministratorDAO implements AdministratorDAO_interface {
 			pstmt.setBytes(4, administratorVO.getAdministrator_picture());
 			pstmt.setString(5, administratorVO.getAdministrator_status());
 
-			
-			
-			
-			
 			
 			
 			
