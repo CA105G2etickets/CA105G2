@@ -264,20 +264,6 @@
    } catch (Exception e) {
 		order_date = new java.sql.Timestamp(System.currentTimeMillis());
    }
-  
-//   java.sql.Timestamp order_etd = null;
-//   try {
-// 		order_etd = orderHistoryVO.getOrder_etd();
-//    } catch (Exception e) {
-// 		order_etd = new java.sql.Timestamp(System.currentTimeMillis());
-//    }
-  
-//   java.sql.Timestamp pickup_date = null;
-//   try {
-// 		pickup_date = orderHistoryVO.getPickup_date();
-//    } catch (Exception e) {
-// 		pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
-//    }
 %>
 </script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
