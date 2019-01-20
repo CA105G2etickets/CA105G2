@@ -66,14 +66,16 @@ pageContext.setAttribute("member_no",member_no);
         			<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).venue_h5VO.venue_name}</td>
         			<td>
         				<c:if test="${TicketVO.ticket_resale_status == 'SELLING2'}">
-							<form method="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
-								<input type="hidden" name="action" value="member_buy_One_Resale_ticket">
-								<input type="hidden" name="member_seller_no" value="${TicketVO.member_no}">
-								<input type="hidden" name="member_buyer_no" value="${member_no}">
-								<input type="hidden" name="ticket_no" value="${TicketVO.ticket_no}">
-								<input type="hidden" name="resale_ordprice" value="${TicketVO.ticket_resale_price}">
-								<input type="submit" value="購買" class="btn btn-primary" style="float:right;">
-							</form>
+        					<c:if test="${TicketVO.member_no != member_no}">
+        						<form method="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
+									<input type="hidden" name="action" value="member_buy_One_Resale_ticket">
+									<input type="hidden" name="member_seller_no" value="${TicketVO.member_no}">
+									<input type="hidden" name="member_buyer_no" value="${member_no}">
+									<input type="hidden" name="ticket_no" value="${TicketVO.ticket_no}">
+									<input type="hidden" name="resale_ordprice" value="${TicketVO.ticket_resale_price}">
+									<input type="submit" value="購買" class="btn btn-primary" style="float:right;">
+								</form>
+        					</c:if>
 						</c:if>
         			</td>
         		</tr>
