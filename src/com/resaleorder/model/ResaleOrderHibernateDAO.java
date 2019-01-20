@@ -144,6 +144,35 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 	}
 	
 	@Override
+	public String insertOneResaleOrderAndUpdateTargetTicketToBuying(ResaleOrderVO resaleorderVO, String ticket_no) {
+		String str = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
+			TicketVO ticketVO = tSvc.getOneTicket(ticket_no);
+			if("NONE1".equals(ticketVO.getTicket_resale_status())) {
+				throw new RuntimeException("賣家已取消此轉售票，因此您的操作失敗");
+			}
+			if("CHECKING3".equals(ticketVO.getTicket_resale_status())) {
+				throw new RuntimeException("已有人買走並繳費中，因此您的操作失敗");
+			}
+			
+			session.beginTransaction();
+			ticketVO.setTicket_resale_status("CHECKING3");
+			resaleorderVO.setTicketVO(ticketVO);
+			
+			session.saveOrUpdate(resaleorderVO);
+			str = resaleorderVO.getResale_ordno();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return str;
+	}
+	
+	@Override
+	//wrong logic, resaleticket comes from tickets, resaleorder is like order not product
 	public ResaleOrderVO getLatestAndSellingROByTicketNo(String ticket_no) {
 		List<ResaleOrderVO> list = null;
 		ResaleOrderVO rvo = new ResaleOrderVO();
@@ -195,30 +224,30 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 //		dao.insert(empVO1);
 		
 //		ResaleOrderVO rvo = dao.findByPrimaryKey("R_20181226_000001");
-		ResaleOrderVO rvo = dao.findByPrimaryKey("asdfasdfasdf");
-		if(rvo == null) {
-			System.out.println(rvo);
-		}else {
-			System.out.println("hsdfasdfjlaisdjflisjeflijselfhjil");
-		}
+//		ResaleOrderVO rvo = dao.findByPrimaryKey("asdfasdfasdf");
+//		if(rvo == null) {
+//			System.out.println(rvo);
+//		}else {
+//			System.out.println("hsdfasdfjlaisdjflisjeflijselfhjil");
+//		}
 		
 		
 		
-//		com.ticket.model.TicketVO ticketVO = new com.ticket.model.TicketVO();
-//		com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
-//		ticketVO = tSvc.getOneTicket("T_20181225_000002");
-//		ticketVO.setTicket_resale_status("updateS");
-//		
-//		ResaleOrderVO rvo = new ResaleOrderVO();
-//		rvo.setMember_buyer_no("M000009");
-//		rvo.setMember_seller_no("M000001");
-//		rvo.setResale_ordprice(777);
-//		rvo.setResale_ordstatus("WAITFORPAY1");
-//		rvo.setResale_ord_createtime(new java.sql.Timestamp(System.currentTimeMillis()));
-//		rvo.setResale_ord_completetime(null);
-//		rvo.setPayment_method("NOTYET");
-//		rvo.setTicketVO(ticketVO);
-//		dao.update(rvo);
+		com.ticket.model.TicketVO ticketVO = new com.ticket.model.TicketVO();
+		com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
+		ticketVO = tSvc.getOneTicket("T_20181225_000002");
+		ticketVO.setTicket_resale_status("updateS");
+		
+		ResaleOrderVO rvo = new ResaleOrderVO();
+		rvo.setMember_buyer_no("M000009");
+		rvo.setMember_seller_no("M000001");
+		rvo.setResale_ordprice(777);
+		rvo.setResale_ordstatus("WAITFORPAY1");
+		rvo.setResale_ord_createtime(new java.sql.Timestamp(System.currentTimeMillis()));
+		rvo.setResale_ord_completetime(null);
+		rvo.setPayment_method("NOTYET");
+		rvo.setTicketVO(ticketVO);
+		dao.update(rvo);
 		
 //		com.ticketorder.model.TicketOrderVO tovo = new com.ticketorder.model.TicketOrderVO();
 //		tovo.setTicket_order_no("TO_20181225_000002");
@@ -294,6 +323,8 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		//Hibernate: select resaleorde0_.resale_ordno as resale_ordno1_0_, resaleorde0_.ticket_no as ticket_no2_0_, resaleorde0_.member_seller_no as member_seller_no3_0_, resaleorde0_.member_buyer_no as member_buyer_no4_0_,resaleorde0_.resale_ordprice as resale_ordprice5_0_, resaleorde0_.resale_ordstatus as resale_ordstatus6_0_, resaleorde0_.resale_ord_createtime as resale_ord_createt7_0_, resaleorde0_.resale_ord_completetime as resale_ord_complet8_0_, resaleorde0_.payment_method as payment_method9_0_ from resale_ord resaleorde0_ where resaleorde0_.resale_ordstatus like ? order by resaleorde0_.resale_ordno asc
 		
 	}
+
+	
 
 	
 

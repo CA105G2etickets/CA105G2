@@ -58,6 +58,27 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 			throw ex;
 		}
 	}
+	
+	public String updateWithCondition(TicketOrderVO ticketorderVO) {
+		String str_ticketorder_no_create = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			
+			session.beginTransaction();
+			if(ticketorderVO.getSeatingarea_h5VO().getTictotalnumber() < ticketorderVO.getSeatingarea_h5VO().getTicbookednumber() ) {
+				throw new RuntimeException();
+			}
+			
+//			session.beginTransaction();
+			session.saveOrUpdate(ticketorderVO);
+			str_ticketorder_no_create = ticketorderVO.getTicket_order_no();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return str_ticketorder_no_create;
+	}
 //	public String insertThenGetLatestToNoWithCondition(TicketOrderVO ticketorderVO) {
 //		String strtemp = null;
 //		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -255,20 +276,23 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 		TicketOrderHibernateDAO dao = new TicketOrderHibernateDAO();
 		
 		//sim buyTickets and add ticketorder with update seatingbookednumber.
-//		SeatingArea_H5_Service sSvc = new SeatingArea_H5_Service();
-//		SeatingArea_H5_VO svoFind = sSvc.getOneSeatingArea_H5("ES00000002");
-//		TicketOrderVO tovoi = new TicketOrderVO();
-//		tovoi.setMember_no("M000007");
-//		tovoi.setTotal_price(7700);
-//		tovoi.setTotal_amount(2);
-//		tovoi.setTicket_order_time(java.sql.Timestamp.valueOf("2005-01-01 01:01:01"));
-//		tovoi.setPayment_method("NOTYET");
-//		tovoi.setTicket_order_status("WAITTOPAY1");
-//		
-//		Integer originalNum = svoFind.getTicbookednumber();
-//		svoFind.setTicbookednumber(originalNum+2);
-//		tovoi.setSeatingarea_h5VO(svoFind);
+		SeatingArea_H5_Service sSvc = new SeatingArea_H5_Service();
+		SeatingArea_H5_VO svoFind = sSvc.getOneSeatingArea_H5("ES00000002");
+		TicketOrderVO tovoi = new TicketOrderVO();
+		tovoi.setMember_no("M000007");
+		tovoi.setTotal_price(7700);
+		tovoi.setTotal_amount(2);
+		tovoi.setTicket_order_time(java.sql.Timestamp.valueOf("2005-01-01 01:01:01"));
+		tovoi.setPayment_method("NOTYET");
+		tovoi.setTicket_order_status("WAITTOPAY1");
+		
+		Integer originalNum = svoFind.getTicbookednumber();
+		svoFind.setTicbookednumber(originalNum+2);
+		tovoi.setSeatingarea_h5VO(svoFind);
+		String temp=dao.updateWithCondition(tovoi);
+		System.out.println("asdfasdfasdfasdfasdf"+temp);
 //		dao.update(tovoi);
+		
 		
 		//sim buyTickets update targetTicketorder and add tickets.
 //		TicketOrderVO tovo1 = new TicketOrderVO();

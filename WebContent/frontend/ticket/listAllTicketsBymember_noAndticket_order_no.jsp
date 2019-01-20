@@ -29,7 +29,7 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>listAllTicketsBymember_no.jsp</title>
+    <title>listAllTicketsBymember_noAndticket_order_no.jsp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
@@ -95,7 +95,7 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 								<input type="hidden" name="member_no" value="${member_no}">
 								<input type="hidden" name="ticket_no" value="${TicketVO.ticket_no}">
 								<input type="hidden" name="ticket_order_no" value="${ticket_order_no}">
-								我要賣<input type="number" name="ticket_resale_price" value="${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price}">元
+								我要賣<input type="number" style="width: 5em" name="ticket_resale_price" value="${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price}">元
 								<input type="submit" value="轉售此票" class="btn btn-primary" style="float:right;">
 							</form>
 						</c:if>

@@ -15,4 +15,5 @@ public interface ResaleOrderDAO_interface {
     public ResaleOrderVO getLatestAndSellingROByTicketNo(String ticket_no);
     public void updateBothRoAndTo(ResaleOrderVO resaleorderVO, TicketVO ticketVO);
     public String insertAndGetReturnPK(ResaleOrderVO resaleorderVO);
+    public String insertOneResaleOrderAndUpdateTargetTicketToBuying(ResaleOrderVO resaleorderVO, String ticket_no);
 }
