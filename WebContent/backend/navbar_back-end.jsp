@@ -183,11 +183,6 @@ body{
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
-				<div>
-					<a href="#" class="topnav" align="center">團購管理</a>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div class="dropdown">
     				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">其他
     				<span class="caret"></span>
@@ -211,6 +206,17 @@ body{
     					<ul class="dropdown-menu" style="text-align: center;">
       						<li><a href="<%=request.getContextPath()%>/backend/member/allMember.jsp">查詢/修改會員資料</a></li>
      						<li><a href="<%=request.getContextPath()%>/backend/member/addMember.jsp">新增會員</a></li>
+    					</ul>
+ 	 			</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+				<div class="dropdown">
+    				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">會員管理
+    				<span class="caret"></span>
+    				</a>
+    					<ul class="dropdown-menu" style="text-align: center;">
+      						<li><a href="#">查詢/修改管理員資料</a></li>
+     						<li><a href="#">新增管理員</a></li>
     					</ul>
  	 			</div>
 			</div>
