@@ -96,11 +96,9 @@ public class AdministratorServlet extends HttpServlet {
 			}
 		}
 		
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+		if ("getOne_For_Display".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -112,7 +110,7 @@ public class AdministratorServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/administrator/select_page.jsp");
+							.getRequestDispatcher("/backend/administrator/allAdministrator.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -126,7 +124,7 @@ public class AdministratorServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/administrator/select_page.jsp");
+							.getRequestDispatcher("/backend/administrator/allAdministrator.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -140,7 +138,7 @@ public class AdministratorServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/backend/administrator/select_page.jsp");
+							.getRequestDispatcher("/backend/administrator/allAdministrator.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -155,7 +153,7 @@ public class AdministratorServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/administrator/select_page.jsp");
+						.getRequestDispatcher("/backend/administrator/allAdministrator.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -186,7 +184,7 @@ public class AdministratorServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/administrator/listAllAdministrator.jsp");
+						.getRequestDispatcher("/backend/administrator/allAdministrator.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -195,8 +193,6 @@ public class AdministratorServlet extends HttpServlet {
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
@@ -218,25 +214,23 @@ public class AdministratorServlet extends HttpServlet {
 					errorMsgs.add("密碼請勿空白");
 				}	
 				
+				Timestamp creation_date = Timestamp.valueOf(req.getParameter("creation_date"));
+				
 				byte[] administrator_picture = null;
 				Part part = req.getPart("administrator_picture");
-				try {
-					String uploadFileName = part.getSubmittedFileName();
-					if (uploadFileName != null && part.getContentType() != null) {
-						InputStream in = part.getInputStream();
-						administrator_picture = new byte[in.available()];
-						in.read(administrator_picture);
-						in.close();
+				
+				if (part.getSize() != 0) {
+					try {
+						String uploadFileName = part.getSubmittedFileName();
+						if (uploadFileName != null && part.getContentType() != null) {
+							InputStream in = part.getInputStream();
+							administrator_picture = new byte[in.available()];
+							in.read(administrator_picture);
+							in.close();
+						}
+					} catch (FileNotFoundException e) {
+						errorMsgs.add("找不到檔案");
 					}
-				} catch (FileNotFoundException e) {
-					errorMsgs.add("找不到檔案");
-				}
-				if (part.getSize() == 0) {
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
 				}
 				
 				String administrator_status = req.getParameter("administrator_status").trim();
@@ -249,7 +243,7 @@ public class AdministratorServlet extends HttpServlet {
 				administratorVO.setAdministrator_name(administrator_name);
 				administratorVO.setAdministrator_account(administrator_account);
 				administratorVO.setAdministrator_password(administrator_password);
-//				administratorVO.setCreation_date(creation_date);
+				administratorVO.setCreation_date(creation_date);
 				administratorVO.setAdministrator_picture(administrator_picture);
 				administratorVO.setAdministrator_status(administrator_status);
 				
@@ -265,7 +259,7 @@ public class AdministratorServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				AdministratorService administratorService = new AdministratorService();
-				administratorService.updateAdministrator(administrator_no, administrator_name, administrator_account, administrator_password, administrator_picture, administrator_status);
+				administratorService.updateAdministrator(administrator_no, administrator_name, administrator_account, administrator_password, creation_date, administrator_picture, administrator_status);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("administratorVO", administratorVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -352,7 +346,7 @@ public class AdministratorServlet extends HttpServlet {
 				administratorVO = administratorService.addAdministrator(administrator_name, administrator_account, administrator_password, administrator_picture, administrator_status);				
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/backend/administrator/listAllAdministrator.jsp";
+				String url = "/backend/administrator/allAdministrator.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -382,7 +376,7 @@ public class AdministratorServlet extends HttpServlet {
 				administratorService.deleteAdministrator(administrator_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/backend/administrator/listAllAdministrator.jsp";
+				String url = "/backend/administrator/allAdministrator.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -390,7 +384,7 @@ public class AdministratorServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/administrator/listAllAdministrator.jsp");
+						.getRequestDispatcher("/backend/administrator/allAdministrator.jsp");
 				failureView.forward(req, res);
 			}
 		}

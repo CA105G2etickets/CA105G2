@@ -16,33 +16,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
-.Administratorphoto {
-	border-radius: 50px;
-	margin-top: 20px;
-}
-
-.Administratormenu {
-	margin-top: 100px;
-	margin-left: 200px;
-}
-
-.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-.topnav {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-</style>
-<style>
   table#table-1 {
 	background-color: #CCCCFF;
     border: 2px solid black;
@@ -85,12 +58,26 @@
 		<td><%=administratorVO.getAdministrator_account()%></td>
 		<td><%=administratorVO.getAdministrator_password()%></td>
 		<td><%=administratorVO.getCreation_date()%></td>
-		<td><img src="<%=request.getContextPath()%>/backend/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="50" width="50"></td>
+		<td><img src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="50" width="50"></td>
 		<td><%=administratorVO.getAdministrator_status()%></td>
+		<td>
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/administrator/administrator.do" style="margin-bottom: 0px;">
+				<input type="submit" value="修改">
+				<input type="hidden" name="administrator_no" value="${administrator.administrator_no}">
+				<input type="hidden" name="action" value="getOne_For_Update">
+			</FORM>
+		</td>
+<!-- 		<td> -->
+<!-- 			<FORM METHOD="post" ACTION="administrator.do" style="margin-bottom: 0px;"> -->
+<!-- 				<input type="submit" value="刪除"> -->
+<%-- 				<input type="hidden" name="administrator_no" value="${administrator.administrator_no}"> --%>
+<!-- 				<input type="hidden" name="action" value="delete"> -->
+<!-- 			</FORM> -->
+<!-- 		</td> -->
 	</tr>
 </table>
 <div class="col-xs-12 col-sm-12">
-<a href="allAdministrator.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
+<a href="<%=request.getContextPath()%>/backend/administrator/allAdministrator.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>
 <br>
 </div>
 
