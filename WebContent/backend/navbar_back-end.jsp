@@ -179,7 +179,7 @@ body{
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div class="dropdown">
-					<a class="dropdown-toggle topnav" id="GoodsManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" align="center">商品管理
+					<a class="dropdown-toggle topnav" id="GoodsManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" align="center" style="text-decoration: none; color: white;">商品管理
 						<span class="caret"></span>
 					</a>
 			        <ul class="dropdown-menu eventManagementMenu" aria-labelledby="eventManagement" style="text-align:center;background-color:rgba(255, 255, 255, 0.9);">

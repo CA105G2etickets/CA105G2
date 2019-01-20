@@ -20,6 +20,8 @@ import org.hibernate.*;
 import org.hibernate.query.Query; //Hibernate 5.2 開始 取代原 org.hibernate.Query 介面
 
 import com.resaleorder.model.ResaleOrderVO;
+import com.seating_area.model.SeatingArea_H5_VO;
+import com.ticketorder.model.TicketOrderVO;
 
 import hibernate.util.HibernateUtil;
 import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Ticket;
@@ -31,6 +33,7 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 	private static final String GET_ALL_STMT = "from TicketVO order by ticket_no";
 	private static final String GET_ALL_BY_MEMBERNO_STMT = "from TicketVO where member_no=?0 order by TICKET_CREATE_TIME desc";
 	private static final String GET_ALL_BY_TONO_AND_MEMBERNO_STMT = "from TicketVO where ticket_order_no=?0 and member_no=?1 order by TICKET_CREATE_TIME desc";
+	private static final String GET_ALL_BY_RESALESTATUS_STMT = "from TicketVO where ticket_resale_status=?0 order by TICKET_CREATE_TIME desc";
 	
 	@Override
 	public void insert(TicketVO ticketVO) {
@@ -125,6 +128,24 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 			session.beginTransaction();
 			Query<TicketVO> query = session.createQuery(GET_ALL_BY_MEMBERNO_STMT, TicketVO.class);
 			query.setParameter(0, member_no);
+			list = query.getResultList();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
+
+	@Override
+	public List<TicketVO> getTicketsOnResale() {
+		List<TicketVO> list = null;
+		String ticket_resale_status = "SELLING2";
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query<TicketVO> query = session.createQuery(GET_ALL_BY_RESALESTATUS_STMT, TicketVO.class);
+			query.setParameter(0, ticket_resale_status);
 			list = query.getResultList();
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -370,9 +391,22 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 		TicketVO tvou = dao.findByPrimaryKey("T_20181225_000001");
 //		tvou.setTicket_no(tvou.getTicket_no());
 //		tvou.setMember_no(tvou.getMember_no());
-		tvou.setTicket_resale_price(6999);
-		tvou.setTicket_resale_status("SELLING2");
+		tvou.setTicket_resale_price(7);
+		tvou.setTicket_resale_status("asdf");
 		dao.update(tvou);
+		
+//		TicketVO tvoNew = new TicketVO();
+////		SeatingArea_H5_VO sh5vo = new SeatingArea_H5_VO();
+//		tvoNew.setTicket_no("T_20181225_000001");
+//		tvoNew.setSeatingarea_h5VO(new SeatingArea_H5_VO());
+//		tvoNew.setTicketorderVO(new TicketOrderVO());
+//		tvoNew.setMember_no("M000001");
+//		tvoNew.setTicket_status("statusU");
+//		tvoNew.setTicket_create_time(null);
+//		tvoNew.setIs_from_resale(null);
+//		tvoNew.setTicket_resale_price(0);
+//		tvoNew.setTicket_resale_status("resaleS");
+//		dao.update(tvoNew); //fail
 		
 		
 //		TicketVO tvo2 = new TicketVO();
@@ -453,6 +487,7 @@ public class TicketHibernateDAO implements TicketDAO_interface {
 //		}
 		
 	}
+
 
 	
 

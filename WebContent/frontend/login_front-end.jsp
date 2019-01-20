@@ -82,7 +82,7 @@ body{
 <form method="post" action="<%=request.getContextPath()%>/member/member.do" role="form">
      <div class="control-group">
      <div class="controls">
-     	<input style="text-transform:lowercase;" id="account" class="string required" placeholder="註冊帳號或是Email" type="text" name="member_account" size="30"/>
+     	<input id="account" class="string required" placeholder="註冊帳號或是Email" type="text" name="member_account" size="30"/>
      	</div>
      	</div>
      <div class="control-group">

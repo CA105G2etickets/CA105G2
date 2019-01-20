@@ -17,6 +17,7 @@
 		});
 	});
 </script>
+
 <style>
 .wallethref {
 	color: black;

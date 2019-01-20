@@ -29,7 +29,7 @@ public class AdministratorService {
 	}
 
 	public AdministratorVO updateAdministrator(String administrator_no, String administrator_name, String administrator_account,
-			String administrator_password, byte[] administrator_picture,
+			String administrator_password, Timestamp creation_date, byte[] administrator_picture,
 			String administrator_status) {
 
 		AdministratorVO administratorVO = new AdministratorVO();
@@ -38,7 +38,7 @@ public class AdministratorService {
 		administratorVO.setAdministrator_name(administrator_name);
 		administratorVO.setAdministrator_account(administrator_account);
 		administratorVO.setAdministrator_password(administrator_password);
-//		administratorVO.setCreation_date(creation_date);
+		administratorVO.setCreation_date(creation_date);
 		administratorVO.setAdministrator_picture(administrator_picture);
 		administratorVO.setAdministrator_status(administrator_status);
 		dao.update(administratorVO);

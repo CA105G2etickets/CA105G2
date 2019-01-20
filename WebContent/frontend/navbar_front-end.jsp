@@ -211,7 +211,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
-					<a href="#" class="topnav" align="center">轉讓票券</a>
+					<a href="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do?action=member_select_resaleorders" class="topnav" align="center">轉讓票券</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">

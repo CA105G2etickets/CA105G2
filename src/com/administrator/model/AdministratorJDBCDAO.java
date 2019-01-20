@@ -13,7 +13,7 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO ADMINISTRATOR (ADMINISTRATOR_NO,ADMINISTRATOR_NAME,ADMINISTRATOR_ACCOUNT,ADMINISTRATOR_PASSWORD,CREATION_DATE,ADMINISTRATOR_PICTURE,ADMINISTRATOR_STATUS) VALUES ('A'||LPAD(to_char(administrator_no_seq.NEXTVAL), 3, '0'), ?, ?, ?,CURRENT_TIMESTAMP, ?, ?)";
 	private static final String UPDATE = 
-			"UPDATE ADMINISTRATOR SET ADMINISTRATOR_NAME = ?, ADMINISTRATOR_ACCOUNT = ?, ADMINISTRATOR_PASSWORD = ?, ADMINISTRATOR_PICTURE = ?, ADMINISTRATOR_STATUS = ? WHERE ADMINISTRATOR_NO = ?";
+			"UPDATE ADMINISTRATOR SET ADMINISTRATOR_NAME = ?, ADMINISTRATOR_ACCOUNT = ?, ADMINISTRATOR_PASSWORD = ?, CREATION_DATE = ?, ADMINISTRATOR_PICTURE = ?, ADMINISTRATOR_STATUS = ? WHERE ADMINISTRATOR_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM ADMINISTRATOR WHERE ADMINISTRATOR_NO = ?";
 	private static final String GET_ONE_STMT = 
@@ -81,10 +81,10 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			pstmt.setString(1, administratorVO.getAdministrator_name());
 			pstmt.setString(2, administratorVO.getAdministrator_account());
 			pstmt.setString(3, administratorVO.getAdministrator_password());
-//			pstmt.setTimestamp(4, administratorVO.getCreation_date());
-			pstmt.setBytes(4, administratorVO.getAdministrator_picture());
-			pstmt.setString(5, administratorVO.getAdministrator_status());
-			pstmt.setString(6, administratorVO.getAdministrator_no());
+			pstmt.setTimestamp(4, administratorVO.getCreation_date());
+			pstmt.setBytes(5, administratorVO.getAdministrator_picture());
+			pstmt.setString(6, administratorVO.getAdministrator_status());
+			pstmt.setString(7, administratorVO.getAdministrator_no());
 
 			pstmt.executeUpdate();
 

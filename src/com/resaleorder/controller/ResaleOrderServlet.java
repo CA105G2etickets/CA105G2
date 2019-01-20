@@ -1,6 +1,7 @@
 package com.resaleorder.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.RequestDispatcher;
@@ -9,9 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.event.model.Event_H5_Service;
 import com.event.model.Event_H5_VO;
+import com.member.model.MemberVO;
 import com.resaleorder.model.ShowResaleTicketVO;
 import com.resaleorder.model.ResaleOrderService;
 import com.resaleorder.model.ResaleOrderVO;
@@ -42,9 +45,10 @@ public class ResaleOrderServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		res.setHeader("Cache-Control", "no-store");
-		res.setHeader("Pragma", "no-cache");
-		res.setDateHeader("Expires", 0);
+		HttpSession session = req.getSession();
+//		res.setHeader("Cache-Control", "no-store");
+//		res.setHeader("Pragma", "no-cache");
+//		res.setDateHeader("Expires", 0);
 	
 		if ("listResaleOrder_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
 			
@@ -507,8 +511,133 @@ public class ResaleOrderServlet extends HttpServlet {
 						.getRequestDispatcher("/frontend/index.jsp");
 				failureView.forward(req, res);
         	}
+        }
+		
+		if("member_select_resaleorders".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+        	try {
+//        		String member_no = req.getParameter("member_no");
+        		MemberVO member = (MemberVO) session.getAttribute("member");
+        		String member_no = member.getMemberNo();
+        		if (member_no == null || (member_no.trim()).length() == 0) {
+        			
+					errorMsgs.add("購票前請登入");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/login_front-end.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+        		req.setAttribute("member_no", member_no);
+				
+        		String url = "/frontend/resaleorder/listAllResaleTicketsByTicketStatus.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+        	} catch(Exception e) {
+        		errorMsgs.add("failed at resaleorder_select_by_member_no.jsp ErrorMsg:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/index.jsp");
+				failureView.forward(req, res);
+        	}
+        }
+		
+		if("member_buy_One_Resale_ticket".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				
+				String member_buyer_no = req.getParameter("member_buyer_no");
+				//block when member_no == null
+				if (member_buyer_no == null || (member_buyer_no.trim()).length() == 0) {
+					errorMsgs.add("請先登入");
+					System.out.println("no member_no at ResaleOrderServlet.java, action = member_buy_One_Resale_ticket");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/login_front-end.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				//set req.setAttribute for error to send back
+				req.setAttribute("member_no", member_buyer_no);
+				
+				//getParameter ordprice first for controller debugging
+				String str_resale_ordprice = req.getParameter("resale_ordprice");
+				
+				Integer resale_ordprice = null;
+				try {
+					resale_ordprice = new Integer(Integer.parseInt(str_resale_ordprice));
+					
+					if(resale_ordprice > 1001001 || resale_ordprice <0) {
+						errorMsgs.add("轉讓票價請勿亂填數字.");
+					}
+				} catch (NumberFormatException e) {
+					resale_ordprice = 0;
+					errorMsgs.add("轉讓票價請填數字.");
+				}
+				
+				// Send the user back to the former page, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					System.out.println("error at ResaleOrderServlet.java, action = member_buy_One_Resale_ticket");
+					String url = "/frontend/resaleorder/listAllResaleTicketsByTicketStatus.jsp";
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(url);
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String ticket_no = req.getParameter("ticket_no");
+				
+				//get ticketvo for insert resaleorder
+				TicketService tSvc = new TicketService();
+				
+				String member_seller_no = req.getParameter("member_seller_no");
+				
+				//decide resaleorderVO
+				String resale_ordstatus = "WAITOPAY1";
+				Timestamp resale_ord_createtime = new java.sql.Timestamp(System.currentTimeMillis());
+				Timestamp resale_ord_completetime = null;
+				String payment_method = "NOTYET";
+				
+				//set for ticketvo
+				String ticket_resale_status = "CHECKING3";
+				Integer ticket_resale_price = resale_ordprice;
+				String is_from_resale = "NO";
+				
+				//prepare to add new resaleorder and update target ticket with two attribute: .ticket_resale_status to SELLING2 and .ticket_resale_price to ticket_resale_price
+				ResaleOrderService roSvc = new ResaleOrderService();
+				String resale_ordno = roSvc.addResaleOrdAndUpdateTicketVOResaleAttributes(ticket_no, member_seller_no, member_buyer_no, resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, member_seller_no, ticket_resale_status, ticket_resale_price, is_from_resale);
+				
+				
+//				String resale_ordno = roSvc.updateTargetTicketResaleAttributesAndMaybeInsertOneResaleOrder("", member_seller_no, member_buyer_no, 
+//						resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, 
+//						false, false, "", 0, "", ticket_no);
+				
+//				String resale_ordno = roSvc.insertOneResaleOrderAndUpdateTargetTicketToBuying(member_seller_no, member_buyer_no, 
+//						resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, ticket_no);
+				
+				req.setAttribute("resale_ordno", resale_ordno);
+				
+				String url = "/frontend/resaleorder/listOneResaleOrderToPay.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+//				errorMsgs.add("出錯，因此您的操作無效");
+				System.out.println("error at ResaleOrderServlet.java action=member_buy_One_Resale_ticket");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/resaleorder/listAllResaleTicketsByTicketStatus.jsp");
+				failureView.forward(req, res);
+			}
         	
         }
+		
 	}
 	
 	public boolean containsHanScript(String s) {

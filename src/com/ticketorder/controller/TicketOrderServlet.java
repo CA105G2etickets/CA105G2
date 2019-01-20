@@ -76,6 +76,7 @@ public class TicketOrderServlet extends HttpServlet {
 			
 			try {
 				String eve_no = req.getParameter("eve_no");
+//				String member_no = member.getMemberNo(); //201901192220 original version.
 				String member_no = member.getMemberNo();
         		if (member_no == null || (member_no.trim()).length() == 0) {
 					errorMsgs.add("購票前請登入");
@@ -163,6 +164,7 @@ public class TicketOrderServlet extends HttpServlet {
 //				req.setAttribute("slist", list);
 //				req.setAttribute("eh5vo", eh5vo);
 				req.setAttribute("eve_no", eve_no);
+				req.setAttribute("member_no", member_no);
 				
 //				req.setAttribute("list4PassValue", list4PassValue);
 //				req.setAttribute("list4PassValue", list4PassValue);
@@ -200,11 +202,11 @@ public class TicketOrderServlet extends HttpServlet {
 					total_amount = new Integer(Integer.parseInt(ticketsNum));
 					
 					if(total_amount > 100100 || total_amount <0) {
-//						errorMsgs.add("總張數請勿亂填數字.");
+						errorMsgs.add("總張數請勿亂填數字.");
 					}
 				} catch (NumberFormatException e) {
 					total_amount = 0;
-//					errorMsgs.add("總張數請填數字.");
+					errorMsgs.add("總張數請填數字.");
 				}
 				
 				Integer total_price = null;
@@ -215,24 +217,25 @@ public class TicketOrderServlet extends HttpServlet {
 					total_price = oneTicketPrice*total_amount;
 					
 					if(total_amount > 10100100 || total_amount <0) {
-//						errorMsgs.add("總張數請勿亂填數字.");
+						errorMsgs.add("總價請勿亂填數字.");
 					}
 				} catch (NumberFormatException e) {
 					total_amount = 0;
-//					errorMsgs.add("總張數請填數字.");
+					errorMsgs.add("總價請勿亂填數字.");
 				}
 				
 				java.sql.Timestamp ticket_order_time = new java.sql.Timestamp(System.currentTimeMillis());
 				String payment_method = "NOTYET";
 				String ticket_order_status = "WAITTOPAY1"; //create a ticket_order and prepare to update seatingarea.
 				
-//				//錯誤處理並導回前頁
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
-//				}
+				//錯誤處理並導回前頁
+				if (!errorMsgs.isEmpty()) {
+					System.out.println("TicketOrderServlet error at aciton ticketNumSelected_buyTickets");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
 				
 				SeatingArea_H5_Service sh5Svc = new SeatingArea_H5_Service();
 				SeatingArea_H5_VO svo = sh5Svc.getOneSeatingArea_H5(ticarea_no); //此if判斷式的開頭有用過sh5Svc了 不用再宣告
@@ -242,7 +245,7 @@ public class TicketOrderServlet extends HttpServlet {
 //					errorMsgs.add("選取的目標活動的剩餘票數不足，請重新購票");	
 //				}
 				
-				req.setAttribute("member_no", member_no);
+				
 				
 //				if (!errorMsgs.isEmpty()) {
 //					RequestDispatcher failureView = req
@@ -261,6 +264,9 @@ public class TicketOrderServlet extends HttpServlet {
 				toVO.setTicket_order_status(ticket_order_status);
 //				String ticarea_no = ticarea_no;
 				
+				svo.setTicbookednumber(svo.getTicbookednumber()+total_amount);
+				toVO.setSeatingarea_h5VO(svo);
+				
 //				SeatingArea_H5_VO svolocal = new SeatingArea_H5_VO();
 //				svolocal.setTicarea_no(svo.getTicarea_no());
 //				svolocal.setTicarea_color(svo.getTicarea_color());
@@ -270,14 +276,14 @@ public class TicketOrderServlet extends HttpServlet {
 //				svolocal.setEve_h5VO(svo.getEve_h5VO());
 //				svolocal.setTickettype_h5VO(svo.getTickettype_h5VO());
 				
-				Integer original_ticbookednumber = svo.getTicbookednumber();
-				Integer update_ticbookednumber = original_ticbookednumber+total_amount;
-				
-//				svolocal.setTicbookednumber(update_ticbookednumber);
-				svo.setTicbookednumber(update_ticbookednumber);
-				
-				//add svo at line281 which contains pk, then insertThenGetLatest... can work.
-				toVO.setSeatingarea_h5VO(svo);
+//				Integer original_ticbookednumber = svo.getTicbookednumber();
+//				Integer update_ticbookednumber = original_ticbookednumber+total_amount;
+//				
+////				svolocal.setTicbookednumber(update_ticbookednumber);
+//				svo.setTicbookednumber(update_ticbookednumber);
+//				
+//				//add svo at line281 which contains pk, then insertThenGetLatest... can work.
+//				toVO.setSeatingarea_h5VO(svo);
 				
 				//prepared toVO and sVO done, now call transaction function
 				TicketOrderService toSvc = new TicketOrderService();
@@ -316,20 +322,23 @@ public class TicketOrderServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
-			} catch(NullPointerException ne) {
-				System.out.println("nullporinter");
-				errorMsgs.add("錯誤訊息如下:"+ne.getMessage());
-//				req.setAttribute("slist", list);
-//				req.setAttribute("eh5vo", eh5vo);
-//				req.setAttribute("eve_no", eve_no);
-//				req.setAttribute("list4PassValue", list4PassValue);
-				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
-						.getRequestDispatcher("/frontend/index.jsp");
-				failureView.forward(req, res);
-				
-			} catch(Exception e) {
-				errorMsgs.add("資料庫更新該座位區已訂位數量錯誤，剩餘票數不足，錯誤訊息如下:"+e.getMessage());
+			} 
+//				catch(NullPointerException ne) {
+//				System.out.println("nullporinter");
+//				errorMsgs.add("錯誤訊息如下:"+ne.getMessage());
+////				req.setAttribute("slist", list);
+////				req.setAttribute("eh5vo", eh5vo);
+////				req.setAttribute("eve_no", eve_no);
+////				req.setAttribute("list4PassValue", list4PassValue);
+//				RequestDispatcher failureView = req
+////						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
+//						.getRequestDispatcher("/frontend/index.jsp");
+//				failureView.forward(req, res);
+//				
+//			} 
+			catch(Exception e) {
+				errorMsgs.add("該座位區剩餘數量不足，您的操作失敗。請重新購票");
+//				errorMsgs.add("資料庫更新該座位區已訂位數量錯誤，剩餘票數不足，錯誤訊息如下:"+e.getMessage());
 //				System.out.println("catch excetpitonjt");
 //				String eve_no = (String) req.getAttribute("eve_no");
 //				SeatingAreaService sSvc = new SeatingAreaService();
@@ -345,8 +354,8 @@ public class TicketOrderServlet extends HttpServlet {
 //				req.setAttribute("eve_no", eve_no);
 //				req.setAttribute("list4PassValue", list4PassValue);
 				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
-						.getRequestDispatcher("/frontend/index.jsp");
+						.getRequestDispatcher("/frontend/ticketorder/eve_no_SelectedReady2Next.jsp");
+//						.getRequestDispatcher("/frontend/index.jsp");
 				failureView.forward(req, res);
 			}
         }
@@ -527,9 +536,9 @@ public class TicketOrderServlet extends HttpServlet {
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				errorMsgs.add("controller.userPaying" + e.getMessage());
+				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/index.jsp");
+						.getRequestDispatcher("/frontend/ticketorder/selectPaymentAndPay.jsp");
 				failureView.forward(req, res);
 			}
         }

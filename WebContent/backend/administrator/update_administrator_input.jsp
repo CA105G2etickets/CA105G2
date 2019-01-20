@@ -17,33 +17,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
-.administratorphoto {
-	border-radius: 50px;
-	margin-top: 20px;
-}
-
-.administratormenu {
-	margin-top: 100px;
-	margin-left: 200px;
-}
-
-.topnav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-.topnav {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-</style>
-<style>
   table {
 	width: 450px;
 	background-color: white;
@@ -90,7 +63,7 @@ function readURL(input){
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="administrator.do" name="form1" enctype="multipart/form-data">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/administrator/administrator.do" name="form1" enctype="multipart/form-data">
 <table class="table">
 	<tr>
 		<td>管理員編號<font color=red></font></td>
@@ -116,7 +89,7 @@ function readURL(input){
 		<td>管理員大頭貼</td>
 		<td>
 		<input type="file" accept="image/jpeg, image/png" name="administrator_picture" onchange="readURL(this)" targetID="previewImg">
-		<img id="previewImg" src="<%=request.getContextPath()%>/backend/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="100" width="100">
+		<img id="previewImg" src="<%=request.getContextPath()%>/administrator/administratorImg.do?administrator_no=${administratorVO.administrator_no}" height="100" width="100">
 		</td>
 	</tr>
 	<tr>
@@ -133,6 +106,7 @@ function readURL(input){
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="administrator_no" value="<%=administratorVO.getAdministrator_no()%>">
+<input type="hidden" name="creation_date" value="<%=administratorVO.getCreation_date()%>">
 <input type="submit" value="送出修改"></FORM>
 <div class="col-xs-12 col-sm-12">
 <a href="<%=request.getContextPath()%>/backend/administrator/allAdministrator.jsp"><button type="button" class="btn btn-primary btn-lg btn-block">返回</button></a>

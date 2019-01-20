@@ -69,7 +69,8 @@ public class TicketOrderService {
 	}
 	
 	public String insertThenGetLatestToNoWithCondition(TicketOrderVO ticketorderVO) {
-		return dao.insertThenGetLatestToNoWithCondition(ticketorderVO);
+//		return dao.insertThenGetLatestToNoWithCondition(ticketorderVO);
+		return dao.updateWithCondition(ticketorderVO);
 	}
 	
 	public String insert(TicketOrderVO ticketorderVO) {
