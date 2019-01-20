@@ -19,7 +19,7 @@ pageContext.setAttribute("member_no",member_no);
 %>
 
 <!-- ======================================== DAI:::begin ================================================== -->
-<jsp:useBean id="eventService" scope="page" class="com.event.model.EventService" />
+<%-- <jsp:useBean id="eventService" scope="page" class="com.event.model.EventService" /> --%>
 <jsp:useBean id="seatingAreaService" scope="page" class="com.seating_area.model.SeatingAreaService" />
 <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />

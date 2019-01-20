@@ -34,6 +34,7 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 	public void insert(ResaleOrderVO resaleorderVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
+			
 			session.beginTransaction();
 			session.saveOrUpdate(resaleorderVO);
 			session.getTransaction().commit();
@@ -54,6 +55,48 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 			session.getTransaction().rollback();
 			throw ex;
 		}
+	}
+	
+	@Override												//要改的票券物件要放在轉讓訂單物件內然後用傳值的方式來比較
+	public String insertResaleOrderWithCondition(ResaleOrderVO resaleorderVO, String original_ticket_resale_status
+			,Integer original_ticket_resale_price, String original_is_from_resale, 
+			String wantToChangeTo_member_no) 
+	{
+		String strForReturn = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			if(!original_ticket_resale_status.equals("SELLING2")) {
+				throw new RuntimeException("此票已非轉讓票，可能被取消轉讓，或是其他使用者已購買付款中");
+			}
+			
+			
+			session.saveOrUpdate(resaleorderVO);
+			strForReturn = resaleorderVO.getResale_ordno();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return strForReturn;
+	}
+
+	@Override
+	public String updateResaleOrderWithCondition(ResaleOrderVO resaleorderVO, 
+			String original_ticket_resale_status,Integer original_ticket_resale_price, String original_is_from_resale, 
+			String wantToChangeTo_member_no)
+	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			
+			session.beginTransaction();
+			session.saveOrUpdate(resaleorderVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return null;
 	}
 	
 	public void updateBothRoAndTo(ResaleOrderVO resaleorderVO, TicketVO ticketVO) {
@@ -323,12 +366,6 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		//Hibernate: select resaleorde0_.resale_ordno as resale_ordno1_0_, resaleorde0_.ticket_no as ticket_no2_0_, resaleorde0_.member_seller_no as member_seller_no3_0_, resaleorde0_.member_buyer_no as member_buyer_no4_0_,resaleorde0_.resale_ordprice as resale_ordprice5_0_, resaleorde0_.resale_ordstatus as resale_ordstatus6_0_, resaleorde0_.resale_ord_createtime as resale_ord_createt7_0_, resaleorde0_.resale_ord_completetime as resale_ord_complet8_0_, resaleorde0_.payment_method as payment_method9_0_ from resale_ord resaleorde0_ where resaleorde0_.resale_ordstatus like ? order by resaleorde0_.resale_ordno asc
 		
 	}
-
-	
-
-	
-
-	
 
 	
 }

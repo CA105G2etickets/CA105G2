@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ticket.model.TicketHibernateDAO;
+import com.ticket.model.TicketService;
 import com.ticket.model.TicketVO;
 
 public class ResaleOrderService {
@@ -20,8 +21,11 @@ public class ResaleOrderService {
 		
 		ResaleOrderVO resaleorderVO = new ResaleOrderVO();
 		
-		TicketVO ticketVO = new TicketVO();
-		ticketVO.setTicket_no(ticket_no);
+		//this logic might fail because update ticketvo with only content of ticket_no.
+//		TicketVO ticketVO = new TicketVO();
+//		ticketVO.setTicket_no(ticket_no);
+		TicketService tSvc = new TicketService();
+		TicketVO ticketVO = tSvc.getOneTicket(ticket_no);
 		resaleorderVO.setTicketVO(ticketVO);
 		
 		resaleorderVO.setMember_seller_no(member_seller_no);
@@ -36,6 +40,45 @@ public class ResaleOrderService {
 
 		return resaleorderVO;
 	}
+	
+	public String addResaleOrdAndUpdateTicketVOResaleAttributes(String ticket_no, String member_seller_no, String member_buyer_no,
+			Integer resale_ordprice, String resale_ordstatus, java.sql.Timestamp resale_ord_createtime, 
+			java.sql.Timestamp resale_ord_completetime, String payment_method,
+			String ticketOwnerMember_no, String changeTo_ticket_resale_status, Integer changeTo_ticket_resale_price,String changeTo_is_from_resale ) 
+	{
+		
+		ResaleOrderVO resaleorderVO = new ResaleOrderVO();
+		
+		TicketService tSvc = new TicketService();
+		TicketVO ticketVO = tSvc.getOneTicket(ticket_no);
+		
+		//先取出目標票券物件內的三個轉讓屬性的值並設為參數準備送到DAO方法內進行判斷
+		String original_ticket_resale_status = ticketVO.getTicket_resale_status();
+		Integer original_ticket_resale_price = ticketVO.getTicket_resale_price();
+		String original_is_from_resale = ticketVO.getIs_from_resale();
+		
+		//get a latest ticketvo as I could and set in resaleorder for dao to compare.
+		//要改的票券物件要放在轉讓訂單物件內然後用傳值的方式來比較因此上面那行註解應該是錯的
+		ticketVO.setMember_no(ticketOwnerMember_no);
+		ticketVO.setTicket_resale_status(changeTo_ticket_resale_status);
+		ticketVO.setTicket_resale_price(changeTo_ticket_resale_price);
+		ticketVO.setIs_from_resale(changeTo_is_from_resale);
+		
+		resaleorderVO.setTicketVO(ticketVO);
+		
+		resaleorderVO.setMember_seller_no(member_seller_no);
+		resaleorderVO.setMember_buyer_no(member_buyer_no);
+		resaleorderVO.setResale_ordprice(resale_ordprice);
+		resaleorderVO.setResale_ordstatus(resale_ordstatus);
+		resaleorderVO.setResale_ord_createtime(resale_ord_createtime);
+		resaleorderVO.setResale_ord_completetime(resale_ord_completetime);
+		resaleorderVO.setPayment_method(payment_method);
+
+		String resale_ordno = dao.insertResaleOrderWithCondition(resaleorderVO, original_ticket_resale_status , original_ticket_resale_price, original_is_from_resale, ticketOwnerMember_no);
+
+		return resale_ordno;
+	}
+	
 
 	public ResaleOrderVO updateResaleOrd(String resale_ordno, String ticket_no, String member_seller_no, String member_buyer_no,
 			Integer resale_ordprice, String resale_ordstatus, java.sql.Timestamp resale_ord_createtime, 

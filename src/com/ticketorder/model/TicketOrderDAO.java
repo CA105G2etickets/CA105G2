@@ -30,12 +30,75 @@ public class TicketOrderDAO implements TicketOrderDAO_interface2{
 //			"INSERT INTO ticket_order (ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status) VALUES ('TO_'||(TO_CHAR(SYSDATE,'YYYYMMDD'))||'_'||LPAD(to_char(TICKET_ORDER_SEQ.NEXTVAL), 6, '0'),?,?,?,?,?,?,?)";
 //	private static final String GET_ALL_STMT=
 //			"SELECT ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status FROM ticket_order order by ticket_order_no";
-//	private static final String GET_ONE_STMT=
-//			"SELECT ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status FROM ticket_order where ticket_order_no=?";
+	private static final String GET_ONE_STMT=
+			"SELECT ticket_order_no,member_no,ticarea_no,total_price,total_amount,ticket_order_time,payment_method,ticket_order_status FROM ticket_order where ticket_order_no=?";
 //	private static final String DELETE = 
 //			"DELETE FROM ticket_order where ticket_order_no = ?";
 	private static final String UPDATE = 
 			"UPDATE ticket_order set member_no=?, ticarea_no=?, total_price=?, total_amount=?, ticket_order_time=?, payment_method=?,ticket_order_status=? where ticket_order_no=?";
+	
+	
+	public void findByPrimaryKeyCheckOriginalTicketOrderVO2_TicketOrderStatusIs_WAITTOPAY1_(String ticket_order_no, Connection con) {
+		
+	
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setString(1, ticket_order_no);
+
+			rs = pstmt.executeQuery();
+			TicketOrderVO2 ticketorderVO2 = new TicketOrderVO2();
+
+			while (rs.next()) {
+				// empVo �]�٬� Domain objects
+				ticketorderVO2.setTicket_order_no(rs.getString("ticket_order_no"));
+				ticketorderVO2.setMember_no(rs.getString("member_no"));
+				ticketorderVO2.setTicarea_no(rs.getString("ticarea_no"));
+				ticketorderVO2.setTotal_price(rs.getInt("total_price"));
+				ticketorderVO2.setTotal_amount(rs.getInt("total_amount"));
+				ticketorderVO2.setTicket_order_time(rs.getTimestamp("ticket_order_time"));
+				ticketorderVO2.setPayment_method(rs.getString("payment_method"));
+				ticketorderVO2.setTicket_order_status(rs.getString("ticket_order_status"));
+			}
+			if(!ticketorderVO2.getTicket_order_status().equals("WAITTOPAY1")) {
+				throw new SQLException();
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("此訂票訂單並非等待付款中，因此您的操作失敗"
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 	
 	@Override
 	public void updateTicketOrderAndInsertTickets(TicketOrderVO2 ticketorderVO2, List<TicketVO2> list) {
@@ -45,6 +108,8 @@ public class TicketOrderDAO implements TicketOrderDAO_interface2{
 			con = ds.getConnection();
 			// 1●設定於 pstm.executeUpdate()之前
     		con.setAutoCommit(false);
+    		
+    		this.findByPrimaryKeyCheckOriginalTicketOrderVO2_TicketOrderStatusIs_WAITTOPAY1_(ticketorderVO2.getTicket_order_no(), con);
 			
     		// 先update ticket_order
 			pstmt = con.prepareStatement(UPDATE);			

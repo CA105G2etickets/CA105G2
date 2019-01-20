@@ -66,7 +66,7 @@ public class TicketOrderHibernateDAO implements TicketOrderDAO_interface {
 			
 			session.beginTransaction();
 			if(ticketorderVO.getSeatingarea_h5VO().getTictotalnumber() < ticketorderVO.getSeatingarea_h5VO().getTicbookednumber() ) {
-				throw new RuntimeException();
+				throw new RuntimeException("ticketsNotEnough");
 			}
 			
 //			session.beginTransaction();
