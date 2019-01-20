@@ -61,8 +61,8 @@ body{
     <div class="tab-block">
         <nav>
     <ul>
-    <a href="<%=request.getContextPath()%>/frontend/login_front-end.jsp"><li class="last" style="width: 10%; height: 100%; text-align: center; background-color: #f8f8f8;"><font color="black">登入</font></li></a>
-    <a href="<%=request.getContextPath()%>/frontend/signup_front-end.jsp" class="signupforsigninpage"><li class="first active" style="width: 10%; height: 100%; text-align: center;"><font color="white" class="signupforsigninpage">註冊</font></li></a>
+    <a href="<%=request.getContextPath()%>/frontend/login_front-end.jsp"><li class="last" style="width: 50%; height: 100%; text-align: center; background-color: #f8f8f8;"><font color="black" class="signupforsigninpage">登入</font></li></a>
+    <a href="<%=request.getContextPath()%>/frontend/signup_front-end.jsp"><li class="first active" style="width: 50%; height: 100%; text-align: center;"><font color="white">註冊</font></li></a>
     </ul>
 </nav>
 
@@ -115,13 +115,6 @@ body{
 
 <script>
 			$(document).ready(function(){
-				$('#userlist').prepend(new Option('account,password','', true));
-				$('#userlist')[0].selectedIndex = 0;
-				$('#userlist').on('change',function(){
-					var str = $(this).val();
-					$('#account').val(str.substring(0,str.indexOf(',',1)));
-					$('#password').val(str.substring(str.indexOf(',',1)+1,str.lastIndexOf('')));
-				});
 				$('li.last').hover(function() {
 					$(this).css("background-color","#2d89e5");
 					$('.signupforsigninpage').css("color","white");

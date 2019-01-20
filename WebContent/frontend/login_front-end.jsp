@@ -61,8 +61,8 @@ body{
     <div class="tab-block">
         <nav>
     <ul>
-    <a href="<%=request.getContextPath()%>/frontend/login_front-end.jsp"><li class="first active" style="width: 10%; height: 100%; text-align: center;"><font color="white">登入</font></li></a>
-    <a href="<%=request.getContextPath()%>/frontend/signup_front-end.jsp" class="signupforsigninpage"><li class="last" style="width: 10%; height: 100%; text-align: center; background-color: #f8f8f8;"><font color="black" class="signupforsigninpage">註冊</font></li></a>
+    <a href="<%=request.getContextPath()%>/frontend/login_front-end.jsp"><li class="first active" style="width: 50%; height: 100%; text-align: center;"><font color="white">登入</font></li></a>
+    <a href="<%=request.getContextPath()%>/frontend/signup_front-end.jsp"><li class="last" style="width: 50%; height: 100%; text-align: center; background-color: #f8f8f8;"><font color="black" class="signupforsigninpage">註冊</font></li></a>
     </ul>
 </nav>
 
