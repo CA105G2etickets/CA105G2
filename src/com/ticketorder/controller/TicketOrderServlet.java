@@ -536,9 +536,9 @@ public class TicketOrderServlet extends HttpServlet {
 				successView.forward(req, res);
 
 			} catch (Exception e) {
-				errorMsgs.add("controller.userPaying" + e.getMessage());
+				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/index.jsp");
+						.getRequestDispatcher("/frontend/ticketorder/selectPaymentAndPay.jsp");
 				failureView.forward(req, res);
 			}
         }

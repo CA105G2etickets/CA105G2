@@ -554,6 +554,7 @@ public class ResaleOrderServlet extends HttpServlet {
 				//block when member_no == null
 				if (member_buyer_no == null || (member_buyer_no.trim()).length() == 0) {
 					errorMsgs.add("請先登入");
+					System.out.println("no member_no at ResaleOrderServlet.java, action = member_buy_One_Resale_ticket");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -562,6 +563,7 @@ public class ResaleOrderServlet extends HttpServlet {
 					return;//程式中斷
 				}
 				
+				//set req.setAttribute for error to send back
 				req.setAttribute("member_no", member_buyer_no);
 				
 				//getParameter ordprice first for controller debugging
@@ -581,6 +583,7 @@ public class ResaleOrderServlet extends HttpServlet {
 				
 				// Send the user back to the former page, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					System.out.println("error at ResaleOrderServlet.java, action = member_buy_One_Resale_ticket");
 					String url = "/frontend/resaleorder/listAllResaleTicketsByTicketStatus.jsp";
 					RequestDispatcher failureView = req
 							.getRequestDispatcher(url);
@@ -601,11 +604,19 @@ public class ResaleOrderServlet extends HttpServlet {
 				Timestamp resale_ord_completetime = null;
 				String payment_method = "NOTYET";
 				
+				//set for ticketvo
+				String ticket_resale_status = "CHECKING3";
+				Integer ticket_resale_price = resale_ordprice;
+				String is_from_resale = "NO";
+				
 				//prepare to add new resaleorder and update target ticket with two attribute: .ticket_resale_status to SELLING2 and .ticket_resale_price to ticket_resale_price
 				ResaleOrderService roSvc = new ResaleOrderService();
-				String resale_ordno = roSvc.updateTargetTicketResaleAttributesAndMaybeInsertOneResaleOrder("", member_seller_no, member_buyer_no, 
-						resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, 
-						false, false, "", 0, "", ticket_no);
+				String resale_ordno = roSvc.addResaleOrdAndUpdateTicketVOResaleAttributes(ticket_no, member_seller_no, member_buyer_no, resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, member_seller_no, ticket_resale_status, ticket_resale_price, is_from_resale);
+				
+				
+//				String resale_ordno = roSvc.updateTargetTicketResaleAttributesAndMaybeInsertOneResaleOrder("", member_seller_no, member_buyer_no, 
+//						resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, 
+//						false, false, "", 0, "", ticket_no);
 				
 //				String resale_ordno = roSvc.insertOneResaleOrderAndUpdateTargetTicketToBuying(member_seller_no, member_buyer_no, 
 //						resale_ordprice, resale_ordstatus, resale_ord_createtime, resale_ord_completetime, payment_method, ticket_no);
@@ -618,7 +629,8 @@ public class ResaleOrderServlet extends HttpServlet {
 				
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				errorMsgs.add("出錯，因此您的操作無效");
+//				errorMsgs.add("出錯，因此您的操作無效");
+				System.out.println("error at ResaleOrderServlet.java action=member_buy_One_Resale_ticket");
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/frontend/resaleorder/listAllResaleTicketsByTicketStatus.jsp");
 				failureView.forward(req, res);
