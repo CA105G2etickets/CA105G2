@@ -39,8 +39,8 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			pstmt.setString(2, administratorVO.getAdministrator_account());
 			pstmt.setString(3, administratorVO.getAdministrator_password());
 //			pstmt.setTimestamp(5, administratorVO.getCreation_date());
-			pstmt.setBytes(5, administratorVO.getAdministrator_picture());
-			pstmt.setString(6, administratorVO.getAdministrator_status());
+			pstmt.setBytes(4, administratorVO.getAdministrator_picture());
+			pstmt.setString(5, administratorVO.getAdministrator_status());
 
 			pstmt.executeUpdate();
 			

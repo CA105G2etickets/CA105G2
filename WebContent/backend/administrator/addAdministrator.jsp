@@ -68,7 +68,7 @@ function readURL(input){
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="administrator.do" name="form1" enctype="multipart/form-data">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/administrator/administrator.do" name="form1" enctype="multipart/form-data">
 <table class="table">
 	<tr>
 		<td>管理員姓名</td>
@@ -82,10 +82,6 @@ function readURL(input){
 		<td>管理員密碼</td>
 		<td><input type="TEXT" placeholder="123456" name="administrator_password" size="45"></td>
 	</tr>
-	<tr>
-		<td>管理員帳號建立日期時間</td>
-		<td>系統新增時間</td>
-	</tr>
 	<tr height="145">
 		<td>管理員大頭貼</td>
 		<td>
@@ -94,19 +90,38 @@ function readURL(input){
 		</td>
 	</tr>
 	<tr>
-		<td>管理員狀態</td>
-		<td>normal</td>
+		<td>管理員權限</td>
+		<td>
+		<input type="checkbox" name="permission" value="PL05">活動管理&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" name="permission" value="PL06">票券管理&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" name="permission" value="PL02">商品管理&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" name="permission" value="PL01">公告管理&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" name="permission" value="PL07">常見問題管理&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" name="permission" value="PL04">會員管理&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" name="permission" value="PL08">管理員管理&nbsp;&nbsp;&nbsp;
+		</td>
 	</tr>
-
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="送出新增" >
+<input type="submit" value="送出新增" id="check">
 </FORM>
 
 </div>
 </div>
 </body>
+
+<!-- <script> -->
+<!--     $(document).ready(function(){ -->
+<!--       $("#check").click(function(){ -->
+<!--         var selected=[]; -->
+<!--         $("[name=permission]:checkbox:checked").each(function(){ -->
+<!--           selected.push($(this).val()); -->
+<!--           }); -->
+<!--         alert("您選擇的權限 : " + selected.join()); -->
+<!--         }); -->
+<!--       }); -->
+<!-- </script> -->
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 

@@ -332,6 +332,12 @@ public class AdministratorServlet extends HttpServlet {
 				administratorVO.setAdministrator_picture(administrator_picture);
 				administratorVO.setAdministrator_status(administrator_status);
 
+				/****************************接收權限請求參數******************************/
+				String[] permission = req.getParameterValues("permission");
+				for(int i = 0; i < permission.length; i++) 
+		            System.out.print(permission[i] + " "); 
+				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("administratorVO", administratorVO); // 含有輸入格式錯誤的empVO物件,也存入req
