@@ -178,9 +178,16 @@ body{
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
-				<div>
-					<a href="<%=request.getContextPath()%>/backend/selectGoodsManagement.jsp" class="topnav" align="center">商品管理</a>
-				</div>
+				<div class="dropdown">
+					<a class="dropdown-toggle topnav" id="GoodsManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" align="center">商品管理
+						<span class="caret"></span>
+					</a>
+			        <ul class="dropdown-menu eventManagementMenu" aria-labelledby="eventManagement" style="text-align:center;background-color:rgba(255, 255, 255, 0.9);">
+			            <li><a href="<%=request.getContextPath()%>/backend/goods/select_page.jsp" align="center">商品紀錄查詢</a></li>
+			            <li><a href="<%=request.getContextPath()%>/backend/favorite_goods/selectFavoriteGoods.jsp" align="center">最愛商品管理</a></li>
+			            <li><a href="<%=request.getContextPath()%>/backend/order_history/selectOrder.jsp" align="center">訂單紀錄管理</a></li>
+			        </ul>
+				</div>			
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div class="dropdown">

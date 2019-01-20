@@ -27,15 +27,15 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<ol class="breadcrumb">
-					<li>
-						<a href="#">首頁</a>
-					</li>
-					<li>
-						<a href="#">商品管理</a>
-					</li>
-					<li class="active">最愛商品管理</li>
-				</ol>
+<!-- 				<ol class="breadcrumb"> -->
+<!-- 					<li> -->
+<!-- 						<a href="#">首頁</a> -->
+<!-- 					</li> -->
+<!-- 					<li> -->
+<!-- 						<a href="#">商品管理</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="active">最愛商品管理</li> -->
+<!-- 				</ol> -->
 <%-- 				<hr><input type="button" class="btn btn-default" value="新增一筆最愛商品" onclick="location.href='<%=request.getContextPath()%>/backend/favorite_goods/addFavoriteGoods.jsp'"> --%>
 				<hr>
 				<table id="example" class="display" style="width:100%; font-size:8px">

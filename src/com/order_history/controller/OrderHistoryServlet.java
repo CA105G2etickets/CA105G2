@@ -4,12 +4,21 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.order_detail.model.*;
 import com.order_history.model.*;
 import com.shopping_cart.model.ShoppingCart;
+import com.favorite_goods.model.FavoriteGoodsService;
 import com.goods.model.GoodsDAO;
 import com.goods.model.GoodsVO;
 import com.member.model.*;
@@ -443,7 +452,6 @@ public class OrderHistoryServlet extends HttpServlet {
 			try {
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				List<OrderHistoryVO> orderHistoryVO = (List<OrderHistoryVO>) orderHistorySvc.findByMemberNo(memberVO.getMemberNo());
-				
 				req.setAttribute("orderHistoryVO", orderHistoryVO);
 				String url = "/frontend/order_history/oneMemberIsOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -605,11 +613,103 @@ public class OrderHistoryServlet extends HttpServlet {
 					memberSvc.memberWithdrawal(memberNo, memberFullname, email, phone, idcard, memberAccount, memberPassword, newEwalletBalance, creationDate, profilePicture, memberStatus, thirduid);
 				}
 				
+				
 				OrderHistoryService orderHistorySvc = new OrderHistoryService();
 				orderHistorySvc.insertWithDetail(orderHistoryVO, list);
 				//新增商品累計銷售量開始
 				GoodsDAO goodsVO = new GoodsDAO();
 				goodsVO.updateGOODS_SALES_COUNT(list);
+
+				//完成結帳後寄E-mail通知
+//				try {
+//					// 設定使用SSL連線至 Gmail smtp Server
+//				   Properties props = new Properties();
+//				   props.put("mail.smtp.host", "smtp.gmail.com");
+//				   props.put("mail.smtp.socketFactory.port", "465");
+//				   props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+//				   props.put("mail.smtp.auth", "true");
+//				   props.put("mail.smtp.port", "465");
+//				
+//				   // ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
+//				   // ●須將myGmail的【安全性較低的應用程式存取權】打開
+//				final String myGmail = "ixlogic.wu@gmail.com";
+//				final String myGmail_password = "BBB45678";
+//				String subject = "安安你好";
+//				String messageText = "安安你好";
+////				String to = "shou198175aa@gmail.com";
+//				String to = memberVO.getEmail(); 
+//				Session session_mail = Session.getInstance(props, new Authenticator() {
+//					protected PasswordAuthentication getPasswordAuthentication() {
+//						return new PasswordAuthentication(myGmail, myGmail_password);
+//					}
+//				});
+//				
+//				   Message message = new MimeMessage(session_mail);
+//				   message.setFrom(new InternetAddress(myGmail));
+//				   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
+//				  
+//
+//				   //設定信中的主旨  
+//				   message.setSubject(subject);
+//				   //設定信中的內容 
+//				   message.setText(messageText);
+//				
+//				   Transport.send(message);
+//				   System.out.println("傳送成功!");
+//				}catch (MessagingException e){
+//					System.out.println("傳送失敗!");
+//					e.printStackTrace();
+//				}
+				
+				
+//				//結帳完成後寄簡訊通知
+//				try {
+//					String server = "203.66.172.131"; //Socket to Air Gateway IP
+//					int port = 8000;            //Socket to Air Gateway Port
+//
+//					String user    = "85559671"; //帳號
+//					String passwd  = "2irioiai"; //密碼
+//					String messageBig5 = new String(message.getBytes(),"big5"); //簡訊內容
+//
+//				      //----建立連線 and 檢查帳號密碼是否錯誤
+//					sock2air mysms = new sock2air();
+//					int ret_code = mysms.create_conn(server,port,user,passwd) ;
+//					if( ret_code == 0 ) {
+//						System.out.println("帳號密碼Login OK!");
+//					} else {
+//						System.out.println("帳號密碼Login Fail!");
+//						System.out.println("ret_code="+ret_code + ",ret_content=" + mysms.get_message());
+//						//結束連線
+//						mysms.close_conn();
+//						return ;
+//					}
+//
+//					//傳送文字簡訊
+//					//如需同時傳送多筆簡訊，請多次呼叫send_message()即可。
+//					for(int i=0 ; i<tel.length ; i++){  
+//						ret_code=mysms.send_message(tel[i],messageBig5);
+//						if( ret_code == 0 ) {
+//							System.out.println("簡訊已送到簡訊中心!");
+//							System.out.println("MessageID="+mysms.get_message()); //取得MessageID
+//						} else {
+//							System.out.println("簡訊傳送發生錯誤!");
+//							System.out.print("ret_code="+ret_code+",");
+//							System.out.println("ret_content="+mysms.get_message());//取得錯誤的訊息
+//							//結束連線
+//							mysms.close_conn();
+//							return ;
+//						}
+//					}
+//
+//					//結束連線
+//					mysms.close_conn();
+//
+//				}catch (Exception e)  {
+//
+//					System.out.println("I/O Exception : " + e);
+//				}
+				
+			
 				
 				session.setAttribute("member", memberVO);
 				req.setAttribute("orderHistoryVO", orderHistoryVO);

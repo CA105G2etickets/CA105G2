@@ -96,16 +96,21 @@
 				<input type="hidden" name="action" value="CHECKOUT" > 
 				<div class="container-fluid" style="margin-bottom: 400px">
 					<div class="row">
-						<div class="col-xs-12 col-sm-9"></div>
-						<div class="col-xs-12 col-sm-1">
-							<a href="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do?action=CLEAN" class="btn btn-default">清空購物車</a>
-						</div>
-						<div class="col-xs-12 col-sm-1">
-<%-- 							<a href="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do?action=BACK" class="btn btn-default">返回商品</a> --%>
-							<input type="button" value="返回商品 " class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/frontend/goods/selectGoods.jsp'" >
-						</div>
-						<div class="col-xs-12 col-sm-1">
-							<input type="submit" class="btn btn-default" value="付款結帳">
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-7"></div>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-5">
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+								<a href="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do?action=CLEAN" style="text-align:right;" class="btn btn-default">清空購物車</a>
+							</div>
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+	<!-- 							返回上一頁用法 -->
+	<%-- 							<%String ref = request.getHeader("REFERER");%>   --%>
+	<%-- 							<input type="button" name="returngo" value="返回上一頁" onclick="javascript:window.location='<%=ref%>'" >   --%>
+								
+								<input type="button" value="返回商品 " class="btn btn-default" style="text-align:right;" onclick="location.href='<%=request.getContextPath()%>/frontend/goods/selectGoods.jsp'" >
+							</div>
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+								<input type="submit" class="btn btn-default" style="text-align:right;" value="付款結帳">
+							</div>
 						</div>
 					</div>
 				</div>

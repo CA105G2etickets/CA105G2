@@ -154,7 +154,7 @@
             'readonly'            : false,
             'zipcodeName'         : 'zipcode',
             'zipcodePlaceholder'  : '郵遞區號',
-            'zipcodeIntoDistrict' : false, // v1.6.6
+            'zipcodeIntoDistrict' : true, // v1.6.6
         };
         /**
          * DOM of selector

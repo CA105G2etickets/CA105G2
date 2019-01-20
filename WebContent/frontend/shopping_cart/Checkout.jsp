@@ -31,7 +31,7 @@
 	<title>ETIckeTs - 購物車結帳頁面</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/TWzipcode/jquery.twzipcode.min.js"></script>
+	<script src="<%=request.getContextPath()%>/TWzipcode/jquery.twzipcode.js"></script>
 </head>
 	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true"/>
 	<style>
@@ -184,16 +184,43 @@
 	
 						<div class="form-group" id="zipcode2" style="width:13%">
 							<label>收件人地址：</label>
+							<div>
+								<script>
+									$("#zipcode2").twzipcode({
+										districtSel: "大安區", // 地區預設值
+										zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+										css: ["town form-control"], // 自訂 "城市"、"地區" class 名稱 
+										districtName: "town", // 自訂地區 select 標籤的 name 值
+									    hideDistrict: ['鄉鎮市區']   // 隱藏`三重區`, `110`（臺北市信義區）
+									});
+								</script>
+
+							</div>
+							<div>
+								<script>
+									$("#zipcode2").twzipcode({
+										countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+										css: ["city form-control"], // 自訂 "城市"、"地區" class 名稱 
+										countyName: "city", // 自訂城市 select 標籤的 name 值
+									    hideCounty: ['縣市'] // 隱藏`臺北市`, `宜蘭縣`
+									});
+								</script>
+							</div>
+							
 							<script>
-								$("#zipcode2").twzipcode({
-									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
-									districtSel: "大安區", // 地區預設值
-									zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
-									css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
-									countyName: "city", // 自訂城市 select 標籤的 name 值
-									districtName: "town" // 自訂地區 select 標籤的 name 值
-								});
-							</script>	
+// 								$("#zipcode2").twzipcode({
+// 									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+// 									districtSel: "大安區", // 地區預設值
+// 									zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+// 									css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+// 									countyName: "city", // 自訂城市 select 標籤的 name 值
+// 									districtName: "town", // 自訂地區 select 標籤的 name 值
+// 								    hideCounty: ['縣市'], // 隱藏`臺北市`, `宜蘭縣`
+// 								    hideDistrict: ['鄉鎮市區']   // 隱藏`三重區`, `110`（臺北市信義區）
+// 								});
+							</script>
+
+								
 						</div>
 						<div class="form-group">
 							<input type="TEXT" name="street" id="street" placeholder="請輸入收件人地址" class="form-control" value="" style="width:40%">
@@ -335,6 +362,11 @@ $(document).ready(function(){
         	$("#orderForm").submit();
         });
     });
+    
+	$('#zipcode2').twzipcode({
+	    'hideCounty': ['臺北市', '宜蘭縣'], // 隱藏`臺北市`, `宜蘭縣`
+	    'hideDistrict': ['三重區', '110']   // 隱藏`三重區`, `110`（臺北市信義區）
+	});
 </script>	
 	
 </html>

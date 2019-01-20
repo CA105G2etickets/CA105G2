@@ -32,15 +32,15 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-2"></div>
 		<div class="col-xs-12 col-sm-8">
-			<ol class="breadcrumb">
-				<li>
-					<a href="#">首頁</a>
-				</li>
-				<li>
-					<a href="#">商品管理</a>
-				</li>
-				<li class="active">商品訂單管理</li>
-			</ol>
+<!-- 			<ol class="breadcrumb"> -->
+<!-- 				<li> -->
+<!-- 					<a href="#">首頁</a> -->
+<!-- 				</li> -->
+<!-- 				<li> -->
+<!-- 					<a href="#">商品管理</a> -->
+<!-- 				</li> -->
+<!-- 				<li class="active">商品訂單管理</li> -->
+<!-- 			</ol> -->
 
 			<div role="tabpanel">
 			    <!-- 標籤面板：標籤區 -->
