@@ -176,48 +176,26 @@
 						<%}%>
 						
 						<!--訂購日期 -->
-						<input type="hidden" name="order_date" id="f_date1" class="form-control" style="width:30%">
+						<input type="hidden" name="order_date" id="f_date1">
 						<!--出貨日期 -->
-						<input type="hidden" name="order_etd" id="f_date2" class="form-control" style="width:30%">
+						<input type="hidden" name="order_etd" value="">
 						<!--取貨日期 -->
-						<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
+						<input type="hidden" name="pickup_date" value="">
 	
 						<div class="form-group" id="zipcode2" style="width:13%">
 							<label>收件人地址：</label>
-							<div>
-								<script>
-									$("#zipcode2").twzipcode({
-										districtSel: "大安區", // 地區預設值
-										zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
-										css: ["town form-control"], // 自訂 "城市"、"地區" class 名稱 
-										districtName: "town", // 自訂地區 select 標籤的 name 值
-									    hideDistrict: ['鄉鎮市區']   // 隱藏`三重區`, `110`（臺北市信義區）
-									});
-								</script>
-
-							</div>
-							<div>
-								<script>
-									$("#zipcode2").twzipcode({
-										countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
-										css: ["city form-control"], // 自訂 "城市"、"地區" class 名稱 
-										countyName: "city", // 自訂城市 select 標籤的 name 值
-									    hideCounty: ['縣市'] // 隱藏`臺北市`, `宜蘭縣`
-									});
-								</script>
-							</div>
 							
 							<script>
-// 								$("#zipcode2").twzipcode({
-// 									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
-// 									districtSel: "大安區", // 地區預設值
-// 									zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
-// 									css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
-// 									countyName: "city", // 自訂城市 select 標籤的 name 值
-// 									districtName: "town", // 自訂地區 select 標籤的 name 值
-// 								    hideCounty: ['縣市'], // 隱藏`臺北市`, `宜蘭縣`
-// 								    hideDistrict: ['鄉鎮市區']   // 隱藏`三重區`, `110`（臺北市信義區）
-// 								});
+								$("#zipcode2").twzipcode({
+									countySel: "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
+									districtSel: "大安區", // 地區預設值
+									zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+									css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+									countyName: "city", // 自訂城市 select 標籤的 name 值
+									districtName: "town", // 自訂地區 select 標籤的 name 值
+								    hideCounty: ['縣市'], // 隱藏`臺北市`, `宜蘭縣`
+								    hideDistrict: ['鄉鎮市區']   // 隱藏`三重區`, `110`（臺北市信義區）
+								});
 							</script>
 
 								
@@ -287,19 +265,19 @@
 		order_date = new java.sql.Timestamp(System.currentTimeMillis());
    }
   
-  java.sql.Timestamp order_etd = null;
-  try {
-		order_etd = orderHistoryVO.getOrder_etd();
-   } catch (Exception e) {
-		order_etd = new java.sql.Timestamp(System.currentTimeMillis());
-   }
+//   java.sql.Timestamp order_etd = null;
+//   try {
+// 		order_etd = orderHistoryVO.getOrder_etd();
+//    } catch (Exception e) {
+// 		order_etd = new java.sql.Timestamp(System.currentTimeMillis());
+//    }
   
-  java.sql.Timestamp pickup_date = null;
-  try {
-		pickup_date = orderHistoryVO.getPickup_date();
-   } catch (Exception e) {
-		pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
-   }
+//   java.sql.Timestamp pickup_date = null;
+//   try {
+// 		pickup_date = orderHistoryVO.getPickup_date();
+//    } catch (Exception e) {
+// 		pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
+//    }
 %>
 </script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
@@ -324,21 +302,21 @@
  		   value: new Date(), // value:   new Date(),
         });
 
-        $('#f_date2').datetimepicker({
-           theme: '',              //theme: 'dark',
-           timepicker:true,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: new Date(), // value:   new Date(),
-        });
+//         $('#f_date2').datetimepicker({
+//            theme: '',              //theme: 'dark',
+//            timepicker:true,       //timepicker:true,
+//  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+//  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+//  		   value: null, // value:   new Date(),
+//         });
         
-        $('#f_date3').datetimepicker({
-           theme: '',              //theme: 'dark',
-           timepicker:true,     //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: new Date(), // value:   new Date(),
-        });
+//         $('#f_date3').datetimepicker({
+//            theme: '',              //theme: 'dark',
+//            timepicker:true,     //timepicker:true,
+//  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+//  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+//  		   value: null, // value:   new Date(),
+//         });
 </script>
 
 <script>
@@ -362,11 +340,6 @@ $(document).ready(function(){
         	$("#orderForm").submit();
         });
     });
-    
-	$('#zipcode2').twzipcode({
-	    'hideCounty': ['臺北市', '宜蘭縣'], // 隱藏`臺北市`, `宜蘭縣`
-	    'hideDistrict': ['三重區', '110']   // 隱藏`三重區`, `110`（臺北市信義區）
-	});
 </script>	
 	
 </html>

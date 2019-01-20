@@ -168,61 +168,33 @@ public class OrderHistoryServlet extends HttpServlet {
 			try {
 				String order_no = new String(req.getParameter("order_no").trim());
 				String member_no = new String(req.getParameter("member_no").trim());
-				Double order_price = null;
-				
-				try {
-					order_price = new Double(req.getParameter("order_price").trim());
-				} catch (NumberFormatException e) {
-					order_price = 0.0;
-					errorMsgs.add("訂單總金額請填金額。");
-				}
-				
+				Double order_price = new Double(req.getParameter("order_price").trim());
 				String pay_methods = new String(req.getParameter("pay_methods").trim());
 				String shipping_methods = new String(req.getParameter("shipping_methods").trim());
 				
-				java.sql.Timestamp order_date = null;
-				try {
-					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
-				} catch (IllegalArgumentException e) {
-					order_date = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入訂購日期。");
-				}
-				
+				java.sql.Timestamp order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
 				java.sql.Timestamp order_etd = null;
-				try {
-					order_etd = java.sql.Timestamp.valueOf(req.getParameter("order_etd").trim());
-				} catch (IllegalArgumentException e) {
-					order_etd = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入出貨日期。");
-				}
-				
 				java.sql.Timestamp pickup_date = null;
-				try {
-					pickup_date = java.sql.Timestamp.valueOf(req.getParameter("pickup_date").trim());
-				} catch (IllegalArgumentException e) {
+				String order_status = new String(req.getParameter("order_status").trim());
+				if("SHIPMENT3".equals(order_status)) {
+					order_etd = new java.sql.Timestamp(System.currentTimeMillis());
+					pickup_date = null;
+				}else if("COMPLETE4".equals(order_status)){
+					try {
+						order_etd = java.sql.Timestamp.valueOf(req.getParameter("order_etd").trim());
+					} catch (IllegalArgumentException e) {
+						order_etd = new java.sql.Timestamp(System.currentTimeMillis());
+					}
 					pickup_date = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入取貨日期。");
+				}else {
+					order_etd = null;
+					pickup_date = null;
 				}
 				
 				String receiver_add = req.getParameter("receiver_add");
-				if (receiver_add == null || receiver_add.trim().length() == 0) {
-					errorMsgs.add("送貨地址請勿空白。");
-				}
-				
 				String receiver_name = req.getParameter("receiver_name");
-				if (receiver_name == null || receiver_name.trim().length() == 0) {
-					errorMsgs.add("收件人名稱請勿空白。");
-				}
-				
 				String receiver_tel = req.getParameter("receiver_tel");
-				if (receiver_tel == null || receiver_tel.trim().length() == 0) {
-					errorMsgs.add("收件人電話請勿空白。");
-				}
 				
-				String order_status = new String(req.getParameter("order_status").trim());
-				if (order_status == null || order_status.trim().length() == 0) {
-					errorMsgs.add("請選擇訂單狀態。");
-				}
 				
 				OrderHistoryVO orderHistoryVO = new OrderHistoryVO();
 				orderHistoryVO.setOrder_no(order_no);
@@ -478,8 +450,8 @@ public class OrderHistoryServlet extends HttpServlet {
 				String shipping_methods = new String(req.getParameter("shipping_methods").trim());
 				
 				java.sql.Timestamp order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
-				java.sql.Timestamp order_etd =  java.sql.Timestamp.valueOf(req.getParameter("order_etd").trim());
-				java.sql.Timestamp pickup_date = java.sql.Timestamp.valueOf(req.getParameter("pickup_date").trim());
+				java.sql.Timestamp order_etd =  null;
+				java.sql.Timestamp pickup_date = null;
 				
 				String receiver_add = req.getParameter("receiver_add");
 				if (receiver_add == null || receiver_add.trim().length() == 0) {
