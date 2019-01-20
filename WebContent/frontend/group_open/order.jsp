@@ -244,16 +244,16 @@
   									<label for="usr">收件人電話</label>
   									<input type="text" class="form-control" id="usr" name="receiver_tel">
 								</div><!-- <div class="form-group"> -->
-\		
+	
 						   <div class="form-group">
- 							 <label for="sel1">出貨方式</label>${group_openVO.group_price}
+ 							 <label for="sel1">出貨方式</label>
   								<select class="form-control" id="sel1" name="shipping_methods">
-   									 <option>超商取貨</option>
-    								 <option>宅配</option>
+   									 <option value="STOREPICKUP">超商取貨</option>
+    								 <option value="HOMEDELIVERY">宅配</option>
   								</select>
 						   </div>
 							<hr>
-								<input type="hidden" name="pay_methods" value="EWALLET1" >
+								<input type="hidden" name="pay_methods" value="EWALLET" >
 								<input type="hidden" name="group_no" value="${group_openVO.group_no}" >
 								<input type="hidden" name="goods_bonus" value="${group_openVO.group_price}" >
 								<input type="hidden" name="goods_no" value="${group_openVO.goods_no}">

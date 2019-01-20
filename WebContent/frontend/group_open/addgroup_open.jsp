@@ -328,13 +328,15 @@ $(function(){
 				 <label for="evetit">商品名稱</label>	
 			
 			<select id="goods" class="form-control" name="goods_no">
+			 		<c:if test="${goodsVO.goods_no==null}">
 						<option value="-1">請選擇</option>
+					</c:if>	
 <%-- 				<c:forEach var="eventtitlemap" items="${evetitle_goods}">
 				<option value="${eventtitlemap.key}">${eventtitlemap.value}${eventtitlemap.key}</option>${eventtitlemap.key}
-				</c:forEach>
+				</c:forEach>--%>
 					 <c:if test="${goodsVO.goods_no!=null}">
 					<option value="${goodsVO.goods_no}">${goodsVO.goods_name}</option>
-					 </c:if> --%>
+					 </c:if>
 			</select>			
 				</div><!-- <div class="form-group"> -->	
 				<div class="form-group">
@@ -449,7 +451,7 @@ $(function(){
 				</div>
 				<div class="col-xs-12 col-sm-2">
 		
-
+				<button id="magic" type="button" class="btn btn-info">magic</button>
 		
 			  </div>
 			</div>
@@ -513,6 +515,14 @@ $(function(){
           }
         });
       }
+    </script>
+    <script>
+  		$('#magic').click(function(){
+  			$('#group_name').val('五月天');
+  		})  
+    
+    
+    
     </script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2lDof7yMn-TTXwt2hwVm4y92t1AqvyU&callback=initMap&libraries=places" async defer></script>
 		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
