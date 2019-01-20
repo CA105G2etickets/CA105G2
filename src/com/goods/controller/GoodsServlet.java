@@ -149,90 +149,144 @@ public class GoodsServlet extends HttpServlet {
 				String goods_status = req.getParameter("goods_status");
 				String goods_introduction = req.getParameter("goods_introduction");
 				
-				byte[] goods_picture1 = null;
-				String goods_picture1_status = req.getParameter("goods_picture1_status");
-				if("noUpload".equals(goods_picture1_status)) {
-						
-					req.setAttribute("goods_picture1_status", "noUpload");					
-				} else if ("yesUpload".equals(goods_picture1_status)){
-					String saveDirectory1 = "/tempGoods";
-					String realPath1 = getServletContext().getRealPath(saveDirectory1);
-					File fileSaveDirectory1 = new File(realPath1);		
-					if(!fileSaveDirectory1.exists()) {
-						fileSaveDirectory1.mkdirs();
-					}
-					Part part1 = req.getPart("goods_picture1");
-					DateFormat dateFormat1 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
-					String strToday1 = dateFormat1.format(today); 
-					String submittedFileName1 = strToday1 + part1.getSubmittedFileName();
-
-					if(submittedFileName1.length() != 0 && part1.getContentType() != null) {
-						File fileHere1 = new File(fileSaveDirectory1, submittedFileName1);
-						part1.write(fileHere1.toString());								
-					}			
-					
-					req.setAttribute("goods_picture1_status", "alreadyUpload");						
-					req.getSession().setAttribute("goods_picture1_path", req.getContextPath() + saveDirectory1 + "/" + submittedFileName1);									
-				} else if ("alreadyUpload".equals(goods_picture1_status)){
-					req.setAttribute("goods_picture1_status", "alreadyUpload");	
-				}
+//				byte[] goods_picture1 = null;
+//				String goods_picture1_status = req.getParameter("goods_picture1_status");
+//				if("noUpload".equals(goods_picture1_status)) {
+//						
+//					req.setAttribute("goods_picture1_status", "noUpload");					
+//				} else if ("yesUpload".equals(goods_picture1_status)){
+//					String saveDirectory1 = "/tempGoods";
+//					String realPath1 = getServletContext().getRealPath(saveDirectory1);
+//					File fileSaveDirectory1 = new File(realPath1);		
+//					if(!fileSaveDirectory1.exists()) {
+//						fileSaveDirectory1.mkdirs();
+//					}
+//					Part part1 = req.getPart("goods_picture1");
+//					DateFormat dateFormat1 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+//					String strToday1 = dateFormat1.format(today); 
+//					String submittedFileName1 = strToday1 + part1.getSubmittedFileName();
+//
+//					if(submittedFileName1.length() != 0 && part1.getContentType() != null) {
+//						File fileHere1 = new File(fileSaveDirectory1, submittedFileName1);
+//						part1.write(fileHere1.toString());								
+//					}			
+//					
+//					req.setAttribute("goods_picture1_status", "alreadyUpload");						
+//					req.getSession().setAttribute("goods_picture1_path", req.getContextPath() + saveDirectory1 + "/" + submittedFileName1);									
+//				} else if ("alreadyUpload".equals(goods_picture1_status)){
+//					req.setAttribute("goods_picture1_status", "alreadyUpload");	
+//				}
+//			
 			
-				
-				byte[] goods_picture2 = null;
-				String goods_picture2_status = req.getParameter("goods_picture2_status");
-				if("noUpload".equals(goods_picture2_status)) {
-						
-					req.setAttribute("goods_picture2_status", "noUpload");					
-				} else if ("yesUpload".equals(goods_picture2_status)){
-					String saveDirectory2 = "/tempGoods";
-					String realPath2 = getServletContext().getRealPath(saveDirectory2);
-					File fileSaveDirectory2 = new File(realPath2);		
-					if(!fileSaveDirectory2.exists()) {
-						fileSaveDirectory2.mkdirs();
+				byte[] goods_picture1 = null;
+				Part part = req.getPart("goods_picture1");
+				try {
+					String uploadFileName = part.getSubmittedFileName();
+					if (uploadFileName != null && part.getContentType() != null) {
+						InputStream in = part.getInputStream();
+						goods_picture1 = new byte[in.available()];
+						in.read(goods_picture1);
+						in.close();
 					}
+				} catch (FileNotFoundException e) {
+					goodsErrorMsgs.put("goods_picture1","請上傳商品圖片");
+				}
+				if (part.getSize() == 0) {
+					
+				}
+					byte[] goods_picture2 = null;
 					Part part2 = req.getPart("goods_picture2");
-					DateFormat dateFormat2 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
-					String strToday2 = dateFormat2.format(today); 
-					String submittedFileName2 = strToday2 + part2.getSubmittedFileName();
-
-					if(submittedFileName2.length() != 0 && part2.getContentType() != null) {
-						File fileHere2 = new File(fileSaveDirectory2, submittedFileName2);
-						part2.write(fileHere2.toString());								
-					}			
-					
-					req.setAttribute("goods_picture2_status", "alreadyUpload");						
-					req.getSession().setAttribute("goods_picture2_path", req.getContextPath() + saveDirectory2 + "/" + submittedFileName2);									
-				} else if ("alreadyUpload".equals(goods_picture2_status)){
-					req.setAttribute("goods_picture2_status", "alreadyUpload");	
-				}
-
-				byte[] goods_picture3 = null;
-				String goods_picture3_status = req.getParameter("goods_picture3_status");
-				if("noUpload".equals(goods_picture3_status)) {
-						
-					req.setAttribute("goods_picture3_status", "noUpload");					
-				} else if ("yesUpload".equals(goods_picture3_status)){
-					String saveDirectory3 = "/tempGoods";
-					String realPath3 = getServletContext().getRealPath(saveDirectory3);
-					File fileSaveDirectory3 = new File(realPath3);		
-					if(!fileSaveDirectory3.exists()) {
-						fileSaveDirectory3.mkdirs();
+					try {
+						String uploadFileName = part2.getSubmittedFileName();
+						if (uploadFileName != null && part2.getContentType() != null) {
+							InputStream in = part2.getInputStream();
+							goods_picture2 = new byte[in.available()];
+							in.read(goods_picture2);
+							in.close();
+						}
+					} catch (FileNotFoundException e) {
+						goodsErrorMsgs.put("goods_picture2","請上傳商品圖片");
 					}
-					Part part3 = req.getPart("goods_picture3");
-					DateFormat dateFormat3 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
-					String strToday3 = dateFormat3.format(today); 
-					String submittedFileName3 = strToday3 + part3.getSubmittedFileName();
-
-					if(submittedFileName3.length() != 0 && part3.getContentType() != null) {
-						File fileHere3 = new File(fileSaveDirectory3, submittedFileName3);
-						part3.write(fileHere3.toString());								
-					}			
-					
-					req.setAttribute("goods_picture3_status", "alreadyUpload");						
-					req.getSession().setAttribute("goods_picture3_path", req.getContextPath() + saveDirectory3 + "/" + submittedFileName3);									
-				} else if ("alreadyUpload".equals(goods_picture3_status)){
-					req.setAttribute("goods_picture3_status", "alreadyUpload");	
+					if (part2.getSize() == 0) {
+						
+					}
+						byte[] goods_picture3 = null;
+						Part part3 = req.getPart("goods_picture1");
+						try {
+							String uploadFileName = part3.getSubmittedFileName();
+							if (uploadFileName != null && part3.getContentType() != null) {
+								InputStream in = part3.getInputStream();
+								goods_picture3 = new byte[in.available()];
+								in.read(goods_picture3);
+								in.close();
+							}
+						} catch (FileNotFoundException e) {
+							goodsErrorMsgs.put("goods_picture3","請上傳商品圖片");
+						}
+						if (part3.getSize() == 0) {
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 				}
+				
+//				
+//				byte[] goods_picture2 = null;
+//				String goods_picture2_status = req.getParameter("goods_picture2_status");
+//				if("noUpload".equals(goods_picture2_status)) {
+//						
+//					req.setAttribute("goods_picture2_status", "noUpload");					
+//				} else if ("yesUpload".equals(goods_picture2_status)){
+//					String saveDirectory2 = "/tempGoods";
+//					String realPath2 = getServletContext().getRealPath(saveDirectory2);
+//					File fileSaveDirectory2 = new File(realPath2);		
+//					if(!fileSaveDirectory2.exists()) {
+//						fileSaveDirectory2.mkdirs();
+//					}
+//					Part part2 = req.getPart("goods_picture2");
+//					DateFormat dateFormat2 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+//					String strToday2 = dateFormat2.format(today); 
+//					String submittedFileName2 = strToday2 + part2.getSubmittedFileName();
+//
+//					if(submittedFileName2.length() != 0 && part2.getContentType() != null) {
+//						File fileHere2 = new File(fileSaveDirectory2, submittedFileName2);
+//						part2.write(fileHere2.toString());								
+//					}			
+//					
+//					req.setAttribute("goods_picture2_status", "alreadyUpload");						
+//					req.getSession().setAttribute("goods_picture2_path", req.getContextPath() + saveDirectory2 + "/" + submittedFileName2);									
+//				} else if ("alreadyUpload".equals(goods_picture2_status)){
+//					req.setAttribute("goods_picture2_status", "alreadyUpload");	
+//				}
+//
+//				byte[] goods_picture3 = null;
+//				String goods_picture3_status = req.getParameter("goods_picture3_status");
+//				if("noUpload".equals(goods_picture3_status)) {
+//						
+//					req.setAttribute("goods_picture3_status", "noUpload");					
+//				} else if ("yesUpload".equals(goods_picture3_status)){
+//					String saveDirectory3 = "/tempGoods";
+//					String realPath3 = getServletContext().getRealPath(saveDirectory3);
+//					File fileSaveDirectory3 = new File(realPath3);		
+//					if(!fileSaveDirectory3.exists()) {
+//						fileSaveDirectory3.mkdirs();
+//					}
+//					Part part3 = req.getPart("goods_picture3");
+//					DateFormat dateFormat3 = new SimpleDateFormat("yyyymmdd_hhmmss_");  
+//					String strToday3 = dateFormat3.format(today); 
+//					String submittedFileName3 = strToday3 + part3.getSubmittedFileName();
+//
+//					if(submittedFileName3.length() != 0 && part3.getContentType() != null) {
+//						File fileHere3 = new File(fileSaveDirectory3, submittedFileName3);
+//						part3.write(fileHere3.toString());								
+//					}			
+//					
+//					req.setAttribute("goods_picture3_status", "alreadyUpload");						
+//					req.getSession().setAttribute("goods_picture3_path", req.getContextPath() + saveDirectory3 + "/" + submittedFileName3);									
+//				} else if ("alreadyUpload".equals(goods_picture3_status)){
+//					req.setAttribute("goods_picture3_status", "alreadyUpload");	
+//				}
 				Integer favorite_count = 0;
 				Integer goods_group_count = 0;
 				Integer goods_want_count = 0;
@@ -266,54 +320,54 @@ public class GoodsServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
-
-				if(!"noUpload".equals(goods_picture1_status)) {
-					String goods_picture1_path = (String) req.getSession().getAttribute("goods_picture1_path");				
-					String goods_picture1_path_forUse = goods_picture1_path.replace(req.getContextPath(), "").replace("/", "\\");
-					String realPath1 = getServletContext().getRealPath("/") + goods_picture1_path_forUse.substring(1);
-					InputStream in = new FileInputStream(realPath1);
-					ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
-					int i;
-					while ((i = in.read()) != -1)
-						baos1.write(i);
-					goods_picture1 = baos1.toByteArray();
-					in.close();
-					baos1.close();
-					
-				}
-				goodsVO.setGoods_picture1(goods_picture1);
-				
-				if(!"noUpload".equals(goods_picture2_status)) {
-					String goods_picture2_path = (String) req.getSession().getAttribute("goods_picture2_path");				
-					String goods_picture2_path_forUse = goods_picture2_path.replace(req.getContextPath(), "").replace("/", "\\");
-					String realPath2 = getServletContext().getRealPath("/") + goods_picture2_path_forUse.substring(1);
-					InputStream in = new FileInputStream(realPath2);
-					ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
-					int i;
-					while ((i = in.read()) != -1)
-						baos2.write(i);
-					goods_picture1 = baos2.toByteArray();
-					in.close();
-					baos2.close();
-					
-				}
-				goodsVO.setGoods_picture2(goods_picture2);
-				
-				if(!"noUpload".equals(goods_picture3_status)) {
-					String goods_picture3_path = (String) req.getSession().getAttribute("goods_picture3_path");				
-					String goods_picture3_path_forUse = goods_picture3_path.replace(req.getContextPath(), "").replace("/", "\\");
-					String realPath3 = getServletContext().getRealPath("/") + goods_picture3_path_forUse.substring(1);
-					InputStream in = new FileInputStream(realPath3);
-					ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
-					int i;
-					while ((i = in.read()) != -1)
-						baos3.write(i);
-					goods_picture3 = baos3.toByteArray();
-					in.close();
-					baos3.close();
-					
-				}
-				goodsVO.setGoods_picture3(goods_picture3);
+//
+//				if(!"noUpload".equals(goods_picture1_status)) {
+//					String goods_picture1_path = (String) req.getSession().getAttribute("goods_picture1_path");				
+//					String goods_picture1_path_forUse = goods_picture1_path.replace(req.getContextPath(), "").replace("/", "\\");
+//					String realPath1 = getServletContext().getRealPath("/") + goods_picture1_path_forUse.substring(1);
+//					InputStream in = new FileInputStream(realPath1);
+//					ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read()) != -1)
+//						baos1.write(i);
+//					goods_picture1 = baos1.toByteArray();
+//					in.close();
+//					baos1.close();
+//					
+//				}
+//				goodsVO.setGoods_picture1(goods_picture1);
+//				
+//				if(!"noUpload".equals(goods_picture2_status)) {
+//					String goods_picture2_path = (String) req.getSession().getAttribute("goods_picture2_path");				
+//					String goods_picture2_path_forUse = goods_picture2_path.replace(req.getContextPath(), "").replace("/", "\\");
+//					String realPath2 = getServletContext().getRealPath("/") + goods_picture2_path_forUse.substring(1);
+//					InputStream in = new FileInputStream(realPath2);
+//					ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read()) != -1)
+//						baos2.write(i);
+//					goods_picture1 = baos2.toByteArray();
+//					in.close();
+//					baos2.close();
+//					
+//				}
+//				goodsVO.setGoods_picture2(goods_picture2);
+//				
+//				if(!"noUpload".equals(goods_picture3_status)) {
+//					String goods_picture3_path = (String) req.getSession().getAttribute("goods_picture3_path");				
+//					String goods_picture3_path_forUse = goods_picture3_path.replace(req.getContextPath(), "").replace("/", "\\");
+//					String realPath3 = getServletContext().getRealPath("/") + goods_picture3_path_forUse.substring(1);
+//					InputStream in = new FileInputStream(realPath3);
+//					ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
+//					int i;
+//					while ((i = in.read()) != -1)
+//						baos3.write(i);
+//					goods_picture3 = baos3.toByteArray();
+//					in.close();
+//					baos3.close();
+//					
+//				}
+//				goodsVO.setGoods_picture3(goods_picture3);
 				
 				
 				GoodsService goodsSvc = new GoodsService();
@@ -324,9 +378,9 @@ public class GoodsServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher("/backend/goods/listAllGoods.jsp"); 
 				successView.forward(req, res);
 
-				req.getSession().removeAttribute("goods_picture1_path");
-				req.getSession().removeAttribute("goods_picture2_path");
-				req.getSession().removeAttribute("goods_picture3_path");
+//				req.getSession().removeAttribute("goods_picture1_path");
+//				req.getSession().removeAttribute("goods_picture2_path");
+//				req.getSession().removeAttribute("goods_picture3_path");
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				goodsErrorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
@@ -340,7 +394,7 @@ public class GoodsServlet extends HttpServlet {
 			Map<String, String> goodsErrorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("goodsErrorMsgs", goodsErrorMsgs);
 
-			
+			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String evetit_no = req.getParameter("evetit_no");
 				if (evetit_no == null || evetit_no.trim().length() == 0) {
@@ -352,13 +406,13 @@ public class GoodsServlet extends HttpServlet {
 				}
 				
 				
-				Integer goods_price = null;
-				try {
-					goods_price = new Integer(req.getParameter("goods_price"));
-				} catch (NumberFormatException e) {
-					goodsErrorMsgs.put("goods_price", "請輸入售價");
-				}
-//				Integer goods_price = new Integer (req.getParameter("goods_price"));
+//				Integer goods_price = null;
+//				try {
+//					goods_price = new Integer(req.getParameter("goods_price"));
+//				} catch (NumberFormatException e) {
+//					goodsErrorMsgs.put("goods_price", "請輸入售價");
+//				}
+				Integer goods_price = new Integer (req.getParameter("goods_price"));
 				
 				 java.sql.Timestamp today = new  java.sql.Timestamp(System.currentTimeMillis());
 				 
@@ -393,11 +447,11 @@ public class GoodsServlet extends HttpServlet {
 				 
 				 
 				 byte[] goods_picture1 = null;
-					Part part = req.getPart("goods_picture1");
+					Part part1 = req.getPart("goods_picture1");
 					try {
-						String uploadFileName = part.getSubmittedFileName();
-						if (uploadFileName != null && part.getContentType() != null) {
-							InputStream in = part.getInputStream();
+						String uploadFileName1 = part1.getSubmittedFileName();
+						if (uploadFileName1 != null && part1.getContentType() != null) {
+							InputStream in = part1.getInputStream();
 							goods_picture1 = new byte[in.available()];
 							in.read(goods_picture1);
 							in.close();
@@ -405,40 +459,47 @@ public class GoodsServlet extends HttpServlet {
 					} catch (FileNotFoundException e) {
 						goodsErrorMsgs.put("goods_picture1","找不到檔案");
 					}
-					if (part.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture1","請上傳大頭貼");
+					if (part1.getSize() == 0) {
+						goodsErrorMsgs.put("goods_picture1","請上傳商品圖片1");
 					}
+					
+					
+					
 					byte[] goods_picture2 = null;
-					Part par2 = req.getPart("goods_picture2");
+					Part part2 = req.getPart("goods_picture2");
 					try {
-						String uploadFileName = part.getSubmittedFileName();
-						if (uploadFileName != null && part.getContentType() != null) {
-							InputStream in = part.getInputStream();
-							goods_picture2 = new byte[in.available()];
-							in.read(goods_picture2);
-							in.close();
+						String uploadFileName2 = part2.getSubmittedFileName();
+						if (uploadFileName2 != null && part2.getContentType() != null) {
+							InputStream in2 = part2.getInputStream();
+							goods_picture2 = new byte[in2.available()];
+							in2.read(goods_picture2);
+							in2.close();
 						}
 					} catch (FileNotFoundException e) {
 						goodsErrorMsgs.put("goods_picture2","找不到檔案");
 					}
-					if (part.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture2","請上傳大頭貼");
+					if (part2.getSize() == 0) {
+						goodsErrorMsgs.put("goods_picture2","請上傳商品圖片2");
 					}
+					
+					
+					
+					
 					byte[] goods_picture3 = null;
 					Part part3 = req.getPart("goods_picture3");
 					try {
-						String uploadFileName = part.getSubmittedFileName();
-						if (uploadFileName != null && part.getContentType() != null) {
-							InputStream in = part.getInputStream();
-							goods_picture3 = new byte[in.available()];
-							in.read(goods_picture3);
-							in.close();
+						String uploadFileName3 = part3.getSubmittedFileName();
+						if (uploadFileName3 != null && part3.getContentType() != null) {
+							InputStream in3 = part3.getInputStream();
+							goods_picture3 = new byte[in3.available()];
+							in3.read(goods_picture3);
+							in3.close();
 						}
 					} catch (FileNotFoundException e) {
 						goodsErrorMsgs.put("goods_picture3","找不到檔案");
 					}
-					if (part.getSize() == 0) {
-						goodsErrorMsgs.put("goods_picture3","請上傳大頭貼");
+					if (part3.getSize() == 0) {
+						goodsErrorMsgs.put("goods_picture3","請上傳商品圖片3");
 					}
 				
 //				byte[] goods_picture2 = null;
@@ -608,7 +669,9 @@ public class GoodsServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 		
-				goodsErrorMsgs.put("Exception","修改資料失敗:" );
+			} catch (Exception e) {
+				goodsErrorMsgs.put("Exception", "新增資料失敗 : " + e.getMessage());
+			}
 				RequestDispatcher failureView = req.getRequestDispatcher("/backend/goods/addGoods.jsp");
 				failureView.forward(req, res);
 

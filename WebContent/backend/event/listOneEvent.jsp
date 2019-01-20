@@ -140,7 +140,7 @@
                 <div class="col-xs-12 col-sm-6">
                 	<div class="form-group eve_seatmap_area">
 						<label>座位圖</label>
-                    	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=850&eve_no=${eventVO.eve_no}">
+                    	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=600&eve_no=${eventVO.eve_no}">
                 	</div>
                 </div>                	
                 <div class="col-xs-12 col-sm-6">

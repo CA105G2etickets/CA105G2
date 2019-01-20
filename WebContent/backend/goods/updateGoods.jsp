@@ -31,6 +31,20 @@ body {
 	font-family: 微軟正黑體 !important;
 }
 </style>
+<script>
+function readURL(input){
+  if(input.files && input.files[0]){
+    var imageID = input.getAttribute("targetID");
+    var reader = new FileReader();
+    reader.onload = function (e) {
+       var img = document.getElementById(imageID);
+       img.setAttribute("src", e.target.result)
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+
 </head>
 
 <body>
@@ -126,56 +140,19 @@ body {
 				</div>
 
 			</div>
-
-			<div class="form-group goods_picture">
-				<label for="goods_picture1">圖片1</label> <span class="text-danger">${goodsErrorMsgs.goods_picture1}</span>
-				<input type="file" id="goods_picture1" name="goods_picture1"
-					class="form-control" accept="image/*"> <input type="hidden"
-					id="goods_picture1_status" name="goods_picture1_status"
-					value="${(goods_picture1_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				<c:if test="${goods_picture1_status != 'alreadyUpload'}">
-					<img
-						src="<%= request.getContextPath()%>/goods/GoodsGifReader?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}"
-						id="goods_picture1_preview">
-				</c:if>
-
-				<c:if test="${goods_picture1_status == 'alreadyUpload'}">
-					<img src="${goods_picture1_path}" id="goods_picture1_preview">
-				</c:if>
-
-
-				<label for="goods_picture2">圖片2</label> <span class="text-danger">${goodsErrorMsgs.goods_picture2}</span>
-				<input type="file" id="goods_picture2" name="goods_picture2"
-					class="form-control" accept="image/*"> <input type="hidden"
-					id="goods_picture2_status" name="goods_picture2_status"
-					value="${(goods_picture2_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				<c:if test="${goods_picture2_status != 'alreadyUpload'}">
-					<img
-						src="<%= request.getContextPath()%>/goods/GoodsGifReader?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}"
-						id="goods_picture2_preview">
-				</c:if>
-
-				<c:if test="${goods_picture2_status == 'alreadyUpload'}">
-					<img src="${goods_picture2_path}" id="goods_picture2_preview">
-				</c:if>
-
-
-				<label for="goods_picture3">圖片3</label> <span class="text-danger">${goodsErrorMsgs.goods_picture3}</span>
-				<input type="file" id="goods_picture3" name="goods_picture3"
-					class="form-control" accept="image/*"> <input type="hidden"
-					id="goods_picture3_status" name="goods_picture3_status"
-					value="${(goods_picture3_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
-				<c:if test="${goods_picture3_status != 'alreadyUpload'}">
-					<img
-						src="<%= request.getContextPath()%>/goods/GoodsGifReader?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}"
-						id="goods_picture3_preview">
-				</c:if>
-
-				<c:if test="${goods_picture3_status == 'alreadyUpload'}">
-					<img src="${goods_picture3_path}" id="goods_picture3_preview">
-				</c:if>
-			</div>
-
+		
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture1" onchange="readURL(this)" targetID="goods_picture1preview">
+		<img id="goods_picture1preview" src="<%=request.getContextPath()%>/goods/goodsImg1.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
+	
+		
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture2" onchange="readURL(this)" targetID="goods_picture2preview">
+		<img id="goods_picture2preview" src="<%=request.getContextPath()%>/goods/goodsImg2.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
+	
+		
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture3" onchange="readURL(this)" targetID="goods_picture3preview">
+		<img id="goods_picture3preview" src="<%=request.getContextPath()%>/goods/goodsImg3.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
+	
+		
 			<div class="tabbable">
 				<!-- 標籤面板：標籤區 -->
 				<ul class="nav nav-tabs">
@@ -246,8 +223,8 @@ body {
            timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=goodsVO.getOffdate()%>
-		', // value:   new Date(),
+ 		   value: '<%=goodsVO.getOffdate()%>', // value:   new Date(),
+
 		});
 	</script>
 	<script type="text/javascript">
