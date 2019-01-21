@@ -134,14 +134,14 @@ public class HibernateUtil_CompositeQuery_Resale_ord {
 		// java.util.Map<java.lang.String,java.lang.String[]> ������
 		Map<String, String[]> map = new TreeMap<String, String[]>();
 
-//		map.put("ticket_no", new String[] { "T_20181225_000003" });
+//		map.put("ticket_no", new String[] { "T_20190120_000154","T_20190120_000156" });
 		
-//		map.put("resale_ordstatus", new String[] { "CO" });
+		map.put("resale_ordstatus", new String[] { "CA","CO" });
 		
 //		map.put("resale_ordprice", new String[] { "1900" });
 
 
-		List<ResaleOrderVO> list = getAllC(map,"RESALE_ORDNO");
+		List<ResaleOrderVO> list = getAllC(map,"resale_ordno");
 		for (ResaleOrderVO aROVO : list) {
 			System.out.println("------------for each at List<ResaleOrderVO> STARTS");
 			System.out.print(aROVO.getResale_ordno() + ",");

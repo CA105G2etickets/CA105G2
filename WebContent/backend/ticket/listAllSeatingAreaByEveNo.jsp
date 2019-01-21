@@ -26,45 +26,52 @@ pageContext.setAttribute("eve_no",eve_no);
 <jsp:useBean id="SeatingArea_H5_Service" scope="page" class="com.seating_area.model.SeatingArea_H5_Service" /> --%>
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
 <jsp:useBean id="SeatingAreaService" scope="page" class="com.seating_area.model.SeatingAreaService" />
+<jsp:useBean id="TicketTypeService" scope="page" class="com.ticket_type.model.TicketTypeService" />
 
 <body>
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>活動編號</th>
+                <th>活動主題名稱</th>
                 <th>場次名稱</th>
-                <th>活動座位區編號</th>
+                <!-- <th>活動座位區編號</th> -->
                 <th>活動座位區名稱</th>
                 <!-- <th>該區票價</th> -->
                 <th>該區容許銷售張數</th>
-                <th>該區已訂張數</th>
+                <th>該區剩餘張數</th>
+                <th>該區票價</th>
+                <th>售票開始日期時間</th>
+                <th>活動開始日期時間</th>
             </tr>
         </thead>
         <tbody>
         	<c:forEach var="seatingareavo" items="${SeatingAreaService.getAllSeatingAreaByEveNo(eve_no)}">
         		<tr>
-        			<td>${eve_no}</td>
+        			<td>${Event_H5_Service.getOneEvent_H5(eve_no).eventtitle_h5VO.evetit_name}</td>
         			<td>${Event_H5_Service.getOneEvent_H5(eve_no).eve_sessionname}</td>
-        			<td>${seatingareavo.ticarea_no}</td>
+        			<%-- <td>${seatingareavo.ticarea_no}</td> --%>
         			<td>${seatingareavo.ticarea_name}</td>
         			<%-- <td>${seatingareavo.tickettype_h5VO.tictype_price}</td> --%>
         			<td>${seatingareavo.tictotalnumber}</td>
-        			<td><font color="red">${seatingareavo.ticbookednumber}</font></td>
+        			<td><font color="red">${seatingareavo.tictotalnumber - seatingareavo.ticbookednumber}</font></td>
+        			<td>${TicketTypeService.getOneTicketType(seatingareavo.tictype_no).tictype_price}</td>
+        			<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(eve_no).eve_onsaledate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+        			<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         		</tr>
         	</c:forEach>
         </tbody>
-        <tfoot>
+        <!-- <tfoot>
             <tr>
             	<th>活動編號</th>
                 <th>場次名稱</th>
                 <th>活動座位區編號</th>
                 <th>活動座位區名稱</th>
-                <!-- <th>該區票價</th> -->
+                <th>該區票價</th>
                 <th>該區容許銷售張數</th>
                 <th>該區已訂張數</th>
             </tr>
-        </tfoot>
+        </tfoot> -->
     </table>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

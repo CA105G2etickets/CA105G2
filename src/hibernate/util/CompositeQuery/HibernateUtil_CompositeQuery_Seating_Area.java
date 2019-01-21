@@ -55,8 +55,8 @@ public class HibernateUtil_CompositeQuery_Seating_Area {
 		else if ("ticarea_no".equals(columnName) || "ticarea_color".equals(columnName) 
 				|| "ticarea_name".equals(columnName)) // for varchar2
 			{
-			predicate = builder.like(root.get(columnName), "%" + value + "%");
-//			predicate = builder.in(root.get(columnName));	
+//			predicate = builder.like(root.get(columnName), "%" + value + "%");
+			predicate = builder.in(root.get(columnName));	
 			}
 		
 //		else if ("eve_startdate".equals(columnName) || "eve_enddate".equals(columnName) || 
@@ -136,12 +136,12 @@ public class HibernateUtil_CompositeQuery_Seating_Area {
 		// �t�X req.getParameterMap()��k �^��
 		// java.util.Map<java.lang.String,java.lang.String[]> ������
 		Map<String, String[]> map = new TreeMap<String, String[]>();
-
-//		map.put("eve_no", new String[] { "01" });
 		
-//		map.put("resale_ordstatus", new String[] { "CO" });
+		map.put("ticarea_name", new String[] {"搖滾A區","搖滾B區"});
 		
-//		map.put("resale_ordprice", new String[] { "1900" });
+//		map.put("eve_no", new String[] {"EV00001"});
+		
+//		map.put("ticarea_no", new String[] { "ES00000001","ES00000002" });
 
 
 		List<SeatingArea_H5_VO> list = getAllC(map, "ticarea_no"); 

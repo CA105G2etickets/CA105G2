@@ -886,19 +886,26 @@ public class ResaleOrderServlet extends HttpServlet {
 				System.out.println("valueSendToController at ResaleOrderServlet, action =member_select_resaleorders_by_member_no:"
 									+member_no+resale_ordno+ticket_no);
 				
-				TicketService tSvc = new TicketService();
-				List<TicketVO> list_tvo = tSvc.getTicketsByMemberNo(member_no);
-				List<String> list_ticket_no = new LinkedList<String>();
-				for(TicketVO atvo:list_tvo) {
-					System.out.println("every ticket_no in ticketvo from ticketvosByMemberNo="+atvo.getTicket_no());
-					list_ticket_no.add(atvo.getTicket_no());
-				}
+				//code below disable because ResaleOrderService.getResaleOrderVOsByTicketno sometimes send back wrong info. so use criteria function to replace
+//				TicketService tSvc = new TicketService();
+//				List<TicketVO> list_tvo = tSvc.getTicketsByMemberNo(member_no);
+//				List<String> list_ticket_no = new LinkedList<String>();
+//				for(TicketVO atvo:list_tvo) {
+//					System.out.println("every ticket_no in ticketvo from ticketvosByMemberNo="+atvo.getTicket_no());
+//					list_ticket_no.add(atvo.getTicket_no());
+//				}
+//				
+//				String[] strArrayTicketNos = list_ticket_no.toArray(new String[list_ticket_no.size()]);
+//				ResaleOrderService reSvc = new ResaleOrderService();
+//				Map<String, String[]> mapForResaleOrder = new TreeMap<String, String[]>();
+//				mapForResaleOrder.put("ticket_no", strArrayTicketNos);
+//				List<ResaleOrderVO> list_revos = reSvc.getAll(mapForResaleOrder, "resale_ordno");
 				
-				String[] strArrayTicketNos = list_ticket_no.toArray(new String[list_ticket_no.size()]);
 				ResaleOrderService reSvc = new ResaleOrderService();
-				Map<String, String[]> mapForResaleOrder = new TreeMap<String, String[]>();
-				mapForResaleOrder.put("ticket_no", strArrayTicketNos);
-				List<ResaleOrderVO> list_revos = reSvc.getAll(mapForResaleOrder, "resale_ordno");
+				System.out.println("bear201901220106="+member_no);
+				String[] strArray_member_buyer_no = {member_no};
+				List<ResaleOrderVO> list_revos = reSvc.getResaleOrderVOsByMemberBuyer(strArray_member_buyer_no);
+				System.out.println("bear201901220106_2.size="+list_revos.size());
 				req.setAttribute("list_revos", list_revos);
 				
 				RequestDispatcher successView = req.getRequestDispatcher("/frontend/resaleorder/listAllResaleOrdersByMemberNo.jsp");
@@ -907,6 +914,34 @@ public class ResaleOrderServlet extends HttpServlet {
 			} catch(Exception e) {
 				errorMsgs.add(e.getMessage());
 				System.out.println("error at ResaleOrderServlet.java action=member_select_resaleorders_by_member_no");
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/index.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if("member_select_One_resaleorder_fromListAll".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);;
+			
+//			String member_buyer_no = req.getParameter("member_buyer_no");
+			String resale_ordno = req.getParameter("resale_ordno");
+			System.out.println("member_select_One_resaleorder at ResaleOrderServlet.java");
+			
+			String ticket_no = req.getParameter("ticket_no");
+			
+			try {
+				TicketService tSvc = new TicketService();
+				TicketVO tvo = tSvc.getOneTicket(ticket_no);
+				
+				req.setAttribute("tvo", tvo);
+				req.setAttribute("resale_ordno", resale_ordno);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/frontend/resaleorder/listOneTicketByResaleOrder.jsp");
+				successView.forward(req, res);
+				
+			} catch(Exception e) {
+				errorMsgs.add(e.getMessage());
+				System.out.println("error at ResaleOrderServlet.java action=member_select_One_resaleorder");
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/index.jsp");
 				failureView.forward(req, res);
 			}

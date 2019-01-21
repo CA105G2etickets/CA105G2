@@ -227,4 +227,8 @@ public class ResaleOrderService {
 	public void updateBothRoAndTo(ResaleOrderVO resaleorderVO, TicketVO ticketVO) {
 		dao.updateBothRoAndTo(resaleorderVO, ticketVO);
 	}
+	
+	public List<ResaleOrderVO> getResaleOrderVOsByMemberBuyer(String[] strArray_member_buyer_no){
+		return dao.getResaleOrderVOsByMemberBuyer(strArray_member_buyer_no);
+	}
 }

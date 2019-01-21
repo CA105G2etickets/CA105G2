@@ -19,7 +19,8 @@ pageContext.setAttribute("resale_ordno",resale_ordno);
 %>
 
 <!-- ======================================== DAI:::begin ================================================== -->
-<%-- <jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
+<jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
+<%-- 
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" /> 
 <jsp:useBean id="seatingAreaService" scope="page" class="com.seating_area.model.SeatingAreaService" />--%>
 <jsp:useBean id="resaleorderService" scope="page" class="com.resaleorder.model.ResaleOrderService" />
@@ -214,7 +215,7 @@ body {
 					<td>${resale_ordno}</td>
 					<td>${resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no}</td>
 					<%-- <td>${SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).ticarea_name}</td> --%>
-					<td>${ticketVO.seatingarea_h5VO.ticarea_name}</td>
+					<td>${ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_name}</td>
 					<td>${memberService.getOneMember(member_no).memberFullname}</td>
 					<td>${memberService.getOneMember(resaleorderService.getOneResaleOrd(resale_ordno).member_seller_no).memberFullname}</td>
 

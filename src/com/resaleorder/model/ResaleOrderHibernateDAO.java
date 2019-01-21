@@ -17,7 +17,13 @@ package com.resaleorder.model;
  */
 
 import org.hibernate.*;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query; //Hibernate 5.2 開始 取代原 org.hibernate.Query 介面
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.ticket.model.TicketVO;
 
@@ -29,6 +35,7 @@ import java.util.*;
 public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 
 	private static final String GET_ALL_STMT = "from ResaleOrderVO order by resale_ordno";
+	private static final String GET_ALL_BY_TICKETNOS_STMT = "from ResaleOrderVO where ticket_no in ?0 order by resale_ordno";
 
 	@Override
 	public void insert(ResaleOrderVO resaleorderVO) {
@@ -160,6 +167,43 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		}
 		return resaleorderVO;
 	}
+	
+	@Override
+	public List<ResaleOrderVO> getResaleOrderVOsByMemberBuyer(String[] strArray_member_buyer_no) {
+		
+		//first try at 201901212028, function in HQL for sql in failed, no crash but no result
+		List<ResaleOrderVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			
+			//hql no result at 201901212028
+//			Query<ResaleOrderVO> query = session.createQuery(GET_ALL_BY_TICKETNOS_STMT, ResaleOrderVO.class);
+//			query.setParameter(0, strArray_ticket_no);
+//			list = query.getResultList();
+			
+//			20190121 try with criteria with sql in condition, ticket_no fail, but member_no success
+			Criteria query2 = session.createCriteria(ResaleOrderVO.class);
+			query2.addOrder(Order.asc("resale_ordno"));
+			query2.add(Restrictions.in("member_buyer_no", strArray_member_buyer_no));
+			list = query2.list();
+			
+//			CriteriaBuilder builder = session.getCriteriaBuilder();
+//			CriteriaQuery<ResaleOrderVO> criteriaQuery = builder.createQuery(ResaleOrderVO.class);
+//			Root<ResaleOrderVO> root = criteriaQuery.from(ResaleOrderVO.class);
+//			criteriaQuery.where(
+//					builder.in(root.get("member_no"),strArray_ticket_no),
+//					builder.like(root.get("member_seller_no"),"%0005%")
+//					);
+			
+			
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
 
 	@Override
 	public List<ResaleOrderVO> getAll() {
@@ -280,23 +324,48 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 //			System.out.println("hsdfasdfjlaisdjflisjeflijselfhjil");
 //		}
 		
+		String[] arrayTest = {"M000005","M000006"};
+		List<ResaleOrderVO> list_sqlin =  dao.getResaleOrderVOsByMemberBuyer(arrayTest); //HQL for sql in failed, no crash but no result.
 		
 		
-		com.ticket.model.TicketVO ticketVO = new com.ticket.model.TicketVO();
-		com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
-		ticketVO = tSvc.getOneTicket("T_20181225_000002");
-		ticketVO.setTicket_resale_status("updateS");
+		for(ResaleOrderVO arevo :list_sqlin) {
+			System.out.print(arevo.getResale_ordno() + ",");
+			
+			System.out.print(arevo.getTicketVO().getTicket_no() + ",");
+			
+			System.out.print(arevo.getMember_seller_no() + ",");
+			System.out.print(arevo.getMember_buyer_no() + ",");
+			System.out.print(arevo.getResale_ordprice() + ",");
+			System.out.print(arevo.getResale_ordstatus() + ",");
+			System.out.print(arevo.getResale_ord_createtime() + ",");
+			System.out.print(arevo.getResale_ord_completetime() + ",");
+			System.out.print(arevo.getPayment_method() + ",");
+			System.out.println("---below is ticketvo----");
+			System.out.print(arevo.getTicketVO().getTicket_status() + ",");
+			System.out.print(arevo.getTicketVO().getTicket_create_time()+ ",");
+			System.out.print(arevo.getTicketVO().getTicket_resale_status() + ",");
+			System.out.print(arevo.getTicketVO().getTicket_resale_price() + ",");
+			System.out.print(arevo.getTicketVO().getMember_no() + ",");
+			System.out.println("---one resaleordervo done--");
+		}
 		
-		ResaleOrderVO rvo = new ResaleOrderVO();
-		rvo.setMember_buyer_no("M000009");
-		rvo.setMember_seller_no("M000001");
-		rvo.setResale_ordprice(777);
-		rvo.setResale_ordstatus("WAITFORPAY1");
-		rvo.setResale_ord_createtime(new java.sql.Timestamp(System.currentTimeMillis()));
-		rvo.setResale_ord_completetime(null);
-		rvo.setPayment_method("NOTYET");
-		rvo.setTicketVO(ticketVO);
-		dao.update(rvo);
+		
+		
+//		com.ticket.model.TicketVO ticketVO = new com.ticket.model.TicketVO();
+//		com.ticket.model.TicketService tSvc = new com.ticket.model.TicketService();
+//		ticketVO = tSvc.getOneTicket("T_20181225_000002");
+//		ticketVO.setTicket_resale_status("updateS");
+//		
+//		ResaleOrderVO rvo = new ResaleOrderVO();
+//		rvo.setMember_buyer_no("M000009");
+//		rvo.setMember_seller_no("M000001");
+//		rvo.setResale_ordprice(777);
+//		rvo.setResale_ordstatus("WAITFORPAY1");
+//		rvo.setResale_ord_createtime(new java.sql.Timestamp(System.currentTimeMillis()));
+//		rvo.setResale_ord_completetime(null);
+//		rvo.setPayment_method("NOTYET");
+//		rvo.setTicketVO(ticketVO);
+//		dao.update(rvo); //success
 		
 //		com.ticketorder.model.TicketOrderVO tovo = new com.ticketorder.model.TicketOrderVO();
 //		tovo.setTicket_order_no("TO_20181225_000002");
@@ -372,6 +441,8 @@ public class ResaleOrderHibernateDAO implements ResaleOrderDAO_interface {
 		//Hibernate: select resaleorde0_.resale_ordno as resale_ordno1_0_, resaleorde0_.ticket_no as ticket_no2_0_, resaleorde0_.member_seller_no as member_seller_no3_0_, resaleorde0_.member_buyer_no as member_buyer_no4_0_,resaleorde0_.resale_ordprice as resale_ordprice5_0_, resaleorde0_.resale_ordstatus as resale_ordstatus6_0_, resaleorde0_.resale_ord_createtime as resale_ord_createt7_0_, resaleorde0_.resale_ord_completetime as resale_ord_complet8_0_, resaleorde0_.payment_method as payment_method9_0_ from resale_ord resaleorde0_ where resaleorde0_.resale_ordstatus like ? order by resaleorde0_.resale_ordno asc
 		
 	}
+
+	
 
 	
 }

@@ -49,9 +49,9 @@ pageContext.setAttribute("listEveNo",listEveNo);
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>活動編號</th>
+                <!-- <th>活動編號</th> -->
                 <!-- <th>送出此查詢者的會員姓名</th> -->
-                
+                <th>活動主題熱度</th>
                 <th>活動主題名稱</th>
                 <th>活動開始時間</th>
                 <th>活動結束時間</th>
@@ -59,14 +59,18 @@ pageContext.setAttribute("listEveNo",listEveNo);
                 <th>活動地點</th>
                 <th>地址</th>
                 <th>單一會員購票上限張數</th>
-                <th>活動狀態</th>
+                <!-- <th>活動狀態</th> -->
                 <th>查看座位區販售情況</th>
             </tr>
         </thead>
         <tbody>
         	<c:forEach var="string_eve_no" items="${listEveNo}">
         		<tr>
-        			<td>${string_eve_no}</td>
+        			<%-- <td>${string_eve_no}</td> --%>
+        			
+        			<td>
+        				${Event_H5_Service.getOneEvent_H5(string_eve_no).eventtitle_h5VO.promotionranking}
+        			</td>
         			
         			<%-- <td>${memberService.getOneMember(member_no).email}</td> --%>
         			<%-- <td>${memberService.getOneMember(member_no).memberFullname}</td> --%>
@@ -98,9 +102,9 @@ pageContext.setAttribute("listEveNo",listEveNo);
         				<c:if test="(${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_status} == 'cancel')">
         					取消販售
         				</c:if>
-        			</td> --%>
+        			</td> 
         			
-        			<td>${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_status}</td>
+        			<td>${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_status}</td> --%>
         			
         			<td>
         				<form method="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
@@ -114,22 +118,22 @@ pageContext.setAttribute("listEveNo",listEveNo);
         		</tr>
         	</c:forEach>
         </tbody>
-        <tfoot>
+       <!--  <tfoot>
            <tr>
                 <th>活動編號</th>
-                <!-- <th>送出此查詢者的會員姓名</th> -->
+                <th>送出此查詢者的會員姓名</th>
                 
                 <th>活動主題名稱</th>
                 <th>活動開始時間</th>
                 <th>活動結束時間</th>
-                <!-- <th>售票開始時間</th> -->
+                <th>售票開始時間</th>
                 <th>活動地點</th>
                 <th>地址</th>
                 <th>單一會員購票上限</th>
                 <th>活動狀態</th>
                 <th>查看座位區販售情況</th>
             </tr>
-        </tfoot>
+        </tfoot> -->
     </table>
 
     <script src="https://code.jquery.com/jquery.js"></script>
