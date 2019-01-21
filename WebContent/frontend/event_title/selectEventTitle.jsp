@@ -32,6 +32,9 @@
 			font-family:微軟正黑體!important;
 		}
 	</style>
+	<!-- Basic -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -98,9 +101,6 @@
 
 
     
-    <!-- Basic -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- datetimepicker -->
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>

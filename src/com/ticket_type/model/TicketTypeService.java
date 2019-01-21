@@ -65,4 +65,7 @@ public class TicketTypeService {
 		return ticketTypeDAO.copyInsertWithSeatingArea(tictype_no_forCopy);
 	}
 	
+	public void insertWithSeatingArea(TicketTypeVO ticketTypeVO, List<SeatingAreaVO> SeatingAreaList) {
+		ticketTypeDAO.insertWithSeatingArea(ticketTypeVO, SeatingAreaList);
+	}
 }

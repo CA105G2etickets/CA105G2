@@ -31,6 +31,9 @@
 			font-family:微軟正黑體!important;
 		}
     </style>
+    <!-- Basic -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -140,7 +143,7 @@
                 <div class="col-xs-12 col-sm-6">
                 	<div class="form-group eve_seatmap_area">
 						<label>座位圖</label>
-                    	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=600&eve_no=${eventVO.eve_no}">
+                    	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=850&eve_no=${eventVO.eve_no}">
                 	</div>
                 </div>                	
                 <div class="col-xs-12 col-sm-6">
@@ -191,9 +194,6 @@
 			</span>
         </div>
 
-    <!-- Basic -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
         $("#flip").click(function() {

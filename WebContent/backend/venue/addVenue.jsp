@@ -29,6 +29,9 @@
 			font-family:微軟正黑體!important;
 		}
     </style>
+    <!-- Basic -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 </head>
 
 <body>
@@ -123,9 +126,6 @@
 
 
 
-    <!-- Basic -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 	<!-- ckEditor JS -->
     <script src="<%=request.getContextPath()%>/vendor/ckeditor_easyImage_final/ckeditor.js"></script>
     <script src="<%=request.getContextPath()%>/backend/venue/js/venueCKEditor.js"></script>
@@ -148,8 +148,11 @@
         });
         
         $("#magicButton").click(function(){
-    		console.log("123");
     		$("#venue_name").val("國立體育大學綜合體育館");
+    		
+			var infoEditorData = '<p><strong><span style="color:#c0392b"><span style="font-size:20px">自行前往：</span></span></strong></p><p><span style="font-size:12pt"><strong>A.</strong>開車至林口下交流道後，沿文化一路往桃園龜山方向行駛約四公里即可抵達。</span></p><p><span style="font-size:12pt"><strong>B.</strong>由台北出發行經台一線往桃園方向，途中右轉青山路一段，接往青山路二段後，左轉文化一路行駛約500公尺即可抵達。 </span></p><p>&nbsp;</p><p><strong><span style="color:#c0392b"><span style="font-size:20px">搭乘大眾交通工具方法如下：</span></span></strong></p><p><strong><span style="font-size:12pt">A.公車</span></strong></p><p><span style="font-size:12pt">三重客運1211(台北市政府--長庚大學)：可直達國立體育大學。</span></p><p><span style="font-size:12pt">桃園客運202(體育大學--工四工業區) 固定班次發車、一日來回共22班，可直達國立體育大學。</span></p><p><span style="font-size:12pt">桃園客運5065(桃園--體育大學)：固定班次發車、一日來回4班，可直達國立體育大學。</span></p><p><span style="font-size:12pt">三重客運體大專車:一日兩班，假日停駛。</span></p><p><span style="font-size:12pt">三重客運603(體與大學--丹鳳捷運站)：107/10/29開通，可直達國立體育大學。</span></p><p><strong><span style="font-size:12pt">B.桃園捷運</span></strong></p><p><span style="font-size:12pt">桃園機場捷運A7站(國立體育大學):下車後，走路約15分鐘可到達行政大樓。</span></p><p><strong><span style="font-size:12pt">C.高鐵</span></strong></p><p><span style="font-size:12pt">高鐵青埔站(桃園):搭乘高鐵至桃園站下車後轉搭桃園捷運至A7體育大學下車。</span></p><p><strong><span style="font-size:12pt">D.客運</span></strong></p><p><span style="font-size:12pt">搭乘國道客運(統聯、國光等)至林口站下車後可轉搭公車或搭乘桃園捷運至體大A7站下車。</span></p>';
+			CKEDITOR.instances.infoEditor.setData(infoEditorData);
+    		
     	});
     });
     

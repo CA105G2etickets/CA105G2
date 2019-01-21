@@ -57,6 +57,9 @@
 			font-family:微軟正黑體!important;
 		}
     </style>
+    <!-- Basic -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -236,7 +239,7 @@
 			         			<input type="hidden" id="eve_seatmap_init" name="eve_seatmap_init" value="init">
 		        			</c:if>
 							<c:if test="${eve_seatmap_status != 'alreadyUpload'}">
-			                	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=600&eve_no=${eventVO.eve_no}" id="eve_seatmap_preview">
+			                	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=850&eve_no=${eventVO.eve_no}" id="eve_seatmap_preview">
 		                    </c:if>					
 							<c:if test="${eve_seatmap_status == 'alreadyUpload'}">
 			                	<img src="${eve_seatmap_path}" id="eve_seatmap_preview">
@@ -277,7 +280,7 @@
                             							<span>
                             								 <input type="hidden" name="ticarea_no" value="${SeatingAreaVO.ticarea_no}" readonly>
 											                                票區色 : <input type="color" name="ticarea_color" value="${SeatingAreaVO.ticarea_color}" readonly>&nbsp;&nbsp;&nbsp;
-											                                票區名 : <input type="text" class="warning" name="ticarea_name" value="${SeatingAreaVO.ticarea_name}" size="10" readonly>&nbsp;&nbsp;&nbsp;
+											                                票區名 : <input type="text" class="warning" name="ticarea_name" value="${SeatingAreaVO.ticarea_name}" size="15" readonly>&nbsp;&nbsp;&nbsp;
 											                                張數 : <input type="text" class="warning" name="tictotalnumber" value="${SeatingAreaVO.tictotalnumber}" size="10" readonly>張
 													    </span>
 							                            <!-- --------------------票區位置::尾-------------------- -->
@@ -311,6 +314,7 @@
 <%-- 					<a class="btn btn-danger" href="<%=request.getContextPath()%>/event/EventServlet.do?action=deleteEvent&evetit_no=${eventVO.evetit_no}&eve_no=${eventVO.eve_no}&requestURL=/backend/event_title/listAllEventTitleRelatives.jsp" style="margin-top:15px;">刪除</a> --%>
 					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventVO.evetit_no}&eve_no=${eventVO.eve_no}" style="margin-top:15px;">回活動總覽</a>
 					<button type="button" class="btn btn-default" id="magicButton" style="margin-top:15px;">Magic!</button>
+					<a href="<%=request.getContextPath()%>/ticket_type/TicketTypeServlet.do?action=demo&eve_no=${eventVO.eve_no}" class="btn btn-default" id="magicButtonTwo" style="margin-top:15px;">Magic!</a>
 				</span>			
 			</form>
         </div>
@@ -325,7 +329,7 @@
 	<span>
 	   <input type="hidden" name="ticarea_no" value="">
 	          票區色 : <input type="color" name="ticarea_color" value="#3399ff">&nbsp;&nbsp;&nbsp;
-	          票區名 : <input type="text" class="warning" name="ticarea_name" value="" size="10">&nbsp;&nbsp;&nbsp;
+	          票區名 : <input type="text" class="warning" name="ticarea_name" value="" size="15">&nbsp;&nbsp;&nbsp;
 	          張數 : <input type="text" class="warning" name="tictotalnumber" value="" size="10">張
 	</span>
 	<!-- --------------------票區位置::尾-------------------- -->
@@ -388,9 +392,7 @@
 
 
 
-    <!-- Basic -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <!-- datetimepicker -->
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -416,17 +418,18 @@
         
         
         
+        
         $("#magicButton").click(function(){
-    		console.log("123");
     		$("#eve_sessionname").val("2019/03/03 第一場");
     		$('#venue_no').val("V009").change();
     		$("#eve_startdate").val("2019-03-03 18:00");
     		$("#eve_enddate").val("2019-03-03 23:00");
-    		$("#eve_onsaledate").val("2019-01-18 14:00");
+    		$("#eve_onsaledate").val("2019-01-22 14:00");
     		$("#eve_offsaledate").val("2019-03-03 17:00");
     		$("#ticlimit").val("4").change();
     		$("#eve_status").val("normal").change();
     	});
+        
      
         
         

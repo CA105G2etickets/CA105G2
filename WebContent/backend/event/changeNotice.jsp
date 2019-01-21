@@ -32,6 +32,9 @@
 	    	border-radius: 1px;
 	    }
     </style>
+    <!-- Basic -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -53,7 +56,7 @@
         	<form method="post" action="<%=request.getContextPath()%>/event/EventServlet.do">	
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
-                    <label>異動通知對象</label>
+                    <label>訊息通知對象</label>
                     <select class="form-control" name="evetit_no" id="selectedEventTitle_forCopyChoose">
                         <option value="pleaseChoose">
 							請選擇活動主題
@@ -139,8 +142,8 @@
         <br>
         <form method="post" action="<%=request.getContextPath()%>/event/EventServlet.do" id="changeNoticeSendNoticesForm">	
         <div class="form-group">
-            <label for="phoneMessageText">簡訊內容(不得超過50字)</label>
-            <textarea class="form-control" rows="1" name="phoneMessageText" id="phoneMessageText" maxlength="50">${param.phoneMessageText}</textarea>
+            <label for="phoneMessageText">簡訊內容</label>
+            <textarea class="form-control" rows="1" name="phoneMessageText" id="phoneMessageText">${param.phoneMessageText}</textarea>
         </div>
         <div class="form-group">
             <label for="subject">電子郵件主旨</label>
@@ -156,6 +159,7 @@
         	<input type="hidden" name="requestURL"   value="<%=request.getServletPath()%>">
 			<input type="hidden" name="action"       value="changeNoticeSendNotices">
 			<button type="button" class="btn btn-primary" style="margin-top:15px;" id="changeNoticeSendNotices">送出</button>
+			<button type="button" class="btn btn-default" style="margin-top:15px;" id="magicButton">Magic!</button>
 		</span>
 		</form>
     </div>
@@ -169,9 +173,6 @@
     
     
     
-	<!-- Basic -->
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- dataTables -->
 	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/page.jumpToData().js"></script>
@@ -243,6 +244,12 @@
 				});
         	}
         });
+        
+        $("#magicButton").click(function(){
+    		$("#phoneMessageText").val("【威肯2019台北演唱會訊息通知】您購買的門票，將於當日17:30開放入場，請預先下載APP，以其出示電子票券。");
+    		$('#subject').val("【威肯2019台北演唱會訊息通知】");
+    		$("#messageText").val("親愛的會員您好：\r\n\r\n您購買的【THE WEEKND ASIA – LIVE IN TAIPEI　威肯2019台北演唱會】門票，將於當日17:30開放入場，請預先下載我們的APP，以其出示電子票券，工作人員將掃描該電子票券。詳情請上ETIckeTs娛樂官網，相關問題請Email至ca105.java.002@gmail.com，由客服人員為您服務。\r\n\r\n請注意：此郵件是系統自動傳送，請勿直接回覆。");
+    	});
 
     });
     </script>

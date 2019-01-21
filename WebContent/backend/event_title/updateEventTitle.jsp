@@ -25,6 +25,9 @@
 			font-family:微軟正黑體!important;
 		}
     </style>
+    <!-- Basic -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -157,7 +160,7 @@
 					<input type="file" id="evetit_poster" name="evetit_poster" class="form-control" accept="image/*">
 					<input type="hidden" id="evetit_poster_status" name="evetit_poster_status" value="${(evetit_poster_status == 'alreadyUpload') ? 'alreadyUpload' : 'noUpload'}">
 					<c:if test="${evetit_poster_status != 'alreadyUpload'}">
-	                	<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?action=add&scaleSize=450&evetit_no=${eventTitleVO.evetit_no}" id="evetit_poster_preview">
+	                	<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?action=add&scaleSize=850&evetit_no=${eventTitleVO.evetit_no}" id="evetit_poster_preview">
                     </c:if>
 					
 					<c:if test="${evetit_poster_status == 'alreadyUpload'}">
@@ -212,9 +215,7 @@
 
 
 
-    <!-- Basic -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <!-- ckEditor JS -->
     <script src="<%=request.getContextPath()%>/vendor/ckeditor_easyImage_final/ckeditor.js"></script>
     <script src="<%=request.getContextPath()%>/backend/event_title/js/eventTitleCKEditor.js"></script>
