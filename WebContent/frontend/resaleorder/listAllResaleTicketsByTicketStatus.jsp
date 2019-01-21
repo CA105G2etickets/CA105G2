@@ -84,7 +84,7 @@ pageContext.setAttribute("member_no",member_no);
         <tfoot>
            <tr>
                 <th>票券編號</th>
-                <!-- <th>賣票者電子信箱</th> -->
+                <th>賣票者電子信箱</th>
                 <th>賣價</th>
                 <th>原票價與票種名稱</th>
                 <th>活動主題名稱</th>

@@ -58,9 +58,9 @@ pageContext.setAttribute("listEveNo",listEveNo);
                 <!-- <th>售票開始時間</th> -->
                 <th>活動地點</th>
                 <th>地址</th>
-                <th>單一會員購票上限</th>
+                <th>單一會員購票上限張數</th>
                 <th>活動狀態</th>
-                <th>座位區販售情況</th>
+                <th>查看座位區販售情況</th>
             </tr>
         </thead>
         <tbody>
@@ -107,7 +107,7 @@ pageContext.setAttribute("listEveNo",listEveNo);
 							<input type="hidden" name="action" value="member_select_One_Evevo_From_listAllEvevoByCompositeQueryWithListEveNo">
 							<%-- <input type="hidden" name="member_no" value="${member_no}"> --%>
 							<input type="hidden" name="eve_no" value="${string_eve_no}">
-							<input type="submit" value="購買" class="btn btn-primary" style="float:right;">
+							<input type="submit" value="查詢" class="btn btn-primary" style="float:right;">
 						</form>
         			</td>
         			

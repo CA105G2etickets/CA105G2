@@ -528,7 +528,7 @@ public class ResaleOrderServlet extends HttpServlet {
         		String member_no = member.getMemberNo();
         		if (member_no == null || (member_no.trim()).length() == 0) {
         			
-					errorMsgs.add("購票前請登入");
+					errorMsgs.add("瀏覽轉讓平台前，請先登入");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -537,9 +537,9 @@ public class ResaleOrderServlet extends HttpServlet {
 					return;//程式中斷
 				}
         		req.setAttribute("member_no", member_no);
-				
-//        		String url = "/frontend/resaleorder/listAllResaleTicketsByTicketStatus.jsp";
-        		String url = "/frontend/resaleorder/select_page.jsp";
+
+        		String url = "/frontend/resaleorder/listAllResaleTicketsByTicketStatus.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
         	} catch(Exception e) {
