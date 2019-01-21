@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.permission.model.PermissionService;
+import com.permission.model.*;
 
 public class AdministratorDAO implements AdministratorDAO_interface {
 
@@ -35,6 +35,8 @@ public class AdministratorDAO implements AdministratorDAO_interface {
 			"SELECT * FROM ADMINISTRATOR ORDER BY ADMINISTRATOR_NO";
 	private static final String GET_ONE_ADMINISTRATOR_BY_ACCOUNT = 
 			"SELECT * FROM ADMINISTRATOR WHERE ADMINISTRATOR_ACCOUNT=?";
+	private static final String GET_Permissions_ByAdministratorno_STMT = 
+			"SELECT * FROM PERMISSION WHERE ADMINISTRATOR_NO = ?";
 
 	@Override
 	public void insert(AdministratorVO administratorVO) {
@@ -43,7 +45,6 @@ public class AdministratorDAO implements AdministratorDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
@@ -54,39 +55,10 @@ public class AdministratorDAO implements AdministratorDAO_interface {
 			pstmt.setBytes(4, administratorVO.getAdministrator_picture());
 			pstmt.setString(5, administratorVO.getAdministrator_status());
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			//權限新增
-			pstmt.getGeneratedKeys();
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
-			throw new RuntimeException("BuBu!"
+			throw new RuntimeException("錯誤"
 					+ se.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -356,5 +328,129 @@ public AdministratorVO findByAccount(String administrator_account) {
 		}
 		return administratorVO;
 	}
+
+@Override
+public Set<PermissionVO> getPermissionsByAdministratorno(String administrator_no) {
+	Set<PermissionVO> set = new HashSet<PermissionVO>();
+	PermissionVO permissionVO = null;
+
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+
+	try {
+
+		con = ds.getConnection();
+		pstmt = con.prepareStatement(GET_Permissions_ByAdministratorno_STMT);
+		
+		pstmt.setString(1, administrator_no);
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			permissionVO = new PermissionVO();
+			permissionVO.setPermission_list_no(rs.getString("PERMISSION_LIST_NO"));
+			permissionVO.setAdministrator_no(rs.getString("ADMINISTRATOR_NO"));
+			set.add(permissionVO);
+		}
+
+	} catch (SQLException se) {
+		throw new RuntimeException("A database error occured. "
+				+ se.getMessage());
+	} finally {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
+	}
+	return set;
+}
+
+@Override
+public void insertWithPermission (AdministratorVO administratorVO , List<PermissionVO> list) {
+
+	Connection con = null;
+	PreparedStatement pstmt = null;
+
+	try {
+		
+		con = ds.getConnection();
+		con.setAutoCommit(false);
+		
+		String cols[] = {"ADMINISTRATOR_NO"};
+		pstmt = con.prepareStatement(INSERT_STMT, cols);
+		
+		pstmt.setString(1, administratorVO.getAdministrator_name());
+		pstmt.setString(2, administratorVO.getAdministrator_account());
+		pstmt.setString(3, administratorVO.getAdministrator_password());
+//		pstmt.setTimestamp(5, administratorVO.getCreation_date());
+		pstmt.setBytes(4, administratorVO.getAdministrator_picture());
+		pstmt.setString(5, administratorVO.getAdministrator_status());
+		pstmt.executeUpdate();
+		
+		String next_administratorno = null;
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if (rs.next()) {
+			next_administratorno = rs.getString(1);
+		}
+		
+		rs.close();
+		PermissionDAO dao = new PermissionDAO();
+		for (PermissionVO aPermission : list) {
+			aPermission.setAdministrator_no(new String(next_administratorno));
+			dao.insert2(aPermission,con);
+		}
+
+		con.commit();
+		con.setAutoCommit(true);
+		
+	} catch (SQLException se) {
+		if (con != null) {
+			try {
+				System.err.print("Transaction is being ");
+				System.err.println("rolled back");
+				con.rollback();
+			} catch (SQLException excep) {
+				throw new RuntimeException("rollback error occured. "
+						+ excep.getMessage());
+			}
+		}
+		throw new RuntimeException("A database error occured. "
+				+ se.getMessage());
+	} finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
+	}
+
+}
+
 
 }

@@ -299,4 +299,43 @@ public class PermissionDAO implements PermissionDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public void insert2 (PermissionVO permissionVO , Connection con) {
+
+		PreparedStatement pstmt = null;
+
+		try {
+
+     		pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setString(1, permissionVO.getPermission_list_no());
+			pstmt.setString(2, permissionVO.getAdministrator_no());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-emp");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
 }

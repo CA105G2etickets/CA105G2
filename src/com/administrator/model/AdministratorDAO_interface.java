@@ -1,6 +1,8 @@
 package com.administrator.model;
 
-import java.util.List;
+import java.util.*;
+
+import com.permission.model.PermissionVO;
 
 public interface AdministratorDAO_interface {
 	
@@ -10,5 +12,9 @@ public interface AdministratorDAO_interface {
     public AdministratorVO findByPrimaryKey(String administrator_no);
     public List<AdministratorVO> getAll();
     public AdministratorVO findByAccount(String administrator_account);
+    
+    public Set<PermissionVO> getPermissionsByAdministratorno(String administrator_no);
+    
+    public void insertWithPermission(AdministratorVO administratorVO , List<PermissionVO> list);
     
 }

@@ -2,6 +2,9 @@ package com.administrator.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
+
+import com.permission.model.PermissionVO;
 
 public class AdministratorService {
 
@@ -14,9 +17,9 @@ public class AdministratorService {
 	public AdministratorVO addAdministrator(String administrator_name, String administrator_account,
 			String administrator_password, byte[] administrator_picture,
 			String administrator_status) {
-
+		
 		AdministratorVO administratorVO = new AdministratorVO();
-
+		
 		administratorVO.setAdministrator_name(administrator_name);
 		administratorVO.setAdministrator_account(administrator_account);
 		administratorVO.setAdministrator_password(administrator_password);
@@ -24,7 +27,7 @@ public class AdministratorService {
 		administratorVO.setAdministrator_picture(administrator_picture);
 		administratorVO.setAdministrator_status(administrator_status);
 		dao.insert(administratorVO);
-
+		
 		return administratorVO;
 	}
 
@@ -60,6 +63,14 @@ public class AdministratorService {
 	
 	public AdministratorVO findByAccount(String administrator_account) {
 		return dao.findByAccount(administrator_account);
+	}
+	
+	public Set<PermissionVO> getPermissionsByAdministratorno(String administrator_no) {
+		return dao.getPermissionsByAdministratorno(administrator_no);
+	}
+	
+	public void insertWithPermission (AdministratorVO administratorVO , List<PermissionVO> list) {
+		dao.insertWithPermission(administratorVO, list);
 	}
 	
 }

@@ -9,7 +9,9 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.administrator.model.*;
-import com.permission.model.PermissionVO;
+import com.order_detail.model.OrderDetailVO;
+import com.order_history.model.OrderHistoryService;
+import com.permission.model.*;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AdministratorServlet extends HttpServlet {
@@ -335,6 +337,27 @@ public class AdministratorServlet extends HttpServlet {
 
 				/****************************接收權限請求參數******************************/
 				String[] permission = req.getParameterValues("permission");
+				List<PermissionVO> list = new ArrayList<PermissionVO>(); 			
+				if (permission != null) { 
+					
+					for (int i=0; i<permission.length; i++) { 
+						PermissionVO permissionVO = new PermissionVO();
+						permissionVO.setPermission_list_no(permission[i]);
+						list.add(permissionVO);
+					} 
+				} 
+				
+				
+				
+				//測試用//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				for(int i = 0; i < permission.length; i++) {
+					System.out.print(permission[i] + " "); 
+				}
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+				
+				
+				
 				
 				
 				// Send the use back to the form, if there were errors
@@ -347,19 +370,26 @@ public class AdministratorServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始新增資料***************************************/
+//				AdministratorService administratorService = new AdministratorService();
+//				administratorVO = administratorService.addAdministrator(administrator_name, administrator_account, administrator_password, administrator_picture, administrator_status);				
 				AdministratorService administratorService = new AdministratorService();
-				administratorVO = administratorService.addAdministrator(administrator_name, administrator_account, administrator_password, administrator_picture, administrator_status);				
+				administratorService.insertWithPermission(administratorVO, list);
+				
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/backend/administrator/allAdministrator.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
-				for(int i = 0; i < permission.length; i++) {
-		            System.out.print(permission[i] + " "); 
-				PermissionVO permissionVO = new PermissionVO();
-				permissionVO.setAdministrator_no(administratorVO.getAdministrator_no());
-				permissionVO.setPermission_list_no(permission[i]);
-				}
+//				if (successView != null) {
+//					for(int i = 0; i < permission.length; i++) {
+//						System.out.print(permission[i] + " "); 
+//						PermissionVO permissionVO = new PermissionVO();
+//						permissionVO.setAdministrator_no(administratorVO.getAdministrator_no());
+//						permissionVO.setPermission_list_no(permission[i]);
+//						PermissionService permissionService = new PermissionService();
+//						permissionService.addPermission(permission[i], administratorVO.getAdministrator_no());
+//					}
+//				}
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
