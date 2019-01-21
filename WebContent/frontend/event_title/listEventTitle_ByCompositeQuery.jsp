@@ -76,7 +76,7 @@
                                 ${(eventTitleVO.evetit_startdate == eventTitleVO.evetit_enddate) ? '' : ' ~ '}
                                 ${(eventTitleVO.evetit_startdate == eventTitleVO.evetit_enddate) ? '' : eventTitleVO.evetit_enddate}
                             </p>
-                            <h4><a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${eventTitleVO.evetit_no}" target="_blank">
+                            <h4><a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${eventTitleVO.evetit_no}">
                             	${eventTitleVO.evetit_name}                   
                             </a></h4>
                         </div>                   

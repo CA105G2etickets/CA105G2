@@ -107,7 +107,7 @@
                             <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=425&evetit_no=${favoriteEventVO.evetit_no}" alt="">
                         </a>                       
                         <div class="caption">
-                            <h4><a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${favoriteEventVO.evetit_no}">
+                            <h4 style="height:25px;"><a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${favoriteEventVO.evetit_no}">
                             	${eventTitleService.getOneEventTitle(favoriteEventVO.evetit_no).evetit_name}                   
                             </a></h4>
                             <input type="hidden" name="evetit_no" value="${favoriteEventVO.evetit_no}">
