@@ -168,7 +168,7 @@ body{
 			            <li><a href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp" target="_blank">活動管理</a></li>
 			            <li><a href="<%=request.getContextPath()%>/backend/venue/listAllVenue.jsp" target="_blank">場地管理</a></li>
 			            <li><a href="<%=request.getContextPath()%>/backend/advertisement/listAllAdvertisement.jsp" target="_blank">廣告管理</a></li>
-			            <li><a href="<%=request.getContextPath()%>/backend/event/changeNotice.jsp" target="_blank">異動通知</a></li>
+			            <li><a href="<%=request.getContextPath()%>/backend/event/changeNotice.jsp" target="_blank">訊息通知</a></li>
 			        </ul>
 				</div>			
 			</div>
