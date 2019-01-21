@@ -63,7 +63,7 @@
 		    height: auto;
 		    width: 100%
 		}
-		#clickFavoriteEvent{
+		.clickFavoriteEvent{
 			cursor: pointer;
 		}
 		body{
@@ -111,7 +111,7 @@
                             	${eventTitleService.getOneEventTitle(favoriteEventVO.evetit_no).evetit_name}                   
                             </a></h4>
                             <input type="hidden" name="evetit_no" value="${favoriteEventVO.evetit_no}">
-							<div style="color:red;float:right;" id="clickFavoriteEvent">
+							<div style="color:red;float:right;" class="clickFavoriteEvent">
 								<h4><i class="glyphicon glyphicon-heart"></i>取消最愛</h4>
 			             	</div>
                         </div>                   
@@ -125,7 +125,7 @@
 
 	<script>
 		$(document).ready(function(){
-			$("#clickFavoriteEvent").click(function(){
+			$(".clickFavoriteEvent").click(function(){
 				var member_no = $("#member_no").val();
 	        	var evetit_no = $(this).prev().val();
 	        	
