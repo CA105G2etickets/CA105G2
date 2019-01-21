@@ -50,7 +50,7 @@ public class AdvertisementService {
 	
 	
 	public AdvertisementVO getOneAdvertisementRandom() {			
-		List<AdvertisementVO> advertisementList = advertisementDAO.getAll();
+		List<AdvertisementVO> advertisementList = advertisementDAO.getLaunched();
 		int howMany = advertisementList.size();
 		int theOne = (int)(Math.random() * howMany);
 		AdvertisementVO advertisementVO = (AdvertisementVO) advertisementList.get(theOne);
