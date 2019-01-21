@@ -102,7 +102,8 @@
 											  </FORM>
 											</td>
 										</c:if>
-										<c:if test="${orderHistoryVO.order_status != 'CANCEL5'}">
+										<c:if test="${(orderHistoryVO.order_status != 'PAYMENT1') || (orderHistoryVO.order_status != 'SHIPPING2')}">
+											<td></td>
 										</c:if>
 									</tr>
 								</c:forEach>
@@ -112,7 +113,7 @@
 					<hr>
 					
 					<%} else {%>
-					<div class="container-fluid" style="margin-bottom: 400px">
+					<div class="container-fluid" style="margin-bottom: 200px">
 						<div class="row">
 							<div class="col-xs-12 col-sm-3"></div>
 							<div class="col-xs-12 col-sm-6">
@@ -129,10 +130,11 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script>
-        var table;
-        $(document).ready(function() {
-			$('#example').DataTable(); 	
-        });
+	        var table;
+	        $(document).ready(function() {
+				$('#example').DataTable(); 
+				
+	        });
         </script>
 	</body>
 	<jsp:include page="/frontend/footer_front-end.jsp" flush="true"/> 
