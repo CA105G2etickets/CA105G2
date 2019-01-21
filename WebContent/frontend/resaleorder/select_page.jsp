@@ -1,16 +1,41 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>resaleorder_home</title>
-</head>
-<body bgcolor='white'>
+<%@ page import="java.util.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="com.event_title.model.*"%>
+
 <%
 String member_no = (String)request.getAttribute("member_no");
 pageContext.setAttribute("member_no",member_no);
 %>
-<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
+
+<!-- ======================================== DAI:::begin ================================================== -->
+<%-- <jsp:useBean id="eventService" scope="page" class="com.event.model.EventService" /> 
+<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" /> 
+<jsp:useBean id="seatingAreaService" scope="page" class="com.seating_area.model.SeatingAreaService" />
+<jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />--%>
+<!-- ======================================== DAI:::end ================================================== -->
+
+
+
+
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+
+
+<!-- <title>模擬訂票訂單資料附帶票券的新增 - selectPayment.jsp</title> -->
+
+<!-- ======================================== DAI:::begin ================================================== -->
+<title>resaleorder_select_page</title>
+<!-- basic -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- progress css -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/frontend/ticketorder/css/progress.css">
+<!-- ======================================== DAI:::end ================================================== -->
+
+
 
 <style>
   table {
@@ -26,74 +51,112 @@ pageContext.setAttribute("member_no",member_no);
     padding: 1px;
   }
 </style>
-<p>這頁是轉讓票券平台的搜尋頁面</p>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<!-- ======================================== DAI:::begin ================================================== -->
+<style>
+body {
+	font-family:微軟正黑體!important;
+}	
+.bs-wizard{
+	margin-top: 10px;
+}
+#comfirmTicketsForm th{
+	text-align: center;
+	vertical-align: middle;
+}
+#comfirmTicketsForm td{
+	text-align: center;
+	vertical-align: middle;
+}
+</style>
+<!-- ======================================== DAI:::end ================================================== -->
 
-<h3>${memberService.getOneMember(toVO.member_no).memberFullname}</h3>
 
 
+</head>
+<body bgcolor='white'>
 
-<%-- 萬用複合查詢-以下欄位-可隨意增減 --%>
-<ul>  
-  <li>   
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
-        <b><font color=blue>請選取下列一種條件，再輸入你想搜尋的條件，搜尋出你想要買的轉讓票: 文字為模糊搜尋，數字可再選大於、小於、或等於</font></b> <br>
-        <b><font color=red>判斷map加入的條件還沒做完，目前只能查全部</font></b> <br>
-        <b><font color=red>有bug還不能用</font></b> <br>
-        <select name=selectBar_Choice>
-        	<option value="ticket_resale_price" selected="selected">低於此價錢的轉售票</option>
-        	<option value="ticarea_name">座位區名稱</option>
-        	<option value="tictype_name">票種名稱</option>
-        	<option value="tictype_price">原價格</option>
-        	<option value="evetit_name">活動主題名稱</option>
-        	<option value="venue_name">場地名稱</option>
-        	<option value="address">場地地址</option>
-        </select>
-        <!--  
-        <b>輸入活動名稱，找目標活動有幾張轉售票</b>
-        <input type="text" name="" value=""><br>
-        -->
-       
-       <!--  
-       <b>輸入賣家的會員編號:(目前僅能是會員編號，未來希望能進化成查某會員的email或姓名)</b>
-       <input type="text" name="" value=""><br>
-       -->
-       
-       <!-- <b>輸入轉讓票券的成交賣價(目前僅能查是不是 <= 這個價錢，並列出所有的轉讓票):</b>
-       <input type="text" name="ticket_resale_price" value=""><br> -->
-       
-       <!--  
-       <b>選擇票券編號，查詢與這張票券相關的轉售訂單:(理論上是給管理者看)</b>
-       <select size="1" name="ticket_no" >
-          <option value="">
-         <c:forEach var="ticketVO" items="${TicketSvc.all}" > 
-          <option value="${ticketVO.ticket_no}">${ticketVO.ticket_no}
-         </c:forEach>   
-       </select><br>
-       -->
-        
-        <!--  this function seems can do with jQuery
-       <b>選擇轉售訂單產生的日期:(理論上要進化成能選擇某段區間的時間，並根據時間排序)</b>
-	   <input name="resale_ord_createtime" id="f_date1" type="text">
-		        
-        -->
-        <input type="submit" value="送出">
-        <input type="hidden" name="action" value="listResaleOrder_ByCompositeQuery">
-        <input type="hidden" name="member_no" value="${member_no}">
-        <font>${member_no}</font>
-        <!-- <input type="hidden" name="resale_ordstatus" value="SELLING1"> -->
-     </FORM>
 
-<h3><a href='<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do'>偷看一下FROM表單送到哪裡</a></h3>
+<!-- ======================================== DAI:::begin ================================================== -->
+
+	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
+	
+	<div class="container">
+		<span class="text-danger">${eventTitleErrorMsgs.Exception}</span>
+	</div>
+
+	<%-- 
+	<!-- ------------------------------ memberInfo ::: start ------------------------------ -->
+	<div class="container" style="margin-bottom:15px;">
+		<table class="table table-hover table-bordered">
+			<tr class="info">
+				<th colspan="2">會員資料</th>
+			</tr>
+			<tr>
+				<th style="width:20%;">會員姓名</th>
+				<td>${memberService.getOneMember(member_no).memberFullname}</td>
+			</tr>
+			<tr>
+				<th>電子信箱</th>
+				<td>${memberService.getOneMember(member_no).email}</td>
+			</tr>
+			<tr>
+				<th>電話號碼</th>
+				<td>${memberService.getOneMember(member_no).phone}</td>
+			</tr>
+		</table>
+	</div>
+	<!-- ------------------------------ memberInfo ::: end ------------------------------ -->
+	--%>
+
+	<!-- ======================================== DAI:::begin ================================================== -->
+	<div class="container">
+		<form method="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
+            <div class="form-group">
+                <label for="evetit_name">活動主題名稱</label>
+                <input type="text" name="evetit_name" id="evetit_name" placeholder="請輸入活動主題名稱，將列出相關的轉讓票" class="form-control" value="">
+            </div>
+            
+            <%-- 
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="evetit_startdate">開始日期</label>
+                        <input type="text" name="evetit_startdate" id="evetit_startdate" placeholder="請選擇開始日期" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="evetit_enddate">結束日期</label>
+                        <input type="text" name="evetit_enddate" id="evetit_enddate" placeholder="請選擇結束日期" class="form-control" value="">
+                    </div>
+                </div>
+            </div>
+            --%>
+            
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-11 hidden-xs hidden-sm">                          
+                	<jsp:useBean id="eventClassificationService" scope="page" class="com.event_classification.model.EventClassificationService" />
+                	<c:forEach var="eventClassificationVO" items="${eventClassificationService.all}">
+	       				<div class="checkbox-inline checkboxCusStyle">
+	            			<label>
+	                			<input type="checkbox" name="eveclass_no" value="${eventClassificationVO.eveclass_no}" id="${eventClassificationVO.eveclass_no}" checked>
+	       						${eventClassificationVO.eveclass_name}
+	            			</label>
+	       				</div>
+                	</c:forEach>
+                </div>               
+                <div class="col-xs-12 col-sm-12 col-md-1">
+                    <div class="form-group text-right">
+                    	<input type="hidden" name="action" value="listEventTitle_ByCompositeQuery">
+                    	<input type="hidden" name="member_no" value="${member_no}">
+                        <button type="submit" class="btn btn-primary" id="search">查詢</button>
+                    </div>
+                </div>
+            </div>
+		</form>
+    </div>
+    <!-- ======================================== DAI:::end ================================================== -->
 
 </body>
 </html>

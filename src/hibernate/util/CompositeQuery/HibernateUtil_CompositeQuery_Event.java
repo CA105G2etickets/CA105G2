@@ -135,7 +135,11 @@ public class HibernateUtil_CompositeQuery_Event {
 		// java.util.Map<java.lang.String,java.lang.String[]> ������
 		Map<String, String[]> map = new TreeMap<String, String[]>();
 
-		map.put("eve_no", new String[] { "01" });
+//		map.put("eve_no", new String[] { "01" });
+		
+//		map.put("evetit_no", new String[] { "E0001","E0002","E0003" });
+		String [] strArrayEveTitNo = {"E0001"};
+		map.put("evetit_no", strArrayEveTitNo);
 		
 //		map.put("resale_ordstatus", new String[] { "CO" });
 		

@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.ticketorder.model.*"%>
-<%@ page import="com.seating_area.model.*"%>
-<%@ page import="com.event.model.*"%>
+<%-- <%@ page import="com.seating_area.model.*"%> --%>
+<%@ page import="com.resaleorder.model.*"%>
+<%@ page import="com.ticket.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -11,14 +11,16 @@ String member_no = (String)request.getAttribute("member_no");
 pageContext.setAttribute("member_no",member_no);
 String resale_ordno = (String)request.getAttribute("resale_ordno");
 pageContext.setAttribute("resale_ordno",resale_ordno);
+ResaleOrderVO revo = (ResaleOrderVO)request.getAttribute("revo");
+pageContext.setAttribute("revo",revo);
 %>
 
 <!-- ======================================== DAI:::begin ================================================== -->
-<jsp:useBean id="seatingAreaService" scope="page" class="com.seating_area.model.SeatingAreaService" />
-<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
-<jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
+<%-- <jsp:useBean id="seatingAreaService" scope="page" class="com.seating_area.model.SeatingAreaService" />
+<jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" /> --%>
 <jsp:useBean id="resaleorderService" scope="page" class="com.resaleorder.model.ResaleOrderService" />
 <jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
+<jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <!-- ======================================== DAI:::end ================================================== -->
 
 
@@ -128,7 +130,7 @@ body {
 	<!-- ------------------------------ progress bar ::: end ------------------------------ -->
 	--%>
 
-
+	<%-- 
 	<!-- when returning, no eh5vo attribute -->
 	<!-- ------------------------------ whichEventTitle&Event ::: start ------------------------------ -->	
 	<div class="container" style="margin-bottom:30px;margin-top:15px;">
@@ -152,7 +154,7 @@ body {
 		</div>
 	</div>
 	<!-- ------------------------------ whichEventTitle&Event ::: end ------------------------------ -->
-
+	--%>
 
 
 	<!-- ------------------------------ memberInfo ::: start ------------------------------ -->
@@ -163,15 +165,15 @@ body {
 			</tr>
 			<tr>
 				<th style="width:20%;">會員姓名</th>
-				<td>${memberService.getOneMember(toVO.member_no).memberFullname}</td>
+				<td>${memberService.getOneMember(member_no).memberFullname}</td>
 			</tr>
 			<tr>
 				<th>電子信箱</th>
-				<td>${memberService.getOneMember(toVO.member_no).email}</td>
+				<td>${memberService.getOneMember(member_no).email}</td>
 			</tr>
 			<tr>
 				<th>電話號碼</th>
-				<td>${memberService.getOneMember(toVO.member_no).phone}</td>
+				<td>${memberService.getOneMember(member_no).phone}</td>
 			</tr>
 		</table>
 	</div>
@@ -186,40 +188,54 @@ body {
 		<table class="table table-hover table-bordered" id="comfirmTicketsForm">
 			<thead>
 				<tr class="info">
-					<th>訂票訂單編號</th>
-					<th>座位區名稱</th>
-					<th>單價</th>
-					<th>總張數</th>
-					<th>總價</th>
-					<th>訂票訂單成立時間</th>
+					<th>轉讓訂單編號</th>
+					<th>票券編號</th>
+					<th>票種名稱</th>
+					<th>買家姓名</th>
+					<th>賣家姓名</th>
+					
+					<th>轉讓價格</th>
 					<th>付款方式</th>
-					<th>訂票訂單狀態</th>
+					<th>轉讓訂單狀態</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td style="width:20%;">${toVO.ticket_order_no}</td>
-					<td>${seatingAreaService.getOneSeatingArea(toVO.seatingarea_h5VO.ticarea_no).ticarea_name}</td>
+					<td style="width:20%;">${resale_ordno}</td>
+					<td>${resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no}</td>
+					<%-- <td>${SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).ticarea_name}</td> --%>
+					<td><font color="red">${ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_name}</font></td>
+					<td>${memberService.getOneMember(member_no).memberFullname}</td>
+					<td>${memberService.getOneMember(resaleorderService.getOneResaleOrd(resale_ordno).member_seller_no).memberFullname}</td>
+
 					<td>
-						<fmt:formatNumber type="number" value="${toVO.total_price / toVO.total_amount}" /> 元
-					</td>
-					<td>${toVO.total_amount} 張</td>
-					<td>
-						<fmt:formatNumber type="number" value="${toVO.total_price}" /> 元
-					</td>
-					<td>
-						<fmt:formatDate value="${toVO.ticket_order_time}" pattern="yyyy-MM-dd HH:mm"/>
+						<fmt:formatNumber type="number" value="${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordprice}" /> 元
 					</td>
 					<td>
-						${(toVO.payment_method == 'NOTYET') ? '尚未選擇' : ''}
-						${(toVO.payment_method == 'CREDITCARD') ? '信用卡' : ''}
-						${(toVO.payment_method == 'EWALLET') ? '電子錢包' : ''}
+						<c:if test="${resaleorderService.getOneResaleOrd(resale_ordno).payment_method == 'NOTYET'}">
+							尚未選擇
+						</c:if>
+						<c:if test="${resaleorderService.getOneResaleOrd(resale_ordno).payment_method == 'CREDITCARD'}">
+							信用卡
+						</c:if>
+						<c:if test="${resaleorderService.getOneResaleOrd(resale_ordno).payment_method == 'EWALLET'}">
+							電子錢包
+						</c:if>
 					</td>
+					
 					<td>
-						${(toVO.ticket_order_status == 'WAITTOPAY1') ? '尚未付款' : ''}
-						${(toVO.ticket_order_status == 'COMPLETE2') ? '完成付款' : ''}
-						${(toVO.ticket_order_status == 'CANCEL3') ? '已取消' : ''}
-						${(toVO.ticket_order_status == 'OUTDATE4') ? '逾時未付' : ''}
+						<c:if test="${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordstatus == 'WAITTOPAY1'}">
+							尚未付款
+						</c:if>
+						<c:if test="${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordstatus == 'COMPLETE2'}">
+							完成付款
+						</c:if>
+						<c:if test="${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordstatus == 'CANCEL3'}">
+							已取消
+						</c:if>
+						<c:if test="${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordstatus == 'OUTDATE4'}">
+							逾時未付
+						</c:if>
 					</td>
 				</tr>
 			</tbody>
@@ -260,10 +276,13 @@ body {
 	
 	<!-- ------------------------------ toListTicketsByMember ::: begin ------------------------------ -->
 	<div class="container" style="margin-bottom:30px;">
-		<form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do">
-			<input type="hidden" name="action" value="member_select_ticketorders">
-			<input type="hidden" name="member_no" value="${toVO.member_no}"> 
-			<input type="submit" value="前往會員的訂票訂單查詢" class="btn btn-primary" style="float:right;">
+		<form method="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
+			<input type="hidden" name="action" value="member_select_resaleorders">
+			<input type="hidden" name="member_no" value="${member_no}">
+			<input type="hidden" name="resale_ordno" value="${resale_ordno}">
+			<input type="hidden" name="ticket_no" value="${resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no}">
+			  
+			<input type="submit" value="前往會員的轉讓訂單查詢" class="btn btn-primary" style="float:right;">
 		</form>
 	</div>
 	<!-- ------------------------------ toListTicketsByMember ::: end ------------------------------ -->
@@ -278,106 +297,6 @@ body {
 
 
 
-
-
-<%--  錯誤表列 
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-
-<c:if test="${not empty list4PassValue}">
-	<font style="color:blue">此訂票訂單的相關資訊:</font>
-	<ul>
-		<c:forEach var="message" items="${list4PassValue}">
-			<li style="color:blue">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if> --%>
-
-<!-- <table> -->
-<!-- 	<tr> -->
-<!-- 		<th>訂票訂單編號</th> -->
-<!-- 		<th>會員編號</th> -->
-		
-<!-- 		<th>總價</th> -->
-<!-- 		<th>總張數</th> -->
-<!-- 		<th>訂票訂單成立時間</th> -->
-<!-- 		<th>付款方式</th> -->
-<!-- 		<th>訂票訂單狀態</th> -->
-<!-- 		<!-- <th>進行付款</th> --> 
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<%-- 		<td>${toVO.ticket_order_no}</td> --%>
-<%-- 		<td>${toVO.member_no}</td> --%>
-		
-<%-- 		<td>${toVO.total_price}</td> --%>
-<%-- 		<td>${toVO.total_amount}</td> --%>
-<%-- 		<td><fmt:formatDate value="${toVO.ticket_order_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
-<%-- 		<td><font color="green">${toVO.payment_method}</font></td> --%>
-<%-- 		<td><font color="green">${toVO.ticket_order_status}</font></td> --%>
-		<%-- <td>
-			<FORM METHOD="post" ACTION="ticketorder.do">
-				<input type="submit" value="pay">
-				<input type="hidden" name="ticket_order_no"  value="${toVO.ticket_order_no}">
-				<input type="hidden" name="action"	value="userWantToPay"></FORM>
-		</td> --%>
-<!-- 	</tr> -->
-<!-- </table> -->
-
-<!-- <h3>列出該訂單的所有票券</h3> -->
-<!-- <table> -->
-<!-- 	<tr> -->
-<!-- 		<th>票券編號</th> -->
-<!-- 		<th>持票人會員編號</th> -->
-<!-- 		<th>票券狀態</th> -->
-<!-- 		<th>活動座位區名稱</th> -->
-<!-- 		<th>活動座位區顏色代碼</th> -->
-		
-<!-- 		<th>票種名稱</th> -->
-<!-- 		<th>票種價格</th> -->
-<!-- 		<th>場次名稱</th> -->
-<!-- 		<th>活動開始日期</th> -->
-<!-- 		<th>活動結束日期</th> -->
-<!-- 		<th>售票結束日期</th> -->
-<!-- 		<th>活動主題名稱</th> -->
-<!-- 		<th>場地名稱</th> -->
-<!-- 		<th>場地地址</th> -->
-		
-<!-- 	</tr> -->
-<%-- 	<c:forEach var="showticketVO" items="${stvos}"> --%>
-<!-- 		<tr> -->
-<%-- 			<td>${showticketVO.ticket_no}</td> --%>
-<%-- 			<td>${showticketVO.member_no}</td> --%>
-<%-- 			<td>${showticketVO.ticket_status}</td> --%>
-<%-- 			<td>${showticketVO.ticarea_name}</td> --%>
-<%-- 			<td>${showticketVO.ticarea_color}</td> --%>
-			
-<%-- 			<td>${showticketVO.tictype_name}</td> --%>
-<%-- 			<td>${showticketVO.tictype_price}</td> --%>
-<%-- 			<td>${showticketVO.eve_sessionname}</td> --%>
-<%-- 			<td>${showticketVO.eve_startdate}</td> --%>
-<%-- 			<td>${showticketVO.eve_enddate}</td> --%>
-<%-- 			<td>${showticketVO.eve_offsaledate}</td> --%>
-<%-- 			<td>${showticketVO.evetit_name}</td> --%>
-<%-- 			<td>${showticketVO.venue_name}</td> --%>
-<%-- 			<td>${showticketVO.address}</td> --%>
-<!-- 		</tr> -->
-<%-- 	</c:forEach> --%>
-<!-- </table> -->
-
-
-
-<%-- <h4><a href="<%=request.getContextPath()%>/frontend/ticketorder/select_page.jsp">前往會員的訂單查詢</a></h4> --%>
-<%-- <form method="post" action="<%=request.getContextPath()%>/frontend/ticketorder/ticketorder.do"> --%>
-<!-- 	<input type="hidden" name="action" value="member_select_ticketorders"> -->
-<%-- 	<input type="hidden" name="member_no" value="${toVO.member_no}"> <!--Member not done yet, only been set as M000001 --> --%>
-<!-- 	<input type="submit" value="前往會員的訂單查詢"> -->
-<!-- </form> -->
 
 </body>
 </html>

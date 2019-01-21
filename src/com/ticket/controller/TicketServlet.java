@@ -10,9 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.event.model.Event_H5_Service;
 import com.event.model.Event_H5_VO;
+import com.event_title.model.EventTitleService;
+import com.event_title.model.EventTitleVO;
+import com.member.model.MemberVO;
 import com.resaleorder.model.ResaleOrderService;
 import com.seating_area.model.SeatingArea_H5_Service;
 import com.seating_area.model.SeatingArea_H5_VO;
@@ -36,6 +40,7 @@ public class TicketServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		HttpSession session = req.getSession();
 		
 //		if("getOne_For_Display".equals(action)) {
 //			List<String> errorMsgs = new LinkedList<String>();
@@ -632,7 +637,8 @@ public class TicketServlet extends HttpServlet {
 			}
 		}
 		
-		if ("member_cancel_One_resale_ticket".equals(action)) { 
+		if ("member_cancel_One_resale_ticket".equals(action)) 
+		{ 
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -732,6 +738,146 @@ public class TicketServlet extends HttpServlet {
 //			}
 //		}
 		
+		//code below is for backend/ticket to search every event's seatingarea situation.
+//		if("".equals(action)) {
+//			
+//			
+//			try {
+//				
+//			} catch(Exception e) {
+//				
+//			}
+//		}
+
+		if ("listEventTitle_ByCompositeQuery_from_backend_ticket".equals(action)) {
+			
+			Map<String, String> eventTitleErrorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("eventTitleErrorMsgs", eventTitleErrorMsgs);
+			
+			try {
+				
+//				String member_no = req.getParameter("member_no");
+//				MemberVO member = (MemberVO) session.getAttribute("member");
+//				if(member==null ) {
+//					eventTitleErrorMsgs.put("Exception", "請先登入");
+//				}
+//				if (!eventTitleErrorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/backend/ticket/select_page.jsp"); 
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+//				
+//				String member_no = member.getMemberNo();
+//				req.setAttribute("member_no", member_no);
+
+				/****************************** 1.將輸入資料轉為Map **************************************************/ 
+				Map<String, String[]> map = req.getParameterMap();
+
+				/****************************** 2.開始複合查詢 **************************************************/
+				EventTitleService eventTitleService = new EventTitleService();
+				List<EventTitleVO> list  = eventTitleService.getAllLaunched(map);
+
+				List<String> listEveTitNo = new LinkedList<String>();
+				for(EventTitleVO a_etvo :list) {
+					String evetit_no = a_etvo.getEvetit_no();
+					listEveTitNo.add(evetit_no);
+				}
+				System.out.println("listSizeOfEventTitleSearch="+listEveTitNo.size());
+				if(listEveTitNo.size()==0) {
+					eventTitleErrorMsgs.put("Exception", "無法取得資料");
+					System.out.println("這可能是代表查無目前還有在賣或是還有座位區剩餘票樹的活動");
+				}
+				
+				if (!eventTitleErrorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/backend/ticket/select_page.jsp"); 
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				String [] strArrayEveTitNo = listEveTitNo.toArray(new String[listEveTitNo.size()]);
+				System.out.println("strArrayEveTitNo created,="+strArrayEveTitNo);
+				System.out.println("0000");
+				for(int i = 0;i<strArrayEveTitNo.length;i++) {
+					System.out.println("strArrayEveTitNo["+i+"]="+strArrayEveTitNo[i]);
+				}
+				System.out.println("1111");
+				
+				
+				Event_H5_Service eh5Svc = new Event_H5_Service();
+				
+				Map<String, String[]> map_Event_H5_VO = new TreeMap<String, String[]>();
+				map_Event_H5_VO.put("evetit_no", strArrayEveTitNo);
+				List<Event_H5_VO> listEvent_H5_VO = eh5Svc.getAll(map_Event_H5_VO, "eve_no");
+				System.out.println("222");
+				List<String> listEveNo = new LinkedList<String>();
+				for(Event_H5_VO a_eh5vo:listEvent_H5_VO) {
+					listEveNo.add(a_eh5vo.getEve_no());
+				}
+				
+				req.setAttribute("listEveNo", listEveNo);
+				
+				System.out.println("listEveNo.size="+listEveNo.size());
+				for(String a_eve_no :listEveNo) {
+					System.out.println("a liseEveNo's eve_no="+a_eve_no);
+				}
+				
+				/****************************** 3.查詢完成,準備轉交 **************************************************/
+															//WebContent\backend\ticket\listAllEvevoByCompositeQueryWithListEveNo.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/ticket/listAllEvevoByCompositeQueryWithListEveNo.jsp");
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+//				eventTitleErrorMsgs.put("Exception", "無法取得資料 : " + e.getMessage());
+				eventTitleErrorMsgs.put("Exception", "無法取得資料 : " + e.getMessage());
+				System.out.println("error at ticketServlet.java action=listEventTitle_ByCompositeQuery_from_backend_ticket");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/ticket/select_page.jsp");
+				failureView.forward(req, res);
+			}
+			
+		}
+		
+			
+		if("member_select_One_Evevo_From_listAllEvevoByCompositeQueryWithListEveNo".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			System.out.println("bear111");
+			
+        	try {
+        		
+//        		String member_no = req.getParameter("member_no");
+//        		System.out.println("member_no="+member_no);
+//        		if (member_no == null || (member_no.trim()).length() == 0) {        			
+//					errorMsgs.add("請先登入");
+//				}
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/backend/ticket/select_page.jsp"); 
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+				
+				String eve_no = req.getParameter("eve_no");
+				System.out.println("bear222");
+				
+//        		req.setAttribute("member_no", member_no);
+        		req.setAttribute("eve_no", eve_no);
+        		System.out.println("bear333");
+        			//WebContent\backend\ticket\listAllSeatingAreaByEveNo.jsp
+        	//CA105G2\WebContent\backend\ticket\listAllSeatingAreaByEveNo.jsp
+        		String url = "/backend/ticket/listAllSeatingAreaByEveNo.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+				
+        	} catch(Exception e) {
+        		System.out.println("bear444");
+        		errorMsgs.add("error at controller ticketServlet.java action=member_select_One_Evevo_From_listAllEvevoByCompositeQueryWithListEveNo"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/backend/ticket/select_page.jsp");
+				failureView.forward(req, res);
+        	}
+        }
 		
 	}
 	public boolean checkInputTicketOrderNo(String str) {

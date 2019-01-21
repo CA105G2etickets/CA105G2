@@ -28,7 +28,7 @@ pageContext.setAttribute("eve_no",eve_no);
 <%@ page import="java.util.*"%>
 <%@ page import="com.event_title.model.*"%>
 
-<jsp:useBean id="eventTitleService" scope="page" class="com.event_title.model.EventTitleService" />
+<%-- <jsp:useBean id="eventTitleService" scope="page" class="com.event_title.model.EventTitleService" /> --%>
 <jsp:useBean id="eventService" scope="page" class="com.event.model.EventService" />
 <jsp:useBean id="ticketTypeService" scope="page" class="com.ticket_type.model.TicketTypeService" />
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />

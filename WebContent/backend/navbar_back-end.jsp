@@ -174,7 +174,7 @@ body{
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div>
-					<a href="#" class="topnav" align="center">票券管理</a>
+					<a href="<%=request.getContextPath()%>/backend/ticket/select_page.jsp" class="topnav" align="center">票券管理</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
