@@ -17,6 +17,17 @@
 	pageContext.setAttribute("getNotInTheAdvertisementList", getNotInTheAdvertisementList); 
 %>
 
+<%
+	String member_no = null;
+
+	if (session.getAttribute("administratorVO") == null) {  
+		session.setAttribute("location", request.getRequestURI()); 
+		response.sendRedirect(request.getContextPath()+"/backend/login_back-end.jsp"); 
+		return;
+	}
+
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -51,7 +62,14 @@
 	
 	<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
 	
-	
+	<div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+            </li>
+            <li class="active">廣告管理</li>
+        </ol>
+    </div>	
 	
 	<div class="container">
 		<input type="hidden" id="projectName" name="projectName" value="<%=request.getContextPath() %>">

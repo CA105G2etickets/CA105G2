@@ -43,6 +43,19 @@
 
 
 
+	<div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+            </li>
+            <li>
+                <a href="<%= request.getContextPath()%>/backend/venue/listAllVenue.jsp">場地管理</a>
+            </li>
+            <li class="active">瀏覽場地</li>
+        </ol>
+    </div>
+
+
 
 	<div class="container">
 		<span class="text-danger">${venueErrorMsgs.venue_no}</span>
@@ -51,7 +64,7 @@
 
 
 
-    	<div class="container" style="margin-bottom:30px;">
+    	<div class="container" style="margin-bottom:30px;"><div class="row">
     	
             <div class="col-xs-12 col-sm-12">    
 				<div class="tabbable">
@@ -122,7 +135,7 @@
 				</span>
 			</div>
                       
-        </div>
+        </div></div>
 
     
 	<!-- Google Map -->

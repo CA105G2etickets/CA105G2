@@ -68,6 +68,20 @@
 
 		<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
 		
+		
+		
+		<div class="container">
+	        <ol class="breadcrumb">
+	            <li>
+	                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+	            </li>
+	            <li>
+	                <a href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventVO.evetit_no}&eve_no=${eventVO.eve_no}">活動管理</a>
+	            </li>
+	            <li class="active">修改活動場次</li>
+	        </ol>
+	    </div>	
+		
 
 
 		<div class="container">

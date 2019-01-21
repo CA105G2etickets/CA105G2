@@ -39,6 +39,20 @@
 
 
 		<div class="container">
+	        <ol class="breadcrumb">
+	            <li>
+	                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+	            </li>
+	            <li>
+	                <a href="<%= request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp">活動管理</a>
+	            </li>
+	            <li class="active">新增活動主題</li>
+	        </ol>
+	    </div>	
+
+
+
+		<div class="container">
 			<span class="text-danger">${eventTitleErrorMsgs.Exception}</span>
 		</div>
 

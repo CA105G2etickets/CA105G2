@@ -11,6 +11,17 @@
 	pageContext.setAttribute("venueList", list); 
 %>
 
+<%
+	String member_no = null;
+
+	if (session.getAttribute("administratorVO") == null) {  
+		session.setAttribute("location", request.getRequestURI()); 
+		response.sendRedirect(request.getContextPath()+"/backend/login_back-end.jsp"); 
+		return;
+	}
+
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -45,6 +56,17 @@
 
 
 	<div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+            </li>
+            <li class="active">場地管理</li>
+        </ol>
+    </div>	
+
+
+
+	<div class="container">
 		<span class="text-danger">${venueErrorMsgs.venue_no}</span>
 		<span class="text-danger">${venueErrorMsgs.Exception}</span>
 	</div>
@@ -70,14 +92,14 @@
 						<td>${venueVO.venue_name}</td>
 						<td>${venueVO.address}</td>
 						<td>						
-							<form method="post" action="<%=request.getContextPath()%>/venue/VenueServlet.do" class="actionForm" target="_blank">
+							<form method="post" action="<%=request.getContextPath()%>/venue/VenueServlet.do" class="actionForm">
 								<input type="hidden" name="venue_no"         value="${venueVO.venue_no}">
 			    		 		<input type="hidden" name="requestURL"       value="<%=request.getServletPath()%>">
 			    		 		<input type="hidden" name="return_venue_no"  value="${param.venue_no}">
 			    		 		<input type="hidden" name="action"           value="getOneVenue_For_Display">
 								<input type="submit" value="瀏覽" class="btn btn-info btn-sm"> 	
 							</form>	
-							<form method="post" action="<%=request.getContextPath()%>/venue/VenueServlet.do" class="actionForm" target="_blank">
+							<form method="post" action="<%=request.getContextPath()%>/venue/VenueServlet.do" class="actionForm">
 								<input type="hidden" name="venue_no"         value="${venueVO.venue_no}">
 			    		 		<input type="hidden" name="requestURL"       value="<%=request.getServletPath()%>">
 			    		 		<input type="hidden" name="return_venue_no"  value="${param.venue_no}">

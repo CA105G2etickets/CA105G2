@@ -6,6 +6,17 @@
 <%@ page import="com.event_title.model.*"%>
 <%@ page import="com.event.model.*"%>
 
+<%
+	String member_no = null;
+
+	if (session.getAttribute("administratorVO") == null) {  
+		session.setAttribute("location", request.getRequestURI()); 
+		response.sendRedirect(request.getContextPath()+"/backend/login_back-end.jsp"); 
+		return;
+	}
+
+%>
+
 <jsp:useBean id="today" class="java.util.Date"/> 
 <fmt:timeZone value="Asia/Taipei">   
 	<fmt:formatDate var="now" value="${today}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -43,6 +54,17 @@
 
 
 	<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
+	
+	
+	
+	<div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+            </li>
+            <li class="active">活動管理</li>
+        </ol>
+    </div>	
 
 
 
@@ -51,15 +73,10 @@
 		<span class="text-danger">${eventTitleErrorMsgs.Exception}</span>
 		<span class="text-danger">${eventErrorMsgs.Exception}</span>
 	</div>
-		
-		
-		
-		
-		
-		
-		
 	
+
 	
+		
 		
 <!-- --------------------活動主題---------------------------------------------------------------------------------------------------- -->
 		

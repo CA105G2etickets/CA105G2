@@ -40,6 +40,19 @@
 
 
 
+		<div class="container">
+	        <ol class="breadcrumb">
+	            <li>
+	                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+	            </li>
+	            <li>
+	                <a href="<%=request.getContextPath()%>/backend/event_title/listAllEventTitleRelatives.jsp?evetit_no=${eventTitleVO.evetit_no}">活動管理</a>
+	            </li>
+	            <li class="active">瀏覽活動主題</li>
+	        </ol>
+	    </div>	
+
+
 
     	<div class="container" style="margin-bottom:30px;">
 	            

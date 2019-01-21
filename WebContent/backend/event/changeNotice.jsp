@@ -2,6 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%
+	String member_no = null;
+
+	if (session.getAttribute("administratorVO") == null) {  
+		session.setAttribute("location", request.getRequestURI()); 
+		response.sendRedirect(request.getContextPath()+"/backend/login_back-end.jsp"); 
+		return;
+	}
+
+%>
+
 <jsp:useBean id="eventTitleService" scope="page" class="com.event_title.model.EventTitleService" />	
 <jsp:useBean id="eventService" scope="page" class="com.event.model.EventService" />	
 
@@ -12,7 +23,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>異動通知</title>
+    <title>訊息通知</title>
     <!-- Basic -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- dataTables -->
@@ -42,6 +53,19 @@
 
 
 	<jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
+	
+	
+	
+	<div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%= request.getContextPath()%>/backend/index.jsp">首頁</a>
+            </li>
+            <li class="active">訊息通知</li>
+        </ol>
+	</div>	
+	
+	
 	
 	<div class="container">
 		<span class="text-danger">${eventErrorMsgs.Exception}</span>
