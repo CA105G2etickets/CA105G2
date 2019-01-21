@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.ticketorder.model.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -13,15 +12,6 @@ if(member_no == null || (member_no.trim()).length() == 0){
 }
 pageContext.setAttribute("member_no",member_no);
 //pageContext.setAttribute("member_no","M000001");
-
-String ticket_order_no = (String)request.getAttribute("ticket_order_no");
-if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
-	pageContext.setAttribute("ticket_order_no","T_20181225_000001");
-}else{
-	pageContext.setAttribute("ticket_order_no",ticket_order_no);
-	//pageContext.setAttribute("ticket_order_no","TO_20181225_000001");
-}
-
 %>
 
 <html>
@@ -29,12 +19,12 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>listAllTicketsBymember_noAndticket_order_no.jsp</title>
+    <title>listAllResaleOrderBymember_noAndresale_ordno.jsp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
 <jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
-<jsp:useBean id="SeatingArea_H5_Service" scope="page" class="com.seating_area.model.SeatingArea_H5_Service" />
+
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" />
 <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
 <body>

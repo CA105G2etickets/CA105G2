@@ -1,16 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.ticket.model.*"%>
-<%@ page import="com.ticketorder.model.*"%>
+<%@ page import="com.resaleorder.model.*"%>
 
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
-List<ShowTicketVO> listShow = (List<ShowTicketVO>)request.getAttribute("listShow");
-pageContext.setAttribute("listShow", listShow);
+//List<ShowTicketVO> listShow = (List<ShowTicketVO>)request.getAttribute("listShow");
+//pageContext.setAttribute("listShow", listShow);
 %>
 <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
+<jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
 <html>
 <head>
 <title>member_select_tickets.jsp</title>

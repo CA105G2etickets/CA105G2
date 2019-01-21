@@ -40,7 +40,7 @@ public class TicketServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 		
 //		if("getOne_For_Display".equals(action)) {
 //			List<String> errorMsgs = new LinkedList<String>();

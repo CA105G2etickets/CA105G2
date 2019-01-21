@@ -277,7 +277,7 @@ body {
 	<!-- ------------------------------ toListTicketsByMember ::: begin ------------------------------ -->
 	<div class="container" style="margin-bottom:30px;">
 		<form method="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
-			<input type="hidden" name="action" value="member_select_resaleorders">
+			<input type="hidden" name="action" value="member_select_resaleorders_by_member_no">
 			<input type="hidden" name="member_no" value="${member_no}">
 			<input type="hidden" name="resale_ordno" value="${resale_ordno}">
 			<input type="hidden" name="ticket_no" value="${resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no}">
