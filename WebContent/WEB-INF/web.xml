@@ -333,7 +333,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>GoodsQaServlet</servlet-name>
-    <url-pattern>/goodsqa/GoodsQaServlet.do</url-pattern>
+    <url-pattern>/goodsqa/GoodsQa.do</url-pattern>
   </servlet-mapping>
   <servlet>
         <servlet-name>ResaleOrderServlet</servlet-name>

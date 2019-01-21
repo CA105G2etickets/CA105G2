@@ -95,13 +95,13 @@
 			<td>${goodsqaVO.questions_date}</td>
 			<td>${goodsqaVO.answer_date}</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQa.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="­×§ï">
 			     <input type="hidden" name="gfaq_no"  value="${goodsqaVO.gfaq_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQa.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="§R°£">
 			     <input type="hidden" name=gfaq_no  value="${goodsqaVO.gfaq_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>

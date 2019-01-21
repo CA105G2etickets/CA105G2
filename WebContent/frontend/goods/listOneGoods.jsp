@@ -20,43 +20,39 @@
 <html>
 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>瀏覽商品詳情</title>
-<!-- Basic -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<style>
-body {
-	font-family: 微軟正黑體 !important;
-}
-
-.right .carousel-control {
-	background-color: white;
-}
-
-.left .carousel-control {
-	background-color: white;
-}
-</style>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>ETIckeTs - 瀏覽商品詳情</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<style>
+		body {
+			font-family: 微軟正黑體 !important;
+		}
+		
+		.right .carousel-control {
+			background-color: white;
+		}
+		
+		.left .carousel-control {
+			background-color: white;
+		}
+		textarea {
+			resize: none;
+			width: 600px;
+			height: 300px;
+		}
+	</style>
 </head>
-
+<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 <body>
-
-	<jsp:include page="/frontend/navbar_front-end.jsp" flush="true" />
 	<input type="hidden" name="member_no" id="member_no" value="${member.memberNo}">
 	<input type="hidden" name="projectName" id="projectName" value="<%=request.getContextPath() %>">
-
-
-	<div class="container" style="margin-bottom: 10px;">
-		<a href="#" class="btn btn-warning" style="float: right;">發起揪團</a> <a
-			href="#" class="btn btn-info"
-			style="float: right; margin-right: 10px;">查看揪團</a>
-	</div>
-
-
+<!-- 	<div class="container" style="margin-bottom: 10px;"> -->
+<!-- 		<a href="#" class="btn btn-warning" style="float: right;">發起揪團</a> <a -->
+<!-- 			href="#" class="btn btn-info" -->
+<!-- 			style="float: right; margin-right: 10px;">查看揪團</a> -->
+<!-- 	</div> -->
 
 	<div class="container">
 		<div class="row">
@@ -75,32 +71,26 @@ body {
 					<!-- 幻燈片主圖區 -->
 					<div class="carousel-inner">
 						<div class="item active">
-							<img
-								src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}"
-								style="height: 300px; width: auto; margin-left: auto; margin-right: auto;">
+							<img src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsVO.goods_no}" style="height: 300px; width: auto; margin-left: auto; margin-right: auto;">
 						</div>
 						<c:if test="${goodsVO.goods_picture2 != null}">
 							<div class="item">
-								<img
-									src="<%=request.getContextPath()%>/goods/goodsImg2.do?goods_no=${goodsVO.goods_no}"
-									style="height: 300px; width: auto; margin-left: auto; margin-right: auto;">
+								<img src="<%=request.getContextPath()%>/goods/goodsImg2.do?goods_no=${goodsVO.goods_no}" style="height: 300px; width: auto; margin-left: auto; margin-right: auto;">
 							</div>
 						</c:if>
 						<c:if test="${goodsVO.goods_picture3 != null}">
 							<div class="item">
-								<img
-									src="<%=request.getContextPath()%>/goods/goodsImg3.do?goods_no=${goodsVO.goods_no}"
-									style="height: 300px; width: auto; margin-left: auto; margin-right: auto;">
+								<img src="<%=request.getContextPath()%>/goods/goodsImg3.do?goods_no=${goodsVO.goods_no}" style="height: 300px; width: auto; margin-left: auto; margin-right: auto;">
 							</div>
 						</c:if>
 					</div>
 					<!-- 上下頁控制區 -->
-					<a class="left carousel-control" href="#carousel-id"
-						data-slide="prev"><span
-						class="glyphicon glyphicon-chevron-left"></span></a> <a
-						class="right carousel-control" href="#carousel-id"
-						data-slide="next"><span
-						class="glyphicon glyphicon-chevron-right"></span></a>
+					<a class="left carousel-control" href="#carousel-id" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a>
+					<a class="right carousel-control" href="#carousel-id" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
@@ -110,7 +100,7 @@ body {
 					<input type="hidden" id="favoriteGoodsStatus" value="outTheFavoriteGoods">
 				</div>
 				<h3>原價 : ${goodsVO.goods_price} 元 / 個</h3>
-				<h3>促銷價 :<font color="red">  ${goodsVO.forsales_a} <font size="2">（購買十個以上即享有促銷價）</font></font></h3>
+				<h3>促銷價 :<font color="red">${goodsVO.forsales_a} <font size="2">（購買十個以上即享有促銷價）</font></font></h3>
 				<h3>銷售量 : ${goodsVO.goods_sales_count}  個</h3>
 				<form name="shoppingForm" action="<%=request.getContextPath()%>/shopping_cart/ShoppingCart.do" method="POST">
 					<h3 style="text-align:right;">數量：
@@ -122,78 +112,69 @@ body {
 					</h3>
 						<div>
 							<input type="submit" name="Submit" class="btn btn-default" value="放入購物車" style="float:right;font-size:large">
-							<input type="hidden" name="goods_no" id="goods_no"  value="${goodsVO.goods_no}">
+							<input type="hidden" name="goods_no" id="goods_no" value="${goodsVO.goods_no}">
 						</div>
-						
 					<input type="hidden" name="goods_no" value="${goodsVO.goods_no}">
 					<input type="hidden" name="evetit_no" value="${goodsVO.evetit_no}">
-					<input type="hidden" name="goods_name"
-						value="${goodsVO.goods_name}"> <input type="hidden"
-						name="goods_price" value="${goodsVO.goods_price}"> <input
-						type="hidden" name="forsales_a" value="${goodsVO.forsales_a}">
-					<input type="hidden" name="goods_status"
-						value="${goodsVO.goods_status}"> <input type="hidden"
-						name="old_price" value="${goodsVO.goods_price}"> <input
-						type="hidden" name="action" value="ADD">
+					<input type="hidden" name="goods_name" value="${goodsVO.goods_name}">
+					<input type="hidden" name="goods_price" value="${goodsVO.goods_price}">
+					<input type="hidden" name="forsales_a" value="${goodsVO.forsales_a}">
+					<input type="hidden" name="goods_status" value="${goodsVO.goods_status}">
+					<input type="hidden" name="old_price" value="${goodsVO.goods_price}">
+					<input type="hidden" name="action" value="ADD">
 				</form>
 			</div>
 		</div>
 	</div>
 
-	<div role="tabpanel">
-		<!-- 標籤面板：標籤區 -->
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#tab1"
-				aria-controls="tab1" role="tab" data-toggle="tab">熱門</a></li>
-			<li role="presentation"><a href="#tab2" aria-controls="tab2"
-				role="tab" data-toggle="tab">商品問答區</a></li>
-		</ul>
+	<div class="container" style="margin-bottom: 200px">
+		<div class="row">
 
-		<!-- 標籤面板：內容區 -->
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="tab1">
-				<h4 style="margin-top: 25px;">${goodsVO.goods_introduction}</h4>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="tab2">
-				<form id="qna_question_form" action="qna_ins.php" method="post"
-					class="rt-panel rt-panel-default rt-panel-header rt-form rt-mb-4x">
-					<h6 class="rt-panel-title">提出問題</h6>
-					<p class="rt-panel-text">
-						為保障會員交易安全，留言請勿填寫個人資料、外部連結或任何導私下交易之內容，否則您送出的內容可能無法正常顯示。</p>
-					<div class="rt-panel-inner qna-post-area">
-						<div class="qna-ask-alert rt-alert rt-alert-danger"
-							style="display: none;">
-							<p>
-								<span class="fa fa-exclamation-triangle rt-text-isolated"></span>
-								<span class="rt-alert-content"></span>
-							</p>
-						</div>
-
-						<textarea name="content" rows="10" id="questionTextarea"
-							class="rt-form-textarea "></textarea>
-						<div class="rt-mt rt-mb text-right">
-							<span class="rt-text-notice rt-text-medium">(250個中文字以內)</span>
-						</div>
-						<input type="hidden" name="action" value="insert"> <input
-							type="submit" value="送出新增">
-						<div class="text-center">
-							<input class="rt-button rt-button-submit" type="submit"
-								name="button" value="提出問題" data-type="submit-question-button">
-
-						</div>
+			<div role="tabpanel">
+				<!-- 標籤面板：標籤區 -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">熱門</a></li>
+					<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">商品問答區</a></li>
+				</ul>
+				<!-- 標籤面板：內容區 -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="tab1">
+						<h4 style="margin-top: 25px;">${goodsVO.goods_introduction}</h4>
 					</div>
-
-				</form>
+					<div role="tabpanel" class="tab-pane" id="tab2">
+						<form id="qna_question_form" action="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" method="post" class="rt-panel rt-panel-default rt-panel-header rt-form rt-mb-4x">
+							<h6 class="rt-panel-title">提出問題</h6>
+							<p class="rt-panel-text">為保障會員交易安全，留言請勿填寫個人資料、外部連結或任何導私下交易之內容，否則您送出的內容可能無法正常顯示。</p>
+							<div class="rt-panel-inner qna-post-area">
+								<div class="qna-ask-alert rt-alert rt-alert-danger" style="display: none;">
+									<p>
+										<span class="fa fa-exclamation-triangle rt-text-isolated"></span>
+										<span class="rt-alert-content"></span>
+									</p>
+								</div>
+		
+								<textarea name="content" rows="10" id="questionTextarea" class="rt-form-textarea ">
+								</textarea>
+								<div class="rt-mt rt-mb text-right">
+									<span class="rt-text-notice rt-text-medium">(250個中文字以內)</span>
+								</div>
+								<input type="hidden" name="action" value="insert">
+								<input type="submit" value="送出新增">
+								<div class="text-center">
+									<input type="hidden" name="action" value="uploadMessage">
+									<input class="rt-button rt-button-submit" type="submit" name="button" value="提出問題" data-type="submit-question-button">
+								</div>
+							</div>
+		
+						</form>
+					</div>
+				</div>
 			</div>
-			<br> <br> <br> <br> <br>
 		</div>
-
-
-
+	</div>
 
 		<jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
 
-		<!-- Basic -->
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script>
@@ -314,9 +295,7 @@ body {
 			                }
 			            });
 			     	}
-			     	
 			    });
 	</script>
 </body>
-
 </html>

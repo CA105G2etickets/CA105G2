@@ -76,34 +76,27 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do"
-		name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQa.do" name="form1">
 		<table>
 			<tr>
 				<td>商品編號:</td>
-				<td><input type="TEXT" name="goods_no" size="45"
-					value="<%=(goodsqaVO == null) ? "P0000003" : goodsqaVO.getGoods_no()%>" /></td>
+				<td><input type="TEXT" name="goods_no" size="45" value="<%=(goodsqaVO == null) ? "P0000003" : goodsqaVO.getGoods_no()%>" /></td>
 			</tr>
 			<tr>
 				<td>會員編號:</td>
-				<td><input type="TEXT" name="member_no" size="45"
-					value="<%=(goodsqaVO == null) ? "M000001" : goodsqaVO.getMember_no()%>" /></td>
+				<td><input type="TEXT" name="member_no" size="45" value="<%=(goodsqaVO == null) ? "M000001" : goodsqaVO.getMember_no()%>" /></td>
 			</tr>
 			<tr>
 				<td>管理員編號:</td>
-				<td><input type="TEXT" name="administrator_no" size="45"
-					value="<%=(goodsqaVO == null) ? "A001" : goodsqaVO.getAdministrator_no()%>" /></td>
+				<td><input type="TEXT" name="administrator_no" size="45" value="<%=(goodsqaVO == null) ? "A001" : goodsqaVO.getAdministrator_no()%>" /></td>
 			</tr>
 			<tr>
 				<td>問題:</td>
-				<td><input type="TEXT" name="questions_content" size="45"
-					value="<%=(goodsqaVO == null) ? "什麼時候到貨" : goodsqaVO.getQuestions_content()%>" /></td>
+				<td><input type="TEXT" name="questions_content" size="45" value="<%=(goodsqaVO == null) ? "什麼時候到貨" : goodsqaVO.getQuestions_content()%>" /></td>
 			</tr>
 			<tr>
 				<td>回答:</td>
-				<td><input type="TEXT" name="answer_content" size="45"
-					value="<%=(goodsqaVO == null) ? "今天" : goodsqaVO.getAnswer_content()%>" /></td>
+				<td><input type="TEXT" name="answer_content" size="45" value="<%=(goodsqaVO == null) ? "今天" : goodsqaVO.getAnswer_content()%>" /></td>
 			</tr>
 
 			<tr>
@@ -165,7 +158,7 @@ th, td {
 	       theme: '',              //theme: 'dark',
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
 		   value: '<%=questions_date%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
@@ -177,9 +170,8 @@ th, td {
 	       theme: '',              //theme: 'dark',
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=answer_date%>
-	', // value:   new Date(),
+	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+		   value: '<%=answer_date%>', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前

@@ -3,7 +3,7 @@
 <%@ page import="com.goods_qa.model.*"%>
 
 <%
-  GoodsQaVO goodsqaVO = (GoodsQaVO) request.getAttribute("goodsQaVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+  GoodsQaVO goodsQaVO = (GoodsQaVO) request.getAttribute("goodsQaVO"); 
 %>
 
 <html>
@@ -65,31 +65,31 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="goodsqa.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQa.do" name="form1">
 <table>
 	<tr>
 		<td>問答編號:<font color=red><b>*</b></font></td>
-		<td><%=goodsqaVO.getGfaq_no()%></td>
+		<td><%=goodsQaVO.getGfaq_no()%></td>
 	</tr>
 	<tr>
 		<td>商品編號:</td>
-		<td><input type="TEXT" name="goods_no" size="45" value="<%=goodsqaVO.getGoods_no()%>" /></td>
+		<td><input type="TEXT" name="goods_no" size="45" value="<%=goodsQaVO.getGoods_no()%>" /></td>
 	</tr>
 	<tr>
 		<td>會員編號:</td>
-		<td><input type="TEXT" name="member_no" size="45"	value="<%=goodsqaVO.getMember_no()%>" /></td>
+		<td><input type="TEXT" name="member_no" size="45" value="<%=goodsQaVO.getMember_no()%>" /></td>
 	</tr>
 	<tr>
 		<td>管理員編號:</td>
-		<td><input type="TEXT" name="administrator_no" size="45"	value="<%=goodsqaVO.getAdministrator_no()%>" /></td>
+		<td><input type="TEXT" name="administrator_no" size="45" value="<%=goodsQaVO.getAdministrator_no()%>" /></td>
 	</tr>
 	<tr>
 		<td>問題:</td>
-		<td><input type="TEXT" name="questions_content" size="45"	value="<%=goodsqaVO.getQuestions_content()%>" /></td>
+		<td><input type="TEXT" name="questions_content" size="45" value="<%=goodsQaVO.getQuestions_content()%>" /></td>
 	</tr>
 	<tr>
 		<td>回答:</td>
-		<td><input type="TEXT" name="answer_content" size="45"	value="<%=goodsqaVO.getAnswer_content()%>" /></td>
+		<td><input type="TEXT" name="answer_content" size="45" value="<%=goodsQaVO.getAnswer_content()%>" /></td>
 	</tr>
 	<tr>
 		<td>發問日期:</td>
@@ -106,10 +106,9 @@
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="gfaq_no" value="<%=goodsqaVO.getGfaq_no()%>">
+<input type="hidden" name="gfaq_no" value="<%=goodsQaVO.getGfaq_no()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
-
 
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
@@ -131,10 +130,10 @@
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
+	       timepicker:true,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=goodsqaVO.getQuestions_date()%>', // value:   new Date(),
+	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+		   value: '<%=goodsQaVO.getQuestions_date()%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -143,10 +142,10 @@
         $.datetimepicker.setLocale('zh');
         $('#f_date2').datetimepicker({
 	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
+	       timepicker:true,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=goodsqaVO.getAnswer_date()%>', // value:   new Date(),
+	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+		   value: '<%=goodsQaVO.getAnswer_date()%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前

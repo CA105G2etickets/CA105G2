@@ -30,11 +30,11 @@
 </c:if>
 
 
-<a href='listAllGoodsqa.jsp'>List</a> 所有問題  <br><br>
+<a href="<%=request.getContextPath()%>/backend/goodsqa/listAllGoodsqa.jsp">List</a> 所有問題  <br><br>
   
   
 
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQa.do" >
         <b>輸入問題編號 (如7001):</b>
         <input type="text" name="gfaq_no">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -45,7 +45,7 @@
   <jsp:useBean id="goodsqaSvc" scope="page" class="com.goods_qa.model.GoodsQaService" />
    
   
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQaServlet.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/goodsqa/GoodsQa.do" >
        <b>選擇問題編號:</b>
        <select size="1" name="gfaq_no">
          <c:forEach var="goodsqaVO" items="${goodsqaSvc.all}" > 
