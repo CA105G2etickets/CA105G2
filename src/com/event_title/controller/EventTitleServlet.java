@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -610,10 +611,17 @@ public class EventTitleServlet extends HttpServlet {
 				/****************************** 2.開始複合查詢 **************************************************/
 				EventTitleService eventTitleService = new EventTitleService();
 				Set<EventVO> list  = eventTitleService.getEventsByEventTitle(evetit_no);
+				Set<EventVO> eventVOSimpleList = new HashSet<>();
+				for(EventVO oldEventVO : list) {
+					EventVO newEventVO = new EventVO();
+					newEventVO.setEve_no(oldEventVO.getEve_no());
+					newEventVO.setEve_sessionname(oldEventVO.getEve_sessionname());
+					eventVOSimpleList.add(newEventVO);
+				}
 				
 				/****************************** 3.查詢完成,準備轉交 **************************************************/
 				Gson gson = new Gson();				
-				String eventVOListStr = gson.toJson(list);
+				String eventVOListStr = gson.toJson(eventVOSimpleList);
 				out.println(eventVOListStr);
 				
 				/***************************其他可能的錯誤處理**********************************/
