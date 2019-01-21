@@ -48,5 +48,9 @@ public class PermissionService {
 	public List<PermissionVO> getAll() {
 		return dao.getAll();
 	}
+
+	public List<String> findPermissionByAdministratorNo(String administrator_no) {
+		return dao.findPermissionByAdministratorNo(administrator_no);
+	}
 	
 }

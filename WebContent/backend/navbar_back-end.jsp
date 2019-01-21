@@ -1,7 +1,30 @@
+<%@	page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*" %>
-<%@page import="com.administrator.model.*"%>
+<%@	page import="com.administrator.model.*"%>
+<%@	page import="com.permission.model.*"%>
+
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+	for (String permission : theAdministratorPermission) {
+		if (permission.equals("PL05")) {
+%>
+		return true;
+<% } %>
+		return false;
+<% }
+}
+%>
+
+<c:forEach var="permission" items="${theAdministratorPermission}">
+	${permission}
+</c:forEach>
 
 <html>
 <head>

@@ -30,6 +30,8 @@ public class PermissionDAO implements PermissionDAO_interface {
 			"SELECT * FROM PERMISSION WHERE ADMINISTRATOR_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM PERMISSION ORDER BY ADMINISTRATOR_NO ,PERMISSION_LIST_NO";
+	private static final String FIND_PERMISSION_BY_ADMINISTRATOR_NO = 
+			"SELECT PERMISSION_LIST_NO FROM PERMISSION WHERE ADMINISTRATOR_NO = ?";
 
 	@Override
 	public void insert(PermissionVO permissionVO) {
@@ -337,5 +339,58 @@ public class PermissionDAO implements PermissionDAO_interface {
 			}
 		}
 
+	}
+	
+	@Override
+	public List<String> findPermissionByAdministratorNo(String administrator_no) {
+
+		List<String> list = new ArrayList<String>();
+		String string = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_PERMISSION_BY_ADMINISTRATOR_NO);
+
+			pstmt.setString(1, administrator_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				string = new String();
+				list.add(rs.getString("PERMISSION_LIST_NO"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("錯誤!"
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 }

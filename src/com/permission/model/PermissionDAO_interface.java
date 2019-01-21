@@ -10,6 +10,8 @@ public interface PermissionDAO_interface {
     public PermissionVO findByPermissionListNo(String permission_list_no);
     public PermissionVO findByAdministratorNo(String administrator_no);
     public List<PermissionVO> getAll();
+
+    public List<String> findPermissionByAdministratorNo(String administrator_no);
     
     public void insert2 (PermissionVO permissionVO , java.sql.Connection con);
     
