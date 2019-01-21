@@ -12,6 +12,13 @@
 
 <%
 	String member_no = null;
+
+	if (session.getAttribute("member") == null) {  
+		session.setAttribute("location", request.getRequestURI()); 
+		response.sendRedirect(request.getContextPath()+"/frontend/login_front-end.jsp"); 
+		return;
+	}
+
 	if(session.getAttribute("member") != null){
 		MemberVO memberVO = (MemberVO)session.getAttribute("member");
 		member_no = memberVO.getMemberNo();
@@ -56,6 +63,9 @@
 		    height: auto;
 		    width: 100%
 		}
+		#clickFavoriteEvent{
+			cursor: pointer;
+		}
 		body{
 			font-family:微軟正黑體!important;
 		}
@@ -73,8 +83,19 @@
 	
 	
 	<input type="hidden" name="member_no" id="member_no" value="${member.memberNo}">
+	<input type="hidden" name="projectName" id="projectName" value="<%=request.getContextPath() %>">
 
-
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<%= request.getContextPath()%>/frontend/index.jsp">首頁</a>
+            </li>
+            <li>
+                <a href="<%= request.getContextPath()%>/frontend/favorite/selectFavorite.jsp">我的最愛</a>
+            </li>
+            <li class="active">最愛活動</li>
+        </ol>
+    </div>
 
     <div class="container">
         <div class="row flex-row">
@@ -82,13 +103,17 @@
                 <div class="col-xs-12 col-sm-4">
                     <div class="thumbnail">
                     	<jsp:useBean id="eventTitleService" scope="page" class="com.event_title.model.EventTitleService" />
-                        <a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${favoriteEventVO.evetit_no}" target="_blank">
+                        <a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${favoriteEventVO.evetit_no}">
                             <img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=425&evetit_no=${favoriteEventVO.evetit_no}" alt="">
                         </a>                       
                         <div class="caption">
-                            <h4><a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${favoriteEventVO.evetit_no}" target="_blank">
+                            <h4><a href="<%= request.getContextPath()%>/frontend/event_title/listOneEventTitle.jsp?evetit_no=${favoriteEventVO.evetit_no}">
                             	${eventTitleService.getOneEventTitle(favoriteEventVO.evetit_no).evetit_name}                   
                             </a></h4>
+                            <input type="hidden" name="evetit_no" value="${favoriteEventVO.evetit_no}">
+							<div style="color:red;float:right;" id="clickFavoriteEvent">
+								<h4><i class="glyphicon glyphicon-heart"></i>取消最愛</h4>
+			             	</div>
                         </div>                   
                     </div>
                 </div>
@@ -96,6 +121,39 @@
         </div>
     </div>
 
+
+
+	<script>
+		$(document).ready(function(){
+			$("#clickFavoriteEvent").click(function(){
+				var member_no = $("#member_no").val();
+	        	var evetit_no = $(this).prev().val();
+	        	
+        		var url = $("#projectName").val();
+                url += '/favorite_event/FavoriteEventServlet.do';
+                var data = '';
+              	data += 'member_no=';
+               	data += member_no;
+               	data += '&evetit_no=';
+               	data += evetit_no;
+               	data += '&';
+                data += 'action=deleteFavoriteEvent';
+                console.log(data);
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: data,
+                    success: function(data) {              	
+                    	if(data.indexOf("成") != -1){
+                    		location.reload();
+                    	} else {
+                    		window.alert(data);
+                    	}
+                    }
+                });	
+			});
+		});
+	</script>
 
 
 
