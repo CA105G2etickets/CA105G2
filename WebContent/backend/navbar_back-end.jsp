@@ -5,26 +5,26 @@
 <%@	page import="com.administrator.model.*"%>
 <%@	page import="com.permission.model.*"%>
 
-<%
-if (session.getAttribute("administratorVO") != null) {
-	PermissionService permissionService = new PermissionService();
-	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
-	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
-%>
-<%
-	for (String permission : theAdministratorPermission) {
-		if (permission.equals("PL05")) {
-%>
-		return true;
-<% } %>
-		return false;
-<% }
-}
-%>
+<%-- <% --%>
+<!-- // if (session.getAttribute("administratorVO") != null) { -->
+<!-- // 	PermissionService permissionService = new PermissionService(); -->
+<!-- // 	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no()); -->
+<!-- // 	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission); -->
+<%-- %> --%>
+<%-- <% --%>
+<!-- // 	for (String permission : theAdministratorPermission) { -->
+<!-- // 		if (permission.equals("PL05")) { -->
+<%-- %> --%>
+<!-- 		return true; -->
+<%-- <% } %> --%>
+<!-- 		return false; -->
+<%-- <% } --%>
+<!-- // } -->
+<%-- %> --%>
 
-<c:forEach var="permission" items="${theAdministratorPermission}">
-	${permission}
-</c:forEach>
+<%-- <c:forEach var="permission" items="${theAdministratorPermission}"> --%>
+<%-- 	${permission} --%>
+<%-- </c:forEach> --%>
 
 <html>
 <head>
@@ -196,9 +196,26 @@ body{
 				</div>			
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL06")) {
+%>
 				<div>
-					<a href="<%=request.getContextPath()%>/backend/ticket/select_page.jsp" class="topnav" align="center">票券管理</a>
+					<a href="<%=request.getContextPath()%>/backend/ticket/select_page.jsp" class="topnav" align="center" style="text-decoration: none; color: white;">票券管理</a>
 				</div>
+<% }
+}
+} else { %>
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">票券管理</a>
+<%
+}
+%>				
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div class="dropdown">

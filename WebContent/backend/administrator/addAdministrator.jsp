@@ -149,31 +149,31 @@ function readURL(input){
 		<td>管理員權限</td>
 		<td>
 		<label class="labelcontainerforadd">
-  		<input type="checkbox" value="PL05">活動管理
+  		<input type="checkbox" name="permission" value="PL05">活動管理
   		<span class="checkmark"></span>
 		</label>
 		<label class="labelcontainerforadd">
-  		<input type="checkbox" value="PL06">票券管理
+  		<input type="checkbox" name="permission" value="PL06">票券管理
   		<span class="checkmark"></span>
 		</label>
 		<label class="labelcontainerforadd">
-  		<input type="checkbox" value="PL02">商品管理
+  		<input type="checkbox" name="permission" value="PL02">商品管理
   		<span class="checkmark"></span>
 		</label>
 		<label class="labelcontainerforadd">
-  		<input type="checkbox" value="PL01">公告管理
+  		<input type="checkbox" name="permission" value="PL01">公告管理
   		<span class="checkmark"></span>
 		</label>
 		<label class="labelcontainerforadd">
-  		<input type="checkbox" value="PL07">常見問題管理
+  		<input type="checkbox" name="permission" value="PL07">常見問題管理
   		<span class="checkmark"></span>
 		</label>
 		<label class="labelcontainerforadd">
-  		<input type="checkbox" value="PL04">會員管理
+  		<input type="checkbox" name="permission" value="PL04">會員管理
   		<span class="checkmark"></span>
 		</label>
 		<label class="labelcontainerforadd">
-  		<input type="checkbox" value="PL08">管理員管理
+  		<input type="checkbox" name="permission" value="PL08">管理員管理
   		<span class="checkmark"></span>
 		</label>
 		</td>
