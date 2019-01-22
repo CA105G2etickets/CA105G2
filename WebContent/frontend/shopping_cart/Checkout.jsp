@@ -275,7 +275,6 @@
             height: 151px;    height:  151px; 
    } 
 </style>
-
 <script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
