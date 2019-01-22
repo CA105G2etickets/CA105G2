@@ -210,7 +210,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-10">
 						<div class="col-xs-12 col-sm-6">
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" name="form1">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/group_open/group_open.do" name="orderForm">
 						<h3>團購訂單</h3>
 							<hr>
 							 <div class="form-group">
@@ -233,7 +233,9 @@
 									districtName: "town" // 自訂地區 select 標籤的 name 值
 								});
 							</script>	
-							<input type="text" class="form-control" id="usr" name="receiver_add">
+<!-- 							<input type="text" class="form-control" id="usr" name="receiver_add"> -->
+							<input type="TEXT" name="street" id="street" placeholder="請輸入收件人地址" class="form-control" value="">
+							<input type="hidden" name="receiver_add" id="receiver_add" value=" " >	
 						</div>							 
 						       <div class="form-group">
   									<label for="usr">收件人電話</label>
@@ -260,7 +262,7 @@
 								<input type="hidden" name="order_etd" id="f_date2" class="form-control" style="width:30%">
 								<input type="hidden" name="pickup_date" id="f_date3" class="form-control" style="width:30%">
 								<input type="hidden" name="action" value="insert_Front">		
-								<button type="submit" class="btn btn-primary finish">產生訂單</button>
+								<button type="submit" class="btn btn-primary finish" id="completeOrderBtn">產生訂單</button>
 							</FORM>
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 							<br>
