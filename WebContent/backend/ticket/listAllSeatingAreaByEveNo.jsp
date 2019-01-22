@@ -73,6 +73,24 @@ pageContext.setAttribute("eve_no",eve_no);
             </tr>
         </tfoot> -->
     </table>
+    
+    <div class="container" style="margin-bottom:30px;">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<div class="form-group eve_seatmap_area">
+                 	<img src="<%= request.getContextPath()%>/event/EventGifReader?scaleSize=850&eve_no=${eve_no}" id="seatmap" style="width:100%;">
+             	</div>
+			</div> 
+			<div class="col-xs-12 col-sm-6">
+				<div class="form-group evetit_poster">
+					<img src="<%= request.getContextPath()%>/event_title/EventTitleGifReader?scaleSize=850&evetit_no=${Event_H5_Service.getOneEvent_H5(eve_no).eventtitle_h5VO.evetit_no}" style="width:100%;">
+				</div>
+			</div> 
+		</div> 
+	</div>
+    
+    
+    
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>

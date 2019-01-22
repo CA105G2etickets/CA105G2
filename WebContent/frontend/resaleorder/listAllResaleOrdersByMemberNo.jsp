@@ -21,8 +21,8 @@ pageContext.setAttribute("list_revos", list_revos);
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
 
-<%-- <jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
-<jsp:useBean id="SeatingArea_H5_Service" scope="page" class="com.seating_area.model.SeatingArea_H5_Service" />
+<jsp:useBean id="ticketService" scope="page" class="com.ticket.model.TicketService" />
+<%-- <jsp:useBean id="SeatingArea_H5_Service" scope="page" class="com.seating_area.model.SeatingArea_H5_Service" />
 <jsp:useBean id="Event_H5_Service" scope="page" class="com.event.model.Event_H5_Service" /> --%>
 <jsp:useBean id="resaleorderService" scope="page" class="com.resaleorder.model.ResaleOrderService" />
 <jsp:useBean id="memberService" scope="page" class="com.member.model.MemberService" />
@@ -45,9 +45,17 @@ pageContext.setAttribute("list_revos", list_revos);
         <thead>
             <tr>
                 <th>轉售訂單編號</th>
+                
+                <th>票券編號</th>
+                <th>票種名稱</th>
+                
                 <th>賣票者姓名</th>
                 <th>買票者姓名</th>
                 <th>轉售價格</th>
+                
+                <th>付款方式</th>
+                <th>轉讓訂單狀態</th>
+                
                 
             </tr>
         </thead>
@@ -55,10 +63,29 @@ pageContext.setAttribute("list_revos", list_revos);
         	<c:forEach var="resaleordervo" items="${list_revos}">
         		<tr>
         			<td>${resaleordervo.resale_ordno}</td>
+        			
+        			<td>${resaleordervo.ticketVO.ticket_no}</td>
+        			<td>${ticketService.getOneTicket(resaleordervo.ticketVO.ticket_no).seatingarea_h5VO.ticarea_name}</td>
+        			
         			<td>${memberService.getOneMember(resaleordervo.member_seller_no).memberFullname}</td>
         			<td>${memberService.getOneMember(resaleordervo.member_buyer_no).memberFullname}</td>
         			<%-- <td><fmt:formatDate value="${TicketVO.ticket_create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
         			<td>${resaleordervo.resale_ordprice}</td>
+        			
+        			<td>
+						<c:if test="${resaleordervo.resale_ordstatus == 'WAITTOPAY1'}">
+							尚未付款
+						</c:if>
+						<c:if test="${resaleordervo.resale_ordstatus == 'COMPLETE2'}">
+							完成付款
+						</c:if>
+						<c:if test="${resaleordervo.resale_ordstatus == 'CANCEL3'}">
+							已取消
+						</c:if>
+						<c:if test="${resaleordervo.resale_ordstatus == 'OUTDATE4'}">
+							逾時未付
+						</c:if>
+					</td>
         			<td>
         				<c:if test="${resaleordervo.resale_ordstatus == 'COMPLETE2'}">
         					<form method="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
@@ -66,6 +93,7 @@ pageContext.setAttribute("list_revos", list_revos);
 								<!-- <font>member_select_One_resaleorder</font> -->
 								<input type="hidden" name="member_buyer_no" value="${resaleordervo.member_buyer_no}">
 								<input type="hidden" name="ticket_no" value="${resaleordervo.ticketVO.ticket_no}">
+								<input type="hidden" name="resale_ordno" value="${resaleordervo.resale_ordno}">
 								<input type="submit" value="票券明細" class="btn btn-primary" style="float:right;">
 							</form>
 						</c:if>
@@ -79,6 +107,7 @@ pageContext.setAttribute("list_revos", list_revos);
 							逾時未付
 						</c:if>
         			</td>
+        			
         		</tr>
         	</c:forEach>
         </tbody>

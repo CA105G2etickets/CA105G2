@@ -935,6 +935,7 @@ public class ResaleOrderServlet extends HttpServlet {
 				
 				req.setAttribute("tvo", tvo);
 				req.setAttribute("resale_ordno", resale_ordno);
+				System.out.println("resale_ordno at member_select_One_resaleorder_fromListAll= "+resale_ordno);
 				
 				RequestDispatcher successView = req.getRequestDispatcher("/frontend/resaleorder/listOneTicketByResaleOrder.jsp");
 				successView.forward(req, res);

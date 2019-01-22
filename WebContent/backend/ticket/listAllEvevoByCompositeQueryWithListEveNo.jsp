@@ -51,6 +51,7 @@ pageContext.setAttribute("listEveNo",listEveNo);
             <tr>
                 <!-- <th>活動編號</th> -->
                 <!-- <th>送出此查詢者的會員姓名</th> -->
+                <th>活動場次名稱</th>
                 <th>活動主題熱度</th>
                 <th>活動主題名稱</th>
                 <th>活動開始時間</th>
@@ -67,7 +68,7 @@ pageContext.setAttribute("listEveNo",listEveNo);
         	<c:forEach var="string_eve_no" items="${listEveNo}">
         		<tr>
         			<%-- <td>${string_eve_no}</td> --%>
-        			
+        			<td>${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_sessionname}</td>
         			<td>
         				${Event_H5_Service.getOneEvent_H5(string_eve_no).eventtitle_h5VO.promotionranking}
         			</td>

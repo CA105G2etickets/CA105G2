@@ -44,7 +44,7 @@ pageContext.setAttribute("member_no",member_no);
         <thead>
             <tr>
                 <th>票券編號</th>
-                <th>賣票者電子信箱</th>
+                <th>賣票者姓名</th>
                 <th>賣價</th>
                 <th>原票價與票種名稱</th>
                 <th>活動主題名稱</th>
@@ -57,7 +57,7 @@ pageContext.setAttribute("member_no",member_no);
         	<c:forEach var="TicketVO" items="${ticketService.getTicketsOnResale()}">
         		<tr>
         			<td>${TicketVO.ticket_no}</td>
-        			<td>${memberService.getOneMember(TicketVO.member_no).email}</td>
+        			<td>${memberService.getOneMember(TicketVO.member_no).memberFullname}</td>
         			<%-- <td><fmt:formatDate value="${TicketVO.ticket_create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
         			<td>${TicketVO.ticket_resale_price}</td>
         			<td>原價:${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price}, ${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_name}</td>

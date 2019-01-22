@@ -116,9 +116,9 @@ public class TicketOrderServlet extends HttpServlet {
 				successView.forward(req, res);
 				
 			}catch(Exception e) {
-				errorMsgs.add("Error at controller.select_EVE_NO_toBuyTickets:"+e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/frontend/index.jsp");
+//				errorMsgs.add("Error at controller.select_EVE_NO_toBuyTickets:"+e.getMessage());
+				errorMsgs.add("購票前請先登入");
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/login_front-end.jsp");
 				failureView.forward(req, res);
 			}
         }

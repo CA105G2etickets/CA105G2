@@ -48,13 +48,13 @@ pageContext.setAttribute("tvo", tvo);
             <tr>
                 <th>票券編號</th>
                 <th>持票人</th>
-                <th>票券成立時間</th>
+                <!-- <th>票券成立時間</th> -->
                 <th>狀態</th>
                 <th>活動開始時間</th>
                 <th>活動的地址</th>
                 <th>活動主題名稱</th>
                 <th>轉讓成交價</th>
-                <%-- <th>轉售狀態</th>--%>
+                <th>是否由轉讓取得</th>
                 
             </tr>
         </thead>
@@ -62,7 +62,7 @@ pageContext.setAttribute("tvo", tvo);
         	<tr>
         		<td>${tvo.ticket_no}</td>
         		<td>${memberService.getOneMember(tvo.member_no).memberFullname}</td>
-        		<td><fmt:formatDate value="${tvo.ticket_create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+        		<%-- <td><fmt:formatDate value="${tvo.ticket_create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
         		<td>
         			${(tvo.ticket_status == 'ACTIVE1') ? '未使用' : ''}
 					${(tvo.ticket_status == 'USED2') ? '已使用' : ''}
@@ -72,12 +72,22 @@ pageContext.setAttribute("tvo", tvo);
         		<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(tvo.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         		<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(tvo.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).venue_h5VO.address}</td>
         		<td>${Event_H5_Service.getOneEvent_H5(SeatingArea_H5_Service.getOneSeatingArea_H5(tvo.seatingarea_h5VO.ticarea_no).eve_h5VO.eve_no).eventtitle_h5VO.evetit_name}</td>
+        		
 				<td>${resaleorderService.getOneResaleOrd(resale_ordno).resale_ordprice} 元</td>
 				<%-- <td>
         			${(TicketVO.ticket_resale_status == 'NONE1') ? '無' : ''}
 					${(TicketVO.ticket_resale_status == 'SELLING2') ? '欲轉讓' : ''}
 					${(TicketVO.ticket_resale_status == 'CHECKING3') ? '有人想要' : ''}
         		</td> --%>
+        		<td>
+        			<%-- <c:if test="(${resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.is_from_resale} == 'YES')">
+        				是
+        			</c:if>
+        			<c:if test="(${resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.is_from_resale} == 'NO')">
+        				否
+        			</c:if> --%>
+        			是
+        		</td>
         		</tr>
         </tbody>
         
