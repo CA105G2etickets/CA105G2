@@ -47,7 +47,7 @@
 							<th>商品價格</th>
 							<th>商品圖片</th>
 <!-- 							<th>修改</th> -->
-							<th>刪除</th>
+<!-- 							<th>刪除</th> -->
 						</tr>
 					</thead>
 						
@@ -88,13 +88,13 @@
 <%-- 								     <input type="hidden" name="goods_no" value="${favoriteGoodsVO.goods_no}"> --%>
 <!-- 								     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
 <!-- 								</td> -->
-								<td>
-								  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/favorite_goods/FavoriteGoods.do" style="margin-bottom: 0px;">
-								     <input type="submit" value="刪除" class="btn btn-danger">
-								     <input type="hidden" name="member_no"  value="${favoriteGoodsVO.member_no}">
-								     <input type="hidden" name="goods_no"  value="${favoriteGoodsVO.goods_no}">
-								     <input type="hidden" name="action" value="delete"></FORM>
-								</td>
+<!-- 								<td> -->
+<%-- 								  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/favorite_goods/FavoriteGoods.do" style="margin-bottom: 0px;"> --%>
+<!-- 								     <input type="submit" value="刪除" class="btn btn-danger"> -->
+<%-- 								     <input type="hidden" name="member_no"  value="${favoriteGoodsVO.member_no}"> --%>
+<%-- 								     <input type="hidden" name="goods_no"  value="${favoriteGoodsVO.goods_no}"> --%>
+<!-- 								     <input type="hidden" name="action" value="delete"></FORM> -->
+<!-- 								</td> -->
 							</tr>
 						</c:forEach>
 					</tbody>

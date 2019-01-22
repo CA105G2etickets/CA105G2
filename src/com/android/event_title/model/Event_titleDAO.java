@@ -268,7 +268,7 @@ public class Event_titleDAO implements Event_titleDAO_interface{
 				"from event_title a right join " + 
 				"(SELECT * " + 
 				"FROM EVENT " + 
-				"where CURRENT_DATE >= trunc(eve_startdate) and CURRENT_DATE < trunc(eve_enddate) ) b " + 
+				"where CURRENT_DATE >= trunc(eve_startdate) and CURRENT_DATE <=  eve_enddate ) b " + 
 				"on a.evetit_no = b.evetit_no";
 		
 		try {

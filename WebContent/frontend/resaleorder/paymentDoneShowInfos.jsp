@@ -204,7 +204,7 @@ body {
 					<td style="width:20%;">${resale_ordno}</td>
 					<td>${resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no}</td>
 					<%-- <td>${SeatingArea_H5_Service.getOneSeatingArea_H5(ticketService.getOneTicket(ticketVO.ticket_no).seatingarea_h5VO.ticarea_no).ticarea_name}</td> --%>
-					<td><font color="red">${ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_name}</font></td>
+					<td>${ticketService.getOneTicket(resaleorderService.getOneResaleOrd(resale_ordno).ticketVO.ticket_no).seatingarea_h5VO.ticarea_name}</td>
 					<td>${memberService.getOneMember(member_no).memberFullname}</td>
 					<td>${memberService.getOneMember(resaleorderService.getOneResaleOrd(resale_ordno).member_seller_no).memberFullname}</td>
 

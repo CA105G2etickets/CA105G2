@@ -5,27 +5,6 @@
 <%@	page import="com.administrator.model.*"%>
 <%@	page import="com.permission.model.*"%>
 
-<%
-if (session.getAttribute("administratorVO") != null) {
-	PermissionService permissionService = new PermissionService();
-	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
-	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
-%>
-<%
-	for (String permission : theAdministratorPermission) {
-		if (permission.equals("PL05")) {
-%>
-		return true;
-<% } %>
-		return false;
-<% }
-}
-%>
-
-<c:forEach var="permission" items="${theAdministratorPermission}">
-	${permission}
-</c:forEach>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -143,12 +122,6 @@ body{
 				<%}%>
 				
 				<ul class="nav navbar-nav navbar-right administratormenu">
-<%-- 					<%if (session.getAttribute("member") == null) {%> --%>
-						
-<%-- 					<% } else {%> --%>
-<%-- 						<li><a href="#">電子錢包餘額<font color="orange">${member.ewalletBalance}</font></a></li> --%>
-<%-- 					<%}%> --%>
-						
 						
 						<li style="padding: 0; margin-top: 0">
 						<%if (session.getAttribute("administratorVO") == null) {%>
@@ -162,18 +135,7 @@ body{
                         </form>
 						</a>
 						<%}%>
-<%-- 						<a href="${member eq null ? "/CA105G2/frontend/login_front-end.jsp" : "/CA105G2/frontend/index.jsp"}"><input type="hidden" name="action" value="member_Logout"> ${member eq null ? "登入" : "登出"} </a> --%>
 						</li>
-						
-					
-					<!-- 				<li class="dropdown"><a href="#" class="dropdown-toggle" -->
-					<!-- 					data-toggle="dropdown">繁體中文 <b class="caret"></b></a> -->
-					<!-- 					<ul class="dropdown-menu"> -->
-					<!-- 						<li><a href="#">繁體中文</a></li> -->
-					<!-- 						<li><a href="#">English</a></li> -->
-					<!-- 						<li><a href="#">日本語</a></li> -->
-					<!-- 					</ul> -->
-					<!-- 				</li> -->
 				</ul>
 			</div>
 			<!-- 手機隱藏選單區結束 -->
@@ -183,6 +145,16 @@ body{
 		<div class="topnav row">
 		<font size="4">
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL05")) {
+%>
 				<div class="dropdown">
 					<a class="dropdown-toggle topnav" id="eventManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" align="center" style="text-decoration: none; color: white;">活動管理
 						<span class="caret"></span>
@@ -193,14 +165,48 @@ body{
 			            <li><a href="<%=request.getContextPath()%>/backend/advertisement/listAllAdvertisement.jsp" target="_blank">廣告管理</a></li>
 			            <li><a href="<%=request.getContextPath()%>/backend/event/changeNotice.jsp" target="_blank">訊息通知</a></li>
 			        </ul>
-				</div>			
-			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
-				<div>
-					<a href="<%=request.getContextPath()%>/backend/ticket/select_page.jsp" class="topnav" align="center">票券管理</a>
 				</div>
+<% }
+}
+} else { %>
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">活動管理</a>
+<%
+}
+%>				
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL06")) {
+%>
+				<div>
+					<a href="<%=request.getContextPath()%>/backend/ticket/select_page.jsp" class="topnav" align="center" style="text-decoration: none; color: white;">票券管理</a>
+				</div>
+<% }
+}
+} else { %>
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">票券管理</a>
+<%
+}
+%>				
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL02")) {
+%>
 				<div class="dropdown">
 					<a class="dropdown-toggle topnav" id="GoodsManagement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" align="center" style="text-decoration: none; color: white;">商品管理
 						<span class="caret"></span>
@@ -210,7 +216,14 @@ body{
 			            <li><a href="<%=request.getContextPath()%>/backend/favorite_goods/selectFavoriteGoods.jsp" align="center">最愛商品管理</a></li>
 			            <li><a href="<%=request.getContextPath()%>/backend/order_history/selectOrder.jsp" align="center">訂單紀錄管理</a></li>
 			        </ul>
-				</div>			
+				</div>
+<% 		}
+	} 
+} else { %>
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">商品管理</a>
+<%	
+}
+%>				
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
 				<div class="dropdown">
@@ -218,13 +231,47 @@ body{
     				<span class="caret"></span>
     				</a>
     					<ul class="dropdown-menu" style="text-align: center;">
-      						<li class="dropdown-header">公告管理</li>
-      						<li><a href="<%=request.getContextPath()%>/backend/news/allNews.jsp">查詢/修改公告</a></li>
-     						<li><a href="<%=request.getContextPath()%>/backend/news/addNews.jsp">新增公告</a></li>
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL01")) {
+%>
+				<li class="dropdown-header">公告管理</li>
+      			<li><a href="<%=request.getContextPath()%>/backend/news/allNews.jsp">查詢/修改公告</a></li>
+     			<li><a href="<%=request.getContextPath()%>/backend/news/addNews.jsp">新增公告</a></li>
+<% 		}
+	} 
+} else { %>
+				<li class="dropdown-header">公告管理</li>
+<%	
+}
+%>    					
       						<li class="divider"></li>
-      						<li class="dropdown-header">常見問題管理</li>
-      						<li><a href="<%=request.getContextPath()%>/backend/faq/allFaq.jsp">查詢/修改常見問題</a></li>
-      						<li><a href="<%=request.getContextPath()%>/backend/faq/addFaq.jsp">新增常見問題</a></li>
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL07")) {
+%>
+				<li class="dropdown-header">常見問題管理</li>
+      			<li><a href="<%=request.getContextPath()%>/backend/faq/allFaq.jsp">查詢/修改常見問題</a></li>
+      			<li><a href="<%=request.getContextPath()%>/backend/faq/addFaq.jsp">新增常見問題</a></li>
+<% 		}
+	} 
+} else { %>
+				<li class="dropdown-header">常見問題管理</li>
+<%	
+}
+%>      						
     					</ul>
  	 			</div>
 			</div>
@@ -301,7 +348,5 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- <script src="https://code.jquery.com/jquery.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>	 -->
 </body>
 </html>

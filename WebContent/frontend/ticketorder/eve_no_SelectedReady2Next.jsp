@@ -121,6 +121,7 @@ h4{
 		</c:if>
 	</div>
 
+	<%-- 
 	<!-- ------------------------------ progress bar ::: start ------------------------------ -->
     <div class="container" style="margin-bottom:30px;">
         <div class="row bs-wizard" style="border-bottom:0;">
@@ -154,7 +155,7 @@ h4{
         </div>
     </div>
 	<!-- ------------------------------ progress bar ::: end ------------------------------ -->
-	
+	--%>
 
 
 	<!-- ------------------------------ whichEventTitle&Event ::: start ------------------------------ -->	

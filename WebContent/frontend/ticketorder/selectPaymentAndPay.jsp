@@ -102,6 +102,7 @@ body {
 		</c:if>
 	</div>
 
+	<%-- 
 	<!-- ------------------------------ progress bar ::: start ------------------------------ -->
     <div class="container">
         <div class="row bs-wizard" style="border-bottom:0;">
@@ -161,7 +162,7 @@ body {
 		</div>
 	</div>
 	<!-- ------------------------------ whichEventTitle&Event ::: end ------------------------------ -->
-
+	--%>
 
 
 	<!-- ------------------------------ memberInfo ::: start ------------------------------ -->
@@ -217,7 +218,7 @@ body {
 						<fmt:formatNumber type="number" value="${toVO.total_price}" /> 元
 					</td>
 					<td>
-						<fmt:formatDate value="${toVO.ticket_order_time}" pattern="yyyy-MM-dd HH:mm"/>
+						<fmt:formatDate value="${toVO.ticket_order_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					</td>
 					<td>
 						${(toVO.payment_method == 'NOTYET') ? '尚未選擇' : ''}
@@ -248,7 +249,7 @@ body {
 							 }
 						%>
 						<c:if test="${(toVO.ticket_order_status == 'WAITTOPAY1')}">
-							<fmt:formatDate value="<%=ticket_order_payment_deadline%>" pattern="yyyy-MM-dd HH:mm"/>
+							<fmt:formatDate value="<%=ticket_order_payment_deadline%>" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</c:if>
 						<c:if test="${(toVO.ticket_order_status == 'CANCEL3')}">
 							無

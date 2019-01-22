@@ -142,8 +142,8 @@
 									<input name="pay_methods" type="radio" value="CREDITCARD" checked="checked"><b>信用卡</b>
 									<input name="pay_methods" type="radio" value="EWALLET"><b>電子錢包</b><br>
 									<div class="creditcard pay_methods bBW" style="display:block;">
-										<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16">
-										<input type="TEXT" name="creditcard_no_safe" placeholder="安全碼" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
+										<input type="TEXT" name="creditcard_no" id="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16">
+										<input type="TEXT" name="creditcard_no_safe" id="creditcard_no_safe" placeholder="安全碼" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
 									</div>
 									<div class="ewallet pay_methods bBW">
 										<label>電子錢包餘額：$<%=memberVO.getEwalletBalance()%></label>
@@ -159,8 +159,8 @@
 									<label>信用卡　</label>
 									<font color="red">電子錢包餘額不足　</font><a href="<%=request.getContextPath()%>/frontend/ewallet/deposit.jsp">儲值</a>
 									<input type="hidden" name="pay_methods" value="CREDITCARD" >
-										<input type="TEXT" name="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16">
-										<input type="TEXT" name="creditcard_no_safe" placeholder="安全碼" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
+										<input type="TEXT" name="creditcard_no" id="creditcard_no" placeholder="請輸入信用卡卡號" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="16">
+										<input type="TEXT" name="creditcard_no_safe" id="creditcard_no_safe" placeholder="安全碼" class="form-control" value="" onkeyup ="value=value.replace(/[^\d]/g,'')" maxlength="3">
 									<div class="form-group">
 										<label>出貨方式：</label>
 										<select class="form-control" size="1" name="shipping_methods">
@@ -241,6 +241,7 @@
 					<hr>
 					<input type="hidden" name="action" value="insert_Front">
 					<input type="button" value="完成訂單" class="btn btn-primary" style="" id="completeOrderBtn">
+					<input type="button" value="MAGIC!" class="btn btn-default" style="" id="magic">
 				</FORM>
 			</div>	
         </div>
@@ -274,7 +275,6 @@
             height: 151px;    height:  151px; 
    } 
 </style>
-
 <script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
@@ -321,6 +321,14 @@ $(document).ready(function(){
         	var street = $("#street").val();
         	$("#receiver_add").val(town.substring(0,3) + city + town.substring(4) + street);
         	$("#orderForm").submit();
+        });
+        
+        $("#magic").click(function(){
+        	var city = $(".city").val("桃園市");
+        	var town = $(".town option:selected").text("324 平鎮區");
+        	var street = $("#street").val("民族路二段175號");
+			var creditcard_no = $("#creditcard_no").val("5120523049872240");
+			var creditcard_no_safe = $("#creditcard_no_safe").val("278");
         });
     });
 </script>	
