@@ -734,6 +734,14 @@ public class Group_openServlet extends HttpServlet {
 				System.out.println("Group_openServlet"+group_openVO.getGroup_name());
 
 				if (!errorMsgs.isEmpty()) {
+					
+					
+					for(String errormsgs : errorMsgs) {
+						System.out.println("錯誤訊息:"+errormsgs);
+						
+					}
+					
+				
 					req.setAttribute("group_openVO", group_openVO);
 //					String url1 = req.getParameter("url1");
 //					String url2 = req.getParameter("url2");

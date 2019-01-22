@@ -10,17 +10,12 @@
 			 String total =session.getAttribute("total").toString();
 		 /* Group_openVO group_openVO = (Group_openVO) session.getAttribute("group_openVOorder");  */
 			 
-			
-			
-			
 			MemberService memberSvc = new MemberService();
 			List<MemberVO> list2 =  memberSvc.getAll();
 			pageContext.setAttribute("list2", list2);
 			
 			MemberVO memberVOsession = (MemberVO)session.getAttribute("member"); 
-			
-			
-			
+	
 %>
 
 <jsp:useBean id="group_memberSvc" scope="page" class="com.group_member.model.Group_memberService" />

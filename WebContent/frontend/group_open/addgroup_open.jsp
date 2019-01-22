@@ -162,10 +162,14 @@ $(function(){
 			var Latitude = document.getElementById("latitude");
 
 			var geocoder = new google.maps.Geocoder();
+			
+			console.log("經緯度166行")
 
 			geocoder.geocode( {
 								 address: add.value}, 
 								function(results, status) 
+								
+								
 							{
 
 							if (status == google.maps.GeocoderStatus.OK) {
@@ -173,6 +177,7 @@ $(function(){
 						Longitude.value = results[0].geometry.location.lng();
 
 						Latitude.value = results[0].geometry.location.lat();	
+						console.log("經緯度180行")
 
 						} else {
 
@@ -382,7 +387,7 @@ $(function(){
 			</select> -->
 			<div class="form-group">
 					<label for="group_address">面交地址</label>
-					<input id="address"  name="group_address" type="textbox"  size="50" maxlength="50" onchange="codeAddress()"class="form-control" value="<%= (group_openVO==null) ? "請輸入面交地址" : group_openVO.getGroup_address()%>"/>
+					<input id="address"  name="group_address" type="textbox"  size="50" maxlength="50" onchange="codeAddress()"class="form-control" value="<%= (group_openVO==null) ? " " : group_openVO.getGroup_address()%>"/>
 					<!-- <input type="text" name="group_address" id="group_address" class="form-control"/>  -->
 					<input id="submit" type="button" value="預視面交地點">
 			</div>
@@ -396,13 +401,13 @@ $(function(){
     			</div>
     		<!-- 	<div id="map"></div> -->
 					<!-- <label for="latitude">緯度</label> -->
-					<input name="latitude" type="hidden" id="latitude" value="<%=(group_openVO==null)? " ": group_openVO.getLatitude()%>" class="form-control"/>
+					<input name="latitude" type="text" id="latitude" value="<%=(group_openVO==null)? " ": group_openVO.getLatitude()%>" class="form-control"/>
 					<%-- <input type="text" name="latitude" id="latitude" class="form-control"
 					value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>"/> --%>
 			<!-- </div> -->
 			<!-- 	<div class="form-group"> -->
 					<!-- <label for="longitude">經度</label> -->
-					<input name="longitude" type="hidden" id="longitude" value="<%=(group_openVO==null)? " ": group_openVO.getLongitude()%>" class="form-control"/>
+					<input name="longitude" type="text" id="longitude" value="<%=(group_openVO==null)? " ": group_openVO.getLongitude()%>" class="form-control"/>
 					<%-- <input type="text" name="longitude" id="longitude" class="form-control"
 					value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>"/> --%>
 				<!--</div> -->
@@ -433,11 +438,13 @@ $(function(){
 			
 			 <c:if test="${goodsVO.goods_no!=null}">
 					<input type="hidden" name="action" value="insert3">
-					<input type="submit" value="送出新增3">
+					<input type="submit" value="送出新增" class="btn btn-success">
+					<button id="magicproduct" type="button" class="btn btn-info">magicproduct</button>
 			</c:if>
 			 <c:if test="${goodsVO.goods_no==null}">
 					<input type="hidden" name="action" value="insert2">
-					<input type="submit" value="送出新增2">
+					<input type="submit" value="送出新增" class="btn btn-success">
+					<button id="magic" type="button" class="btn btn-info">magic</button>
 			</c:if>	
 			<input type="hidden" name="member_no" value="<%=memberVOsession.getMemberNo()%>">
 			<input type="hidden" name="group_member_status" value="grouplead">
@@ -451,7 +458,7 @@ $(function(){
 				</div>
 				<div class="col-xs-12 col-sm-2">
 		
-				<button id="magic" type="button" class="btn btn-info">magic</button>
+				
 		
 			  </div>
 			</div>
@@ -510,6 +517,7 @@ $(function(){
               map: resultsMap,
               position: results[0].geometry.location
             });
+            console.log("經緯度")
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
           }
@@ -517,9 +525,27 @@ $(function(){
       }
     </script>
     <script>
-  		$('#magic').click(function(){
-  			$('#group_name').val('五月天');
+  		$('#magicproduct').click(function(){
+  			$('#group_name').val('五月天人生巡迴演唱會一起打卡不下班');
+  			$('#address').val('中壢市中壢區中大路100號')
+  			$('#latitude').val('24.9682162')
+  			$('#longitude').val('121.20020850000003') 			
+  			$('#end_dateTime').val('2019-01-29 09:30:38')
+  			$('#group_quantity').val('10')
+  			$('#group_dateTime').val('2019-02-09 09:30:38')
+  			
+  			
   		})  
+  		$('#magic').click(function(){
+  			$('#group_name').val('張學友超級經典灰色刷毛衣,一起支持他的經典演唱會')
+  			$('#address').val('台北小巨蛋')
+  			$('#latitude').val('25.0513848')
+  			$('#longitude').val('121.54974140000002') 			
+  			$('#end_dateTime').val('2019-01-28 09:28:38')
+  			$('#group_quantity').val('20')
+  			$('#group_dateTime').val('2019-02-01 09:30:38')
+  			
+  		})
     
     
     
