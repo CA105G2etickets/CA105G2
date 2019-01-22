@@ -267,7 +267,6 @@
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
 							<br>
 						<div class="col-xs-12 col-sm-6">
-							
 
 
 						</div><!-- <div class="col-xs-12 col-sm-6"> -->
