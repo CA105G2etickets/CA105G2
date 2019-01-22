@@ -229,6 +229,16 @@ body{
  	 			</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL04")) {
+%>
 				<div class="dropdown">
     				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">會員管理
     				<span class="caret"></span>
@@ -238,8 +248,25 @@ body{
      						<li><a href="<%=request.getContextPath()%>/backend/member/addMember.jsp">新增會員</a></li>
     					</ul>
  	 			</div>
+<% 		}
+	} 
+} else { %>
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">會員管理</a>
+<%	
+}
+%>				
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL08")) {
+%>
 				<div class="dropdown">
     				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">管理員管理
     				<span class="caret"></span>
@@ -249,6 +276,13 @@ body{
      						<li><a href="<%=request.getContextPath()%>/backend/administrator/addAdministrator.jsp">新增管理員</a></li>
     					</ul>
  	 			</div>
+<% }
+}
+} else { %>
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">管理員管理</a>
+<%
+}
+%>
 			</div>
 			</font>
 		</div>

@@ -312,7 +312,8 @@ public class TicketOrderServlet extends HttpServlet {
 //				req.setAttribute("createdTicketOrderNo", createdTicketOrderNo);
 				
 				//set sessionLiveTime for payment deadline 
-//				session.setMaxInactiveInterval(60);
+				session.setMaxInactiveInterval(30);
+				
 				TicketOrderVO toVO_sendTo_selectPaymentAndPayjsp = toSvc.getOneTicketOrder(createdTicketOrderNo);
 				req.setAttribute("toVO", toVO_sendTo_selectPaymentAndPayjsp);
 				
@@ -530,6 +531,9 @@ public class TicketOrderServlet extends HttpServlet {
 //					listShow.add(stvo);
 //				}
 //				req.setAttribute("listShow", listShow);
+				
+				//after pay successfully, set session live time back to origianl
+				session.setMaxInactiveInterval(1800);
 				
 				String url = "/frontend/ticketorder/paymentDoneShowInfos.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

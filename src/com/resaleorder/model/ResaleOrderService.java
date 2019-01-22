@@ -41,7 +41,7 @@ public class ResaleOrderService {
 		return resaleorderVO;
 	}
 	
-	public String addResaleOrdAndUpdateTicketVOResaleAttributes(String ticket_no, String member_seller_no, String member_buyer_no,
+	synchronized public String addResaleOrdAndUpdateTicketVOResaleAttributes(String ticket_no, String member_seller_no, String member_buyer_no,
 			Integer resale_ordprice, String resale_ordstatus, java.sql.Timestamp resale_ord_createtime, 
 			java.sql.Timestamp resale_ord_completetime, String payment_method,
 			String ticketOwnerMember_no, String changeTo_ticket_resale_status, Integer changeTo_ticket_resale_price,String changeTo_is_from_resale ) 
