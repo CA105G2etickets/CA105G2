@@ -28,10 +28,10 @@
 
 <body>
 
-<div class="container-fluid" style="margin-bottom: 400px">
+<div class="container-fluid" style="margin-bottom: 200px">
 	<div class="row">
-		<div class="col-xs-12 col-sm-2"></div>
-		<div class="col-xs-12 col-sm-8">
+		<div class="col-xs-12 col-sm-1"></div>
+		<div class="col-xs-12 col-sm-10">
 <!-- 			<ol class="breadcrumb"> -->
 <!-- 				<li> -->
 <!-- 					<a href="#">首頁</a> -->
