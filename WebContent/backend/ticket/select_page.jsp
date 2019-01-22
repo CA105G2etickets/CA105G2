@@ -109,12 +109,16 @@ body {
 	</div>
 	<!-- ------------------------------ memberInfo ::: end ------------------------------ -->
 	--%>
+	<div class="container">
+		<h2>購票狀況查詢</h2>
+	</div>
+	<br>
 
 	<!-- ======================================== DAI:::begin ================================================== -->
 	<div class="container">
 		<form method="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
             <div class="form-group">
-                <label for="evetit_name">活動主題名稱</label>
+                <label for="evetit_name">活動主題名稱:</label>
                 <input type="text" name="evetit_name" id="evetit_name" placeholder="請輸入活動主題名稱，來查詢出相關的活動售票狀況" class="form-control" value="">
             </div>
             

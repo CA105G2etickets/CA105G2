@@ -30,11 +30,16 @@ pageContext.setAttribute("eve_no",eve_no);
 
 <body>
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true" />
+
+	<div class="container">
+		<h2>該活動場次的售票狀況:</h2>
+	</div>
+	<br>
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>活動主題名稱</th>
-                <th>場次名稱</th>
+                <th><font color="red">場次名稱</font></th>
                 <!-- <th>活動座位區編號</th> -->
                 <th>活動座位區名稱</th>
                 <!-- <th>該區票價</th> -->

@@ -239,7 +239,7 @@ body {
 							String strError = "";
 							try {
 								ticketOrderCreatedTimeInLongInt = toVO.getTicket_order_time().getTime();
-								deadLineTime = ticketOrderCreatedTimeInLongInt+sessionLiveTime*1000;
+								deadLineTime = ticketOrderCreatedTimeInLongInt+(sessionLiveTime+60)*1000;
 								ticket_order_payment_deadline = new java.sql.Timestamp(deadLineTime);
 							 } catch (Exception e) {
 								 System.out.println("ticket_order_payment_deadline error");
@@ -247,7 +247,15 @@ body {
 								 ticket_order_payment_deadline = new java.sql.Timestamp(System.currentTimeMillis());
 							 }
 						%>
-						<fmt:formatDate value="<%=ticket_order_payment_deadline%>" pattern="yyyy-MM-dd HH:mm"/>
+						<c:if test="${(toVO.ticket_order_status == 'WAITTOPAY1')}">
+							<fmt:formatDate value="<%=ticket_order_payment_deadline%>" pattern="yyyy-MM-dd HH:mm"/>
+						</c:if>
+						<c:if test="${(toVO.ticket_order_status == 'CANCEL3')}">
+							無
+						</c:if>
+						<c:if test="${(toVO.ticket_order_status == 'OUTDATE4')}">
+							無
+						</c:if>
 					</td>
 				</tr>
 			</tbody>

@@ -45,15 +45,21 @@ pageContext.setAttribute("listEveNo",listEveNo);
 			</ul>
 		</c:if>
 	</div>
+	
+	<div class="container">
+		<h2>查詢結果:</h2>
+	</div>
+	<br>
 
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
+            	<th><font color="red">活動主題名稱</font></th>
                 <!-- <th>活動編號</th> -->
                 <!-- <th>送出此查詢者的會員姓名</th> -->
                 <th>活動場次名稱</th>
                 <th>活動主題熱度</th>
-                <th>活動主題名稱</th>
+                
                 <th>活動開始時間</th>
                 <th>活動結束時間</th>
                 <!-- <th>售票開始時間</th> -->
@@ -61,12 +67,13 @@ pageContext.setAttribute("listEveNo",listEveNo);
                 <th>地址</th>
                 <th>單一會員購票上限張數</th>
                 <!-- <th>活動狀態</th> -->
-                <th>查看座位區販售情況</th>
+                <th>查看販售情況</th>
             </tr>
         </thead>
         <tbody>
         	<c:forEach var="string_eve_no" items="${listEveNo}">
         		<tr>
+        			<td>${Event_H5_Service.getOneEvent_H5(string_eve_no).eventtitle_h5VO.evetit_name}</td>
         			<%-- <td>${string_eve_no}</td> --%>
         			<td>${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_sessionname}</td>
         			<td>
@@ -86,7 +93,6 @@ pageContext.setAttribute("listEveNo",listEveNo);
         			
         			<%-- <td>原價:${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_price}, ${SeatingArea_H5_Service.getOneSeatingArea_H5(TicketVO.seatingarea_h5VO.ticarea_no).tickettype_h5VO.tictype_name}</td> --%>
         			
-        			<td>${Event_H5_Service.getOneEvent_H5(string_eve_no).eventtitle_h5VO.evetit_name}</td>
         			<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_startdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         			<td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_enddate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         			<%-- <td><fmt:formatDate value="${Event_H5_Service.getOneEvent_H5(string_eve_no).eve_onsaledate}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
