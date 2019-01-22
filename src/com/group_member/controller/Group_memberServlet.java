@@ -606,8 +606,8 @@ public class Group_memberServlet extends HttpServlet {
 				
 				
 	
-//				String email = group_memberSvc.getemail(group_open_member_no);
-//				group_memberSvc.sendMail(email, log_out_reason);
+				String email = group_memberSvc.getemail(group_open_member_no);
+				group_memberSvc.sendMail(email, log_out_reason);
 				/***************************退款 ************/
 				//取的購買人購買數量	
 				Integer quantity =  group_memberSvc.findByPrimaryKey(member_no, group_no).getProduct_quantity();

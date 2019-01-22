@@ -1297,13 +1297,13 @@ public class Group_openServlet extends HttpServlet {
 
 				System.out.println("Group_openServlet" + list.size());
 				// 寄信件
-//				for (Group_memberVO group_memberVO : list) {
-//					String member_noemail = group_memberVO.getMember_no();
-//					String eamil = group_memberSvc.getemail(member_noemail);
-//					group_memberSvc.sendMail(eamil, dimiss_reason);
-//					System.out.println("Group_openServlet" + member_noemail);
-//
-//				}
+				for (Group_memberVO group_memberVO : list) {
+					String member_noemail = group_memberVO.getMember_no();
+					String eamil = group_memberSvc.getemail(member_noemail);
+					group_memberSvc.sendMail(eamil, dimiss_reason);
+					System.out.println("Group_openServlet" + member_noemail);
+
+				}
 
 				group_openSvc.group_open_quit(group_no);
 
