@@ -253,7 +253,7 @@
     		$('#ticrefpolicy_no').val("TRP2").change();
     		$("#evetit_startdate").val("2019-03-03");
     		$("#evetit_enddate").val("2019-03-03");
-    		$("#launchdate").val("2019-01-20");
+    		$("#launchdate").val("2019-01-24");
     		$("#offdate").val("2019-03-04");
     		$("#eveclass_no").val("A").change();
     		$("#promotionranking").val("5").change();
