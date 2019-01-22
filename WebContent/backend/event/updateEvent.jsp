@@ -56,6 +56,16 @@
  	    body{
 			font-family:微軟正黑體!important;
 		}
+		#magicButton {
+		  position: absolute;
+		  right: 25px;
+		  top: 255px;
+		}
+		#magicButtonTwo {
+		  position: absolute;
+		  right: 25px;
+		  top: 300px;
+		}
     </style>
     <!-- Basic -->
     <script src="https://code.jquery.com/jquery.js"></script>
