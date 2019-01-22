@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*" %>
 <%@ page import="com.administrator.model.*"%>
+<%@	page import="com.permission.model.*"%>
 <%@ page import="com.permission_list.model.*"%>
  
 <%
@@ -110,6 +112,16 @@ function readURL(input){
 
 <jsp:include page="/backend/navbar_back-end.jsp" flush="true"/> 
 
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL08")) {
+%>
 <div class="container table-responsive-md">
 <div class="row">
 
@@ -186,19 +198,13 @@ function readURL(input){
 
 </div>
 </div>
+<% }
+}
+} else { %>
+<%
+}
+%>
 </body>
-
-<!-- <script> -->
-<!--     $(document).ready(function(){ -->
-<!--       $("#check").click(function(){ -->
-<!--         var selected=[]; -->
-<!--         $("[name=permission]:checkbox:checked").each(function(){ -->
-<!--           selected.push($(this).val()); -->
-<!--           }); -->
-<!--         alert("您選擇的權限 : " + selected.join()); -->
-<!--         }); -->
-<!--       }); -->
-<!-- </script> -->
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
