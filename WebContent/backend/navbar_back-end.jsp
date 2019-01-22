@@ -5,22 +5,22 @@
 <%@	page import="com.administrator.model.*"%>
 <%@	page import="com.permission.model.*"%>
 
-<%-- <% --%>
-<!-- // if (session.getAttribute("administratorVO") != null) { -->
-<!-- // 	PermissionService permissionService = new PermissionService(); -->
-<!-- // 	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no()); -->
-<!-- // 	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission); -->
-<%-- %> --%>
-<%-- <% --%>
-<!-- // 	for (String permission : theAdministratorPermission) { -->
-<!-- // 		if (permission.equals("PL05")) { -->
-<%-- %> --%>
-<!-- 		return true; -->
-<%-- <% } %> --%>
-<!-- 		return false; -->
-<%-- <% } --%>
-<!-- // } -->
-<%-- %> --%>
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+	for (String permission : theAdministratorPermission) {
+		if (permission.equals("PL05")) {
+%>
+		return true;
+<% } %>
+		return false;
+<% }
+}
+%>
 
 <c:forEach var="permission" items="${theAdministratorPermission}">
 	${permission}
@@ -229,6 +229,16 @@ body{
  	 			</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
+<%
+if (session.getAttribute("administratorVO") != null) {
+	PermissionService permissionService = new PermissionService();
+	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
+	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
+%>
+<%
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL04")) {
+%>
 				<div class="dropdown">
     				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">會員管理
     				<span class="caret"></span>
@@ -238,20 +248,26 @@ body{
      						<li><a href="<%=request.getContextPath()%>/backend/member/addMember.jsp">新增會員</a></li>
     					</ul>
  	 			</div>
+<% 		}
+	} 
+} else { %>
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">會員管理</a>
+<%	
+}
+%>				
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 topnavbtn">
-			
-			<%
+<%
 if (session.getAttribute("administratorVO") != null) {
 	PermissionService permissionService = new PermissionService();
 	List<String> theAdministratorPermission = permissionService.findPermissionByAdministratorNo(((AdministratorVO) session.getAttribute("administratorVO")).getAdministrator_no());
 	pageContext.setAttribute("theAdministratorPermission", theAdministratorPermission);
 %>
 <%
-	for (String permission : theAdministratorPermission) {
-		if (permission.equals("PL08")) {
+for (String permission : theAdministratorPermission) {
+if (permission.equals("PL08")) {
 %>
-		<div class="dropdown">
+				<div class="dropdown">
     				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">管理員管理
     				<span class="caret"></span>
     				</a>
@@ -260,33 +276,13 @@ if (session.getAttribute("administratorVO") != null) {
      						<li><a href="<%=request.getContextPath()%>/backend/administrator/addAdministrator.jsp">新增管理員</a></li>
     					</ul>
  	 			</div>
-<% } %>
-<% } 
+<% }
+}
 } else { %>
-		<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">管理員管理</a>
-<%	
+					<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">管理員管理</a>
+<%
 }
 %>
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-<!-- 				<div class="dropdown"> -->
-<!--     				<a class="dropdown-toggle topnav" data-toggle="dropdown" style="text-decoration: none; color: white;">管理員管理 -->
-<!--     				<span class="caret"></span> -->
-<!--     				</a> -->
-<!--     					<ul class="dropdown-menu" style="text-align: center;"> -->
-<%--       						<li><a href="<%=request.getContextPath()%>/backend/administrator/allAdministrator.jsp">查詢/修改管理員資料</a></li> --%>
-<%--      						<li><a href="<%=request.getContextPath()%>/backend/administrator/addAdministrator.jsp">新增管理員</a></li> --%>
-<!--     					</ul> -->
-<!--  	 			</div> -->
 			</div>
 			</font>
 		</div>

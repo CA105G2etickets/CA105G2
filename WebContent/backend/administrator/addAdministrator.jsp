@@ -33,6 +33,61 @@
   img {
   border-radius: 90%;
 }
+/* Customize the label (the container) */
+.labelcontainerforadd {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Hide the browser's default checkbox */
+.labelcontainerforadd input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+}
+/* On mouse-over, add a grey background color */
+.labelcontainerforadd:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+.labelcontainerforadd input:checked ~ .checkmark {
+  background-color: #3399ff;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Style the checkmark/indicator */
+.labelcontainerforadd .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 </style>
 
 <script>
@@ -93,13 +148,34 @@ function readURL(input){
 	<tr>
 		<td>管理員權限</td>
 		<td>
-		<input type="checkbox" name="permission" value="PL05">活動管理&nbsp;&nbsp;&nbsp;
-		<input type="checkbox" name="permission" value="PL06">票券管理&nbsp;&nbsp;&nbsp;
-		<input type="checkbox" name="permission" value="PL02">商品管理&nbsp;&nbsp;&nbsp;
-		<input type="checkbox" name="permission" value="PL01">公告管理&nbsp;&nbsp;&nbsp;
-		<input type="checkbox" name="permission" value="PL07">常見問題管理&nbsp;&nbsp;&nbsp;
-		<input type="checkbox" name="permission" value="PL04">會員管理&nbsp;&nbsp;&nbsp;
-		<input type="checkbox" name="permission" value="PL08">管理員管理&nbsp;&nbsp;&nbsp;
+		<label class="labelcontainerforadd">
+  		<input type="checkbox" value="PL05">活動管理
+  		<span class="checkmark"></span>
+		</label>
+		<label class="labelcontainerforadd">
+  		<input type="checkbox" value="PL06">票券管理
+  		<span class="checkmark"></span>
+		</label>
+		<label class="labelcontainerforadd">
+  		<input type="checkbox" value="PL02">商品管理
+  		<span class="checkmark"></span>
+		</label>
+		<label class="labelcontainerforadd">
+  		<input type="checkbox" value="PL01">公告管理
+  		<span class="checkmark"></span>
+		</label>
+		<label class="labelcontainerforadd">
+  		<input type="checkbox" value="PL07">常見問題管理
+  		<span class="checkmark"></span>
+		</label>
+		<label class="labelcontainerforadd">
+  		<input type="checkbox" value="PL04">會員管理
+  		<span class="checkmark"></span>
+		</label>
+		<label class="labelcontainerforadd">
+  		<input type="checkbox" value="PL08">管理員管理
+  		<span class="checkmark"></span>
+		</label>
 		</td>
 	</tr>
 </table>
