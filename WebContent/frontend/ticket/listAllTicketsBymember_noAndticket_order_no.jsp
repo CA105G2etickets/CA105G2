@@ -102,6 +102,7 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 							</form>
 						</c:if>
 						<c:if test="${TicketVO.ticket_resale_status == 'SELLING2'}">
+							賣 <font color="red">${TicketVO.ticket_resale_price}</font> 元
 							<form method="post" action="<%=request.getContextPath()%>/frontend/ticket/ticket.do">
 								<input type="hidden" name="action" value="member_cancel_One_resale_ticket">
 								<input type="hidden" name="member_no" value="${member_no}">
