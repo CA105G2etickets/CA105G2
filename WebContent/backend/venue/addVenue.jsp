@@ -28,6 +28,11 @@
       	body{
 			font-family:微軟正黑體!important;
 		}
+		#magicButton {
+		  position: absolute;
+		  right: 25px;
+		  top: 270px;
+		}
     </style>
     <!-- Basic -->
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -126,13 +131,13 @@
 	                </div>
 	            </div>
             </div>
-  
+  			
+  			<button type="button" class="btn btn-default" id="magicButton">Magic!</button>
 			<div class="col-xs-12 col-sm-12" style="margin-top:15px;">	            	
 	  			<span class="form-group">
 	  				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 					<button type="submit" class="btn btn-success" name="action" value="addVenue">新增</button>
 					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/venue/listAllVenue.jsp?venue_no=${venueVO.venue_no}">回場地總覽</a>
-					<button type="button" class="btn btn-default" id="magicButton">Magic!</button>
 				</span>	
 			</div>
 		</form>               
