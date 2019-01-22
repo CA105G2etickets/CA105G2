@@ -256,11 +256,13 @@
 								<td><img
 									src="<%=request.getContextPath()%>/goods/goodsImg1.do?goods_no=${goodsmap.key}"
 									class="shop"></td>
-								<td><c:forEach var="goodsVO" items="${goodsSvc.getAll()}">
+								<td>
+								<c:forEach var="goodsVO" items="${goodsSvc.getAll()}">
 										<c:if test="${goodsVO.goods_no==goodsmap.key}">
-							${goodsVO.goods_name}			
-							</c:if>
-									</c:forEach></td>
+											${goodsVO.goods_name}			
+										</c:if>
+									</c:forEach>
+								</td>
 								<td>${goodsmap.value}</td>
 								<td>
 									<FORM METHOD="post"
@@ -319,16 +321,26 @@
 											height="200px">
 										<div class="card-body">
 											<h4 class="card-title ">${group_openVO.group_name}</h4>
-											<p class="card-text bg-warning">
+											<span class="text-muted" style="text-decoration:line-through"> 商品價格</span>
+											<c:forEach var="goodsVO" items="${goodsSvc.getAll()}">		
+												<c:if test="${group_openVO.goods_no==goodsVO.goods_no}">
+	                   								<span class="text-muted" style="text-decoration:line-through">${goodsVO.goods_price}</span>
+                    							</c:if>	
+											</c:forEach>	
+		
+											<span class="text-muted">折扣後商品價格</span><span style="font-size:18px"><font color="#750000" >:${group_openVO.group_price}</font></span>
+																						
+											<p class="card-text">
 											<h3>開團結束倒數計時</h3>
-											<div class="timeback" style="background-color: #D3D3D3;">
+											<div class="timeback" style="background-color: #D3D3D3; width:48%">
 												<p class="bg-warning">
 												<h3>
 													<span id="pad_${group_openVO.group_no}"
-														style="color: #FF0000;">${group_openVO.group_no}</span>
+														>${group_openVO.group_no}</span>
 												</h3>
+												</p>
 											</div>
-											</p>
+											
 											<p class="card-text">
 												<!-- 	開始時間：<span id="start_pad"></span><br>
 											結束時間：<p class="bg-danger"><span class="end_pad"></span></p><br> -->
@@ -355,7 +367,7 @@
 															var h = Math.floor((spantime_${group_openVO.group_no} % (24 * 3600)) / 3600);
 															var m = Math.floor((spantime_${group_openVO.group_no} % 3600) / (60));
 															var s = Math.floor(spantime_${group_openVO.group_no} % 60);
-															str = d + "天 " + h + "时 " + m + "分 " + s + "秒 ";
+															str = d + "天 " + h + "時 " + m + "分 " + s + "秒 ";
 															console.log('${group_openVO.group_no}' + "----------" + str);
 															console.log("here");
 															$("#pad_${group_openVO.group_no}").html(str);

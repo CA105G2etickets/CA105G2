@@ -401,13 +401,13 @@ $(function(){
     			</div>
     		<!-- 	<div id="map"></div> -->
 					<!-- <label for="latitude">緯度</label> -->
-					<input name="latitude" type="text" id="latitude" value="<%=(group_openVO==null)? " ": group_openVO.getLatitude()%>" class="form-control"/>
+					<input name="latitude" type="hidden" id="latitude" value="<%=(group_openVO==null)? " ": group_openVO.getLatitude()%>" class="form-control"/>
 					<%-- <input type="text" name="latitude" id="latitude" class="form-control"
 					value="<%=(group_openVO==null)? "25.0177684": group_openVO.getLatitude()%>"/> --%>
 			<!-- </div> -->
 			<!-- 	<div class="form-group"> -->
 					<!-- <label for="longitude">經度</label> -->
-					<input name="longitude" type="text" id="longitude" value="<%=(group_openVO==null)? " ": group_openVO.getLongitude()%>" class="form-control"/>
+					<input name="longitude" type="hidden" id="longitude" value="<%=(group_openVO==null)? " ": group_openVO.getLongitude()%>" class="form-control"/>
 					<%-- <input type="text" name="longitude" id="longitude" class="form-control"
 					value="<%=(group_openVO==null)? "121.2998": group_openVO.getLongitude()%>"/> --%>
 				<!--</div> -->
@@ -533,6 +533,171 @@ $(function(){
   			$('#end_dateTime').val('2019-01-29 09:30:38')
   			$('#group_quantity').val('10')
   			$('#group_dateTime').val('2019-02-09 09:30:38')
+  			var group_introduction = '<p style="text-align:center"><span style="font-size:26px"><span style="color:#e74c3c">五月天人生無限公司</span></span></p>'
+
+  			+'<p><span style="color:#d35400"><span style="font-size:16px">故事起點：</span></span></p>'
+
+  			+'<p>2016年12月31日，五月天在台北的演唱會上公布了他們將在2017年3月18日於高雄開跑名為「人生無限公司」的全新巡迴演唱會。高雄場門票開賣後即完售，因此加場演出一場。另外，五月天也公布其他地區的巡迴場次。</p>'
+
+  			+'<p>2017年5月31日，五月天公布7場於美加地區的場次。10月底，五月天公布於巴黎及倫敦的場次。2018年3月5日，五月天公布墨爾本及雪梨的場次。2018年9月22日，五月天公布自2018年12月22日開始共10場於台中舉行的最終回演出，巡演於2019年1月6日結束。</p>'
+
+  			+'<p>由於觀眾反應熱烈，在高雄、新加坡、桃園、澳門、蘇州、長沙、香港、天津、常州、佛山及昆明等城市額外加場，而香港、新加坡、上海、北京於2018年再次造訪</p>'
+
+  			+'<p><span style="font-size:16px"><span style="color:#d35400">開團緣由：</span></span></p>'
+
+  			+'<p>&nbsp;</p>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="color:#333333"><strong><span style="font-size:medium">五月天的五個人都不是帥哥，不是你看一眼就會喜歡的，</span></strong></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="color:#333333"><strong><span style="font-size:medium">所以我們就到處跑，讓大家聽到我們的音樂，</span></strong></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="color:#333333"><strong><span style="font-size:medium">場地小沒關係，我們多跑幾場，就會有更多的人聽到了。</span></strong></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">聽完這段話，眼眶真的濕了，想到有場演唱會，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">阿信坐在地上撒嬌：變了心的她們，不是去喜歡了5566就是去喜歡了飛輪海。</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">現在呢，5566很久沒見到了吧？飛輪海也單飛了，可你們五個憨人還在啊！</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">怪獸說：五月天不是唱片公司為了組一個組合而拉來五個人湊起來的，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333"><strong>我們從高中就混在一起了，志同道合才在一起這麼多年。</strong></span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">對於主場阿信的搶眼，石頭說：</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><strong><span style="color:#3366ff">五月天就像一隻手，阿信就是大拇指，大拇指很重要，</span></strong></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><strong><span style="color:#3366ff">但要跟其他四個一起才能比一個贊。</span></strong></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">而他們的專輯，從最初幾張阿信包辦所有詞曲到現在其他四個人的創作量大大增加，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">阿信說這麼多年五月天的變化中這是他最開心的，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="color:#333333"><strong><span style="font-size:medium">可是這樣力求隊員間的平衡竟然成為不少人批評阿信江郎才盡的理由。</span></strong></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">五月天的一切，絶不是幾首口水歌就可以代表的，也不是我說的這些能代表的。</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">對於說他們偽搖的人，我也不知道怎麼跟你們辯論，我不知道搖滾的真正定義，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">我只知道：</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333"><strong>「五月天，唱青春，唱愛情，唱友情，唱親情，唱社會，唱他們所有想唱的東西。」</strong></span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">真正懂搖滾的人所在乎的，不是每首歌都用鼓點與吉他，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">不是在舞台上跳來跳去砸吉他，而是一顆搖滾的心。</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">他們可以不叫演唱會之王，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">可以不叫亞洲天團，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">可以長得不好看，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">可以不被人喜歡。</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333"><strong>但是，他們是用心在唱歌的五個人。</strong></span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="font-size:small"><span style="color:#333333">你可以不喜歡五月天，可以不聽他們的歌，</span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">&nbsp;</div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px"><span style="font-size:15px"><span style="color:#333333"><span style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Roboto,Arial,&quot;Lucida Grande&quot;,&quot;PingFang TC&quot;,蘋果儷中黑,&quot;Apple LiGothic Medium&quot;,sans-serif"><span style="background-color:#ffffff"><span style="color:#333333"><span style="font-size:x-large"><strong>但是，再也不要不懂裝懂胡言亂語。</strong></span></span></span></span></span></span></div>'
+
+  			+'<div style="-webkit-text-stroke-width:0px; padding:0px; text-align:left; text-indent:0px">'
+  			+'<figure class="easyimage easyimage-side"><img alt="" sizes="100vw" src="https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg" srcset="https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_100 100w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_200 200w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_300 300w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_400 400w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_500 500w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_600 600w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_700 700w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_800 800w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_900 900w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/bb5c0f5d1218b51a50845dea8d419d212bafb8c7ab0f8c4a_124443.jpeg/w_1000 1000w" width="500" />'
+  			+'<figcaption></figcaption>'
+  			+'</figure>'
+  			+'</div>';
+
+			CKEDITOR.instances.group_introduction.setData(group_introduction);
+			
+			var group_mind = <!-- start: 注意事項 -->
+			'<div class="tab-pane" id="note">'
+			+'<p><span style="color:#f39c12"><span style="font-size:18px"><strong>團員參與合購有什麼要特別注意的嗎？</strong></span></span></p>'
+
+			+'<p><strong>1.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>合購時的禮貌</strong></span></span></p>'
+
+			+'<p>大多數的主購並不是賣家，不是以營利的心情來找人合購喔。找人合購通常是為了要讓大家都能用更便宜的價格買到相同品質的物品，所以合購最重要的一件事就是禮貌，大家要感恩常互相說謝謝喔。</p>'
+
+			+'<p>&nbsp;</p>'
+
+			+'<p><strong>2.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>合購的安全性</strong></span></span></p>'
+
+			+'<p>一起合購的人常常有可能是不認識的，所以的確有一些風險存在，在 ETicket 每一個會員都有自己的個人檔案，個人檔案會有合購評比。如果主購的合購評比不足以判斷合購信用，合購時最好是採用面交付款。 另外如果主購有很多合購都尚未結團也要特別注意，以免遇到詐騙。<br />'
+			+'（提醒您面交時最好約在人多的地方）</p>'
+
+			+'<p>&nbsp;</p>'
+
+			+'<p><strong>3.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>確實讀過合購資訊，面交時請準時</strong></span></span></p>'
+
+			+'<p>團員要參與合購時，千萬要確實的讀完合購資訊，了解主購所徵求的合購內容是您可以參與的。另外在面交時請準時，記得跟主購說謝謝喔。</p>'
+
+			+'<p>&nbsp;</p>'
+
+			+'<p><strong>4.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>合購順利完成，別忘了道討論區留言喔</strong></span></span></p>'
+
+			+'<p>討論區留言是 ETicket 非常重要的一個制度，並會以此來決定合購 是否有結團。所以請大家在順利拿到合購物品時記得要互相給評比喔</p>'
+			+'</div>'
+			/* <!-- end: 注意事項 —> */;
+			CKEDITOR.instances.group_mind.setData(group_mind);
   			
   			
   		})  
@@ -545,7 +710,85 @@ $(function(){
   			$('#group_quantity').val('20')
   			$('#group_dateTime').val('2019-02-01 09:30:38')
   			
+  			
+  			var group_introduction = '<p style="text-align:center"><span style="color:#c0392b"><span style="font-size:18px">張學友經典演唱會</span></span></p>'
+
+  				+'<p><span style="color:#c0392b"><span style="font-size:18px">故事：</span></span></p>'
+
+  				+'<p dir="ltr">為什麼一生要看一次張學友演唱會？</p>'
+
+  				+'<h3 dir="ltr"><strong>一、因為他是歌神。</strong></h3>'
+
+  				+'<p dir="ltr">不誇張，張學友開口唱的第一句，我旁邊的兩位女觀眾：「天啊！」異口同聲：「這根本是DVD！」</p>'
+
+  				+'<p dir="ltr">憑著記者的觀察，開始用火眼金睛盯著歌神看，難道是對嘴？因為聲音的穿透力實在太強，但是音響設備的等級太好，連微弱的換氣都聽的一清二楚。</p>'
+
+  				+'<p dir="ltr"><strong>歌神的現場演唱實力，有如DVD原音重現，每一次開口都是一次享受。</strong></p>'
+
+  				+'<h3 dir="ltr"><strong>二、歌神的經典，是他的心血。</strong></h3>'
+
+  				+'<p dir="ltr">每場演唱會都會有串場Talking的橋段，<strong>第二天時張學友就說了，「昨天好友來看他的演唱會，庾澄慶問他為什麼不降Key？」畢竟年紀大了聲音也會改變，不如年輕時能揮霍的嗓音，但歌神說了：「因為降了不是經典，這是我的經典演唱會嘛！」</strong></p>'
+
+  				+'<p dir="ltr">&nbsp;</p>'
+
+  				+'<h3 dir="ltr"><strong>三、那些關於愛情的歌，唱進心坎。</strong></h3>'
+
+  				+'<p dir="ltr">如果說蔡依林的演唱會曾經讓我覺得是一個說故事的舞台，那張學友的演唱會就是一場愛情故事。</p>'
+
+  				+'<p dir="ltr">&nbsp;</p>'
+
+  				+'<p dir="ltr">&nbsp;</p>'
+
+  				+'<p dir="ltr">&nbsp;</p>'
+
+  				+'<p dir="ltr">&nbsp;</p>'
+
+  				+'<figure class="easyimage easyimage-side"><img alt="" sizes="100vw" src="https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg" srcset="https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_90 90w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_180 180w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_270 270w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_360 360w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_450 450w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_540 540w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_630 630w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_720 720w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_810 810w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_870 870w" width="500"/>'
+  				+'<figcaption></figcaption>'
+  				+'</figure>'
+			CKEDITOR.instances.group_introduction.setData(group_introduction);
+  			
+  			
+  			var group_mind = <!-- start: 注意事項 -->
+			'<div class="tab-pane" id="note">'
+			+'<p><span style="color:#f39c12"><span style="font-size:18px"><strong>團員參與合購有什麼要特別注意的嗎？</strong></span></span></p>'
+
+			+'<p><strong>1.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>合購時的禮貌</strong></span></span></p>'
+
+			+'<p>大多數的主購並不是賣家，不是以營利的心情來找人合購喔。找人合購通常是為了要讓大家都能用更便宜的價格買到相同品質的物品，所以合購最重要的一件事就是禮貌，大家要感恩常互相說謝謝喔。</p>'
+
+			+'<p>&nbsp;</p>'
+
+			+'<p><strong>2.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>合購的安全性</strong></span></span></p>'
+
+			+'<p>一起合購的人常常有可能是不認識的，所以的確有一些風險存在，在 ETicket 每一個會員都有自己的個人檔案，個人檔案會有合購評比。如果主購的合購評比不足以判斷合購信用，合購時最好是採用面交付款。 另外如果主購有很多合購都尚未結團也要特別注意，以免遇到詐騙。<br />'
+			+'（提醒您面交時最好約在人多的地方）</p>'
+
+			+'<p>&nbsp;</p>'
+
+			+'<p><strong>3.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>確實讀過合購資訊，面交時請準時</strong></span></span></p>'
+
+			+'<p>團員要參與合購時，千萬要確實的讀完合購資訊，了解主購所徵求的合購內容是您可以參與的。另外在面交時請準時，記得跟主購說謝謝喔。</p>'
+
+			+'<p>&nbsp;</p>'
+
+			+'<p><strong>4.</strong></p>'
+
+			+'<p><span style="font-size:16px"><span style="color:#e74c3c"><strong>合購順利完成，別忘了道討論區留言喔</strong></span></span></p>'
+
+			+'<p>討論區留言是 ETicket 非常重要的一個制度，並會以此來決定合購 是否有結團。所以請大家在順利拿到合購物品時記得要互相給評比喔</p>'
+			+'</div>'
+			/* <!-- end: 注意事項 —> */;
+			CKEDITOR.instances.group_mind.setData(group_mind);
+	
   		})
+  		
     
     
     
