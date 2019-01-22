@@ -102,6 +102,7 @@ body {
 		</c:if>
 	</div>
 
+	<%-- 
 	<!-- ------------------------------ progress bar ::: start ------------------------------ -->
     <div class="container">
         <div class="row bs-wizard" style="border-bottom:0;">
@@ -135,7 +136,7 @@ body {
         </div>
     </div>
 	<!-- ------------------------------ progress bar ::: end ------------------------------ -->
-
+	--%>
 
 
 	<!-- when returning, no eh5vo attribute -->

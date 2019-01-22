@@ -43,7 +43,9 @@ pageContext.setAttribute("tvo", tvo);
 		</c:if>
 	</div>
 
-    <table id="example" class="display" style="width:100%">
+    <div class="container">
+    	<div class="row">
+    		<table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>票券編號</th>
@@ -92,6 +94,8 @@ pageContext.setAttribute("tvo", tvo);
         </tbody>
         
     </table>
+    	</div>
+    </div>
 <jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

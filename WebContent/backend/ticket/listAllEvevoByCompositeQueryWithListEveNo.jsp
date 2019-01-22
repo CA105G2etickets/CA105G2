@@ -51,7 +51,9 @@ pageContext.setAttribute("listEveNo",listEveNo);
 	</div>
 	<br>
 
-    <table id="example" class="display" style="width:100%">
+    <div class = "container">
+    	<div class="row">
+    		<table id="example" class="display" style="width:100%">
         <thead>
             <tr>
             	<th><font color="red">活動主題名稱</font></th>
@@ -142,6 +144,8 @@ pageContext.setAttribute("listEveNo",listEveNo);
             </tr>
         </tfoot> -->
     </table>
+    	</div>
+    </div>
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

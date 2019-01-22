@@ -51,7 +51,9 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
 		</c:if>
 	</div>
 
-    <table id="example" class="display" style="width:100%">
+    <div class="container">
+    	<div class="row">
+    		<table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>票券編號</th>
@@ -115,7 +117,7 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
         		</tr>
         	</c:forEach>
         </tbody>
-        <tfoot>
+        <!-- <tfoot>
             <tr>
                 <th>票券編號</th>
                 <th>持票人</th>
@@ -127,8 +129,10 @@ if(ticket_order_no == null || (ticket_order_no.trim()).length() == 0){
                 <th>票種名稱與票價</th>
                 <th>轉售狀態</th>
             </tr>
-        </tfoot>
+        </tfoot> -->
     </table>
+    	</div>
+    </div>
 <jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

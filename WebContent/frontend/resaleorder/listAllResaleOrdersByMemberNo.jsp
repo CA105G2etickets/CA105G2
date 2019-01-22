@@ -41,7 +41,9 @@ pageContext.setAttribute("list_revos", list_revos);
 		</c:if>
 	</div>
 
-    <table id="example" class="display" style="width:100%">
+    <div class="container">
+    	<div class="row">
+    		<table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>轉售訂單編號</th>
@@ -55,7 +57,7 @@ pageContext.setAttribute("list_revos", list_revos);
                 
                 <th>付款方式</th>
                 <th>轉讓訂單狀態</th>
-                
+                <th>票券</th>
                 
             </tr>
         </thead>
@@ -73,11 +75,22 @@ pageContext.setAttribute("list_revos", list_revos);
         			<td>${resaleordervo.resale_ordprice}</td>
         			
         			<td>
-						<c:if test="${resaleordervo.resale_ordstatus == 'WAITTOPAY1'}">
-							尚未付款
+						<c:if test="${resaleordervo.payment_method == 'NOTYET'}">
+							尚未選擇
 						</c:if>
-						<c:if test="${resaleordervo.resale_ordstatus == 'COMPLETE2'}">
-							完成付款
+						<c:if test="${resaleordervo.payment_method == 'CREDITCARD'}">
+							信用卡
+						</c:if>
+						<c:if test="${resaleordervo.payment_method == 'EWALLET'}">
+							電子錢包
+						</c:if>
+					</td>
+        			<td>
+        				<c:if test="${resaleordervo.resale_ordstatus == 'COMPLETE2'}">
+        					已完成
+						</c:if>
+						<c:if test="${resaleordervo.resale_ordstatus == 'WAITTOPAY1'}">
+							待付款
 						</c:if>
 						<c:if test="${resaleordervo.resale_ordstatus == 'CANCEL3'}">
 							已取消
@@ -85,7 +98,7 @@ pageContext.setAttribute("list_revos", list_revos);
 						<c:if test="${resaleordervo.resale_ordstatus == 'OUTDATE4'}">
 							逾時未付
 						</c:if>
-					</td>
+        			</td>
         			<td>
         				<c:if test="${resaleordervo.resale_ordstatus == 'COMPLETE2'}">
         					<form method="post" action="<%=request.getContextPath()%>/frontend/resaleorder/resaleorder.do">
@@ -97,21 +110,14 @@ pageContext.setAttribute("list_revos", list_revos);
 								<input type="submit" value="票券明細" class="btn btn-primary" style="float:right;">
 							</form>
 						</c:if>
-						<c:if test="${resaleordervo.resale_ordstatus == 'WAITOPAY1'}">
-							未完成付款
-						</c:if>
-						<c:if test="${resaleordervo.resale_ordstatus == 'CANCEL3'}">
-							已取消
-						</c:if>
-						<c:if test="${resaleordervo.resale_ordstatus == 'OUTDATE4'}">
-							逾時未付
-						</c:if>
         			</td>
         			
         		</tr>
         	</c:forEach>
         </tbody>
     </table>
+    	</div>
+    </div>
 <jsp:include page="/frontend/footer_front-end.jsp" flush="true" />
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

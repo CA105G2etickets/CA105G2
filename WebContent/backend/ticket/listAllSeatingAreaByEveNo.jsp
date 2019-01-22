@@ -35,7 +35,9 @@ pageContext.setAttribute("eve_no",eve_no);
 		<h2>該活動場次的售票狀況:</h2>
 	</div>
 	<br>
-    <table id="example" class="display" style="width:100%">
+    <div class="container">
+    	<div class="row">
+    		<table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>活動主題名稱</th>
@@ -78,6 +80,8 @@ pageContext.setAttribute("eve_no",eve_no);
             </tr>
         </tfoot> -->
     </table>
+    	</div>
+    </div>
     
     <div class="container" style="margin-bottom:30px;">
 		<div class="row">
