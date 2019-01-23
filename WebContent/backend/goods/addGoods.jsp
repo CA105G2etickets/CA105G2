@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>新增活動主題</title>
+    <title>新增商品</title>
     <!-- Basic -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- datetimepicker -->
@@ -157,6 +157,7 @@ function readURL(input){
 	<span class="form-group">
 					<button type="submit" class="btn btn-success" name="action" value="insertGoods" style="margin-top:15px;">新增</button>
 					<a class="btn btn-info" href="<%=request.getContextPath()%>/backend/goods/listAllGoods.jsp" style="margin-top:15px;">回商品總攬</a>
+					<button type="button" class="btn btn-default" style="margin-top:15px;" id="magicButton">點我</button>
 				</span>			
 			</form>
 	</div>
@@ -171,44 +172,55 @@ function readURL(input){
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.js"></script>
     <script src="<%=request.getContextPath()%>/vendor/datetimepicker/jquery.datetimepicker.full.js"></script>
     <!-- JavaScript in File -->
-    <script src="<%=request.getContextPath()%>/backend/event_title/js/eventTitleCKEditor.js"></script>
-    <script src="<%=request.getContextPath()%>/backend/event_title/js/addEventTitle.js"></script>
+    <script src="<%=request.getContextPath()%>/backend/goods/js/goodsCKEditor.js"></script>
+    <script src="<%=request.getContextPath()%>/backend/goods/js/addGoods.js"></script>
     <!-- JavaScript in HTML -->
+    <script>
+    
+    $("#magicButton").click(function(){
+		$("#goods_name").val("BLACKPINK 2019 WORLD TOUR TAIPEI with KIA");
+		$('#launchdate').val("2019-01-17");
+		$("#offdate").val("2019-01-28");
+		$("#goods_price").val("1000");
+		$("#forsales_a").val("500");
+		$("#infoEditor").val("BLACKPINK 由 JISOO，JENNIE，ROSÉ 和LISA 一共4名成員組成，2016年以單曲專輯《SQUARE ONE》出道已經獲得極大迴響。繼成功的出道後，她們先後推出1張單曲和3張EP，她們的歌曲不僅攻佔韓國流行榜，亦在國際音樂榜如Billboard等佔一席位。NK歌迷的稱號）帶來只能在YG演唱會中體驗的豐富耀目音樂表演。");
+    });
+   
 	
-	<script type="text/javascript">
 	
-		$(function() {
-			initInfoEditor();
+	
+// 		$(function() {
+// 			initInfoEditor();
 			//         initNoticesEditor();
 			//         initEticpurchaserulesEditor();
 			//         initEticrulesEditor();
 			//         initRefundrulesEditor();
 
-			$("#goods_picture1").change(function() {
-				imagesPreview(this);
-				$("#goods_picture1_status").attr("value", "yesUpload");
-			});
-			$("#goods_picture2").change(function() {
-				imagesPreview(this);
-				$("#goods_picture2_status").attr("value", "yesUpload");
-			});
-			$("#goods_picture3").change(function() {
-				imagesPreview(this);
-				$("#goods_picture3_status").attr("value", "yesUpload");
-			});
+// 			$("#goods_picture1").change(function() {
+// 				imagesPreview(this);
+// 				$("#goods_picture1_status").attr("value", "yesUpload");
+// 			});
+// 			$("#goods_picture2").change(function() {
+// 				imagesPreview(this);
+// 				$("#goods_picture2_status").attr("value", "yesUpload");
+// 			});
+// 			$("#goods_picture3").change(function() {
+// 				imagesPreview(this);
+// 				$("#goods_picture3_status").attr("value", "yesUpload");
+// 			});
 
-			$(".text-danger")
-					.each(
-							function() {
-								var errorMsg = $(this).text();
-								if (errorMsg.trim() != "") {
-									$(this)
-											.prepend(
-													"<i class='glyphicon glyphicon-triangle-left'></i>");
-								}
-							});
-			localStorage.removeItem("DataTables_goodsTable");
-		});
+// 			$(".text-danger")
+// 					.each(
+// 							function() {
+// 								var errorMsg = $(this).text();
+// 								if (errorMsg.trim() != "") {
+// 									$(this)
+// 											.prepend(
+// 													"<i class='glyphicon glyphicon-triangle-left'></i>");
+// 								}
+// 							});
+// 			localStorage.removeItem("DataTables_goodsTable");
+// 		});
 	</script>
 </body>
 
