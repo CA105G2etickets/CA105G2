@@ -711,7 +711,7 @@ $(function(){
   			$('#group_dateTime').val('2019-02-01 09:30:38')
   			
   			
-  			var group_introduction = '<div><em><span style="font-size:16px"><span style="color:#d35400"><strong>讓我們全力支持BLACKPINK!!!</strong></span></span></em><u><em><span style="font-size:16px"><span style="color:#d35400"><strong><img alt="heart" height="23" src="http://localhost:8081/CA105G2/vendor/ckeditor_easyImage_final/plugins/smiley/images/heart.png" title="heart" width="23" /><img alt="heart" height="23" src="http://localhost:8081/CA105G2/vendor/ckeditor_easyImage_final/plugins/smiley/images/heart.png" title="heart" width="23" /><img alt="heart" height="23" src="http://localhost:8081/CA105G2/vendor/ckeditor_easyImage_final/plugins/smiley/images/heart.png" title="heart" width="23" /></strong></span></span></em></u></div><div>&nbsp;</div><div>韓國三大經紀公司YG娛樂相隔七年推出的女子團體 - BLACKPINK，出道即以亮麗的外表和不可忽視的實力迅速從新生代韓國女團中脫穎而出，引起全球矚目，由JISOO、JENNIE，ROS&Eacute;和LISA所組成，四人四色，成為次世代時尚指標。以單曲和出道，出道14天即贏得首座音樂節目一位獎盃，大獲成功。後續相繼發行、、等歌曲，在國內外都獲得廣大迴響，更被富士比雜誌讚賞為「<span style="color:#c0392b"><strong>全美最具影響力的K-POP女子團體</strong></span>」。<br />&nbsp;</div>';
+  			var group_introduction = '<div><em><span style="font-size:16px"><span style="color:#d35400"><strong>讓我們全力支持BLACKPINK!!!</strong></span></span></em></div><div>&nbsp;</div><div>韓國三大經紀公司YG娛樂相隔七年推出的女子團體 - BLACKPINK，出道即以亮麗的外表和不可忽視的實力迅速從新生代韓國女團中脫穎而出，引起全球矚目，由JISOO、JENNIE，ROS&Eacute;和LISA所組成，四人四色，成為次世代時尚指標。以單曲和出道，出道14天即贏得首座音樂節目一位獎盃，大獲成功。後續相繼發行、、等歌曲，在國內外都獲得廣大迴響，更被富士比雜誌讚賞為「<span style="color:#c0392b"><strong>全美最具影響力的K-POP女子團體</strong></span>」。<br />&nbsp;</div>';
 			CKEDITOR.instances.group_introduction.setData(group_introduction);
   			
   			
