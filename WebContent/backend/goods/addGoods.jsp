@@ -125,17 +125,18 @@ function readURL(input){
 				</div>
 
 			</div>
+	<tr height="145">
+		<td>會員大頭貼</td>
+		<td>
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture1" onchange="readURL(this)" targetID="goods_picture1">
+		<img id="goods_picture1" src="" height="" width="">
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture2" onchange="readURL(this)" targetID="goods_picture2">
+		<img id="goods_picture2" src="" height="" width="">
+		<input type="file" accept="image/jpeg, image/png" name="goods_picture3" onchange="readURL(this)" targetID="goods_picture3">
+		<img id="goods_picture3" src="" height="" width="">
+		</td>
+	</tr>
 	
-		<input type="file" accept="image/jpeg, image/png" name="goods_picture1" onchange="readURL(this)" targetID="goods_picture1preview">
-		<img id="goods_picture1preview" src="<%=request.getContextPath()%>/goods/goodsImg1.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
-	
-		
-		<input type="file" accept="image/jpeg, image/png" name="goods_picture2" onchange="readURL(this)" targetID="goods_picture2preview">
-		<img id="goods_picture2preview" src="<%=request.getContextPath()%>/goods/goodsImg2.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
-	
-		
-		<input type="file" accept="image/jpeg, image/png" name="goods_picture3" onchange="readURL(this)" targetID="goods_picture3preview">
-		<img id="goods_picture3preview" src="<%=request.getContextPath()%>/goods/goodsImg3.do?action=add&scaleSize=850&goods_no=${goodsVO.goods_no}" height="200" width="200">
 	
 
 			<div class="tabbable">
