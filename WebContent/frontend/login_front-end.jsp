@@ -106,7 +106,7 @@ body{
 			       選擇會員帳號
 			       <select size="1" name="memberA" onchange="changeA" id="userlist" autofocus>
 			         <c:forEach var="member" items="${memberservice.all}" > 
-			          <option value="${member.memberAccount},${member.memberPassword}">${member.memberAccount},${member.memberPassword}
+			          <option value="${member.memberAccount},${member.memberPassword}">${member.memberFullname}
 			         </c:forEach>
 			       </select>
 			  </li>
@@ -121,7 +121,7 @@ body{
 
 <script>
 			$(document).ready(function(){
-				$('#userlist').prepend(new Option('account,password','', true));
+				$('#userlist').prepend(new Option('選擇會員輸入帳密','', true));
 				$('#userlist')[0].selectedIndex = 0;
 				$('#userlist').on('change',function(){
 					var str = $(this).val();

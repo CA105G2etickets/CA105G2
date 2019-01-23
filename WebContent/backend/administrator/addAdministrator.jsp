@@ -148,7 +148,7 @@ if (permission.equals("PL08")) {
 	</tr>
 	<tr>
 		<td>管理員密碼</td>
-		<td><input type="TEXT" placeholder="123456" name="administrator_password" size="45"></td>
+		<td><input type="password" placeholder="123456" name="administrator_password" size="45"></td>
 	</tr>
 	<tr height="145">
 		<td>管理員大頭貼</td>

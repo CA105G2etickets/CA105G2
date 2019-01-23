@@ -94,7 +94,7 @@ body{
 			      選擇管理員帳號
 			       <select size="1" name="administratorA" onchange="changeA" id="administratorlist" autofocus>
 			         <c:forEach var="administrator" items="${administratorservice.all}" > 
-			          <option value="${administrator.administrator_account},${administrator.administrator_password}">${administrator.administrator_account},${administrator.administrator_password}
+			          <option value="${administrator.administrator_account},${administrator.administrator_password}">${administrator.administrator_name}
 			         </c:forEach>
 			       </select>
 			  </li>
@@ -105,7 +105,7 @@ body{
 
 <script>
 			$(document).ready(function(){
-				$('#administratorlist').prepend(new Option('account,password','', true));
+				$('#administratorlist').prepend(new Option('選擇管理員輸入帳密','', true));
 				$('#administratorlist')[0].selectedIndex = 0;
 				$('#administratorlist').on('change',function(){
 					var str = $(this).val();
