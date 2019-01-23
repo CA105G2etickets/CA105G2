@@ -126,7 +126,7 @@ function readURL(input){
 
 			</div>
 	<tr height="145">
-		<td>會員大頭貼</td>
+		
 		<td>
 		<input type="file" accept="image/jpeg, image/png" name="goods_picture1" onchange="readURL(this)" targetID="goods_picture1">
 		<img id="goods_picture1" src="" height="" width="">
@@ -148,7 +148,7 @@ function readURL(input){
 				<!-- 標籤面板：內容區 -->
 				<div class="tab-content">
 					<div class="tab-pane active" id="infoTab">
-						<textarea name="goods_introduction" id="infoEditor">
+						<textarea style="width:800px;height:200px;" name="goods_introduction" id="infoEditor">
 		                		${param.goods_introduction}
 		               		</textarea>
 					</div>

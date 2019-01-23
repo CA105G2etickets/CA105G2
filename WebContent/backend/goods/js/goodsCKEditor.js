@@ -43,7 +43,13 @@ var initInfoEditor = ( function() {
 			CKEDITOR.replace( 'infoEditor' );
 		} else {
 			editorElement.setAttribute( 'contenteditable', 'true' );
-			CKEDITOR.inline( 'infoEditor' );
+//			CKEDITOR.inline( 'infoEditor' );
+			CKEDITOR.replace( 'infoEditor', {
+				removePlugins: 'image',
+				extraPlugins: 'easyimage',
+				cloudServices_tokenUrl: 'https://36762.cke-cs.com/token/dev/UM6e5GmaKWwu89mPGLfo7csdkFHnd6pThBTSG6KZ3PZIOnotQZZOpXzO92Lu',
+				cloudServices_uploadUrl: 'https://36762.cke-cs.com/easyimage/upload/'
+			} );
 
 			// TODO we can consider displaying some info box that
 			// without wysiwygarea the classic editor may not work.
