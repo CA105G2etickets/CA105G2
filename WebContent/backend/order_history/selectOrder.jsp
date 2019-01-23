@@ -28,10 +28,10 @@
 
 <body>
 
-<div class="container-fluid" style="margin-bottom: 400px">
+<div class="container-fluid" style="margin-bottom: 200px">
 	<div class="row">
-		<div class="col-xs-12 col-sm-2"></div>
-		<div class="col-xs-12 col-sm-8">
+		<div class="col-xs-12 col-sm-1"></div>
+		<div class="col-xs-12 col-sm-10">
 <!-- 			<ol class="breadcrumb"> -->
 <!-- 				<li> -->
 <!-- 					<a href="#">首頁</a> -->
@@ -101,7 +101,7 @@
 					                        <td>${orderHistoryVO.receiver_tel}</td>
 					                        <td>
 												<c:if test="${orderHistoryVO.order_status == 'PAYMENT1'}">
-													<div class="form-group"style="width:100%">
+													<div class="form-group" style="width:90px">
 														<select class="form-control" size="1" name="order_status">
 															<option value="PAYMENT1" selected>已付款</option>
 															<option value="SHIPPING2">出貨中</option>
@@ -112,7 +112,7 @@
 													</div>	
 										        </c:if>
 					                        	<c:if test="${orderHistoryVO.order_status == 'SHIPPING2'}">
-													<div class="form-group"style="width:100%">
+													<div class="form-group" style="width:90px">
 														<select class="form-control" size="1" name="order_status">
 															<option value="SHIPPING2" selected>出貨中</option>
 															<option value="SHIPMENT3">已出貨</option>
@@ -122,7 +122,7 @@
 													</div>	
 										        </c:if>
 										        <c:if test="${orderHistoryVO.order_status == 'SHIPMENT3'}">
-													<div class="form-group"style="width:100%">
+													<div class="form-group" style="width:90px">
 														<select class="form-control" size="1" name="order_status">
 															<option value="SHIPMENT3" selected>已出貨</option>
 															<option value="COMPLETE4">已完成</option>
@@ -130,13 +130,14 @@
 													</div>	
 										        </c:if>
 										        <c:if test="${orderHistoryVO.order_status == 'COMPLETE4'}">
-													<div class="form-group"style="width:100%">
+													<div class="form-group" style="width:90px">
 														<input class="form-control" value="已完成" readonly="readonly">
 														<input type="hidden" name="order_status" value="COMPLETE4">
 													</div>	
 										        </c:if>
 										        <c:if test="${orderHistoryVO.order_status == 'CANCEL5'}">
-													<div class="form-group" style="width:100%">
+<!-- 													<div class="form-group" style="width:100%"> -->
+														<div class="form-group" style="width:90px">
 														<input class="form-control" value="已取消" readonly="readonly">
 														<input type="hidden" name="order_status" value="CANCEL5">
 													</div>	

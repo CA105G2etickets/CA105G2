@@ -56,6 +56,16 @@
  	    body{
 			font-family:微軟正黑體!important;
 		}
+		#magicButton {
+		  position: absolute;
+		  right: 25px;
+		  top: 255px;
+		}
+		#magicButtonTwo {
+		  position: absolute;
+		  right: 25px;
+		  top: 300px;
+		}
     </style>
     <!-- Basic -->
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -438,10 +448,10 @@
     		$('#venue_no').val("V009").change();
     		$("#eve_startdate").val("2019-03-03 18:00");
     		$("#eve_enddate").val("2019-03-03 23:00");
-    		$("#eve_onsaledate").val("2019-01-22 17:00");
+    		$("#eve_onsaledate").val("2019-01-24 12:00");
     		$("#eve_offsaledate").val("2019-03-03 17:00");
     		$("#ticlimit").val("4").change();
-    		$("#eve_status").val("normal").change();
+    		$("#eve_status").val("temp").change();
     	});
         
      
