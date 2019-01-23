@@ -702,50 +702,16 @@ $(function(){
   			
   		})  
   		$('#magic').click(function(){
-  			$('#group_name').val('張學友超級經典灰色刷毛衣,一起支持他的經典演唱會')
+  			$('#group_name').val('韓國人氣女團BLACKPINK,一起支持BLACKPINK衣服!!!')
   			$('#address').val('台北小巨蛋')
   			$('#latitude').val('25.0513848')
   			$('#longitude').val('121.54974140000002') 			
   			$('#end_dateTime').val('2019-01-28 09:28:38')
-  			$('#group_quantity').val('20')
+  			$('#group_quantity').val('2')
   			$('#group_dateTime').val('2019-02-01 09:30:38')
   			
   			
-  			var group_introduction = '<p style="text-align:center"><span style="color:#c0392b"><span style="font-size:18px">張學友經典演唱會</span></span></p>'
-
-  				+'<p><span style="color:#c0392b"><span style="font-size:18px">故事：</span></span></p>'
-
-  				+'<p dir="ltr">為什麼一生要看一次張學友演唱會？</p>'
-
-  				+'<h3 dir="ltr"><strong>一、因為他是歌神。</strong></h3>'
-
-  				+'<p dir="ltr">不誇張，張學友開口唱的第一句，我旁邊的兩位女觀眾：「天啊！」異口同聲：「這根本是DVD！」</p>'
-
-  				+'<p dir="ltr">憑著記者的觀察，開始用火眼金睛盯著歌神看，難道是對嘴？因為聲音的穿透力實在太強，但是音響設備的等級太好，連微弱的換氣都聽的一清二楚。</p>'
-
-  				+'<p dir="ltr"><strong>歌神的現場演唱實力，有如DVD原音重現，每一次開口都是一次享受。</strong></p>'
-
-  				+'<h3 dir="ltr"><strong>二、歌神的經典，是他的心血。</strong></h3>'
-
-  				+'<p dir="ltr">每場演唱會都會有串場Talking的橋段，<strong>第二天時張學友就說了，「昨天好友來看他的演唱會，庾澄慶問他為什麼不降Key？」畢竟年紀大了聲音也會改變，不如年輕時能揮霍的嗓音，但歌神說了：「因為降了不是經典，這是我的經典演唱會嘛！」</strong></p>'
-
-  				+'<p dir="ltr">&nbsp;</p>'
-
-  				+'<h3 dir="ltr"><strong>三、那些關於愛情的歌，唱進心坎。</strong></h3>'
-
-  				+'<p dir="ltr">如果說蔡依林的演唱會曾經讓我覺得是一個說故事的舞台，那張學友的演唱會就是一場愛情故事。</p>'
-
-  				+'<p dir="ltr">&nbsp;</p>'
-
-  				+'<p dir="ltr">&nbsp;</p>'
-
-  				+'<p dir="ltr">&nbsp;</p>'
-
-  				+'<p dir="ltr">&nbsp;</p>'
-
-  				+'<figure class="easyimage easyimage-side"><img alt="" sizes="100vw" src="https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg" srcset="https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_90 90w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_180 180w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_270 270w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_360 360w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_450 450w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_540 540w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_630 630w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_720 720w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_810 810w, https://36762.cdn.cke-cs.com/HncHCGiDJbUeaigrEncD/images/36380b4ecf1a60b4af140a8d77fa85944677bc49fec43a35_20170221114938-4711c254-me.jpg/w_870 870w" width="500"/>'
-  				+'<figcaption></figcaption>'
-  				+'</figure>'
+  			var group_introduction = '<div><em><span style="font-size:16px"><span style="color:#d35400"><strong>讓我們全力支持BLACKPINK!!!</strong></span></span></em><u><em><span style="font-size:16px"><span style="color:#d35400"><strong><img alt="heart" height="23" src="http://localhost:8081/CA105G2/vendor/ckeditor_easyImage_final/plugins/smiley/images/heart.png" title="heart" width="23" /><img alt="heart" height="23" src="http://localhost:8081/CA105G2/vendor/ckeditor_easyImage_final/plugins/smiley/images/heart.png" title="heart" width="23" /><img alt="heart" height="23" src="http://localhost:8081/CA105G2/vendor/ckeditor_easyImage_final/plugins/smiley/images/heart.png" title="heart" width="23" /></strong></span></span></em></u></div><div>&nbsp;</div><div>韓國三大經紀公司YG娛樂相隔七年推出的女子團體 - BLACKPINK，出道即以亮麗的外表和不可忽視的實力迅速從新生代韓國女團中脫穎而出，引起全球矚目，由JISOO、JENNIE，ROS&Eacute;和LISA所組成，四人四色，成為次世代時尚指標。以單曲和出道，出道14天即贏得首座音樂節目一位獎盃，大獲成功。後續相繼發行、、等歌曲，在國內外都獲得廣大迴響，更被富士比雜誌讚賞為「<span style="color:#c0392b"><strong>全美最具影響力的K-POP女子團體</strong></span>」。<br />&nbsp;</div>';
 			CKEDITOR.instances.group_introduction.setData(group_introduction);
   			
   			
