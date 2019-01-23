@@ -37,7 +37,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 			+ ", GOODS_INTRODUCTION=?, FORSALES_A=?, FAVORITE_COUNT=?, GOODS_STATUS=?, LAUNCHDATE=?, OFFDATE=?, GOODS_GROUP_COUNT=?"
 			+ ", GOODS_WANT_COUNT=?, GOODS_SALES_COUNT=? WHERE GOODS_NO=?";
 
-	private static final String GET_ALL_STMT_LAUNCHED = "SELECT * FROM GOODS WHERE (GOODS_STATUS = 'confirmed') AND (CURRENT_DATE BETWEEN LAUNCHDATE and OFFDATE) ORDER BY GOODS_NO DESC, LAUNCHDATE";
+	private static final String GET_ALL_STMT_LAUNCHED = "SELECT * FROM GOODS WHERE (GOODS_STATUS = 'confirmed') ORDER BY GOODS_NO DESC";
 
 	@Override
 	public String insert(GoodsVO goodsVO) {
@@ -50,7 +50,7 @@ public class GoodsDAO implements GoodsDAO_interface {
 
 			String[] cols = { "goods_no" };
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
-
+ 
 			pstmt.setString(1, goodsVO.getEvetit_no());
 			pstmt.setString(2, goodsVO.getGoods_name());
 			pstmt.setInt(3, goodsVO.getGoods_price());

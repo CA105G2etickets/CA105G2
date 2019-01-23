@@ -26,13 +26,7 @@ public static String get_WhereCondition(Map<String, String[]> map) {
 				
 
 
-				else if ("launchdate".equals(key)) {
-					whereCondition.append("AND to_char(" + key + ",'yyyy-mm-dd') > '").append(values[0]).append("' ");
-				}
-				
-				else if ("offdate".equals(key)) {
-					whereCondition.append("AND to_char(" + key + ",'yyyy-mm-dd') < '").append(values[0]).append("' ");
-				}
+			
 			}			
 		}
 		return whereCondition.toString();
