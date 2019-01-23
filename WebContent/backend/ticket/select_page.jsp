@@ -29,7 +29,7 @@
 <!-- <title>模擬訂票訂單資料附帶票券的新增 - selectPayment.jsp</title> -->
 
 <!-- ======================================== DAI:::begin ================================================== -->
-<title>backend_ticket_selling_select_page</title>
+<title>票券管理</title>
 <!-- basic -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- progress css -->

@@ -30,7 +30,7 @@ pageContext.setAttribute("revo",revo);
 
 <!-- <title>paymentDoneShowInfos.jsp</title> -->
 <!-- ======================================== DAI:::begin ================================================== -->
-<title>Step3 : 完成訂購</title>
+<title>完成購買</title>
 <!-- basic -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- progress css -->
